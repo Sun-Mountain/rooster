@@ -1,0 +1,16 @@
+@use './_resources/color' as color;
+
+body {
+  background-color: color.$bg-color;
+  color: color.$text-color;
+  font-family: Anziano, Georgia, 'Times New Roman', Times, serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: color.$tekhelet;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+  margin: 0;
+}
+

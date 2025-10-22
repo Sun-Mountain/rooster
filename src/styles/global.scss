@@ -1,4 +1,6 @@
+@use './_resources/breakpoint' as bp;
 @use './_resources/color' as color;
+@use './_resources/mixins' as mixins;
 
 body {
   background-color: color.$bg-color;
@@ -6,6 +8,18 @@ body {
   font-family: Anziano, Georgia, 'Times New Roman', Times, serif;
   margin: 0;
   padding: 0;
+}
+
+main {
+  @include mixins.main-container;
+}
+
+nav {
+  @include mixins.main-container;
+}
+
+footer {
+  @include mixins.main-container;
 }
 
 h1, h2, h3, h4, h5, h6 {

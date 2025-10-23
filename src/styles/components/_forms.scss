@@ -1,0 +1,19 @@
+@use '../_resources/breakpoint' as bp;
+@use '../_resources/color' as color;
+@use '../_resources/mixins' as mixins;
+
+.form-container {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: bp.$md;
+
+  button {
+    display: block;
+    margin: 1.5rem auto;
+    width: 100%;
+  }
+
+  .text-field-container {
+    margin-top: 1rem;
+  }
+}

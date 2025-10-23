@@ -2,6 +2,8 @@
 @use './_resources/color' as color;
 @use './_resources/mixins' as mixins;
 
+@forward './components/navigation';
+
 body {
   background-color: color.$bg-color;
   color: color.$text-color;
@@ -34,16 +36,11 @@ ul {
 
 main {
   @include mixins.main-container;
+  min-height: 80vh;
 }
 
 nav {
-  @include mixins.main-container;
-
-  ul {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  background-color: color.$nav-bg-color;
 }
 
 footer {

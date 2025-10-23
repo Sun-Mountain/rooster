@@ -5,6 +5,7 @@ import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req });
+  const role = token?.role;
   const { nextUrl } = req;
 
   if (PUBLIC_ROUTES.includes(nextUrl.pathname)) {
@@ -13,6 +14,10 @@ export async function middleware(req: NextRequest) {
 
   if (!token) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
+  }
+
+  if (nextUrl.pathname.startsWith('/admin') && role !== 'ADMIN') {
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   return NextResponse.next();

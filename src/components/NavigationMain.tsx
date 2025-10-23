@@ -4,14 +4,16 @@ export const NavigationMain = () => {
 
   return (
     <nav>
-      <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/sign-in">Sign In</Link>
-        </li>
-      </ul>
+      <div className="nav-link-container">
+        <ul>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/sign-in">Sign In</Link>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 };

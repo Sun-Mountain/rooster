@@ -1,6 +1,12 @@
+'use client';
+
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { Button } from "./UI/Button";
 
 export const NavigationMain = () => {
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
 
   return (
     <nav>
@@ -10,7 +16,11 @@ export const NavigationMain = () => {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/sign-in">Sign In</Link>
+            {isAuthenticated ? (
+              <Button>Account</Button>
+            ) : (
+              <Link href="/sign-in">Sign In</Link>
+            )}
           </li>
         </ul>
       </div>

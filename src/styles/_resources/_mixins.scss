@@ -1,0 +1,14 @@
+@use './breakpoint' as bp;
+
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin main-container {
+  width: 100%;
+  max-width: bp.$main-width;
+  margin: 0 auto;
+  padding: 1rem;
+}

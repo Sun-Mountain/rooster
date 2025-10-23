@@ -10,21 +10,43 @@ body {
   padding: 0;
 }
 
-main {
-  @include mixins.main-container;
-}
+a, a:visited {
+  color: color.$nav-link-color;
+  text-decoration: none;
 
-nav {
-  @include mixins.main-container;
-}
-
-footer {
-  @include mixins.main-container;
+  &:hover {
+    color: color.$nav-link-hover-color;
+    text-decoration: underline;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: color.$tekhelet;
   font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
   margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  @include mixins.main-container;
+}
+
+nav {
+  @include mixins.main-container;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+footer {
+  @include mixins.main-container;
 }
 

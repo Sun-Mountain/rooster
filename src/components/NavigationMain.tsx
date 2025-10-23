@@ -1,9 +1,17 @@
-
+import Link from "next/link";
 
 export const NavigationMain = () => {
+
   return (
     <nav>
-      Nav
+      <ul>
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/sign-in">Sign In</Link>
+        </li>
+      </ul>
     </nav>
   );
 };

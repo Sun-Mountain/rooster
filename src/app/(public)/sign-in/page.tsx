@@ -5,7 +5,7 @@ const SignInPage = () => {
     <>
       <h1>Sign In</h1>
 
-      <AccountForm showSignUp />
+      <AccountForm formType="sign-in" />
     </>
   );
 };

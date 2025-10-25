@@ -27,6 +27,9 @@ export const NavigationMain = () => {
                 buttonText='Account'
               >
                 <MenuItem>
+                  <Link href="/account">Account</Link>
+                </MenuItem>
+                <MenuItem>
                   <Button onClick={handleSignOut}>Sign Out</Button>
                 </MenuItem>
               </Menu>

@@ -31,13 +31,14 @@ model Address {
 }
 
 model EmergencyContact {
-  id         String   @id @default(cuid())
-  userId     String
-  name       String
-  relationship String
-  phoneNumber PhoneNumber?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id              String   @id @default(cuid())
+  userId          String
+  firstName       String
+  lastName        String
+  relationship    String
+  phoneNumber     PhoneNumber?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -47,7 +48,9 @@ model PhoneNumber {
   userId            String?   @unique
   contactId         String?   @unique
   label             String
-  number            String
+  areaCode          String
+  numberGrp1        String
+  numberGrp2        String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 

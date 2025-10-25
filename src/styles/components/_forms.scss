@@ -17,3 +17,25 @@
     margin-top: 1rem;
   }
 }
+
+.phone-field-container {
+  display: flex;
+  gap: 1rem;
+
+  .phone-separator {
+    align-items: center;
+    display: flex;
+    padding: 0 0.5rem;
+  }
+}
+
+@media screen and (min-width: bp.$sm) {
+  .flex-fields-container {
+    display: flex;
+    gap: 1rem;
+
+    .text-field-container {
+      flex: 1;
+    }
+  }
+}

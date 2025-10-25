@@ -6,17 +6,31 @@ import { AccountLinks } from '../AccountLinks';
 import { signIn } from 'next-auth/react';
 import { Button } from '../UI/Button';
 import { TextField } from '../UI/TextField';
+import { FullNameFields } from '../Forms/Fields/FullName';
+import { PhoneNumberFields } from './Fields/PhoneNumber';
 
 interface AccountFormProps {
-  showSignIn?: boolean;
-  showSignUp?: boolean;
+  formType?: 'sign-in' | 'sign-up' | 'settings';
 }
 
 export const AccountForm: FC<AccountFormProps> = (
-  { showSignIn, showSignUp }
+  { formType }
 ) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const buttonText = () => {
+    switch (formType) {
+      case 'sign-in':
+        return 'Sign In';
+      case 'sign-up':
+        return 'Sign Up';
+      case 'settings':
+        return 'Save Account Settings';
+      default:
+        return 'Submit';
+    }
+  }
 
   const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
     event.preventDefault();
@@ -27,7 +41,7 @@ export const AccountForm: FC<AccountFormProps> = (
 
     let response;
 
-    if (showSignUp) {
+    if (formType === 'sign-in') {
       response = await signIn("credentials", {
         email: values.email as string,
         password: values.password as string,
@@ -39,7 +53,7 @@ export const AccountForm: FC<AccountFormProps> = (
       }
     }
 
-    if (showSignIn) {
+    if (formType === 'sign-up') {
       console.log({values})
       if (values.password !== values.confirmPassword) {
         console.log("Passwords do not match");
@@ -70,20 +84,9 @@ export const AccountForm: FC<AccountFormProps> = (
   return (
     <div className="form-container">
       <form onSubmit={onSubmit}>
-        {showSignIn && (
+        {(formType === 'settings' || formType === 'sign-up') && (
           <>
-            <TextField
-              label="First Name"
-              name="firstName"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="Last Name"
-              name="lastName"
-              value=""
-              type="text"
-            />
+            <FullNameFields />
           </>
         )}
         <TextField
@@ -92,13 +95,56 @@ export const AccountForm: FC<AccountFormProps> = (
           value=""
           type="email"
         />
-        <TextField
-          label="Password"
-          name="password"
-          value=""
-          type="password"
-        />
-        {showSignIn && (
+        {formType === 'settings' && (
+          <>
+            <PhoneNumberFields />
+            <TextField
+              label="Address 1"
+              name="street1"
+              value=""
+              type="text"
+            />
+            <TextField
+              label="Address 2"
+              name="street2"
+              value=""
+              type="text"
+            />
+            <TextField
+              label="City"
+              name="city"
+              value=""
+              type="text"
+            />
+            <TextField
+              label="State/Province"
+              name="state"
+              value=""
+              type="text"
+            />
+            <TextField
+              label="ZIP/Postal Code"
+              name="zip"
+              value=""
+              type="text"
+            />
+            <TextField
+              label="Country"
+              name="country"
+              value=""
+              type="text"
+            />
+          </>
+        )}
+        {(formType === 'sign-in' || formType === 'sign-up') && (
+          <TextField
+            label="Password"
+            name="password"
+            value=""
+            type="password"
+          />
+        )}
+        {formType === 'sign-up' && (
           <TextField
             label="Confirm Password"
             name="confirmPassword"
@@ -106,9 +152,11 @@ export const AccountForm: FC<AccountFormProps> = (
             type="password"
           />
         )}
-        <Button defaultDisabled={isLoading} type="submit">{isLoading ? 'Loading...' : (showSignIn ? 'Sign Up' : 'Sign In')}</Button>
+        <Button defaultDisabled={isLoading} type="submit">
+          {isLoading ? 'Loading...' : buttonText()}
+        </Button>
       </form>
-      <AccountLinks showSignIn={showSignIn} showSignUp={showSignUp} />
+      <AccountLinks showSignIn={formType === 'sign-up'} showSignUp={formType === 'sign-in'} />
     </div>
   );
 };

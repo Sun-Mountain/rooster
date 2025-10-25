@@ -5,10 +5,13 @@
 .nav-link-container {
   @include mixins.main-container;
   background-color: color.$nav-bg-color;
+  min-height: 38px;
 
   a, a:visited {
     color: color.$nav-link-color;
     text-decoration: none;
+    line-height: 38px;
+    text-align: center;
 
     &:hover {
       color: color.$nav-link-hover-color;
@@ -16,10 +19,18 @@
     }
   }
 
+  button {
+    margin: 0;
+  }
+
   ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    li {
+      margin: 0 1rem;
+    }
   }
 }
 

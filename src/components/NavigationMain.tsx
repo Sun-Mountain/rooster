@@ -1,12 +1,18 @@
 'use client';
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { MenuItem } from "@mui/material";
+import { Menu } from "./UI/Menu";
 import { Button } from "./UI/Button";
 
 export const NavigationMain = () => {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: '/' });
+  };
 
   return (
     <nav>
@@ -17,7 +23,13 @@ export const NavigationMain = () => {
           </li>
           <li>
             {isAuthenticated ? (
-              <Button>Account</Button>
+              <Menu
+                buttonText='Account'
+              >
+                <MenuItem>
+                  <Button onClick={handleSignOut}>Sign Out</Button>
+                </MenuItem>
+              </Menu>
             ) : (
               <Link href="/sign-in">Sign In</Link>
             )}

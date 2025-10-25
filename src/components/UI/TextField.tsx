@@ -5,6 +5,7 @@ import { TextField as TextFieldUI } from '@mui/material';
 
 interface TextFieldProps {
   label: string;
+  name: string;
   value: string;
   helperText?: string;
   required?: boolean;
@@ -12,7 +13,7 @@ interface TextFieldProps {
 }
 
 export const TextField = (
-  { label, value, helperText, required = false, type = 'text' }: TextFieldProps
+  { label, value, helperText, required = false, type = 'text', ...props }: TextFieldProps
 ) => {
   const [inputValue, setInputValue] = useState(value);
 
@@ -31,6 +32,7 @@ export const TextField = (
         fullWidth
         required={required}
         className="text-field"
+        {...props}
       />
     </div>
   );

@@ -18,3 +18,7 @@ export const createUser = async (data: Prisma.UserCreateInput): Promise<User> =>
     data,
   });
 };
+
+export const updateUser = async (data: Prisma.UserUpdateInput) => {
+  console.log("Update user data:", data);
+};

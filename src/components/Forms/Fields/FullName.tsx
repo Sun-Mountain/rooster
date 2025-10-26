@@ -15,7 +15,7 @@ export const FullNameFields = ({ firstNameFieldName, lastNameFieldName, firstNam
         name={
           firstNameFieldName ? firstNameFieldName : 'firstName'
         }
-        value={firstNameValue ? firstNameValue : ''}
+        initialValue={firstNameValue ? firstNameValue : ''}
         type="text"
       />
       <TextField
@@ -23,7 +23,7 @@ export const FullNameFields = ({ firstNameFieldName, lastNameFieldName, firstNam
         name={
           lastNameFieldName ? lastNameFieldName : 'lastName'
         }
-        value={lastNameValue ? lastNameValue : ''}
+        initialValue={lastNameValue ? lastNameValue : ''}
         type="text"
       />
     </div>

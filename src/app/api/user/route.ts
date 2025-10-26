@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 
-import { createUser, getUserByEmail } from "@db/user";
+import { createUser, getUserByEmail, getUserById } from "@db/user";
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +33,34 @@ export async function POST(req: Request) {
     );
   }
   catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Internal server error." },
+      { status: 500 }
+    );
+  }
+};
+
+export const GET = async (req: Request) => {
+  try {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId") as string;
+    const user = await getUserById(userId);
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "User not found." },
+        { status: 404 }
+      );
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+
+    return NextResponse.json(
+      { message: "User retrieved successfully", user: userWithoutPassword },
+      { status: 200 }
+    );
+  } catch (err) {
     console.log(err);
     return NextResponse.json(
       { message: "Internal server error." },

@@ -1,162 +1,99 @@
 'use client';
 
-import { FC, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { AccountLinks } from '../AccountLinks';
-import { signIn } from 'next-auth/react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '../UI/Button';
 import { TextField } from '../UI/TextField';
 import { FullNameFields } from '../Forms/Fields/FullName';
 import { PhoneNumberFields } from './Fields/PhoneNumber';
+import { useSession } from 'next-auth/react';
+import { UserProps as User } from '@/lib/interfaces/user';
 
-interface AccountFormProps {
-  formType?: 'sign-in' | 'sign-up' | 'settings';
-}
 
-export const AccountForm: FC<AccountFormProps> = (
-  { formType }
-) => {
-  const router = useRouter();
+export const AccountForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState<User | null>(null);
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
 
-  const buttonText = () => {
-    switch (formType) {
-      case 'sign-in':
-        return 'Sign In';
-      case 'sign-up':
-        return 'Sign Up';
-      case 'settings':
-        return 'Save Account Settings';
-      default:
-        return 'Submit';
-    }
-  }
+  useEffect(() => {
+    fetch(`/api/user?userId=${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setUserData(data.user);
+    })
+    .catch(error => {
+      console.error('Error fetching user data:', error);
+    });
+  }, [userId]);
+
+  console.log({userData});
 
   const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
     event.preventDefault();
     setIsLoading(true);
+    setIsLoading(false);
+  };
 
-    const formData = new FormData(event.currentTarget);
-    const values = Object.fromEntries(formData.entries());
-
-    let response;
-
-    if (formType === 'sign-in') {
-      response = await signIn("credentials", {
-        email: values.email as string,
-        password: values.password as string,
-        callbackUrl: `${window.location.origin}/`
-      });
-
-      if (response?.error) {
-        console.log("Failed to sign in:", response.error);
-      }
-    }
-
-    if (formType === 'sign-up') {
-      console.log({values})
-      if (values.password !== values.confirmPassword) {
-        console.log("Passwords do not match");
-        setIsLoading(false);
-        return;
-      }
-      response = await fetch ('/api/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        // setError(errorData.message || 'An error occurred. Please try again.');
-        console.log('Error:', errorData);
-        // console.log({error})
-        setIsLoading(false);
-        return;
-      } else {
-        router.push('/sign-in');
-      }
-    }
+  if (!userData) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="form-container">
       <form onSubmit={onSubmit}>
-        {(formType === 'settings' || formType === 'sign-up') && (
-          <>
-            <FullNameFields />
-          </>
-        )}
+        <FullNameFields firstNameValue={userData?.firstName || ''} lastNameValue={userData?.lastName || ''} />
         <TextField
           label="Email"
           name="email"
-          value=""
+          initialValue={userData?.email || ''}
           type="email"
         />
-        {formType === 'settings' && (
-          <>
-            <PhoneNumberFields />
-            <TextField
-              label="Address 1"
-              name="street1"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="Address 2"
-              name="street2"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="City"
-              name="city"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="State/Province"
-              name="state"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="ZIP/Postal Code"
-              name="zip"
-              value=""
-              type="text"
-            />
-            <TextField
-              label="Country"
-              name="country"
-              value=""
-              type="text"
-            />
-          </>
-        )}
-        {(formType === 'sign-in' || formType === 'sign-up') && (
-          <TextField
-            label="Password"
-            name="password"
-            value=""
-            type="password"
-          />
-        )}
-        {formType === 'sign-up' && (
-          <TextField
-            label="Confirm Password"
-            name="confirmPassword"
-            value=""
-            type="password"
-          />
-        )}
+        <PhoneNumberFields />
+        <TextField
+          label="Address 1"
+          name="street1"
+          initialValue=''
+          type="text"
+        />
+        <TextField
+          label="Address 2"
+          name="street2"
+          initialValue=''
+          type="text"
+        />
+        <TextField
+          label="City"
+          name="city"
+          initialValue=''
+          type="text"
+        />
+        <TextField
+          label="State/Province"
+          name="state"
+          initialValue=""
+          type="text"
+        />
+        <TextField
+          label="ZIP/Postal Code"
+          name="zip"
+          initialValue=""
+          type="text"
+        />
+        <TextField
+          label="Country"
+          name="country"
+          initialValue=""
+          type="text"
+        />
         <Button defaultDisabled={isLoading} type="submit">
-          {isLoading ? 'Loading...' : buttonText()}
+          {isLoading ? 'Loading...' : 'Save Account Settings'}
         </Button>
       </form>
-      <AccountLinks showSignIn={formType === 'sign-up'} showSignUp={formType === 'sign-in'} />
     </div>
   );
 };

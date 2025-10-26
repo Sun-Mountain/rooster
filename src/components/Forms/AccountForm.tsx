@@ -53,7 +53,7 @@ export const AccountForm: FC = () => {
           initialValue={userData?.email || ''}
           type="email"
         />
-        <PhoneNumberFields />
+        <PhoneNumberFields {...userData?.phoneNumber} />
         <TextField
           label="Address 1"
           name="street1"

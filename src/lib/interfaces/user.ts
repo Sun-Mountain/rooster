@@ -1,4 +1,4 @@
-export interface Address {
+export interface AddressProps {
   street1: string;
   street2?: string;
   city: string;
@@ -7,10 +7,10 @@ export interface Address {
   country: string;
 }
 
-export interface PhoneNumber {
-  countryCode: string;
-  numberGrp1: string;
-  numberGrp2: string;
+export interface PhoneNumberProps {
+  areaCode?: string;
+  numberGrp1?: string;
+  numberGrp2?: string;
 }
 
 export interface UserProps {
@@ -18,6 +18,6 @@ export interface UserProps {
   firstName: string;
   lastName: string;
   email: string;
-  addresses: Address[];
-  phoneNumber?: PhoneNumber;
+  address: AddressProps;
+  phoneNumber?: PhoneNumberProps;
 }

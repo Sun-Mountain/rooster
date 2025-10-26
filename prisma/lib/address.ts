@@ -1,19 +1,7 @@
 import { db } from "@db/index";
-import { Address, Prisma } from "@prisma/client";
 
-export const createOrUpdateAddress = async (data: Prisma.AddressCreateInput): Promise<Address> => {
-  const existingAddress = await db.address.findUnique({
-    where: { id: data.id },
+export const getAddressesByUserId = async (userId: string) => {
+  return db.address.findMany({
+    where: { userId },
   });
-
-  if (existingAddress) {
-    return db.address.update({
-      where: { id: data.id },
-      data,
-    });
-  }
-
-  return db.address.create({
-    data,
-  });
-}
+};

@@ -17,7 +17,7 @@ enum Role {
 model Address {
   id         String   @id @default(cuid())
   userId     String   @unique
-  label      String
+  label      String?
   street1    String
   street2    String?
   city       String
@@ -32,7 +32,7 @@ model Address {
 
 model EmergencyContact {
   id              String   @id @default(cuid())
-  userId          String
+  userId          String   @unique
   firstName       String
   lastName        String
   relationship    String
@@ -47,7 +47,6 @@ model PhoneNumber {
   id                String   @id @default(cuid())
   userId            String?   @unique
   contactId         String?   @unique
-  label             String
   areaCode          String
   numberGrp1        String
   numberGrp2        String
@@ -64,9 +63,9 @@ model User {
   lastName                String
   email                   String   @unique
   password                String
-  Addresses               Address[]
-  PhoneNumber             PhoneNumber?
-  EmergencyContacts       EmergencyContact[]
+  address                 Address?
+  phoneNumber             PhoneNumber?
+  emergencyContact        EmergencyContact?
   role                    Role      @default(USER)
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt

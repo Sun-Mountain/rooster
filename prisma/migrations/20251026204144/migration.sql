@@ -5,7 +5,7 @@ CREATE TYPE "Role" AS ENUM ('USER', 'BETA', 'ADMIN', 'SUPER');
 CREATE TABLE "Address" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "label" TEXT NOT NULL,
+    "label" TEXT,
     "street1" TEXT NOT NULL,
     "street2" TEXT,
     "city" TEXT NOT NULL,
@@ -22,7 +22,8 @@ CREATE TABLE "Address" (
 CREATE TABLE "EmergencyContact" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "relationship" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -35,8 +36,9 @@ CREATE TABLE "PhoneNumber" (
     "id" TEXT NOT NULL,
     "userId" TEXT,
     "contactId" TEXT,
-    "label" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
+    "areaCode" TEXT NOT NULL,
+    "numberGrp1" TEXT NOT NULL,
+    "numberGrp2" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -59,6 +61,9 @@ CREATE TABLE "User" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Address_userId_key" ON "Address"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EmergencyContact_userId_key" ON "EmergencyContact"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "PhoneNumber_userId_key" ON "PhoneNumber"("userId");

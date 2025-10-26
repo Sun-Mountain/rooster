@@ -80,20 +80,20 @@ export const SignInSignOutForm: FC<AccountFormProps> = (
         <TextField
           label="Email"
           name="email"
-          value=""
+          initialValue=""
           type="email"
         />
         <TextField
           label="Password"
           name="password"
-          value=""
+          initialValue=""
           type="password"
         />
         {signUpForm && (
           <TextField
             label="Confirm Password"
             name="confirmPassword"
-            value=""
+            initialValue=""
             type="password"
           />
         )}

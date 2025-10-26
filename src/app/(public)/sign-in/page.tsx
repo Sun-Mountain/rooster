@@ -1,11 +1,10 @@
-import { AccountForm } from "@/components/Forms/AccountForm";
+import { SignInSignOutForm } from "@/components/Forms/SignInSignOut";
 
 const SignInPage = () => {
   return (
     <>
       <h1>Sign In</h1>
-
-      <AccountForm formType="sign-in" />
+      <SignInSignOutForm signInForm />
     </>
   );
 };

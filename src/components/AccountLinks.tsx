@@ -1,17 +1,17 @@
 interface AccountLinksProps {
-  showSignIn?: boolean;
-  showSignUp?: boolean;
+  signInForm?: boolean;
+  signUpForm?: boolean;
 }
 
-export const AccountLinks = ({ showSignIn, showSignUp }: AccountLinksProps) => {
+export const AccountLinks = ({ signInForm, signUpForm }: AccountLinksProps) => {
   return (
     <div className="account-links">
-      {showSignIn && (
+      {signUpForm && (
         <>
           Already have an account? <a href="/sign-in">Sign In</a>
         </>
       )}
-      {showSignUp && (
+      {signInForm && (
         <>
           Don&apos;t have an account? <a href="/sign-up">Sign Up</a>
         </>

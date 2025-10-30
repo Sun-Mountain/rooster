@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/global.scss";
 
+import Provider from "@/components/Provider";
 import { NavigationMain } from "@/components/NavigationMain";
 import { Footer } from "@/components/Footer";
 
@@ -16,13 +17,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <NavigationMain />
-        <main>
-          {children}
-        </main>
-        <Footer />
-      </body>
+      <Provider>
+        <body>
+          <NavigationMain />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </body>
+      </Provider>
     </html>
   );
 }

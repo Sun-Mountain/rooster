@@ -5,16 +5,17 @@ import { TextField as TextFieldUI } from '@mui/material';
 
 interface TextFieldProps {
   label: string;
-  value: string;
+  name: string;
+  initialValue: string;
   helperText?: string;
   required?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
 }
 
 export const TextField = (
-  { label, value, helperText, required = false, type = 'text' }: TextFieldProps
+  { label, initialValue, helperText, required = false, type = 'text', ...props }: TextFieldProps
 ) => {
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(initialValue);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -31,6 +32,7 @@ export const TextField = (
         fullWidth
         required={required}
         className="text-field"
+        {...props}
       />
     </div>
   );

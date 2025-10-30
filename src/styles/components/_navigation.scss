@@ -38,3 +38,9 @@
   @include mixins.center-flex;
   gap: 1rem;
 }
+
+.navigation-admin-container {
+  border-right: 1px solid color.$divider-color;
+  padding: 1rem;
+  min-height: 80vh;
+}

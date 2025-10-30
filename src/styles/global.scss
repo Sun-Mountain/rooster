@@ -48,10 +48,21 @@ nav {
 
 footer {
   @include mixins.main-container;
+  background-color: color.$footer-bg-color;
+  padding: 2rem;
+}
+
+.page-content-container {
+  padding: 1rem;
 }
 
 .divider-top {
   border-top: 1px solid color.$divider-color;
   margin-top: 2rem;
   padding-top: 2rem;
+}
+
+// Admin layout styles
+.admin-layout {
+  display: flex;
 }

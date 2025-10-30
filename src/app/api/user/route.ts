@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 
-import { createUser, getUserByEmail, getUserById } from "@db/user";
+import {
+  createUser,
+  getUserByEmail,
+  getUserById,
+  updateUser
+} from "@db/user";
 
 export async function POST(req: Request) {
   try {
@@ -58,6 +63,27 @@ export const GET = async (req: Request) => {
 
     return NextResponse.json(
       { message: "User retrieved successfully", user: userWithoutPassword },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Internal server error." },
+      { status: 500 }
+    );
+  }
+};
+
+export const PUT = async (req: Request) => {
+  try {
+    const { userId, ...updateData } = await req.json();
+
+    const updateUserData = { id: userId, ...updateData };
+
+    await updateUser(updateUserData);
+
+    return NextResponse.json(
+      { message: "User updated successfully" },
       { status: 200 }
     );
   } catch (err) {

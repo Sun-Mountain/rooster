@@ -5,12 +5,19 @@ interface FullNameFieldsProps {
   lastNameFieldName?: string;
   firstNameValue?: string;
   lastNameValue?: string;
+  emergencyContact?: boolean;
 }
 
-export const FullNameFields = ({ firstNameFieldName, lastNameFieldName, firstNameValue, lastNameValue }: FullNameFieldsProps) => {
+export const FullNameFields = ({
+  firstNameFieldName,
+  lastNameFieldName,
+  firstNameValue,
+  lastNameValue,
+  emergencyContact
+}: FullNameFieldsProps) => {
   return (
     <div className="field-group">
-      <label className="field-label">Full Name:
+      <label className="field-label">{emergencyContact ? 'Contact ' : ''}Full Name:
         <div className="flex-fields-container">
           <TextField
             label="First Name"

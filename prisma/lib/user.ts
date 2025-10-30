@@ -1,8 +1,8 @@
 import { db } from "@db/index";
 import { User, Prisma } from "@prisma/client";
-import { getAddressByUserId } from "./address";
-import { getEmergencyContactByUserId } from "./emergencyContact";
-import { getPhoneNumbersByUserId } from "./phoneNumber";
+import { getAddressByUserId, updateAddressByUserId } from "./address";
+import { getEmergencyContactByUserId, updateEmergencyContactByUserId } from "./emergencyContact";
+import { getPhoneNumbersByUserId, updatePhoneNumberByUserId } from "./phoneNumber";
 
 export const getUserById = async (id: string) => {
   const user = await db.user.findUnique({
@@ -68,5 +68,24 @@ export const createUser = async (data: Prisma.UserCreateInput): Promise<User> =>
 };
 
 export const updateUser = async (data: Prisma.UserUpdateInput) => {
-  console.log("Update user data:", data);
+  const { id, ...updateData } = data as { id: string } & Prisma.UserUpdateInput;
+
+  await updateAddressByUserId(id, updateData.address as Partial<{ street1: string; street2: string; city: string; state: string; zip: string; country: string; }>);
+
+  await updateEmergencyContactByUserId(id, updateData.emergencyContact as Partial<{ firstName: string; lastName: string; relationship: string; phoneNumber?: Partial<{ areaCode: string; numberGrp1: string; numberGrp2: string; }> }>);
+
+  await updatePhoneNumberByUserId(id, updateData.phoneNumber as Partial<{ areaCode: string; numberGrp1: string; numberGrp2: string; }>);
+
+  await updatePhoneNumberByUserId(id, updateData.phoneNumber as Partial<{ areaCode: string; numberGrp1: string; numberGrp2: string; }>);
+
+  const updatedUser = await db.user.update({
+    where: { id },
+    data: {
+      firstName: updateData.firstName,
+      lastName: updateData.lastName,
+      email: updateData.email,
+    },
+  });
+
+  return updatedUser;
 };

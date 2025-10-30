@@ -8,20 +8,20 @@ export const PhoneNumberFields = ({ ...props }: PhoneNumberProps) => {
         <div className="phone-field-container">
           <TextField
             label="(###)"
-            name="areaCode"
+            name={props.emergencyContact ? 'emergencyContactAreaCode' : 'areaCode'}
             initialValue={props?.areaCode || ''}
             type="text"
           />
           <TextField
             label="###"
-            name="numberGrp1"
+            name={props.emergencyContact ? 'emergencyContactNumberGrp1' : 'numberGrp1'}
             initialValue={props?.numberGrp1 || ''}
             type="text"
           />
           <span className="phone-separator">-</span>
           <TextField
             label="####"
-            name="numberGrp2"
+            name={props.emergencyContact ? 'emergencyContactNumberGrp2' : 'numberGrp2'}
             initialValue={props?.numberGrp2 || ''}
             type="text"
           />

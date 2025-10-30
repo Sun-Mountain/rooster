@@ -50,3 +50,8 @@ footer {
   @include mixins.main-container;
 }
 
+.divider-top {
+  border-top: 1px solid color.$divider-color;
+  margin-top: 2rem;
+  padding-top: 2rem;
+}

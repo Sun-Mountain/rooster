@@ -29,7 +29,6 @@ export const AccountForm: FC = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data.user);
       setUserData(data.user);
     })
     .catch(error => {

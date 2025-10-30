@@ -55,6 +55,7 @@ export const updateEmergencyContactByUserId = async (userId: string, data: Parti
       firstName: data.firstName,
       lastName: data.lastName,
       relationship: data.relationship,
+      updatedAt: new Date(),
     },
   });
 }

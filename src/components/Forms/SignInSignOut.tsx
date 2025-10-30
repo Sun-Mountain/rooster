@@ -42,7 +42,6 @@ export const SignInSignOutForm: FC<AccountFormProps> = (
     }
 
     if (signUpForm) {
-      console.log({values})
       if (values.password !== values.confirmPassword) {
         console.log("Passwords do not match");
         setIsLoading(false);

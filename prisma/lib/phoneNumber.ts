@@ -15,13 +15,10 @@ export const updatePhoneNumberByUserId = async (userId: string, data: Partial<{ 
 };
 
 export const updatePhoneNumberByContactId = async (contactId: string, data: Partial<{ areaCode: string; numberGrp1: string; numberGrp2: string; }>) => {
-  console.log("Updating phone number for contactId:", contactId, "with data:", data);
 
   const phoneNumber = await db.phoneNumber.findUnique({
     where: { contactId },
   });
-
-  console.log("Found phone number:", phoneNumber);
 
   if (!phoneNumber) {
     throw new Error(`Phone number not found for contactId: ${contactId}`);
@@ -29,10 +26,11 @@ export const updatePhoneNumberByContactId = async (contactId: string, data: Part
 
   const updatedPhoneNumber = await db.phoneNumber.update({
     where: { contactId },
-    data,
+    data: {
+      ...data,
+      updatedAt: new Date(),
+    },
   });
-
-  console.log("Updated phone number:", updatedPhoneNumber);
 
   return updatedPhoneNumber;
 }

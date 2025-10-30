@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 import { User, Prisma } from "@prisma/client";
-import { getAddressesByUserId } from "./address";
-import { getEmergencyContactsByUserId } from "./emergencyContact";
+import { getAddressByUserId } from "./address";
+import { getEmergencyContactByUserId } from "./emergencyContact";
 import { getPhoneNumbersByUserId } from "./phoneNumber";
 
 export const getUserById = async (id: string) => {
@@ -10,15 +10,12 @@ export const getUserById = async (id: string) => {
   });
 
   if (user) {
-    const addresses = await getAddressesByUserId(user.id);
-    const emergencyContacts = await getEmergencyContactsByUserId(user.id);
+    const address = await getAddressByUserId(user.id);
+    const emergencyContact = await getEmergencyContactByUserId(user.id);
     const phoneNumber = await getPhoneNumbersByUserId(user.id);
-    console.log("Fetched addresses for user:", addresses);
-    console.log("Fetched phone number for user:", phoneNumber);
-    console.log("Fetched emergency contacts for user:", emergencyContacts);
-    (user as User & { addresses: typeof addresses }).addresses = addresses;
+    (user as User & { address: typeof address }).address = address;
     (user as User & { phoneNumber: typeof phoneNumber }).phoneNumber = phoneNumber;
-    (user as User & { emergencyContacts: typeof emergencyContacts }).emergencyContacts = emergencyContacts;
+    (user as User & { emergencyContact: typeof emergencyContact }).emergencyContact = emergencyContact;
   }
 
   return user;

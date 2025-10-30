@@ -9,23 +9,27 @@ interface FullNameFieldsProps {
 
 export const FullNameFields = ({ firstNameFieldName, lastNameFieldName, firstNameValue, lastNameValue }: FullNameFieldsProps) => {
   return (
-    <div className="flex-fields-container">
-      <TextField
-        label="First Name"
-        name={
-          firstNameFieldName ? firstNameFieldName : 'firstName'
-        }
-        initialValue={firstNameValue ? firstNameValue : ''}
-        type="text"
-      />
-      <TextField
-        label="Last Name"
-        name={
-          lastNameFieldName ? lastNameFieldName : 'lastName'
-        }
-        initialValue={lastNameValue ? lastNameValue : ''}
-        type="text"
-      />
+    <div className="field-group">
+      <label className="field-label">Full Name:
+        <div className="flex-fields-container">
+          <TextField
+            label="First Name"
+            name={
+              firstNameFieldName ? firstNameFieldName : 'firstName'
+            }
+            initialValue={firstNameValue ? firstNameValue : ''}
+            type="text"
+          />
+          <TextField
+            label="Last Name"
+            name={
+              lastNameFieldName ? lastNameFieldName : 'lastName'
+            }
+            initialValue={lastNameValue ? lastNameValue : ''}
+            type="text"
+          />
+        </div>
+      </label>
     </div>
   )
 }

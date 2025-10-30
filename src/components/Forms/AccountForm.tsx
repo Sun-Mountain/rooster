@@ -3,8 +3,10 @@
 import { FC, useEffect, useState } from 'react';
 import { Button } from '../UI/Button';
 import { TextField } from '../UI/TextField';
+import { EmergencyContactFields } from './Fields/EmergencyContact';
 import { FullNameFields } from '../Forms/Fields/FullName';
 import { PhoneNumberFields } from './Fields/PhoneNumber';
+import { ZipCountryFields } from '../Forms/Fields/ZipCountry';
 import { useSession } from 'next-auth/react';
 import { UserProps as User } from '@/lib/interfaces/user';
 
@@ -78,18 +80,8 @@ export const AccountForm: FC = () => {
           initialValue=""
           type="text"
         />
-        <TextField
-          label="ZIP/Postal Code"
-          name="zip"
-          initialValue=""
-          type="text"
-        />
-        <TextField
-          label="Country"
-          name="country"
-          initialValue=""
-          type="text"
-        />
+        <ZipCountryFields zipValue="" countryValue="" />
+        <EmergencyContactFields />
         <Button defaultDisabled={isLoading} type="submit">
           {isLoading ? 'Loading...' : 'Save Account Settings'}
         </Button>

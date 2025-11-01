@@ -4,17 +4,17 @@ import { createSession } from "@db/session";
 export const POST = async (req: NextRequest) => {
   try {
 
-    const { name, description, startDate, endDate } = await req.json();
+    const { title, description, startDate, endDate } = await req.json();
 
-    if (!name || !startDate || !endDate) {
+    if (!title || !startDate || !endDate) {
       return NextResponse.json(
         { message: "Session is invalid." },
         { status: 400 }
       );
     }
     
-    const newSession = await createSession({
-      name,
+    await createSession({
+      title,
       description,
       startDate: new Date(startDate),
       endDate: new Date(endDate),

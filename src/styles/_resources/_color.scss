@@ -12,6 +12,9 @@ $antiflash-white: rgba(233, 236, 239, 1);
 $platinum: rgba(222, 226, 230, 1);
 $white: rgba(255, 255, 255, 1);
 
+
+$tekhelet-soft: rgba(66, 44, 114, .5);
+
 // Variables
 $bg-color: $seasalt;
 $text-color: $onyx;
@@ -20,6 +23,11 @@ $divider-color: $french-gray;
 $nav-bg-color: $tekhelet;
 $nav-link-color: $seasalt;
 $nav-link-hover-color: $african-violet;
+
+$admin-link-hover-bg-color: $tekhelet;
+$admin-link-hover-color: $seasalt;
+$admin-link-active-bg-color: $tekhelet-soft;
+$admin-link-active-color: $seasalt;
 
 $btn-bg-color: $tekhelet;
 $btn-text-color: $seasalt;

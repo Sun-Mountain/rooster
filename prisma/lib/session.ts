@@ -8,3 +8,15 @@ export const createSession = async (data: Prisma.SessionCreateInput): Promise<Se
 
   return session;
 }
+
+export const getAllSessions = async (): Promise<Session[]> => {
+  const sessions = await db.session.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  console.log("Fetched sessions:", sessions);
+
+  return sessions;
+}

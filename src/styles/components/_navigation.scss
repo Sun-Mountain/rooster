@@ -47,6 +47,23 @@
 .admin-dash-links {
   min-width: 220px;
   max-width: bp.$xxs;
+
+  a, a:visited {
+    display: block;
+    padding: 0.5rem;
+    width: 100%;
+
+    &:hover {
+      background-color: color.$admin-link-hover-bg-color;
+      color: color.$admin-link-hover-color;
+      text-decoration: none;
+    }
+  }
+
+  .active {
+    background-color: color.$admin-link-active-bg-color;
+    color: color.$admin-link-active-color;
+  }
 }
 
 .drawer-content {

@@ -10,6 +10,9 @@ export const AdminDashLinks = () => {
         <li>
           <Link href="/admin/sessions">Manage Sessions</Link>
         </li>
+        <li>
+          <Link href="/admin/classes">Manage Classes</Link>
+        </li>
       </ul>
     </div>
   );

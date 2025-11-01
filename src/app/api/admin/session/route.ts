@@ -12,13 +12,13 @@ export const POST = async (req: NextRequest) => {
         { status: 400 }
       );
     }
-
-    // const newSession = await createSession({
-    //   name,
-    //   description,
-    //   startDate: new Date(startDate),
-    //   endDate: new Date(endDate),
-    // });
+    
+    const newSession = await createSession({
+      name,
+      description,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+    });
 
 
     return NextResponse.json(

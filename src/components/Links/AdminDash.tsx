@@ -7,6 +7,9 @@ export const AdminDashLinks = () => {
         <li>
           <Link href="/admin">Dashboard</Link>
         </li>
+        <li>
+          <Link href="/admin/sessions">Manage Sessions</Link>
+        </li>
       </ul>
     </div>
   );

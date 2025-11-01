@@ -3,9 +3,8 @@ import { Role } from "@prisma/client";
 
 import { getUserCount } from "@db/user";
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
   try {
-
     const count = await getUserCount({
       where: { role: Role.USER }
     });

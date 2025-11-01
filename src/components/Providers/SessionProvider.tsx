@@ -3,7 +3,7 @@
 import { SessionProvider as NextSessionProvider } from "next-auth/react";
 import { FC, ReactNode } from "react";
 
-const Provider: FC<{ children: ReactNode }> = ({ children }) => {
+const SessionProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <NextSessionProvider>
       {children}
@@ -11,4 +11,4 @@ const Provider: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-export default Provider;
+export default SessionProvider;

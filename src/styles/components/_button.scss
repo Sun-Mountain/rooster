@@ -18,3 +18,18 @@ button {
     cursor: pointer;
   }
 }
+
+.icon {
+  margin: 0;
+}
+
+.transparent {
+  background-color: transparent;
+  color: color.$btn-bg-color;
+  padding-bottom: 0;
+
+  &:hover {
+    background-color: transparent;
+    color: color.$btn-hover-bg-color;
+  }
+}

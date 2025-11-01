@@ -1,9 +1,10 @@
+import { SessionForm } from "@/components/Forms/Session";
 
 export default function SessionsPage() {
 
   return (
     <>
-      Sessions Page
+      <SessionForm />
     </>
   );
 }

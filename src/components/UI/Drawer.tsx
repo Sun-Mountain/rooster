@@ -21,7 +21,7 @@ export const Drawer = ({ children, anchor = 'right' }: DrawerProps) => {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>
+      <Button className="icon transparent" onClick={toggleDrawer(true)}>
         <Menu />
       </Button>
       <DrawerUI onClose={toggleDrawer(false)} open={open} anchor={anchor}>

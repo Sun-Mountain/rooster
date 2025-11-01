@@ -12,7 +12,7 @@ body {
   color: color.$text-color;
   font-family: vars.$font-family;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
 }
 
 a, a:visited {
@@ -47,7 +47,6 @@ nav {
 }
 
 footer {
-  @include mixins.main-container;
   background-color: color.$footer-bg-color;
   padding: 2rem;
 }
@@ -65,4 +64,11 @@ footer {
 // Admin layout styles
 .admin-layout {
   display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: bp.$sm) {
+  .admin-layout {
+    flex-direction: row;
+  }
 }

@@ -22,7 +22,19 @@ export const Menu = ({ buttonText, children }: MenuProps) => {
   return (
     <>
       <Button onClick={handleClick}>{buttonText}</Button>
-      <MenuUI anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <MenuUI
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
         {children}
       </MenuUI>
     </>

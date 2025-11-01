@@ -1,25 +1,25 @@
 'use client';
 
-import Link from "next/link";
-import { Button } from "@/components/UI/Button";
-import { Menu } from "@mui/icons-material";
 import { useWindowSize } from "@/helpers/useWindowSize";
+import { Drawer } from "@/components/UI/Drawer";
+import { AdminDashLinks } from "./Links/AdminDash";
 
 export const NavigationAdmin = () => {
   const { width } = useWindowSize();
 
-
   return (
-    <div className="navigation-admin-container">
-      <div>
-        {width && width <= 768 ? (
-          <Button>
-            <Menu />
-          </Button>
-        ) : (
-          <Link href="/admin">Dashboard</Link>
-        )}
+    <>
+      <div className="navigation-admin-container">
+        <div>
+          {width && width <= 768 ? (
+            <Drawer anchor="left">
+              <AdminDashLinks />
+            </Drawer>
+          ) : (
+            <AdminDashLinks />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

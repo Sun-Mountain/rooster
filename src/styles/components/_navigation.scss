@@ -40,7 +40,20 @@
 }
 
 .navigation-admin-container {
-  border-right: 1px solid color.$divider-color;
   padding: 1rem;
-  min-height: 80vh;
+}
+
+.admin-dash-links {
+  min-width: 220px;
+  max-width: bp.$xxs;
+}
+
+.drawer-content {
+  padding: 1.5rem;
+}
+
+@media screen and (min-width: bp.$sm) {
+  .navigation-admin-container {
+    border-right: 1px solid color.$divider-color;
+  }
 }

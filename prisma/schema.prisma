@@ -81,41 +81,6 @@ model Address {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Class {
-  id          String         @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  details     ClassDetails[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-}
-
-model ClassDetails {
-  id        String   @id @default(cuid())
-  classId   String
-  weekday   Weekday
-  hour      Hour
-  minute    Minute
-  coachId   String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
-  coach Coach @relation(fields: [coachId], references: [id], onDelete: Cascade)
-}
-
-model Coach {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  bio       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  ClassDetails ClassDetails?
-}
-
 model EmergencyContact {
   id           String       @id @default(cuid())
   userId       String       @unique
@@ -166,5 +131,4 @@ model User {
   role             Role              @default(USER)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
-  Coach            Coach?
 }

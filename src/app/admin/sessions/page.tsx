@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
 import { SessionForm } from "@/components/Forms/Session";
 import { WeekDayNames } from "@/lib/dates";
+import { AddSessionModal } from "@/components/Modals/AddSession";
 
 export default function SessionsPage() {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
@@ -34,22 +35,30 @@ export default function SessionsPage() {
   return (
 
     <>
-      <h1>Manage Sessions</h1>
+      <h2>Manage Sessions</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : allSessions.length > 0 ? (
-        <ul>
-          {allSessions.map(session => (
-            <li key={session.id}>
-              <div>
-                <h4>{session.title}</h4>
-                <div>{session.description}</div>
-                <div>Start: {new Date(session.startDate).toLocaleDateString()}, {WeekDayNames[new Date(session.startDate).getDay()]}</div>
-                <div>End: {new Date(session.endDate).toLocaleDateString()}, {WeekDayNames[new Date(session.endDate).getDay()]}</div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <>
+          <section>
+            <AddSessionModal />
+          </section>
+          <section>
+            <h3>Existing Sessions:</h3>
+            <ul>
+              {allSessions.map(session => (
+                <li className="list-item-container" key={session.id}>
+                  <div>
+                    <h4>{session.title}</h4>
+                    <div>{session.description}</div>
+                    <div>Start: {new Date(session.startDate).toLocaleDateString()}, {WeekDayNames[new Date(session.startDate).getDay()]}</div>
+                    <div>End: {new Date(session.endDate).toLocaleDateString()}, {WeekDayNames[new Date(session.endDate).getDay()]}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
       ) : (
         <>
           <p>No sessions found.</p>

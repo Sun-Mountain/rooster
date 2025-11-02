@@ -23,6 +23,12 @@ button {
   margin: 0;
 }
 
+.w-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .transparent {
   background-color: transparent;
   color: color.$btn-bg-color;

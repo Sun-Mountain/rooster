@@ -35,7 +35,6 @@ export const SessionForm = () => {
 
   return (
     <div className="form-container">
-      <h2>New Session</h2>
       <form onSubmit={onSubmit}>
         <TextField label="Session Title" name="sessionTitle" initialValue="" />
         <TextField label="Description (optional)" name="description" initialValue="" />

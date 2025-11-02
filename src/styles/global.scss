@@ -5,7 +5,9 @@
 
 @forward './components/button';
 @forward './components/forms';
+@forward './components/modal';
 @forward './components/navigation';
+@forward './components/page';
 
 body {
   background-color: color.$bg-color;

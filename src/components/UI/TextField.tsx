@@ -10,10 +10,11 @@ interface TextFieldProps {
   helperText?: string;
   required?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
+  errorMessage?: string;
 }
 
 export const TextField = (
-  { label, initialValue, helperText, required = false, type = 'text', ...props }: TextFieldProps
+  { label, initialValue, helperText, required = false, type = 'text', errorMessage, ...props }: TextFieldProps
 ) => {
   const [inputValue, setInputValue] = useState(initialValue);
 
@@ -26,12 +27,13 @@ export const TextField = (
       <TextFieldUI
         label={label}
         value={inputValue}
-        helperText={helperText}
+        helperText={errorMessage || helperText}
         type={type}
         onChange={handleChange}
         fullWidth
         required={required}
         className="text-field"
+        error={!!errorMessage}
         {...props}
       />
     </div>

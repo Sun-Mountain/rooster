@@ -1,6 +1,7 @@
 import { TextField } from "@/components/UI/TextField"
 
 interface FullNameFieldsProps {
+  isLoading?: boolean;
   firstNameError?: string;
   lastNameError?: string;
   firstNameFieldName?: string;
@@ -11,6 +12,7 @@ interface FullNameFieldsProps {
 }
 
 export const FullNameFields = ({
+  isLoading,
   firstNameError,
   lastNameError,
   firstNameFieldName,
@@ -30,6 +32,7 @@ export const FullNameFields = ({
             }
             initialValue={firstNameValue ? firstNameValue : ''}
             type="text"
+            disabled={isLoading}
             errorMessage={firstNameError}
           />
           <TextField
@@ -39,6 +42,7 @@ export const FullNameFields = ({
             }
             initialValue={lastNameValue ? lastNameValue : ''}
             type="text"
+            disabled={isLoading}
             errorMessage={lastNameError}
           />
         </div>

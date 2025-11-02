@@ -149,6 +149,7 @@ export const SignInSignOutForm: FC<AccountFormProps> = (
           name="email"
           initialValue=""
           type="email"
+          disabled={isLoading}
           errorMessage={signInForm ? signInErrors.email?.errors[0] : signUpErrors.email?.errors[0]}
         />
         <TextField
@@ -156,6 +157,7 @@ export const SignInSignOutForm: FC<AccountFormProps> = (
           name="password"
           initialValue=""
           type="password"
+          disabled={isLoading}
           errorMessage={signInForm ? signInErrors.password?.errors[0] : signUpErrors.password?.errors[0]}
         />
         {signUpForm && (
@@ -164,6 +166,7 @@ export const SignInSignOutForm: FC<AccountFormProps> = (
             name="confirmPassword"
             initialValue=""
             type="password"
+            disabled={isLoading}
             errorMessage={signUpErrors.confirmPassword?.errors[0]}
           />
         )}

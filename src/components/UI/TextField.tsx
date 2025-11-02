@@ -11,6 +11,7 @@ interface TextFieldProps {
   required?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
   errorMessage?: string;
+  disabled?: boolean;
 }
 
 export const TextField = (

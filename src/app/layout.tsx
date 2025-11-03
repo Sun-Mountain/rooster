@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/global.scss";
 
-import Provider from "@/components/Provider";
+import SessionProvider from "@/components/Providers/SessionProvider";
 import { NavigationMain } from "@/components/NavigationMain";
 import { Footer } from "@/components/Footer";
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider>
+      <SessionProvider>
         <body>
           <NavigationMain />
           <main>
@@ -25,7 +25,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </body>
-      </Provider>
+      </SessionProvider>
     </html>
   );
 }

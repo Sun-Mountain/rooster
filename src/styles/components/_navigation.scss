@@ -11,6 +11,7 @@
     color: color.$nav-link-color;
     text-decoration: none;
     line-height: 38px;
+    padding: 10px 20px;
     text-align: center;
 
     &:hover {
@@ -37,4 +38,40 @@
 .account-links {
   @include mixins.center-flex;
   gap: 1rem;
+}
+
+.navigation-admin-container {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.admin-dash-links {
+  min-width: 220px;
+  max-width: bp.$xxs;
+
+  a, a:visited {
+    display: block;
+    padding: 0.5rem;
+    width: 100%;
+
+    &:hover {
+      background-color: color.$admin-link-hover-bg-color;
+      color: color.$admin-link-hover-color;
+      text-decoration: none;
+    }
+  }
+
+  .active {
+    background-color: color.$admin-link-active-bg-color;
+    color: color.$admin-link-active-color;
+  }
+}
+
+.drawer-content {
+  padding: 1.5rem;
+}
+
+@media screen and (min-width: bp.$sm) {
+  .navigation-admin-container {
+    border-right: 1px solid color.$divider-color;
+  }
 }

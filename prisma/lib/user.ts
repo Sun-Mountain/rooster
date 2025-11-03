@@ -1,8 +1,36 @@
 import { db } from "@db/index";
-import { User, Prisma } from "@prisma/client";
+import { User, Prisma, Role } from "@prisma/client";
 import { getAddressByUserId, updateAddressByUserId } from "./address";
 import { getEmergencyContactByUserId, updateEmergencyContactByUserId } from "./emergencyContact";
 import { getPhoneNumbersByUserId, updatePhoneNumberByUserId } from "./phoneNumber";
+
+export const getUserCount = async (data: { where?: Prisma.UserWhereInput }) => {
+  const count = await db.user.count({
+    where: data?.where || {},
+  });
+
+  return count;
+};
+
+export const getAdminsCount = async () => {
+  const count = await db.user.count({
+    where: {
+      role: Role.ADMIN
+    }
+  });
+
+  return count;
+};
+
+export const getSuperAdminsCount = async () => {
+  const count = await db.user.count({
+    where: {
+      role: Role.SUPER
+    }
+  });
+
+  return count;
+}
 
 export const getUserById = async (id: string) => {
   const user = await db.user.findUnique({

@@ -1,0 +1,22 @@
+@use '../_resources/breakpoint' as bp;
+@use '../_resources/color' as color;
+
+section {
+  margin: 2rem 0;
+}
+
+.page-content-container {
+  padding: 1rem;
+  width: 90%;
+}
+
+.list-item-container {
+  border: 1px solid color.$french-gray;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

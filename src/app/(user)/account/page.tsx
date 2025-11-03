@@ -4,9 +4,9 @@ const AccountPage = () => {
   
 
   return (
-    <>
+    <div className="page-content-container">
       <AccountForm />
-    </>
+    </div>
   );
 }
 

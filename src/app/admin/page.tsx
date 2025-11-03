@@ -17,7 +17,7 @@ export default function AdminPage() {
 
   return (
     <>
-      Admin Page
+      <h1>Dashboard</h1>
       <div>User Count: {userCount}</div>
     </>
   );

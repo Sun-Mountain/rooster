@@ -9,10 +9,18 @@ export const createSession = async (data: Prisma.SessionCreateInput): Promise<Se
   return session;
 }
 
+export const deleteSession = async (sessionId: string): Promise<void> => {
+  await db.session.delete({
+    where: {
+      id: sessionId,
+    },
+  });
+};
+
 export const getAllSessions = async (): Promise<Session[]> => {
   const sessions = await db.session.findMany({
     orderBy: {
-      createdAt: "desc",
+      startDate: "desc",
     },
   });
 

@@ -15,10 +15,13 @@ export const AdminDashLinks = () => {
           <Link href="/admin" className={isActive('/admin') ? 'active' : ''}>Dashboard</Link>
         </li>
         <li>
+          <Link href="/admin/classes" className={isActive('/admin/classes') ? 'active' : ''}>Manage Classes</Link>
+        </li>
+        <li>
           <Link href="/admin/sessions" className={isActive('/admin/sessions') ? 'active' : ''}>Manage Sessions</Link>
         </li>
         <li>
-          <Link href="/admin/classes" className={isActive('/admin/classes') ? 'active' : ''}>Manage Classes</Link>
+          <Link href="/admin/users" className={isActive('/admin/users') ? 'active' : ''}>Manage Users</Link>
         </li>
       </ul>
     </div>

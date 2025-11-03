@@ -19,8 +19,35 @@ button {
   }
 }
 
+.danger {
+  background-color: color.$danger-color;
+  border: none;
+  border-radius: 5px;
+  color: color.$seasalt;
+  font-family: vars.$font-family;
+  font-size: 16px;
+  margin: 10px 0;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: color.$danger-hover-color;
+    cursor: pointer;
+  }
+}
+
+.icon + .danger {
+  background-color: transparent;
+  color: color.$danger-hover-color;
+
+  &:hover {
+    background-color: color.$danger-hover-color;
+    color: color.$seasalt;
+  }
+}
+
 .icon {
   margin: 0;
+  padding: 0.5rem;
 }
 
 .w-icon {

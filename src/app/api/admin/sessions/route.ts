@@ -10,4 +10,4 @@ export const GET = async () => {
     console.log("Error fetching sessions:", err);
     return NextResponse.error();
   }
-}
+};

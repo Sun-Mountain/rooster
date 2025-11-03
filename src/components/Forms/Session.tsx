@@ -4,8 +4,12 @@ import { StartDateEndDateFields } from "./Fields/StartDateEndDate";
 import { TextField } from "../UI/TextField";
 import { buildSessionData } from "@/helpers/buildSession";
 
-export const SessionForm = () => {
-  
+interface SessionFormProps {
+  onSuccess?: () => void;
+}
+
+export const SessionForm = ({ onSuccess }: SessionFormProps) => {
+
   const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -27,7 +31,7 @@ export const SessionForm = () => {
     })
 
     if (response.ok) {
-      console.log("Session created successfully.");
+      if (onSuccess) onSuccess();
     } else {
       console.log("Failed to create session.");
     }

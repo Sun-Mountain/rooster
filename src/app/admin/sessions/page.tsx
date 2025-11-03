@@ -5,6 +5,7 @@ import { Session } from "@prisma/client";
 import { SessionForm } from "@/components/Forms/Session";
 import { WeekDayNames } from "@/lib/dates";
 import { AddSessionModal } from "@/components/Modals/AddSession";
+import { ConfirmDeleteModal as ButtonDelete } from "@/components/Modals/ConfirmDelete";
 
 export default function SessionsPage() {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
@@ -53,6 +54,9 @@ export default function SessionsPage() {
                     <div>{session.description}</div>
                     <div>Start: {new Date(session.startDate).toLocaleDateString()}, {WeekDayNames[new Date(session.startDate).getDay()]}</div>
                     <div>End: {new Date(session.endDate).toLocaleDateString()}, {WeekDayNames[new Date(session.endDate).getDay()]}</div>
+                  </div>
+                  <div>
+                    <ButtonDelete />
                   </div>
                 </li>
               ))}

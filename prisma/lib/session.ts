@@ -24,8 +24,6 @@ export const getAllSessions = async (): Promise<Session[]> => {
     },
   });
 
-  console.log("Fetched sessions:", sessions);
-
   return sessions;
 }
 
@@ -43,6 +41,20 @@ export const getCurrentSession = async (): Promise<Session | null> => {
     },
     orderBy: {
       startDate: "asc",
+    },
+  });
+
+  return session;
+}
+
+export const updateSession = async (sessionId: string, data: Prisma.SessionUpdateInput): Promise<Session> => {
+  const session = await db.session.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      ...data,
+      updatedAt: new Date(),
     },
   });
 

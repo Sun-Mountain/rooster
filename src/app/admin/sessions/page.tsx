@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
-import { SessionForm } from "@/components/Forms/Session";
 import { WeekDayNames } from "@/lib/dates";
-import { AddSessionModal } from "@/components/Modals/AddSession";
+import { Button } from "@/components/UI/Button";
+import { SessionForm } from "@/components/Forms/Session";
+import { AddEditSessionModal } from "@/components/Modals/AddEditSession";
 import { ConfirmDeleteModal as ButtonDelete } from "@/components/Modals/ConfirmDelete";
+import { EditSquare } from "@mui/icons-material";
+import { id } from "zod/locales";
 
 export default function SessionsPage() {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
@@ -57,6 +60,10 @@ export default function SessionsPage() {
     setNewSessionCreated(!newSessionCreated);
   }
 
+  const handleEditSessionSuccess = () => {
+    setNewSessionCreated(!newSessionCreated);
+  }
+
   const handleDeleteSessionSuccess = () => {
     setNewSessionCreated(!newSessionCreated);
   }
@@ -69,7 +76,7 @@ export default function SessionsPage() {
       ) : allSessions.length > 0 ? (
         <>
           <section>
-            <AddSessionModal onSuccess={handleNewSessionSuccess} />
+            <AddEditSessionModal onSuccess={handleNewSessionSuccess} />
           </section>
           <section>
             <h3>Current Session:</h3>
@@ -94,6 +101,17 @@ export default function SessionsPage() {
                     <div>End: {new Date(session.endDate).toLocaleDateString()}, {WeekDayNames[new Date(session.endDate).getDay()]}</div>
                   </div>
                   <div>
+                    <AddEditSessionModal
+                      onSuccess={handleEditSessionSuccess}
+                      editSessionId={session.id}
+                      sessionData={{
+                        id: session.id,
+                        title: session.title,
+                        description: session.description || undefined,
+                        startDate: new Date(session.startDate),
+                        endDate: new Date(session.endDate),
+                      }}
+                    />
                     <ButtonDelete id={session.id} itemType="session"
                     handleSuccess={handleDeleteSessionSuccess} />
                   </div>

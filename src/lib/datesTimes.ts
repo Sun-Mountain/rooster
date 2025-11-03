@@ -8,7 +8,7 @@ export const WeekDayNames = [
   "Saturday",
 ];
 
-export const Hours = [
+export const HourValues = [
   "1",
   "2",
   "3",
@@ -23,7 +23,7 @@ export const Hours = [
   "12"
 ]
 
-export const Minutes = [
+export const MinuteValues = [
   "00",
   "15",
   "30",

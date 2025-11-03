@@ -95,6 +95,7 @@ model ClassSessionDetails {
   description   String?
   capacity      Int
   classDayTimes ClassDayTime[]
+  price         Float
   session       Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId     String
   createdAt     DateTime @default(now())

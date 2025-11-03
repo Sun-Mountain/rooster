@@ -28,3 +28,23 @@ export const getAllSessions = async (): Promise<Session[]> => {
 
   return sessions;
 }
+
+export const getCurrentSession = async (): Promise<Session | null> => {
+  const now = new Date();
+
+  const session = await db.session.findFirst({
+    where: {
+      startDate: {
+        lte: now,
+      },
+      endDate: {
+        gte: now,
+      },
+    },
+    orderBy: {
+      startDate: "asc",
+    },
+  });
+
+  return session;
+}

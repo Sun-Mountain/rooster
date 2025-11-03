@@ -6,11 +6,20 @@ import { Modal } from "@/components/UI/Modal";
 import { Add as AddIcon } from "@mui/icons-material";
 import { SessionForm } from "@/components/Forms/Session";
 
-export const AddSessionModal = () => {
+interface AddSessionModalProps {
+  onSuccess: () => void;
+}
+
+export const AddSessionModal = ({ onSuccess }: AddSessionModalProps) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleSuccess = () => {
+    onSuccess();
+    handleClose();
+  };
 
   return (
     <>
@@ -20,7 +29,7 @@ export const AddSessionModal = () => {
       <Modal open={open} handleClose={handleClose}>
         <>
           <h2>Add New Session</h2>
-          <SessionForm onSuccess={handleClose} />
+          <SessionForm onSuccess={handleSuccess} />
         </>
       </Modal>
     </>

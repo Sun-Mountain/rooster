@@ -94,17 +94,27 @@ model ClassSessionDetails {
   classId       String
   description   String?
   capacity      Int
-  weekday       Weekday
-  startHour     Hour
-  startMinute   Minute
-  endHour       Hour
-  endMinute     Minute
+  classDayTimes ClassDayTime[]
   session       Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId     String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+}
+
+model ClassDayTime {
+  id          String   @id @default(cuid())
+  classId     String
+  weekday     Weekday
+  startHour   Hour
+  startMinute Minute
+  endHour     Hour
+  endMinute   Minute
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  classDetails ClassSessionDetails @relation(fields: [classId], references: [id], onDelete: Cascade)
 }
 
 model EmergencyContact {

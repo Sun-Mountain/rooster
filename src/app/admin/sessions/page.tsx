@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
-import { WeekDayNames } from "@/lib/dates";
+import { WeekDayNames } from "@/lib/datesTimes";
 import { SessionForm } from "@/components/Forms/Session";
 import { AddEditSessionModal } from "@/components/Modals/AddEditSession";
 import { ConfirmDeleteModal as ButtonDelete } from "@/components/Modals/ConfirmDelete";

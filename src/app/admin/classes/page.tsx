@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Class } from "@prisma/client";
+import { ClassForm } from "@/components/Forms/Class";
 
 export default function ClassesPage() {
   const [allClasses, setAllClasses] = useState<Class[]>([]);
@@ -32,6 +33,7 @@ export default function ClassesPage() {
       ) : (
         <p>No classes found.</p>
       )}
+      <ClassForm />
     </>
   );
 }

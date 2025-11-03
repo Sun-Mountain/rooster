@@ -64,6 +64,14 @@ export const getFutureSessions = async (): Promise<Session[]> => {
   return sessions;
 }
 
+export const getSessionCount = async (data: { where?: Prisma.SessionWhereInput }) => {
+  const count = await db.session.count({
+    where: data?.where || {},
+  });
+
+  return count;
+};
+
 export const updateSession = async (sessionId: string, data: Prisma.SessionUpdateInput): Promise<Session> => {
   const session = await db.session.update({
     where: {

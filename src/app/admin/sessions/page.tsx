@@ -3,12 +3,9 @@
 import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
 import { WeekDayNames } from "@/lib/dates";
-import { Button } from "@/components/UI/Button";
 import { SessionForm } from "@/components/Forms/Session";
 import { AddEditSessionModal } from "@/components/Modals/AddEditSession";
 import { ConfirmDeleteModal as ButtonDelete } from "@/components/Modals/ConfirmDelete";
-import { EditSquare } from "@mui/icons-material";
-import { id } from "zod/locales";
 
 export default function SessionsPage() {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
@@ -124,7 +121,7 @@ export default function SessionsPage() {
         <>
           <p>No sessions found.</p>
           <p>Create your first session:</p>
-          <SessionForm />
+          <SessionForm onSuccess={handleNewSessionSuccess} />
         </>
       )}
     </>

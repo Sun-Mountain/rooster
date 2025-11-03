@@ -47,6 +47,23 @@ export const getCurrentSession = async (): Promise<Session | null> => {
   return session;
 }
 
+export const getFutureSessions = async (): Promise<Session[]> => {
+  const now = new Date();
+
+  const sessions = await db.session.findMany({
+    where: {
+      startDate: {
+        gt: now,
+      },
+    },
+    orderBy: {
+      startDate: "asc",
+    },
+  });
+
+  return sessions;
+}
+
 export const updateSession = async (sessionId: string, data: Prisma.SessionUpdateInput): Promise<Session> => {
   const session = await db.session.update({
     where: {

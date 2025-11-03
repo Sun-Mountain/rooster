@@ -2,7 +2,7 @@ export default function UsersPage() {
 
   return (
     <>
-      Users Page
+      <h2>Manage Users</h2>
     </>
   );
 }

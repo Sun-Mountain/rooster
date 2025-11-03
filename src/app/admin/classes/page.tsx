@@ -2,7 +2,7 @@ export default function ClassesPage() {
 
   return (
     <>
-      Classes Page
+      <h2>Manage Classes</h2>
     </>
   );
 }

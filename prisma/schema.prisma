@@ -81,6 +81,32 @@ model Address {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Class {
+  id            String   @id @default(cuid())
+  title         String
+  classSessions ClassSessionDetails[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ClassSessionDetails {
+  id            String   @id @default(cuid())
+  classId       String
+  description   String?
+  capacity      Int
+  weekday       Weekday
+  startHour     Hour
+  startMinute   Minute
+  endHour       Hour
+  endMinute     Minute
+  session       Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+}
+
 model EmergencyContact {
   id           String       @id @default(cuid())
   userId       String       @unique
@@ -112,6 +138,7 @@ model Session {
   id          String   @id @default(cuid())
   title       String
   description String?
+  classes     ClassSessionDetails[]
   startDate   DateTime
   endDate     DateTime
   createdAt   DateTime @default(now())

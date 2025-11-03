@@ -7,20 +7,24 @@ interface ModalProps {
   children: ReactNode;
   open: boolean;
   handleClose: Dispatch<SetStateAction<boolean>>;
+  className?: string;
 }
 
-export const Modal = ({ children, open, handleClose }: ModalProps) => {
+export const Modal = ({ children, open, handleClose, className }: ModalProps) => {
 
   return (
     <>
       <ModalUI open={open} onClose={handleClose}>
-        <div className="modal-container">
+        <div className={`modal-container ${className || ''}`}>
           <div className="close-button-container">
             <Button className="icon transparent" onClick={() => handleClose(false)}>
               <CloseIcon />
             </Button>
           </div>
-          {children}
+          <div className="modal-content">
+
+            {children}
+          </div>
         </div>
       </ModalUI>
     </>

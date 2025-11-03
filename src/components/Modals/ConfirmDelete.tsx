@@ -36,9 +36,10 @@ export const ConfirmDeleteModal = ({ id, itemType, handleSuccess }: ConfirmDelet
       <Button className="icon danger" onClick={handleOpen}>
         <DeleteIcon />
       </Button>
-      <Modal open={open} handleClose={handleClose}>
+      <Modal open={open} handleClose={handleClose} className="dangerous-action-warning">
         <h2>Confirm Delete</h2>
-        <p>Are you sure you want to delete this item?</p>
+        <p>Are you sure you want to delete this {itemType}?</p>
+        <p>Once deleted, this action cannot be undone.</p>
         <Button className="danger" onClick={handleConfirmDelete}>
           Confirm
         </Button>

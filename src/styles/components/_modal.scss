@@ -6,7 +6,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: bp.$sm;
-  margin: 2rem auto;
+  margin: 5rem auto;
   padding: 1.5rem;
   position: relative;
 
@@ -25,6 +25,22 @@
       &:hover {
         color: color.$link-hover-color;
       }
+    }
+  }
+
+  &.dangerous-action-warning {
+    border: 5px solid color.$danger-color;
+
+    .danger {
+      width: 100%;
+    }
+
+    h2 {
+      color: color.$danger-color;
+    }
+
+    .modal-content {
+      padding: 1rem;
     }
   }
 }

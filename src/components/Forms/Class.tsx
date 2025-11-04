@@ -2,41 +2,49 @@
 
 import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
+import { Button } from "../UI/Button";
 import { TextField } from "../UI/TextField";
 import { SelectField } from "../UI/SelectField";
-import { WeekDayNames } from "@/lib/datesTimes";
-import { Weekday } from "@prisma/client";
-import { StartTimeEndTimeFields } from "./Fields/StartTimeEndTime";
+import { DayTimesFields } from "./Fields/DayTimes";
 
 export const ClassForm = () => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-      const fetchSessions = async () => {
-        setIsLoading(true);
-        const response = await fetch('/api/admin/sessions', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          const sessions: Session[] = data.sessions || [];
-          setAllSessions(sessions);
-        } else {
-          console.log("Failed to fetch sessions.");
+  useEffect(() => {
+    const fetchSessions = async () => {
+      setIsLoading(true);
+      const response = await fetch('/api/admin/sessions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
         }
-        setIsLoading(false);
-      };
-      fetchSessions();
-    }, []);
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const sessions: Session[] = data.sessions || [];
+        setAllSessions(sessions);
+      } else {
+        console.log("Failed to fetch sessions.");
+      }
+      setIsLoading(false);
+    };
+    fetchSessions();
+  }, []);
+
+  const onSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const values = Object.fromEntries(formData.entries());
+
+    console.log(values);
+
+    // TODO: Handle form submission logic here
+  };
 
   return (
     <div className="form-container">
-      <h2>Class Form</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <TextField label="Class Title" name="title" initialValue="" disabled={isLoading} />
         <TextField label="Class Description" name="description" initialValue="" />
         <TextField label="Class Capacity" name="capacity" initialValue="" />
@@ -49,15 +57,8 @@ export const ClassForm = () => {
             label: `${session.title}: ${new Date(session.startDate).toLocaleDateString()} - ${new Date(session.endDate).toLocaleDateString()}`
           }))}
         />
-        <SelectField
-          label="Weekday"
-          name="weekday"
-          options={WeekDayNames.map((day, index) => ({
-            value: Object.values(Weekday)[index],
-            label: day
-          }))}
-        />
-        <StartTimeEndTimeFields />
+        <DayTimesFields />
+        <Button type="submit">Create Class</Button>
       </form>
     </div>
   );

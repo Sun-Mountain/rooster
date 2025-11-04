@@ -13,10 +13,10 @@ export const StartTimeEndTimeFields = ({
     <div className="field-group">
       <div className="flex-fields-container">
         <div className="field-label flex-column">
-          <TimePicker />
+          <TimePicker name="startTime" />
         </div>
         <div className="field-label flex-column">
-          <TimePicker />
+          <TimePicker name="endTime" />
         </div>
       </div>
     </div>

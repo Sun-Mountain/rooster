@@ -2,6 +2,7 @@
 
 import { StartDateEndDateFields } from "./Fields/StartDateEndDate";
 import { TextField } from "../UI/TextField";
+import { Button } from "../UI/Button";
 import { buildSessionData } from "@/helpers/buildSession";
 import { SessionProps } from "@/lib/interfaces/session";
 
@@ -46,7 +47,7 @@ export const SessionForm = ({ onSuccess, editSessionId, sessionData }: SessionFo
         <TextField label="Session Title" name="sessionTitle" initialValue={sessionData?.title || ""} />
         <TextField label="Description (optional)" name="description" initialValue={sessionData?.description || ""} />
         <StartDateEndDateFields initialStartDate={sessionData?.startDate} initialEndDate={sessionData?.endDate} />
-        <button type="submit">{editSessionId ? "Update" : "Create"} Session</button>
+        <Button type="submit">{editSessionId ? "Update" : "Create"} Session</Button>
       </form>
     </div>
   );

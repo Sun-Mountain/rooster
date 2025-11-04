@@ -31,7 +31,10 @@ export default function ClassesPage() {
           Yay!
         </>
       ) : (
-        <p>No classes found.</p>
+        <>
+          <p>No classes found.</p>
+          <p>Create your first class.</p>
+        </>
       )}
       <ClassForm />
     </>

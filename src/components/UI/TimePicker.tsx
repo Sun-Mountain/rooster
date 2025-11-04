@@ -4,11 +4,15 @@ import { useState } from "react";
 import DateTimePickerProvider from "@/components/Providers/DateTimePickerProvider";
 import { TimePicker as TimePickerUI } from "@mui/x-date-pickers";
 
-export const TimePicker = () => {
+interface TimePickerProps {
+  name: string;
+}
+
+export const TimePicker = ({ name }: TimePickerProps) => {
   
   return (
     <DateTimePickerProvider>
-      <TimePickerUI />
+      <TimePickerUI name={name} />
     </DateTimePickerProvider>
   );
 };

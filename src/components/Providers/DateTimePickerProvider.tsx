@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { FC, ReactNode } from "react";
 
-const DatePickerProvider: FC<{ children: ReactNode }> = ({ children }) => {
+const DateTimePickerProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {children}
@@ -13,4 +13,4 @@ const DatePickerProvider: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-export default DatePickerProvider;
+export default DateTimePickerProvider;

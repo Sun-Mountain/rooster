@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import DatePickerProvider from "@/components/Providers/DatePickerProvider";
+import DateTimePickerProvider from "@/components/Providers/DateTimePickerProvider";
 import { DatePicker as DatePickerUI} from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -18,8 +18,8 @@ export const DatePicker = ({ label, name, initialDate }: DatePickerProps) => {
   };
 
   return (
-    <DatePickerProvider>
+    <DateTimePickerProvider>
       <DatePickerUI label={label} name={name} value={selectedDate} onChange={handleDateChange} />
-    </DatePickerProvider>
+    </DateTimePickerProvider>
   );
 }

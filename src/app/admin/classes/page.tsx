@@ -22,7 +22,7 @@ export default function ClassesPage() {
 
   return (
     <>
-      <h2>Manage Classes</h2>
+      <h2>Classes</h2>
 
       {isLoading ? (
         <p>Loading classes...</p>

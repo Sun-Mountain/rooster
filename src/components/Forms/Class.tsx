@@ -6,6 +6,7 @@ import { TextField } from "../UI/TextField";
 import { SelectField } from "../UI/SelectField";
 import { WeekDayNames } from "@/lib/datesTimes";
 import { Weekday } from "@prisma/client";
+import { StartTimeEndTimeFields } from "./Fields/StartTimeEndTime";
 
 export const ClassForm = () => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
@@ -38,7 +39,8 @@ export const ClassForm = () => {
       <form>
         <TextField label="Class Title" name="title" initialValue="" disabled={isLoading} />
         <TextField label="Class Description" name="description" initialValue="" />
-        <TextField label="Class Capacity" name="capacity" initialValue="" type="number" />
+        <TextField label="Class Capacity" name="capacity" initialValue="" />
+        <TextField label="Price" name="price" initialValue="" />
         <SelectField
           label="Session"
           name="session"
@@ -55,6 +57,7 @@ export const ClassForm = () => {
             label: day
           }))}
         />
+        <StartTimeEndTimeFields />
       </form>
     </div>
   );

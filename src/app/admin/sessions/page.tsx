@@ -67,7 +67,7 @@ export default function SessionsPage() {
 
   return (
     <>
-      <h2>Manage Sessions</h2>
+      <h2>Sessions</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : allSessions.length > 0 ? (

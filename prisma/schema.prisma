@@ -59,10 +59,18 @@ enum Hour {
 }
 
 enum Minute {
-  MINUTE_0
+  MINUTE_00
+  MINUTE_05
+  MINUTE_10
   MINUTE_15
+  MINUTE_20
+  MINUTE_25
   MINUTE_30
+  MINUTE_35
+  MINUTE_40
   MINUTE_45
+  MINUTE_50
+  MINUTE_55
 }
 
 model Address {

@@ -112,6 +112,7 @@ export const updateUser = async (data: Prisma.UserUpdateInput) => {
       firstName: updateData.firstName,
       lastName: updateData.lastName,
       email: updateData.email,
+      updatedAt: new Date(),
     },
   });
 

@@ -6,8 +6,13 @@ import { Button } from "../UI/Button";
 import { TextField } from "../UI/TextField";
 import { SelectField } from "../UI/SelectField";
 import { DayTimesFields } from "./Fields/DayTimes";
+import { buildClassData } from "@/helpers/buildClass";
 
-export const ClassForm = () => {
+interface ClassFormProps {
+  onSuccess?: () => void;
+}
+
+export const ClassForm = ({ onSuccess }: ClassFormProps) => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [classNumber, setClassNumber] = useState(1);
@@ -33,14 +38,28 @@ export const ClassForm = () => {
     fetchSessions();
   }, []);
 
-  const onSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const values = Object.fromEntries(formData.entries());
 
-    console.log(values);
+    const classData = buildClassData(values, classNumber);
 
-    // TODO: Handle form submission logic here
+    const response = await fetch('/api/admin/class', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(classData),
+    });
+
+    if (response.ok) {
+      if (onSuccess) {
+        onSuccess();
+      }
+    } else {
+      console.log("Failed to create class.");
+    }
   };
 
   return (
@@ -66,7 +85,7 @@ export const ClassForm = () => {
             <DayTimesFields key={index} index={index} />
           </div>
         ))}
-        <div>
+        <div className="extra-form-button">
           <Button type="button" onClick={() => setClassNumber(classNumber + 1)}>Add Day/Time</Button>
         </div>
         <Button type="submit">Create Class</Button>

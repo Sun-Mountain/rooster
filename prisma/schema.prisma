@@ -31,48 +31,6 @@ enum Weekday {
   SATURDAY
 }
 
-enum Hour {
-  HOUR_0
-  HOUR_1
-  HOUR_2
-  HOUR_3
-  HOUR_4
-  HOUR_5
-  HOUR_6
-  HOUR_7
-  HOUR_8
-  HOUR_9
-  HOUR_10
-  HOUR_11
-  HOUR_12
-  HOUR_13
-  HOUR_14
-  HOUR_15
-  HOUR_16
-  HOUR_17
-  HOUR_18
-  HOUR_19
-  HOUR_20
-  HOUR_21
-  HOUR_22
-  HOUR_23
-}
-
-enum Minute {
-  MINUTE_00
-  MINUTE_05
-  MINUTE_10
-  MINUTE_15
-  MINUTE_20
-  MINUTE_25
-  MINUTE_30
-  MINUTE_35
-  MINUTE_40
-  MINUTE_45
-  MINUTE_50
-  MINUTE_55
-}
-
 model Address {
   id        String   @id @default(cuid())
   userId    String   @unique
@@ -116,10 +74,8 @@ model ClassDayTime {
   id          String   @id @default(cuid())
   classId     String
   weekday     Weekday
-  startHour   Hour
-  startMinute Minute
-  endHour     Hour
-  endMinute   Minute
+  startTime   String
+  endTime     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

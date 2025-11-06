@@ -17,7 +17,7 @@ export const SelectField = ({ label, name, options }: SelectFieldProps) => {
   };
 
   return (
-    <div className="text-field-container">
+    <>
       <FormControl className="select-field">
       <InputLabel>{label}</InputLabel>
       <Select
@@ -36,6 +36,6 @@ export const SelectField = ({ label, name, options }: SelectFieldProps) => {
         ))}
       </Select>
       </FormControl>
-    </div>
+    </>
   );
 }

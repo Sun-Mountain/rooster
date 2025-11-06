@@ -10,6 +10,7 @@ import { DayTimesFields } from "./Fields/DayTimes";
 export const ClassForm = () => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [classNumber, setClassNumber] = useState(1);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -49,15 +50,25 @@ export const ClassForm = () => {
         <TextField label="Class Description" name="description" initialValue="" />
         <TextField label="Class Capacity" name="capacity" initialValue="" />
         <TextField label="Price" name="price" initialValue="" />
-        <SelectField
-          label="Session"
-          name="session"
-          options={allSessions.map(session => ({
-            value: session.id,
-            label: `${session.title}: ${new Date(session.startDate).toLocaleDateString()} - ${new Date(session.endDate).toLocaleDateString()}`
-          }))}
-        />
-        <DayTimesFields />
+        <div className="text-field-container">
+          <SelectField
+            label="Session"
+            name="session"
+            options={allSessions.map(session => ({
+              value: session.id,
+              label: `${session.title}: ${new Date(session.startDate).toLocaleDateString()} - ${new Date(session.endDate).toLocaleDateString()}`
+            }))}
+          />
+        </div>
+        {[...Array(classNumber)].map((_, index) => (
+          <div key={index}>
+            <div className="divider-top" />
+            <DayTimesFields key={index} index={index} />
+          </div>
+        ))}
+        <div>
+          <Button type="button" onClick={() => setClassNumber(classNumber + 1)}>Add Day/Time</Button>
+        </div>
         <Button type="submit">Create Class</Button>
       </form>
     </div>

@@ -3,18 +3,22 @@ import { StartTimeEndTimeFields } from "@/components/Forms/Fields/StartTimeEndTi
 import { WeekDayNames } from "@/lib/datesTimes";
 import { Weekday } from "@prisma/client";
 
-export const DayTimesFields = () => {
+interface DayTimesFieldsProps {
+  index: number;
+}
+
+export const DayTimesFields = ({ index }: DayTimesFieldsProps) => {
   return (
     <>
       <SelectField
         label="Weekday"
-        name="weekday"
-        options={WeekDayNames.map((day, index) => ({
-          value: Object.values(Weekday)[index],
+        name={`weekday-${index}`}
+        options={WeekDayNames.map((day, idx) => ({
+          value: Object.values(Weekday)[idx],
           label: day
         }))}
       />
-      <StartTimeEndTimeFields />
+      <StartTimeEndTimeFields index={index} />
     </>
   );
 }

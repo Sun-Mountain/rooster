@@ -7,35 +7,37 @@ import { TextField } from "../UI/TextField";
 import { SelectField } from "../UI/SelectField";
 import { DayTimesFields } from "./Fields/DayTimes";
 import { buildClassData } from "@/helpers/buildClass";
+import { Close as CloseIcon } from "@mui/icons-material";
+
+import { ClassProps, DayTimesProps } from "@/lib/interfaces/class";
 
 interface ClassFormProps {
   onSuccess?: () => void;
   editClassId?: string;
+  classData?: ClassProps;
 }
 
-export const ClassForm = ({ onSuccess, editClassId }: ClassFormProps) => {
+export const ClassForm = ({ onSuccess, editClassId, classData }: ClassFormProps) => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [classNumber, setClassNumber] = useState(1);
+  const [classNumber, setClassNumber] = useState<DayTimesProps[]>(classData?.sessionDetails?.classDayTimes || [{
+    id: '',
+    classId: '',
+    sessionId: '',
+    weekday: '',
+    startTime: '',
+    endTime: '',
+  }]);
 
   useEffect(() => {
-    const fetchSessions = async () => {
+    async function fetchSessions() {
       setIsLoading(true);
-      const response = await fetch('/api/admin/sessions', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const sessions: Session[] = data.sessions || [];
-        setAllSessions(sessions);
-      } else {
-        console.log("Failed to fetch sessions.");
-      }
+      const response = await fetch("/api/admin/sessions");
+      const data = await response.json();
+      setAllSessions(data.sessions);
       setIsLoading(false);
-    };
+    }
+
     fetchSessions();
   }, []);
 
@@ -44,7 +46,7 @@ export const ClassForm = ({ onSuccess, editClassId }: ClassFormProps) => {
     const formData = new FormData(event.currentTarget);
     const values = Object.fromEntries(formData.entries());
 
-    const classData = buildClassData(values, classNumber);
+    const classData = buildClassData(values, classNumber.length);
 
     const response = await fetch('/api/admin/class', {
       method: 'POST',
@@ -63,31 +65,56 @@ export const ClassForm = ({ onSuccess, editClassId }: ClassFormProps) => {
     }
   };
 
+  const handleDelete = (index: number) => {
+    const updatedClassNumber = [...classNumber];
+    updatedClassNumber.splice(index, 1);
+    setClassNumber(updatedClassNumber);
+  };
+
   return (
     <div className="form-container">
       <form onSubmit={onSubmit}>
-        <TextField label="Class Title" name="title" initialValue="" disabled={isLoading} />
-        <TextField label="Class Description" name="description" initialValue="" />
-        <TextField label="Class Capacity" name="capacity" initialValue="" />
-        <TextField label="Price" name="price" initialValue="" />
+        <TextField label="Class Title" name="title" initialValue={classData?.title || ""} disabled={isLoading} />
+        <TextField label="Class Description" name="description" initialValue={classData?.sessionDetails?.description || ""} />
+        <TextField label="Class Capacity" name="capacity" initialValue={classData?.sessionDetails?.capacity?.toString() || ""} />
+        <TextField label="Price" name="price" initialValue={classData?.sessionDetails?.price?.toString() || ""} />
         <div className="text-field-container">
           <SelectField
             label="Session"
             name="session"
+            initialValue={classData?.sessionDetails?.sessionId || ''}
             options={allSessions.map(session => ({
               value: session.id,
               label: `${session.title}: ${new Date(session.startDate).toLocaleDateString()} - ${new Date(session.endDate).toLocaleDateString()}`
             }))}
           />
         </div>
-        {[...Array(classNumber)].map((_, index) => (
+        {classNumber.map((item, index) => (
           <div key={index}>
             <div className="divider-top" />
-            <DayTimesFields key={index} index={index} />
+            <div className="form-list-item">
+              <div className="fields-container">
+                <DayTimesFields key={index} index={index} details={item} />
+              </div>
+              {classNumber.length > 1 && (
+                <div className="delete-button-container">
+                  <Button className="icon transparent" onClick={() => handleDelete(index)}>
+                    <CloseIcon />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
         <div className="extra-form-button">
-          <Button type="button" onClick={() => setClassNumber(classNumber + 1)}>Add Day/Time</Button>
+          <Button type="button" onClick={() => setClassNumber([...classNumber, {
+            id: '',
+            classId: '',
+            weekday: '',
+            sessionId: '',
+            startTime: '',
+            endTime: '',
+          }])}>Add Day/Time</Button>
         </div>
         <Button type="submit">{editClassId ? "Update" : "Create"} Class</Button>
       </form>

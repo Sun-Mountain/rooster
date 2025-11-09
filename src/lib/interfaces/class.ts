@@ -1,8 +1,20 @@
+export interface DayTimesProps {
+  classId: string;
+  id: string;
+  sessionId: string;
+  weekday: string;
+  startTime: string;
+  endTime: string;
+};
+
 export interface ClassProps {
   id: string;
   title: string;
-  description?: string;
-  sessionId: string;
-  startDate: string;
-  endDate: string;
+  sessionDetails: {
+    capacity: number;
+    price: number;
+    description: string;
+    sessionId: string;
+    classDayTimes: DayTimesProps[];
+  };
 }

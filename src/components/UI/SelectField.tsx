@@ -7,11 +7,11 @@ interface SelectFieldProps {
   label: string;
   name: string;
   options: { value: string; label: string }[];
+  initialValue?: string;
 }
 
-export const SelectField = ({ label, name, options }: SelectFieldProps) => {
-  const [selectedOption, setSelectedOption] = useState("");
-
+export const SelectField = ({ label, name, options, initialValue = '' }: SelectFieldProps) => {
+  const [selectedOption, setSelectedOption] = useState(initialValue);
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedOption(event.target.value);
   };
@@ -25,6 +25,7 @@ export const SelectField = ({ label, name, options }: SelectFieldProps) => {
         className="text-field"
         name={name}
         id={`${name}-select`}
+        defaultValue={initialValue}
         value={selectedOption}
         label={label}
         onChange={handleChange}

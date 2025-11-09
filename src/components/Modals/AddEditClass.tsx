@@ -17,7 +17,8 @@ interface AddEditClassModalProps {
 
 export const AddEditClassModal = ({
   onSuccess,
-  editClassId
+  editClassId,
+  classData
 }: AddEditClassModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -37,7 +38,7 @@ export const AddEditClassModal = ({
       <Modal open={open} handleClose={handleClose}>
         <>
           <h2>{editClassId ? "Edit Class" : "Add New Class"}</h2>
-          <ClassForm onSuccess={handleSuccess} editClassId={editClassId} />
+          <ClassForm onSuccess={handleSuccess} editClassId={editClassId} classData={classData} />
         </>
       </Modal>
     </>

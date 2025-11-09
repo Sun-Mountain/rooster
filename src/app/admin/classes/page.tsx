@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { Class } from "@prisma/client";
+import { ClassProps } from "@/lib/interfaces/class";
 
 import { ConfirmDeleteModal as ButtonDelete } from "@/components/Modals/ConfirmDelete";
 
 import { AddEditClassModal } from "@/components/Modals/AddEditClass";
 
 export default function ClassesPage() {
-  const [allClasses, setAllClasses] = useState<Class[]>([]);
+  const [allClasses, setAllClasses] = useState<ClassProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -64,7 +64,9 @@ export default function ClassesPage() {
                 <div>
                   <AddEditClassModal
                     onSuccess={handleNewClassSuccess}
-                    editClassId={classItem.id} />
+                    editClassId={classItem.id}
+                    classData={classItem}
+                  />
                   <ButtonDelete
                     id={classItem.id} 
                     itemType="class"

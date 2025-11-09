@@ -20,6 +20,44 @@
   .text-field-container {
     margin-top: 1rem;
   }
+
+  .form-list-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid color.$seasalt;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .delete-button-container {
+    button {
+      margin: 0;
+      padding: 0;
+
+      &:hover {
+        color: color.$link-hover-color;
+      }
+    }
+  }
+}
+
+.form-list-item {
+  .fields-container {
+    width: 100%;
+  }
+
+  .delete-button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.extra-form-button {
+  float: right;
 }
 
 .select-field {

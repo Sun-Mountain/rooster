@@ -13,6 +13,7 @@ export default function ClassesPage() {
       setIsLoading(true);
       const response = await fetch("/api/admin/classes");
       const data = await response.json();
+      console.log(data)
       setAllClasses(data.classes);
       setIsLoading(false);
     }

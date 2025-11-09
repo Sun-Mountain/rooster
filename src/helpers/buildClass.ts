@@ -8,10 +8,12 @@ export const buildClassData = (values: Record<string, FormDataEntryValue>, class
   
   return {
     title: values.title,
-    description: values.description,
-    capacity: Number(values.capacity),
-    price: Number(values.price),
-    sessionId: values.session,
-    dayTimes: classDayTimes
+    sessionDetails: {
+      description: values.description,
+      capacity: Number(values.capacity),
+      price: Number(values.price),
+      sessionId: values.session,
+      classDayTimes: classDayTimes
+    }
   };
 };

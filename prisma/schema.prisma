@@ -48,36 +48,38 @@ model Address {
 }
 
 model Class {
-  id            String   @id @default(cuid())
-  title         String
-  classSessions ClassSessionDetails[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String                @id @default(cuid())
+  title          String
+  sessionDetails ClassSessionDetails[]
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
 }
 
 model ClassSessionDetails {
-  id            String   @id @default(cuid())
+  id            String         @id @default(cuid())
   classId       String
   description   String?
   capacity      Int
   classDayTimes ClassDayTime[]
   price         Float
-  session       Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  session       Session        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId     String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
 }
 
 model ClassDayTime {
-  id          String   @id @default(cuid())
-  classId     String
-  weekday     Weekday
-  startTime   String
-  endTime     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  classId   String
+  sessionId String
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  weekday   Weekday
+  startTime String
+  endTime   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   classDetails ClassSessionDetails @relation(fields: [classId], references: [id], onDelete: Cascade)
 }
@@ -110,14 +112,15 @@ model PhoneNumber {
 }
 
 model Session {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  classes     ClassSessionDetails[]
-  startDate   DateTime
-  endDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String                @id @default(cuid())
+  title        String
+  description  String?
+  classes      ClassSessionDetails[]
+  startDate    DateTime
+  endDate      DateTime
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  ClassDayTime ClassDayTime[]
 }
 
 model User {

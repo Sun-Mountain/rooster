@@ -6,7 +6,12 @@ import { getUserCount } from "@db/user";
 export const GET = async () => {
   try {
     const count = await getUserCount({
-      where: { role: Role.USER }
+      where: { OR: [
+        { role: Role.USER },
+        { role: Role.BETA },
+        { role: Role.COACH },
+        { role: Role.ADMIN }
+      ] }
     });
 
     return NextResponse.json(

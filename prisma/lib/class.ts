@@ -59,3 +59,9 @@ export const getClassCount = async (data: { where?: Prisma.ClassWhereInput }) =>
 
   return count;
 };
+
+export const deleteClass = async (id: string) => {
+  await db.class.delete({
+    where: { id },
+  });
+};

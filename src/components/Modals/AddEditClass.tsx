@@ -37,7 +37,7 @@ export const AddEditClassModal = ({
       <Modal open={open} handleClose={handleClose}>
         <>
           <h2>{editClassId ? "Edit Class" : "Add New Class"}</h2>
-          <ClassForm />
+          <ClassForm onSuccess={handleSuccess} />
         </>
       </Modal>
     </>

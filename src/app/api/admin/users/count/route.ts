@@ -10,7 +10,8 @@ export const GET = async () => {
         { role: Role.USER },
         { role: Role.BETA },
         { role: Role.COACH },
-        { role: Role.ADMIN }
+        { role: Role.ADMIN },
+        { role: Role.SUPER }
       ] }
     });
 

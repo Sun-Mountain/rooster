@@ -61,11 +61,15 @@ export default function ClassesPage() {
             {allClasses.map((classItem) => (
               <div key={classItem.id} className="list-item-container">
                 <h4>{classItem.title}</h4>
-
-                <ButtonDelete
-                  id={classItem.id} 
-                  itemType="class"
-                  handleSuccess={handleDeleteClassSuccess} />
+                <div>
+                  <AddEditClassModal
+                    onSuccess={handleNewClassSuccess}
+                    editClassId={classItem.id} />
+                  <ButtonDelete
+                    id={classItem.id} 
+                    itemType="class"
+                    handleSuccess={handleDeleteClassSuccess} />
+                </div>
               </div>
             ))}
           </section>

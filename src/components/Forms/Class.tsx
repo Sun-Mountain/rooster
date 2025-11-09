@@ -10,9 +10,10 @@ import { buildClassData } from "@/helpers/buildClass";
 
 interface ClassFormProps {
   onSuccess?: () => void;
+  editClassId?: string;
 }
 
-export const ClassForm = ({ onSuccess }: ClassFormProps) => {
+export const ClassForm = ({ onSuccess, editClassId }: ClassFormProps) => {
   const [allSessions, setAllSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [classNumber, setClassNumber] = useState(1);
@@ -88,7 +89,7 @@ export const ClassForm = ({ onSuccess }: ClassFormProps) => {
         <div className="extra-form-button">
           <Button type="button" onClick={() => setClassNumber(classNumber + 1)}>Add Day/Time</Button>
         </div>
-        <Button type="submit">Create Class</Button>
+        <Button type="submit">{editClassId ? "Update" : "Create"} Class</Button>
       </form>
     </div>
   );

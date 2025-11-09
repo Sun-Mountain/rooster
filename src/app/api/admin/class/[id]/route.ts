@@ -8,8 +8,6 @@ export const DELETE = async (req: NextRequest) => {
     const url = new URL(req.url);
     const classId = url.pathname.split("/").pop();
 
-    console.log("Deleting class with ID:", classId);
-
     if (!classId) {
       return NextResponse.json(
         { message: "Class ID is required." },

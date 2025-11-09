@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { PUBLIC_ROUTES } from '@/lib/routes';
 import { getToken } from 'next-auth/jwt';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const token = await getToken({ req });
   const role = token?.role;
   const { nextUrl } = req;

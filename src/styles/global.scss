@@ -1,10 +1,12 @@
 @use './resources/breakpoints' as *;
 @use './resources/color' as *;
+@use './resources/variables' as *;
 
+@forward './components/buttons.scss';
 @forward './components/forms.scss';
 
 body {
-  font-family: Anziano, Georgia, 'Times New Roman', Times, serif;
+  font-family: $font-family-base;
   background-color: $bg-color-light;
   color: $text-color-light;
   margin: 0;

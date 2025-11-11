@@ -1,6 +1,7 @@
 'use client';
 
 import { TextField } from "@/components/_ui/TextField";
+import { Button } from "@/components/_ui/Button";
 
 interface SignInSignUpFormProps {
   signUp?: boolean;
@@ -13,7 +14,7 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
       <form>
         <TextField label="Email" name="email" type="email" />
         <TextField label="Password" name="password" type="password" />
-        <button type="submit">{signUp ? "Sign Up" : "Sign In"}</button>
+        <Button type="submit">{signUp ? "Sign Up" : "Sign In"}</Button>
       </form>
     </div>
   );

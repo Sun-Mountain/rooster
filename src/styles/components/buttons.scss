@@ -1,0 +1,23 @@
+@use '../resources/breakpoints' as *;
+@use '../resources/color' as *;
+@use '../resources/variables' as *;
+
+button {
+  background-color: $color-primary;
+  color: $button-text-color;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: $font-family-base;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $tekhelet-soft;
+  }
+
+  &[type="submit"] {
+    width: 100%;
+  }
+}

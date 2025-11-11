@@ -20,6 +20,6 @@ test('has nav bar', async ({ page }) => {
 
 test('has footer', async ({ page }) => {
   await page.goto('/');
-  const footer = page.getByTestId('contentinfo');
+  const footer = page.getByTestId('footer-content');
   await expect(footer).toBeVisible();
 });

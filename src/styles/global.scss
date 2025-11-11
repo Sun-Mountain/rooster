@@ -1,6 +1,8 @@
 @use './resources/breakpoints' as *;
 @use './resources/color' as *;
 
+@forward './components/forms.scss';
+
 body {
   font-family: Anziano, Georgia, 'Times New Roman', Times, serif;
   background-color: $bg-color-light;
@@ -33,6 +35,10 @@ main {
 nav {
   background-color: $nav-bg-color-light;
   color: $nav-text-color-light;
+}
+
+#main-container {
+  padding: 2rem 1rem;
 }
 
 #nav-container {

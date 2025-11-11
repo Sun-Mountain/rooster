@@ -19,7 +19,9 @@ export default function RootLayout({
         <div id="app">
           <NavBar />
             <main>
-              {children}
+              <div id="main-container" data-testid="main-content">
+                {children}
+              </div>
             </main>
           <Footer />
         </div>

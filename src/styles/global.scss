@@ -1,8 +1,47 @@
+@use './resources/breakpoints' as *;
+@use './resources/color' as *;
+
 body {
-  font-family: var(--font-geist-sans), sans-serif;
-  background-color: var(--color-background);
-  color: var(--color-text);
+  font-family: Anziano, Georgia, 'Times New Roman', Times, serif;
+  background-color: $bg-color-light;
+  color: $text-color-light;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+main, #footer-container, #nav-container {
+  max-width: $max-main-width;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+footer {
+  background-color: $footer-bg-color-light;
+  color: $nav-text-color-light;
+}
+
+main {
+  min-height: 80vh;
+}
+
+nav {
+  background-color: $nav-bg-color-light;
+  color: $nav-text-color-light;
+}
+
+#nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-link {
+  color: $nav-link-color-light;
+  text-decoration: none;
+  margin-right: 1rem;
+
+  &:hover {
+    border-bottom: 2px solid $nav-link-color-light;
+  }
 }

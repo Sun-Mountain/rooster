@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <>
-      Page
+      <h1>Welcome to Rooster</h1>
     </>
   );
 }

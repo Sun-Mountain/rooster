@@ -10,6 +10,11 @@ body {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: $color-primary;
+  margin: 0 0 1rem 0;
+}
+
 main, #footer-container, #nav-container {
   max-width: $max-main-width;
   margin: 0 auto;

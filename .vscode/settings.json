@@ -3,6 +3,7 @@
     "antiflash",
     "NEXTAUTH",
     "seasalt",
-    "tekhelet"
+    "tekhelet",
+    "treeify"
   ]
 }

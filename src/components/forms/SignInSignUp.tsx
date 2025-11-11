@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
+import { AccountFormLinks } from "../content/AccountFormLinks";
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -56,8 +57,9 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [signInErrors, setSignInErrors] = useState<SignInErrorProps>({});
   const [signUpErrors, setSignUpErrors] = useState<SignUpErrorProps>({});
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsLoading(true);
@@ -65,23 +67,41 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
+    let response, validation;
+
     if (signUp) {
-      const validation = SignUpSchema.safeParse(data);
+      validation = SignUpSchema.safeParse(data);
       if (!validation.success) {
         setSignUpErrors(z.treeifyError(validation.error).properties || {});
         setIsLoading(false);
         return;
       }
+
+      response = await fetch('/api/user', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setFormError(errorData.error || 'An error occurred during sign up. Please try again later.');
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(false);
+      return;
     } else {
-      const validation = SignInSchema.safeParse(data);
+      validation = SignInSchema.safeParse(data);
       if (!validation.success) {
         setSignInErrors(z.treeifyError(validation.error).properties || {});
         setIsLoading(false);
         return;
       }
     }
-
-    setIsLoading(false);
   }
 
   return (
@@ -125,6 +145,7 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
                     />}
         <Button type="submit" disabled={isLoading}>{signUp ? "Sign Up" : "Sign In"}</Button>
       </form>
+      <AccountFormLinks signUp={signUp} />
     </div>
   );
 }

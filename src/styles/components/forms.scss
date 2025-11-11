@@ -8,6 +8,21 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
+  .links-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    a {
+      text-decoration: none;
+      margin: 0 0.5rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .text-field-container {
     margin: 1rem 0;
   }

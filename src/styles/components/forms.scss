@@ -31,3 +31,14 @@
     width: 100%;
   }
 }
+
+.form-error {
+  background-color: $error-color-soft;
+  border: 2px solid $error-color-light;
+  border-radius: 8px;
+  color: $error-color;
+  line-height: 1.75;
+  margin: 1rem 0;
+  padding: 1rem;
+  text-align: center;
+}

@@ -1,6 +1,8 @@
 'use client';
 
 import { FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { AccountFormLinks } from "../content/AccountFormLinks";
@@ -54,6 +56,7 @@ interface SignInErrorProps {
 }
 
 export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [signInErrors, setSignInErrors] = useState<SignInErrorProps>({});
   const [signUpErrors, setSignUpErrors] = useState<SignUpErrorProps>({});
@@ -90,6 +93,8 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
         setFormError(errorData.error || 'An error occurred during sign up. Please try again later.');
         setIsLoading(false);
         return;
+      } else {
+        router.push('/sign-in');
       }
 
       setIsLoading(false);
@@ -101,11 +106,27 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
         setIsLoading(false);
         return;
       }
+
+      response = await signIn("credentials", {
+        email: data.email as string,
+        password: data.password as string,
+        callbackUrl: `${window.location.origin}/`
+      });
+
+      if (response?.error) {
+        setFormError(response.error || 'An error occurred during sign in. Please try again later.');
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(false);
+      return;
     }
   }
 
   return (
     <div className="form-container">
+      {formError && <div className="form-error">{formError}</div>}
       <h1>{signUp ? "Sign Up" : "Sign In"}</h1>
       <form onSubmit={onSubmit}>
         {signUp && <TextField

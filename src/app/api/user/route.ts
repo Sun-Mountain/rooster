@@ -9,7 +9,9 @@ export async function POST(request: Request) {
     const existingUser = await getUserByEmail(email);
 
     if (!!existingUser) {
-      return NextResponse.json({ error: "User already exists" }, { status: 400 });
+      return NextResponse.json(
+        { error: "It seems like a user with this email already exists." },
+        { status: 400 });
     }
 
     const hashedPassword = await hash(password, 15);

@@ -15,6 +15,7 @@ $platinum: rgba(222, 226, 230, 1);
 $white: rgba(255, 255, 255, 1);
 
 $tekhelet-soft: rgba(66, 44, 114, .5);
+$fire-brick-soft: hsla(356, 83%, 41%, 0.05);
 
 $color-primary: $tekhelet;
 $color-secondary: $african-violet;
@@ -35,3 +36,8 @@ $button-text-color: $white;
 // Link colors
 $nav-link-color-light: $seasalt;
 $nav-link-hover-color-light: $french-gray;
+
+// Error colors
+$error-color: $barn-red;
+$error-color-light: $fire-brick;
+$error-color-soft: $fire-brick-soft;

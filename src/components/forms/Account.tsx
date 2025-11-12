@@ -95,26 +95,25 @@ export const AccountForm: FC = () => {
       <h2>Account Info</h2>
       <form onSubmit={handleSubmit}>
         <div className="field-group">
-          <label> Full Name:
-            <div className="flex-fields-container">
-              <TextField
-                label="First Name"
-                name="firstName"
-                type="text"
-                initialValue={formData?.firstName || ''}
-                disabled={isLoading}
-                errorMsg={formErrors.firstName?.errors[0]}
-              />
-              <TextField
-                label="Last Name"
-                name="lastName"
-                type="text"
-                initialValue={formData?.lastName || ''}
-                disabled={isLoading}
-                errorMsg={formErrors.lastName?.errors[0]}
-              />
-            </div>
-          </label>
+          Full Name:
+          <div className="flex-fields-container">
+            <TextField
+              label="First Name"
+              name="firstName"
+              type="text"
+              initialValue={formData?.firstName || ''}
+              disabled={isLoading}
+              errorMsg={formErrors.firstName?.errors[0]}
+            />
+            <TextField
+              label="Last Name"
+              name="lastName"
+              type="text"
+              initialValue={formData?.lastName || ''}
+              disabled={isLoading}
+              errorMsg={formErrors.lastName?.errors[0]}
+            />
+          </div>
         </div>
         <TextField
           label="Email"
@@ -124,7 +123,7 @@ export const AccountForm: FC = () => {
           disabled={isLoading}
           errorMsg={formErrors.email?.errors[0]}
         />
-        <Button type="submit" disabled={isLoading}>Update Account</Button>
+        <Button ariaLabel="Update Account" type="submit" disabled={isLoading}>Update Account</Button>
       </form>
     </div>
   );

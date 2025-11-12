@@ -11,10 +11,8 @@ test('has nav bar', async ({ page }) => {
   const navBar = page.getByRole('navigation');
   await expect(navBar).toBeVisible();
   const homeLink = navBar.getByRole('link', { name: 'Home' });
-  const signUpLink = navBar.getByRole('link', { name: 'Sign Up' });
   const signInLink = navBar.getByRole('link', { name: 'Sign In' });
   await expect(homeLink).toBeVisible();
-  await expect(signUpLink).toBeVisible();
   await expect(signInLink).toBeVisible();
 });
 

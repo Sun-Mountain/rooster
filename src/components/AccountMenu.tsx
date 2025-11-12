@@ -23,7 +23,7 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <Button handleClick={handleClick}>
+      <Button ariaLabel="Open account menu" handleClick={handleClick}>
         Account
       </Button>
       <MenuUI
@@ -44,7 +44,7 @@ export const AccountMenu = () => {
             <Link href="/settings">Settings</Link>
           </MenuItem>
           <MenuItem>
-            <Button onClick={handleSignOut}>
+            <Button ariaLabel="Sign out of the application" onClick={handleSignOut}>
               Sign Out
             </Button>
           </MenuItem>

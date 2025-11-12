@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import { db } from "@db/index";
 
-import { getUserByEmail } from "@db/user";
+import { getUser } from "@db/user";
 
 declare module "next-auth" {
   interface User {
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email and password are required");
         }
 
-        const existingUser = await getUserByEmail(credentials.email);
+        const existingUser = await getUser({ email: credentials.email });
 
         let isPasswordValid = false;
 
@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const { id, email, role } = existingUser;
-        return { id, email, role };
+        return { id, email, role: Array.isArray(role) ? role[0] : role };
       }
     })
   ],

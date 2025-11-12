@@ -4,7 +4,7 @@
 .form-container {
   max-width: $xs;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -24,11 +24,16 @@
   }
 
   .text-field-container {
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
   }
 
   .text-field {
     width: 100%;
+  }
+
+  &.full-page {
+    box-shadow: none;
+    max-width: 100%;
   }
 }
 
@@ -41,4 +46,20 @@
   margin: 1rem 0;
   padding: 1rem;
   text-align: center;
+}
+
+.flex-fields-container {
+  display: flex;
+  gap: 1rem;
+
+  .text-field-container {
+    flex: 1;
+  }
+}
+
+@media (max-width: $sm) {
+  .flex-fields-container {
+    flex-direction: column;
+    gap: 0;
+  }
 }

@@ -8,9 +8,9 @@ export const createUser = async (data: Prisma.UserCreateInput): Promise<User> =>
   return user;
 };
 
-export const getUserByEmail = async (email: string): Promise<User | null> => {
-  const user = await db.user.findUnique({
-    where: { email },
+export const getUser = async ({email, id}: {email?: string, id?: string}): Promise<User | null> => {
+  const user = await db.user.findFirst({
+    where: { OR: [{ email }, { id }] },
   });
   return user;
 };

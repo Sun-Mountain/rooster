@@ -1,16 +1,12 @@
 'use client';
 
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import { Button } from "./_ui/Button";
+import { useSession } from "next-auth/react";
+import { AccountMenu } from "./AccountMenu";
 
 const NavBar = () => {
   const { data: session } = useSession();
   const isAuthenticated = !!session;
-
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
-  }
   return (
     <nav>
       <div id="nav-container">
@@ -20,9 +16,7 @@ const NavBar = () => {
 
         <div>
           {isAuthenticated ? (
-            <>
-              <Button onClick={handleSignOut}>Sign Out</Button>
-            </>
+            <AccountMenu />
           ) : (
             <>
               <Link href="/sign-in" className="nav-link">

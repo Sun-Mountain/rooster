@@ -1,20 +1,30 @@
+'use client';
+
+import { ChangeEvent, useState } from "react";
 import { TextField as TextFieldComponent } from "@mui/material";
 
 interface TextFieldProps {
   label: string;
   name: string;
+  initialValue?: string;
   disabled?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   errorMsg?: string;
 }
 
-export const TextField = ({ label, name, disabled = false, type, value, onChange, errorMsg }: TextFieldProps) => {
+export const TextField = ({
+  label,
+  name,
+  initialValue = '',
+  disabled = false,
+  type,
+  errorMsg
+}: TextFieldProps) => {
+  const [defaultValue, setDefaultValue] = useState(initialValue);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) onChange(event);
-  }
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDefaultValue(event.target.value);
+  };
 
   return (
     <div className="text-field-container">
@@ -24,7 +34,7 @@ export const TextField = ({ label, name, disabled = false, type, value, onChange
         name={name}
         type={type}
         disabled={disabled}
-        value={value}
+        value={defaultValue}
         onChange={handleOnChange}
         helperText={errorMsg}
         error={!!errorMsg}

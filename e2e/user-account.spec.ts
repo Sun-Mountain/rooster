@@ -10,15 +10,15 @@ test.describe('User Account', () => {
     await page.goto('/');
     const accountMenuButton = page.getByRole('button', { name: 'Account' });
     await accountMenuButton.click();
-    const settingsLink = page.getByRole('link', { name: 'Settings' });
-    await settingsLink.click();
-    await expect(page).toHaveURL('/settings');
+    const accountLink = page.getByRole('link', { name: 'Account' });
+    await accountLink.click();
+    await expect(page).toHaveURL('/account');
   });
 
   test('account form is populated with user data', async ({ page }) => {
     await signUp(page, ctx);
     await signIn(page, ctx);
-    await page.goto('/settings');
+    await page.goto('/account');
     const firstNameInput = page.getByLabel('First Name');
     const lastNameInput = page.getByLabel('Last Name');
     const emailInput = page.getByLabel('Email');

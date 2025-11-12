@@ -41,7 +41,7 @@ export const AccountMenu = () => {
       >
         <div id="account-menu-container">
           <MenuItem>
-            <Link href="/settings">Settings</Link>
+            <Link href="/account">Account</Link>
           </MenuItem>
           <MenuItem>
             <Button ariaLabel="Sign out of the application" onClick={handleSignOut}>

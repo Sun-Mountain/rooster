@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
-import { createUser, getUser } from "@db/user";
+import { createUser, getUser, updateUser } from "@db/user";
 
 export async function POST(request: Request) {
   try {
@@ -60,6 +60,40 @@ export async function GET(request: Request) {
     console.error("Error fetching user:", error);
     return NextResponse.json({
       error: "There was an error fetching the user. It's probably a server issue. Please try again later."
+    }, { status: 500 });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "User ID is required." }, { status: 400 });
+    }
+
+    const { email, firstName, lastName } = await request.json();
+
+    const updatedUser = await updateUser(id, {
+      email,
+      firstName,
+      lastName,
+    });
+
+    if (!updatedUser) {
+      return NextResponse.json({
+        error: "There was an error updating the user. It's probably a server issue. Please try again later."
+      }, { status: 500 });
+    }
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+
+    return NextResponse.json({ user: userWithoutPassword }, { status: 200 });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return NextResponse.json({
+      error: "There was an error updating the user. It's probably a server issue. Please try again later."
     }, { status: 500 });
   }
 }

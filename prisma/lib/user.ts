@@ -14,3 +14,11 @@ export const getUser = async ({email, id}: {email?: string, id?: string}): Promi
   });
   return user;
 };
+
+export const updateUser = async (id: string, data: Prisma.UserUpdateInput): Promise<User> => {
+  const user = await db.user.update({
+    where: { id },
+    data,
+  });
+  return user;
+};

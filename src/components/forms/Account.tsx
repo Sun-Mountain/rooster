@@ -54,10 +54,46 @@ export const AccountForm: FC = () => {
     return <div>Loading...</div>;
   }
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setFormErrors({});
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+    };
+
+    try {
+      const response = await fetch(`/api/user?id=${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setFormErrors(errorData.errors || {});
+      } else {
+        const updatedUser = await response.json();
+        setFormData(updatedUser.user);
+      }
+    } catch (error) {
+      console.error('Error updating user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="form-container full-page">
       <h2>Account Info</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="field-group">
           <label> Full Name:
             <div className="flex-fields-container">

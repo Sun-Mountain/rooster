@@ -39,6 +39,12 @@ nav {
   color: $nav-text-color-light;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 #main-container {
   padding: 2rem 1rem;
 }
@@ -65,4 +71,44 @@ nav {
   align-items: center;
   padding: 1rem;
   min-width: 220px;
+}
+
+.content-container {
+  padding: 1rem;
+  width: 100%;
+}
+
+.side-nav-layout {
+  display: flex;
+}
+
+.side-nav-container {
+  border-right: 1px solid $border-color-light;
+  min-width: 220px;
+  max-width: $xxs;
+}
+
+.side-nav-link-container {
+  a, a:visited {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;;
+
+    &:hover {
+      background-color: $admin-link-hover-bg-color;
+      color: $admin-link-hover-color;
+      text-decoration: none;
+    }
+  }
+
+  .active {
+    background-color: $admin-link-active-bg-color;
+    color: $admin-link-active-color;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .side-nav-layout {
+    flex-direction: column;
+  }
 }

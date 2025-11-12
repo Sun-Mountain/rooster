@@ -1,22 +1,23 @@
 'use client';
 
+import { ReactNode } from "react";
 import { useWindowSize } from "@/helpers/useWindowSize";
 import { Drawer } from "@/components/_ui/Drawer";
 
-export const SideNavMenu = () => {
+export const SideNavMenu = ({ children }: { children: ReactNode }) => {
   const { width } = useWindowSize();
 
   return (
     <>
-      <div className="navigation-admin-container">
+      <div className="side-nav-container">
         <div>
           {width && width <= 768 ? (
             <Drawer anchor="left">
-              Links
+              {children}
             </Drawer>
           ) : (
             <>
-              Links
+              {children}
             </>
           )}
         </div>

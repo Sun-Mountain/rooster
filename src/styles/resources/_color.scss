@@ -28,6 +28,8 @@ $bg-color-light: $seasalt;
 $footer-bg-color-light: $outer-space;
 $nav-bg-color-light: $tekhelet;
 
+$border-color-light: $french-gray;
+
 // Text colors
 $text-color-light: $onyx;
 $nav-text-color-light: $seasalt;
@@ -36,6 +38,11 @@ $button-text-color: $white;
 // Link colors
 $nav-link-color-light: $seasalt;
 $nav-link-hover-color-light: $french-gray;
+
+$admin-link-hover-bg-color: $tekhelet;
+$admin-link-hover-color: $seasalt;
+$admin-link-active-bg-color: $tekhelet-soft;
+$admin-link-active-color: $seasalt;
 
 // Error colors
 $error-color: $barn-red;

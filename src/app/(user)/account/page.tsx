@@ -1,11 +1,9 @@
-import { AccountForm } from '@/components/forms/Account';
+import { AccountInfo } from "@/components/content/AccountInfo";
 
-export default function Settings () {
+export default function AccountPage () {
   return (
-    <div className="settings-page">
-      <h1>Settings</h1>
-      <p>Manage your account settings and preferences here.</p>
-      <AccountForm />
-    </div>
+    <>
+      <AccountInfo />
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { Button } from '@/components/_ui/Button';
 import { UserAccountProps } from '@/lib/types';
 import { FullNameFields } from './fields/FullName';
 import { PhoneNumberFields } from './fields/PhoneNumber';
+import { addressBuilder, phoneNumberBuilder } from '@/helpers/builder';
 
 interface FormErrorProps {
   firstName?: {
@@ -45,7 +46,7 @@ interface FormErrorProps {
     prefix?: {
       errors: string[];
     };
-    lineNumber?: {
+    lineNum?: {
       errors: string[];
     };
   };
@@ -63,7 +64,7 @@ interface FormErrorProps {
       prefix?: {
         errors: string[];
       };
-      lineNumber?: {
+      lineNum?: {
         errors: string[];
       };
     };
@@ -111,10 +112,30 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const address = addressBuilder({
+      street: formData.get('street') as string,
+      street2: formData.get('street2') as string,
+      city: formData.get('city') as string,
+      state: formData.get('state') as string,
+      zipCode: formData.get('zipCode') as string,
+      country: formData.get('country') as string,
+    });
+    const phoneNumber = phoneNumberBuilder({
+      areaCode: formData.get('areaCode') as string,
+      prefix: formData.get('prefix') as string,
+      lineNum: formData.get('lineNum') as string,
+    });
+
     const data = {
       firstName: formData.get('firstName') as string,
       lastName: formData.get('lastName') as string,
       email: formData.get('email') as string,
+    };
+
+    const payload = {
+      ...data,
+      address,
+      phoneNumber
     };
 
     try {
@@ -123,7 +144,7 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -217,12 +238,12 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
         <PhoneNumberFields
           areaCode={formData?.phoneNumber?.areaCode || ''}
           prefix={formData?.phoneNumber?.prefix || ''}
-          lineNumber={formData?.phoneNumber?.lineNumber || ''}
+          lineNum={formData?.phoneNumber?.lineNum || ''}
           isLoading={isLoading}
           errors={{
             areaCode: formErrors.phoneNumber?.areaCode?.errors,
             prefix: formErrors.phoneNumber?.prefix?.errors,
-            lineNumber: formErrors.phoneNumber?.lineNumber?.errors,
+            lineNum: formErrors.phoneNumber?.lineNum?.errors,
           }}
         />
         <div className="field-group divider-top">
@@ -241,15 +262,15 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
           <PhoneNumberFields
             areaCode={formData?.emergencyContact?.phoneNumber?.areaCode || ''}
             prefix={formData?.emergencyContact?.phoneNumber?.prefix || ''}
-            lineNumber={formData?.emergencyContact?.phoneNumber?.lineNumber || ''}
+            lineNum={formData?.emergencyContact?.phoneNumber?.lineNum || ''}
             isLoading={isLoading}
             formAreaCode="emergencyAreaCode"
             formPrefix="emergencyPrefix"
-            formLineNumber="emergencyLineNumber"
+            formLineNum="emergencyLineNum"
             errors={{
               areaCode: formErrors.emergencyContact?.phoneNumber?.areaCode?.errors,
               prefix: formErrors.emergencyContact?.phoneNumber?.prefix?.errors,
-              lineNumber: formErrors.emergencyContact?.phoneNumber?.lineNumber?.errors,
+              lineNum: formErrors.emergencyContact?.phoneNumber?.lineNum?.errors,
             }}
           />
         </div>

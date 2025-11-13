@@ -10,7 +10,7 @@ export interface AddressProps {
 export interface PhoneNumProps {
   areaCode: string;
   prefix: string;
-  lineNumber: string;
+  lineNum: string;
 }
 
 export interface UserAccountProps {

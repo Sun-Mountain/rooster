@@ -53,9 +53,9 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
 
-    const { password: _, ...userWithoutPassword } = user;
+    console.log({ user });
 
-    return NextResponse.json({ user: userWithoutPassword }, { status: 200 });
+    return NextResponse.json({ user }, { status: 200 });
   } catch (error) {
     console.error("Error fetching user:", error);
     return NextResponse.json({
@@ -73,12 +73,14 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "User ID is required." }, { status: 400 });
     }
 
-    const { email, firstName, lastName } = await request.json();
+    const { email, firstName, lastName, address, phoneNumber } = await request.json();
 
     const updatedUser = await updateUser(id, {
       email,
       firstName,
       lastName,
+      address: address || undefined,
+      phoneData: phoneNumber || undefined,
     });
 
     if (!updatedUser) {

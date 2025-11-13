@@ -5,23 +5,23 @@ interface PhoneNumberFieldProps {
   isLoading: boolean;
   formAreaCode?: string;
   formPrefix?: string;
-  formLineNumber?: string;
+  formLineNum?: string;
   errors?: {
     areaCode?: string[];
     prefix?: string[];
-    lineNumber?: string[];
+    lineNum?: string[];
   };
 }
 
 export const PhoneNumberFields = ({
   areaCode,
   prefix,
-  lineNumber,
+  lineNum,
   isLoading,
   errors,
   formAreaCode = "areaCode",
   formPrefix = "prefix",
-  formLineNumber = "lineNumber"
+  formLineNum = "lineNum"
 }: PhoneNumProps & PhoneNumberFieldProps) => {
   return (
     <div className="field-group">
@@ -46,11 +46,11 @@ export const PhoneNumberFields = ({
         <div className="phone-separator">-</div>
         <TextField
           label="XXXX"
-          name={formLineNumber}
+          name={formLineNum}
           type="text"
-          initialValue={lineNumber || ''}
+          initialValue={lineNum || ''}
           disabled={isLoading}
-          errorMsg={errors?.lineNumber?.[0]}
+          errorMsg={errors?.lineNum?.[0]}
         />
       </div>
     </div>

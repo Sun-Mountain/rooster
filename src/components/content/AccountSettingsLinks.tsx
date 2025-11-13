@@ -13,7 +13,7 @@ export const AccountSettingsLinks = () => {
         <Link href="/account" className={pathname === "/account" ? "active" : ""}>Account Info</Link>
       </li>
       <li>
-        <Link href="/account/settings" className={pathname === "/account/settings" ? "active" : ""}>Settings</Link>
+        <Link href="/account/settings" className={pathname === "/account/settings" ? "active" : ""}>Settings & Privacy</Link>
       </li>
     </ul>
   )

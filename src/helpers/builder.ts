@@ -1,0 +1,93 @@
+import { UserAccountProps } from '@/lib/types';
+
+export const addressBuilder = (addressData: UserAccountProps['address']) => {
+  if (!addressData) {
+    return null;
+  }
+
+  const { street, street2, city, state, zipCode, country } = addressData;
+
+  if (street === '' && city === '' && state === '' && zipCode === '') {
+    return null;
+  }
+
+  return {
+    street,
+    street2,
+    city,
+    state,
+    zipCode,
+    country: country || 'USA',
+  };
+};
+
+export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumber']) => {
+  if (!phoneNumberData) {
+    return null;
+  }
+
+  const { areaCode, prefix, lineNum } = phoneNumberData;
+
+  if (areaCode === '' && prefix === '' && lineNum === '') {
+    return null;
+  }
+
+  return {
+    areaCode,
+    prefix,
+    lineNum: lineNum,
+  };
+};
+
+export const userProfileBuilder = (userData: UserAccountProps) => {
+  const { firstName, lastName, email, address, phoneNumber, emergencyContact } = userData;
+
+  const hasAddress = address && Object.keys(address).length > 0;
+  const hasPhoneNumber = phoneNumber && Object.keys(phoneNumber).length > 0;
+  const hasEmergencyContact = emergencyContact && Object.keys(emergencyContact).length > 0;
+
+  if (!hasAddress && !hasPhoneNumber && !hasEmergencyContact) {
+    return {
+      firstName,
+      lastName,
+      email,
+    };
+  }
+
+
+  if (!address && !phoneNumber && !emergencyContact) {
+    return {
+      firstName,
+      lastName,
+      email,
+    };
+  }
+
+  return {
+    firstName,
+    lastName,
+    email,
+    address: address ? {
+      street: address.street,
+      street2: address.street2,
+      city: address.city,
+      state: address.state,
+      country: address.country,
+      zipCode: address.zipCode,
+    } : undefined,
+    phoneNumber: phoneNumber ? {
+      areaCode: phoneNumber.areaCode,
+      prefix: phoneNumber.prefix,
+      lineNum: phoneNumber.lineNum,
+    } : undefined,
+    emergencyContact: emergencyContact ? {
+      firstName: emergencyContact.firstName,
+      lastName: emergencyContact.lastName,
+      phoneNumber: emergencyContact.phoneNumber ? {
+        areaCode: emergencyContact.phoneNumber.areaCode,
+        prefix: emergencyContact.phoneNumber.prefix,
+        lineNum: emergencyContact.phoneNumber.lineNum,
+      } : undefined,
+    } : undefined,
+  };
+}

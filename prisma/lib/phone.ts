@@ -27,3 +27,16 @@ export const getPhone = async (userId: string): Promise<Omit<Phone, 'userId' | '
 
   return phoneWithoutMeta;
 };
+
+export const updatePhone = async (userId: string, data: { areaCode?: string; prefix?: string; lineNum?: string }): Promise<Phone> => {
+  const phone = await db.phone.update({
+    where: { userId },
+    data: {
+      areaCode: data.areaCode,
+      prefix: data.prefix,
+      lineNum: data.lineNum,
+    },
+  });
+
+  return phone;
+};

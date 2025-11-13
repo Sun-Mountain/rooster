@@ -12,10 +12,10 @@ export const AccountInfo = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  console.log({ accountInfo });
-  
   useEffect(() => {
     if (!userId) return;
+
+    if (showForm) return;
 
     fetch(`/api/user?id=${userId}`, {
       method: 'GET',

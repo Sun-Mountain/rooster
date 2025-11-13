@@ -35,25 +35,12 @@ export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumbe
   return {
     areaCode,
     prefix,
-    lineNum: lineNum,
+    lineNum,
   };
 };
 
 export const userProfileBuilder = (userData: UserAccountProps) => {
   const { firstName, lastName, email, address, phoneNumber, emergencyContact } = userData;
-
-  const hasAddress = address && Object.keys(address).length > 0;
-  const hasPhoneNumber = phoneNumber && Object.keys(phoneNumber).length > 0;
-  const hasEmergencyContact = emergencyContact && Object.keys(emergencyContact).length > 0;
-
-  if (!hasAddress && !hasPhoneNumber && !hasEmergencyContact) {
-    return {
-      firstName,
-      lastName,
-      email,
-    };
-  }
-
 
   if (!address && !phoneNumber && !emergencyContact) {
     return {

@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
     const existingUser = await getUser({ email });
 
-    if (!!existingUser) {
+    if (!existingUser) {
       return NextResponse.json(
         { error: "It seems like a user with this email already exists." },
         { status: 400 });

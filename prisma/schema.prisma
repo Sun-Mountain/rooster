@@ -35,7 +35,7 @@ model Address {
 }
 
 model EmergencyContact {
-  id              String  @id @default("e-${cuid()}")
+  id              String  @id @default(cuid())
   userId          String  @unique
   firstName       String
   lastName        String
@@ -62,7 +62,7 @@ model Phone {
 }
 
 model User {
-  id                  String  @id @default("u-${cuid()}")
+  id                  String  @id @default(cuid())
   firstName           String
   lastName            String
   email               String   @unique

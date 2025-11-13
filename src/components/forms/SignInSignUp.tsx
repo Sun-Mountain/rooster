@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
-import { AccountFormLinks } from "../content/AccountFormLinks";
+import { AccountFormLinks } from "../content/SignInLinks";
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { SideNavMenu } from "../SideNavMenu";
-import { AccountSettingsLinks } from "../content/AccountSettingsLinks";
+import { AccountSettingsLinks } from "../content/AccountLinks";
 
 export function SideNavLayout({ children }: { children: ReactNode }) {
   return (

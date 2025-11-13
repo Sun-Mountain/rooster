@@ -3,9 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { UserAccountProps } from '@/lib/types';
+import { Button } from '@/components/_ui/Button';
+import { AccountForm } from '@/components/forms/Account';
 
 export const AccountInfo = () => {
   const [accountInfo, setAccountInfo] = useState<UserAccountProps | null>(null);
+  const [showForm, setShowForm] = useState(false);
   const { data: session } = useSession();
   const userId = session?.user?.id;
   
@@ -33,8 +36,18 @@ export const AccountInfo = () => {
       <p>Here you can view and update your account information.</p>
       {accountInfo ? (
         <div className="account-details">
-          <p><strong>Name:</strong> {accountInfo.firstName} {accountInfo.lastName}</p>
-          <p><strong>Email:</strong> {accountInfo.email}</p>
+          {!showForm ? ( 
+            <>
+              <p><strong>Name:</strong> {accountInfo.firstName} {accountInfo.lastName}</p>
+              <p><strong>Email:</strong> {accountInfo.email}</p>
+              <Button className="text-style-btn" onClick={() => setShowForm(true)}>Edit Account Information</Button>
+            </>
+          ) : (
+            <>
+              <AccountForm />
+              <Button onClick={() => setShowForm(false)}>Cancel</Button>
+            </>
+          )}
         </div>
       ) : (
         <p>Loading account information...</p>

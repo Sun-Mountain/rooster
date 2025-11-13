@@ -23,6 +23,7 @@ model Address {
   id        String  @id @default(cuid())
   userId    String  @unique
   street    String
+  street2   String?
   city      String
   state     String
   zipCode   String

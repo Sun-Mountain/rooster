@@ -29,6 +29,11 @@ main, #footer-container, #nav-container {
 footer {
   background-color: $footer-bg-color-light;
   color: $nav-text-color-light;
+
+  .copyright {
+    text-align: center;
+    padding: 1rem 0;
+  }
 }
 
 main {
@@ -99,6 +104,12 @@ ul {
   width: 100%;
 }
 
+.divider-top {
+  border-top: 1px solid $french-gray;
+  margin: 2rem 0;
+  padding: 2rem 0;
+}
+
 .side-nav-layout {
   display: flex;
 }
@@ -129,6 +140,10 @@ ul {
 }
 
 @media screen and (max-width: $sm) {
+  .side-nav-container {
+    border-right: none;
+  }
+
   .side-nav-layout {
     flex-direction: column;
   }

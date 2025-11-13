@@ -19,7 +19,6 @@ button {
 
   &[type="submit"] {
     margin-top: 1.5rem;
-    width: 100%;
   }
 }
 
@@ -51,7 +50,6 @@ button {
   border: none;
   color: $color-primary;
   padding: 0;
-  font-size: 0.9rem;
   cursor: pointer;
 
   &:hover {
@@ -59,5 +57,14 @@ button {
     border-bottom: 1px solid $color-secondary;
     border-radius: 0;
     color: $color-secondary;
+  }
+
+  &.danger {
+    color: $error-color-light;
+
+    &:hover {
+      color: $error-color;
+      border-bottom: 1px solid $error-color;
+    }
   }
 }

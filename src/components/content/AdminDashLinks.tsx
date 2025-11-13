@@ -14,13 +14,13 @@ export const AdminDashLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/admin/sessions" className={pathname === "/admin/sessions" ? "active" : ""}>
-          Sessions
+        <Link href="/admin/classes" className={pathname === "/admin/classes" ? "active" : ""}>
+          Classes
         </Link>
       </li>
       <li>
-        <Link href="/admin/classes" className={pathname === "/admin/classes" ? "active" : ""}>
-          Classes
+        <Link href="/admin/sessions" className={pathname === "/admin/sessions" ? "active" : ""}>
+          Sessions
         </Link>
       </li>
       <li>

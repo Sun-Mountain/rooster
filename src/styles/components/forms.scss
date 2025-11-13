@@ -23,12 +23,37 @@
     }
   }
 
+  .field-group {
+    margin: 2rem 0 0.5rem 0;
+  }
+
   .text-field-container {
     margin: 1rem 0 0 0;
   }
 
   .text-field {
     width: 100%;
+  }
+
+  .two-thirds-group {
+    display: flex;
+    gap: 1rem;
+
+    & > *:first-child {
+      flex: 2;
+    }
+
+    & > *:last-child {
+      flex: 1;
+    }
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    button {
+      margin-top: 1.5rem;
+    }
   }
 
   &.full-page {
@@ -54,6 +79,17 @@
 
   .text-field-container {
     flex: 1;
+  }
+}
+
+.phone-field-container {
+  display: flex;
+  gap: 1rem;
+
+  .phone-separator {
+    align-items: center;
+    display: flex;
+    padding: 0 0.5rem;
   }
 }
 

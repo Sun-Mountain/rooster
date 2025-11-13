@@ -5,6 +5,8 @@ import { useSession } from 'next-auth/react';
 import { TextField } from '@/components/_ui/TextField';
 import { Button } from '@/components/_ui/Button';
 import { UserAccountProps } from '@/lib/types';
+import { FullNameFields } from './fields/FullName';
+import { PhoneNumberFields } from './fields/PhoneNumber';
 
 interface FormErrorProps {
   firstName?: {
@@ -16,15 +18,63 @@ interface FormErrorProps {
   email?: {
     errors: string[];
   };
-  password?: {
-    errors: string[];
+  address?: {
+    street?: {
+      errors: string[];
+    };
+    street2?: {
+      errors: string[];
+    };
+    city?: {
+      errors: string[];
+    };
+    state?: {
+      errors: string[];
+    };
+    zipCode?: {
+      errors: string[];
+    };
+    country?: {
+      errors: string[];
+    };
   };
-  confirmPassword?: {
-    errors: string[];
+  phoneNumber?: {
+    areaCode?: {
+      errors: string[];
+    };
+    prefix?: {
+      errors: string[];
+    };
+    lineNumber?: {
+      errors: string[];
+    };
+  };
+  emergencyContact?: {
+    firstName?: {
+      errors: string[];
+    };
+    lastName?: {
+      errors: string[];
+    };
+    phoneNumber?: {
+      areaCode?: {
+        errors: string[];
+      };
+      prefix?: {
+        errors: string[];
+      };
+      lineNumber?: {
+        errors: string[];
+      };
+    };
   };
 }
 
-export const AccountForm: FC = () => {
+interface AccountFormProps {
+  onCancel?: () => void;
+}
+
+export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<UserAccountProps | null>(null);
   const [formErrors, setFormErrors] = useState<FormErrorProps>({});
@@ -87,6 +137,7 @@ export const AccountForm: FC = () => {
       console.error('Error updating user data:', error);
     } finally {
       setIsLoading(false);
+      if (onCancel) onCancel();
     }
   };
 
@@ -94,27 +145,12 @@ export const AccountForm: FC = () => {
     <div className="form-container full-page">
       <h2>Account Info</h2>
       <form onSubmit={handleSubmit}>
-        <div className="field-group">
-          Full Name:
-          <div className="flex-fields-container">
-            <TextField
-              label="First Name"
-              name="firstName"
-              type="text"
-              initialValue={formData?.firstName || ''}
-              disabled={isLoading}
-              errorMsg={formErrors.firstName?.errors[0]}
-            />
-            <TextField
-              label="Last Name"
-              name="lastName"
-              type="text"
-              initialValue={formData?.lastName || ''}
-              disabled={isLoading}
-              errorMsg={formErrors.lastName?.errors[0]}
-            />
-          </div>
-        </div>
+        <FullNameFields
+          firstName={formData.firstName}
+          lastName={formData.lastName}
+          isLoading={isLoading}
+          errors={{ firstName: formErrors.firstName?.errors, lastName: formErrors.lastName?.errors }}
+        />
         <TextField
           label="Email"
           name="email"
@@ -123,7 +159,104 @@ export const AccountForm: FC = () => {
           disabled={isLoading}
           errorMsg={formErrors.email?.errors[0]}
         />
-        <Button ariaLabel="Update Account" type="submit" disabled={isLoading}>Update Account</Button>
+        <div className="field-group">
+          Address:
+          <TextField
+            label="Street"
+            name="street"
+            type="text"
+            initialValue={formData?.address?.street || ''}
+            disabled={isLoading}
+            errorMsg={formErrors.address?.street?.errors[0]}
+          />
+          <TextField
+            label="Street 2"
+            name="street2"
+            type="text"
+            initialValue={formData?.address?.street2 || ''}
+            disabled={isLoading}
+            errorMsg={formErrors.address?.street2?.errors[0]}
+          />
+          <div className="two-thirds-group">
+            <TextField
+              label="City"
+              name="city"
+              type="text"
+              initialValue={formData?.address?.city || ''}
+              disabled={isLoading}
+              errorMsg={formErrors.address?.city?.errors[0]}
+            />
+            <TextField
+              label="State"
+              name="state"
+              type="text"
+              initialValue={formData?.address?.state || ''}
+              disabled={isLoading}
+              errorMsg={formErrors.address?.state?.errors[0]}
+            />
+          </div>
+          <div className="flex-fields-container">
+            <TextField
+              label="Zip Code"
+              name="zipCode"
+              type="text"
+              initialValue={formData?.address?.zipCode || ''}
+              disabled={isLoading}
+              errorMsg={formErrors.address?.zipCode?.errors[0]}
+            />
+            <TextField
+              label="Country"
+              name="country"
+              type="text"
+              initialValue={formData?.address?.country || 'USA'}
+              disabled={isLoading}
+              errorMsg={formErrors.address?.country?.errors[0]}
+            />
+          </div>
+        </div>
+        <PhoneNumberFields
+          areaCode={formData?.phoneNumber?.areaCode || ''}
+          prefix={formData?.phoneNumber?.prefix || ''}
+          lineNumber={formData?.phoneNumber?.lineNumber || ''}
+          isLoading={isLoading}
+          errors={{
+            areaCode: formErrors.phoneNumber?.areaCode?.errors,
+            prefix: formErrors.phoneNumber?.prefix?.errors,
+            lineNumber: formErrors.phoneNumber?.lineNumber?.errors,
+          }}
+        />
+        <div className="field-group divider-top">
+          <h3>Emergency Contact</h3>
+          <FullNameFields
+            firstName={formData?.emergencyContact?.firstName || ''}
+            lastName={formData?.emergencyContact?.lastName || ''}
+            isLoading={isLoading}
+            formFirstName="emergencyFirstName"
+            formLastName="emergencyLastName"
+            errors={{
+              firstName: formErrors.emergencyContact?.firstName?.errors,
+              lastName: formErrors.emergencyContact?.lastName?.errors,
+            }}
+          />
+          <PhoneNumberFields
+            areaCode={formData?.emergencyContact?.phoneNumber?.areaCode || ''}
+            prefix={formData?.emergencyContact?.phoneNumber?.prefix || ''}
+            lineNumber={formData?.emergencyContact?.phoneNumber?.lineNumber || ''}
+            isLoading={isLoading}
+            formAreaCode="emergencyAreaCode"
+            formPrefix="emergencyPrefix"
+            formLineNumber="emergencyLineNumber"
+            errors={{
+              areaCode: formErrors.emergencyContact?.phoneNumber?.areaCode?.errors,
+              prefix: formErrors.emergencyContact?.phoneNumber?.prefix?.errors,
+              lineNumber: formErrors.emergencyContact?.phoneNumber?.lineNumber?.errors,
+            }}
+          />
+        </div>
+        <div className="two-thirds-group reverse">
+          <Button ariaLabel="Update Account" type="submit" disabled={isLoading}>Update Account</Button>
+          <Button ariaLabel="Cancel Changes" className="text-style-btn danger" type="button" onClick={onCancel}>Cancel</Button>
+        </div>
       </form>
     </div>
   );

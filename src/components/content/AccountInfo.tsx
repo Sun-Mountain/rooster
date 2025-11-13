@@ -28,7 +28,7 @@ export const AccountInfo = () => {
     .catch(error => {
       console.error('Error fetching user data:', error);
     });
-  }, [userId]);
+  }, [userId, showForm]);
 
   return (
     <div className="account-info-container">
@@ -44,8 +44,7 @@ export const AccountInfo = () => {
             </>
           ) : (
             <>
-              <AccountForm />
-              <Button onClick={() => setShowForm(false)}>Cancel</Button>
+              <AccountForm onCancel={() => setShowForm(false)} />
             </>
           )}
         </div>

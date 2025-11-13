@@ -10,6 +10,7 @@ interface TextFieldProps {
   disabled?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
   errorMsg?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextField = ({
@@ -18,12 +19,14 @@ export const TextField = ({
   initialValue = '',
   disabled = false,
   type,
-  errorMsg
+  errorMsg,
+  onChange
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDefaultValue(event.target.value);
+    if (onChange) onChange(event);
   };
 
   return (

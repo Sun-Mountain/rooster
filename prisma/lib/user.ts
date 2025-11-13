@@ -18,7 +18,10 @@ export const getUser = async ({email, id}: {email?: string, id?: string}): Promi
 export const updateUser = async (id: string, data: Prisma.UserUpdateInput): Promise<User> => {
   const user = await db.user.update({
     where: { id },
-    data,
+    data: {
+      ...data,
+      updatedAt: new Date(),
+    }
   });
   return user;
 };

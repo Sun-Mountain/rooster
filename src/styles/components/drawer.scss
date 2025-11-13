@@ -1,0 +1,12 @@
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-width: 220px;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+}

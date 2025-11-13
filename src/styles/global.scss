@@ -3,6 +3,7 @@
 @use './resources/variables' as *;
 
 @forward './components/buttons.scss';
+@forward './components/drawer.scss';
 @forward './components/forms.scss';
 
 body {
@@ -110,5 +111,13 @@ ul {
 @media screen and (max-width: $sm) {
   .side-nav-layout {
     flex-direction: column;
+  }
+
+  .content-container {
+    padding: 1rem 0rem;
+  }
+
+  #main-container {
+    padding: 1rem 0.5rem;
   }
 }

@@ -22,3 +22,26 @@ button {
     width: 100%;
   }
 }
+
+.icon {
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.w-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.transparent {
+  background-color: transparent;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+  padding-bottom: 0;
+
+  &:hover {
+    background-color: $color-secondary;
+    color: $color-secondary;
+  }
+}

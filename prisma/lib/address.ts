@@ -30,3 +30,19 @@ export const getAddress = async (userId: string): Promise<Omit<Address, 'userId'
 
   return addressWithoutMeta;
 };
+
+export const updateAddress = async (userId: string, data: { street?: string; street2?: string; city?: string; state?: string; zipCode?: string; country?: string }): Promise<Address> => {
+  const address = await db.address.update({
+    where: { userId },
+    data: {
+      street: data.street,
+      street2: data.street2,
+      city: data.city,
+      state: data.state,
+      zipCode: data.zipCode,
+      country: data.country,
+    },
+  });
+
+  return address;
+};

@@ -42,7 +42,14 @@ export const AccountInfo = () => {
             <>
               <p><strong>Name:</strong> {accountInfo.firstName} {accountInfo.lastName}</p>
               <p><strong>Email:</strong> {accountInfo.email}</p>
-              <p><strong>Address:</strong> {accountInfo.address ? `${accountInfo.address.street}, ${accountInfo.address.city}, ${accountInfo.address.state} ${accountInfo.address.zipCode}` : (
+              <p><strong>Address:</strong> {accountInfo.address ? (
+                <>
+                  <br />
+                  {accountInfo.address.street},<br />
+                  {accountInfo.address.street2 && (<>{accountInfo.address.street2},<br /></>)}
+                  {accountInfo.address.city}, {accountInfo.address.state}, {accountInfo.address.zipCode}
+                </>
+              ) : (
                 <>
                   No address on file. <Button className="text-style-btn" onClick={() => setShowForm(true)}>Add your address.</Button>
                 </>

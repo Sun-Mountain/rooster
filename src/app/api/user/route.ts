@@ -79,7 +79,7 @@ export async function PUT(request: Request) {
       email,
       firstName,
       lastName,
-      address: address || undefined,
+      addressData: address || undefined,
       phoneData: phoneNumber || undefined,
     });
 

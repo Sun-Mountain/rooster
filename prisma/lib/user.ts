@@ -1,6 +1,6 @@
 import { db } from '@db/index';
 import { Address, Phone, User, Prisma } from '@prisma/client';
-import { getAddress } from './address';
+import { createAddress, getAddress, updateAddress } from './address';
 import { createPhone, getPhone, updatePhone } from './phone';
 
 interface UserFull extends Omit<User, 'password'> {
@@ -41,10 +41,30 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
 export const updateUser = async (id: string, data: Prisma.UserUpdateInput & { addressData?: { street?: string; street2?: string; city?: string; state?: string; zipCode?: string; country?: string } } & { phoneData?: { areaCode?: string; prefix?: string; lineNum?: string } }): Promise<User> => {
   console.log('Updating user with data:', data);
 
-  const { phoneData, ...userData } = data;
+  const { addressData, phoneData, ...userData } = data;
   
   const userPhone = phoneData ? await getPhone(id) : null;
-  const userAddress = await getAddress(id);
+  const userAddress = addressData ? await getAddress(id) : null;
+
+  if (addressData && !userAddress) {
+    await createAddress(id, {
+      street: addressData.street || '',
+      street2: addressData.street2 || '',
+      city: addressData.city || '',
+      state: addressData.state || '',
+      zipCode: addressData.zipCode || '',
+      country: addressData.country || 'USA',
+    });
+  } else if (addressData && userAddress) {
+    await updateAddress(id, {
+      street: addressData.street,
+      street2: addressData.street2,
+      city: addressData.city,
+      state: addressData.state,
+      zipCode: addressData.zipCode,
+      country: addressData.country,
+    });
+  }
 
   if (phoneData && !userPhone) {
     await createPhone(id, {

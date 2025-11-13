@@ -9,10 +9,24 @@ export const AdminDashLinks = () => {
   return (
     <ul>
       <li>
-        <Link href="/admin" className={pathname === "/admin" ? "active" : ""}>Dashboard</Link>
+        <Link href="/admin" className={pathname === "/admin" ? "active" : ""}>
+          Dashboard
+        </Link>
       </li>
       <li>
-        <Link href="/admin/settings" className={pathname === "/admin/settings" ? "active" : ""}>Settings</Link>
+        <Link href="/admin/sessions" className={pathname === "/admin/sessions" ? "active" : ""}>
+          Sessions
+        </Link>
+      </li>
+      <li>
+        <Link href="/admin/classes" className={pathname === "/admin/classes" ? "active" : ""}>
+          Classes
+        </Link>
+      </li>
+      <li>
+        <Link href="/admin/students" className={pathname === "/admin/students" ? "active" : ""}>
+          Students
+        </Link>
       </li>
     </ul>
   )

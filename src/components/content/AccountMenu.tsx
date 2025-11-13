@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Menu as MenuUI, MenuItem } from '@mui/material'
 import { Button } from '@/components/_ui/Button';
 import { signOut } from 'next-auth/react';
@@ -7,6 +8,8 @@ import Link from 'next/link';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { data: session } = useSession();
+  const role = session?.user.role;
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,6 +46,11 @@ export const AccountMenu = () => {
           <MenuItem>
             <Link href="/account">Account Settings</Link>
           </MenuItem>
+          {(role === "ADMIN" || role === "SUPER") && (
+            <MenuItem>
+              <Link href="/admin">Admin Dashboard</Link>
+            </MenuItem>
+          )}
           <MenuItem>
             <Button ariaLabel="Sign out of the application" onClick={handleSignOut}>
               Sign Out

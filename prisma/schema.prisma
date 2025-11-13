@@ -33,15 +33,44 @@ model Address {
   user User @relation(fields: [userId], references: [id])
 }
 
-model User {
+// model EmergencyContact {
+//   id              String  @id @default("e-${cuid()}")
+//   userId          String  @unique
+//   firstName       String
+//   lastName        String
+//   relationship    String
+//   phoneNum        Phone?
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+
+//   user User @relation(fields: [userId], references: [id])
+// }
+
+model Phone {
   id        String  @id @default(cuid())
-  firstName String
-  lastName  String
-  email     String   @unique
-  password  String
-  address   Address?
-  role      Role[]   @default([USER])
-  status    Status   @default(ACTIVE)
+  userId    String? @unique
+  // contactId String? @unique
+  areaCode  String
+  prefix    String
+  lineNum   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user              User?             @relation(fields: [userId], references: [id])
+  // emergencyContact  EmergencyContact? @relation(fields: [contactId], references: [id])
+}
+
+model User {
+  id                  String  @id @default("u-${cuid()}")
+  firstName           String
+  lastName            String
+  email               String   @unique
+  password            String
+  address             Address?
+  phoneNum            Phone?
+  // emergencyContact    EmergencyContact?
+  role      Role    @default(USER)
+  status    Status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

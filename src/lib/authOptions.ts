@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const { id, email, role } = existingUser;
-        return { id, email, role: Array.isArray(role) ? role[0] : role };
+        return { id, email, role };
       }
     })
   ],

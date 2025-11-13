@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { AccountMenu } from "./AccountMenu";
+import { AccountMenu } from "./content/AccountMenu";
 
 const NavBar = () => {
   const { data: session } = useSession();

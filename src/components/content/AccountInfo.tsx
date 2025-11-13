@@ -59,7 +59,21 @@ export const AccountInfo = () => {
                   No phone number on file. <Button className="text-style-btn" onClick={() => setShowForm(true)}>Add your phone number.</Button>
                 </>
               )}</p>
-              <Button className="text-style-btn" onClick={() => setShowForm(true)}>Edit Account Information</Button>
+              <p className="divider-top"><strong>Emergency Contact:</strong><br /><br />
+              {accountInfo.emergencyContact ? (
+                  <>
+                    <p>{accountInfo.emergencyContact.firstName} {accountInfo.emergencyContact.lastName} ({accountInfo.emergencyContact.relationship})</p>
+                    <p>{accountInfo.emergencyContact.phoneNumber.areaCode}-{accountInfo.emergencyContact.phoneNumber.prefix}-{accountInfo.emergencyContact.phoneNumber.lineNum}</p>
+                  </>
+                ) : (
+                  <>
+                    No emergency contact on file. <Button className="text-style-btn" onClick={() => setShowForm(true)}>Add an emergency contact.</Button>
+                  </>
+                )}
+              </p>
+              <div>
+                <Button className="text-style-btn" onClick={() => setShowForm(true)}>Edit Account Information</Button>
+              </div>
             </>
           ) : (
             <>

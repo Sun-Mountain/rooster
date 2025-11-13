@@ -22,6 +22,7 @@ export interface UserAccountProps {
   emergencyContact?: {
     firstName: string;
     lastName: string;
+    relationship: string;
     phoneNumber: PhoneNumProps;
   };
 }

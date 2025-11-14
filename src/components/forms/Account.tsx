@@ -87,12 +87,11 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
         lineNum: formData.get('emergencyLineNum') as string,
       },
     });
-    const phoneNumber = phoneNumberBuilder({
-      areaCode: formData.get('areaCode') as string,
-      prefix: formData.get('prefix') as string,
-      lineNum: formData.get('lineNum') as string,
-    });
-
+    const phoneNumber = phoneNumberBuilder(
+      formData.get('areaCode') as string,
+      formData.get('prefix') as string,
+      formData.get('lineNum') as string,
+    );
     const data = {
       firstName: formData.get('firstName') as string,
       lastName: formData.get('lastName') as string,
@@ -209,9 +208,9 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
           </div>
         </div>
         <PhoneNumberFields
-          areaCode={formData?.phoneNumber?.areaCode || ''}
-          prefix={formData?.phoneNumber?.prefix || ''}
-          lineNum={formData?.phoneNumber?.lineNum || ''}
+          areaCode={formData?.phoneNum ? formData.phoneNum.split('-')[0] : ''}
+          prefix={formData?.phoneNum ? formData.phoneNum.split('-')[1] : ''}
+          lineNum={formData?.phoneNum ? formData.phoneNum.split('-')[2] : ''}
           isLoading={isLoading}
         />
         <div className="field-group divider-top">

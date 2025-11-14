@@ -44,12 +44,14 @@ export const emergencyContactBuilder = (emergencyContactData: UserAccountProps['
   };
 };
 
-export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumber']) => {
-  if (!phoneNumberData) {
+export const phoneNumberBuilder = (
+  areaCode: string,
+  prefix: string,
+  lineNum: string,
+) => {
+  if (!areaCode && !prefix && !lineNum) {
     return null;
   }
-
-  const { areaCode, prefix, lineNum } = phoneNumberData;
 
   if (areaCode === '' && prefix === '' && lineNum === '') {
     return null;
@@ -59,13 +61,14 @@ export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumbe
 };
 
 export const userProfileBuilder = (userData: UserAccountProps) => {
-  const { firstName, lastName, email, address, phoneNumber, emergencyContact } = userData;
+  const { firstName, lastName, email, address, phoneNum, emergencyContact } = userData;
 
-  if (!address && !phoneNumber && !emergencyContact) {
+  if (!address && !emergencyContact) {
     return {
       firstName,
       lastName,
       email,
+      phoneNum,
     };
   }
 
@@ -80,11 +83,6 @@ export const userProfileBuilder = (userData: UserAccountProps) => {
       state: address.state,
       country: address.country,
       zipCode: address.zipCode,
-    } : undefined,
-    phoneNumber: phoneNumber ? {
-      areaCode: phoneNumber.areaCode,
-      prefix: phoneNumber.prefix,
-      lineNum: phoneNumber.lineNum,
     } : undefined,
     emergencyContact: emergencyContact ? {
       firstName: emergencyContact.firstName,

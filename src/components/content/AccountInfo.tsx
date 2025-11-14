@@ -56,7 +56,9 @@ export const AccountInfo = () => {
                   No address on file. <Button className="text-style-btn" onClick={() => setShowForm(true)}>Add your address.</Button>
                 </>
               )}</p>
-              <p><strong>Phone Number:</strong> {accountInfo.phoneNumber ? `${accountInfo.phoneNumber.areaCode}-${accountInfo.phoneNumber.prefix}-${accountInfo.phoneNumber.lineNum}` : (
+              <p><strong>Phone Number:</strong> {accountInfo.phoneNum ? (
+                accountInfo.phoneNum
+              ) : (
                 <>
                   No phone number on file. <Button className="text-style-btn" onClick={() => setShowForm(true)}>Add your phone number.</Button>
                 </>

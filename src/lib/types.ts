@@ -18,7 +18,7 @@ export interface UserAccountProps {
   lastName: string;
   email: string;
   address?: AddressProps;
-  phoneNumber?: PhoneNumProps;
+  phoneNum?: string;
   emergencyContact?: {
     firstName: string;
     lastName: string;

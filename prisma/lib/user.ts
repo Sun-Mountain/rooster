@@ -1,10 +1,10 @@
 import { db } from '@db/index';
 import { Address, EmergencyContact, Phone, User, Prisma } from '@prisma/client';
 import { createAddress, getAddress, updateAddress } from './address';
-import { getEmergencyContact } from './emergencyContact';
+import { createEmergencyContact, getEmergencyContact, updateEmergencyContact } from './emergencyContact';
 import { createPhone, getPhone, updatePhone } from './phone';
 
-interface UserFull extends Omit<User, 'password'> {
+interface UserFull extends Omit<User, 'password' | 'createdAt' | 'updatedAt'> {
   address: Omit<Address, 'userId' | 'createdAt' | 'updatedAt'> | null;
   emergencyContact: Omit<EmergencyContact & Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'>, 'userId' | 'createdAt' | 'updatedAt'> | null;
   phone: Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'> | null;
@@ -67,12 +67,11 @@ export const updateUser = async (
       areaCode?: string;
       prefix?: string;
       lineNum?: string
-    } }): Promise<User> => {
-  console.log('Updating user with data:', data);
-
-  const { addressData, phoneData, ...userData } = data;
+    } }): Promise<UserFull> => {
+  const { addressData, emergencyContactData, phoneData,  ...userData } = data;
   
   const userPhone = phoneData ? await getPhone(id) : null;
+  const userEmergencyContact = emergencyContactData ? await getEmergencyContact(id) : null;
   const userAddress = addressData ? await getAddress(id) : null;
 
   if (addressData && !userAddress) {
@@ -95,12 +94,37 @@ export const updateUser = async (
     });
   }
 
+  if (emergencyContactData && !userEmergencyContact) {
+    await createEmergencyContact(id, {
+      firstName: emergencyContactData.firstName || '',
+      lastName: emergencyContactData.lastName || '',
+      relationship: emergencyContactData.relationship || '',
+      user: { connect: { id } },
+      phoneNumber: {
+        areaCode: emergencyContactData.phoneNumber?.areaCode || '',
+        prefix: emergencyContactData.phoneNumber?.prefix || '',
+        lineNum: emergencyContactData.phoneNumber?.lineNum || '',
+      },
+    });
+  } else if (emergencyContactData && userEmergencyContact) {
+    await updateEmergencyContact(id, {
+      firstName: emergencyContactData.firstName,
+      lastName: emergencyContactData.lastName,
+      relationship: emergencyContactData.relationship,
+      phoneNumber: {
+        areaCode: emergencyContactData.phoneNumber?.areaCode,
+        prefix: emergencyContactData.phoneNumber?.prefix,
+        lineNum: emergencyContactData.phoneNumber?.lineNum,
+      },
+    });
+  }
+
   if (phoneData && !userPhone) {
-    await createPhone(id, {
+    await createPhone({userId: id, contactId: undefined, data: {
       areaCode: phoneData.areaCode || '',
       prefix: phoneData.prefix || '',
       lineNum: phoneData.lineNum || '',
-    });
+    }});
   } else if (phoneData && userPhone) {
       await updatePhone(id, {
         areaCode: phoneData.areaCode,
@@ -109,7 +133,7 @@ export const updateUser = async (
       });
   }
 
-  const user = await db.user.update({
+  await db.user.update({
     where: { id },
     data: {
       firstName: userData.firstName,
@@ -118,5 +142,8 @@ export const updateUser = async (
       updatedAt: new Date(),
     }
   });
-  return user;
+
+  // Get updated user with all related data
+  const updatedUserFull = await getUser({ id });
+  return updatedUserFull!;
 };

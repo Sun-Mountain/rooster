@@ -88,9 +88,7 @@ export async function PUT(request: Request) {
       }, { status: 500 });
     }
 
-    const { password: _, ...userWithoutPassword } = updatedUser;
-
-    return NextResponse.json({ user: userWithoutPassword }, { status: 200 });
+    return NextResponse.json({ user: updatedUser }, { status: 200 });
   } catch (error) {
     console.error("Error updating user:", error);
     return NextResponse.json({

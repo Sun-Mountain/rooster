@@ -64,8 +64,8 @@ export const AccountInfo = () => {
               <p className="divider-top"><strong>Emergency Contact:</strong><br /><br />
               {accountInfo.emergencyContact ? (
                   <>
-                    <p>{accountInfo.emergencyContact.firstName} {accountInfo.emergencyContact.lastName} ({accountInfo.emergencyContact.relationship})</p>
-                    <p>{accountInfo.emergencyContact.phoneNumber.areaCode}-{accountInfo.emergencyContact.phoneNumber.prefix}-{accountInfo.emergencyContact.phoneNumber.lineNum}</p>
+                    {accountInfo.emergencyContact.firstName} {accountInfo.emergencyContact.lastName} ({accountInfo.emergencyContact.relationship})<br />
+                    {accountInfo.emergencyContact.phoneNumber.areaCode}-{accountInfo.emergencyContact.phoneNumber.prefix}-{accountInfo.emergencyContact.phoneNumber.lineNum}
                   </>
                 ) : (
                   <>

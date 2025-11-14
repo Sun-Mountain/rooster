@@ -67,7 +67,7 @@ export const AccountInfo = () => {
               {accountInfo.emergencyContact ? (
                   <>
                     {accountInfo.emergencyContact.firstName} {accountInfo.emergencyContact.lastName} ({accountInfo.emergencyContact.relationship})<br />
-                    {accountInfo.emergencyContact.phoneNumber.areaCode}-{accountInfo.emergencyContact.phoneNumber.prefix}-{accountInfo.emergencyContact.phoneNumber.lineNum}
+                    {accountInfo.emergencyContact.phoneNum}
                   </>
                 ) : (
                   <>

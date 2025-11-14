@@ -2,6 +2,10 @@ $tekhelet: rgba(66, 44, 114, 1);
 $african-violet: rgba(142, 123, 183, 1);
 $barn-red: hsla(0, 100%, 24%, 1);
 $fire-brick: hsla(356, 83%, 41%, 1);
+$mikado-yellow: rgba(255, 195, 0, 1);
+$gold: rgba(255, 214, 10, 1);
+$pistachio: rgba(144, 190, 109, 1);
+$zomp: rgba(67, 170, 139, 1);
 
 $eerie-black: rgba(33, 37, 41, 1);
 $onyx: rgba(52, 58, 64, 1);
@@ -48,3 +52,11 @@ $admin-link-active-color: $seasalt;
 $error-color: $barn-red;
 $error-color-light: $fire-brick;
 $error-color-soft: $fire-brick-soft;
+
+// Warning colors
+$warning-color: $mikado-yellow;
+$warning-color-soft: rgba(255, 195, 0, 0.5);  
+
+// Success colors
+$success-color: $pistachio;
+$success-color-soft: rgba(144, 190, 109, 0.5);

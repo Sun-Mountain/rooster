@@ -105,6 +105,8 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
       phoneNumber
     };
 
+    console.log({payload})
+
     try {
       const validationResult = z.object({
         ...AccountFormSchema.shape
@@ -230,9 +232,9 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             disabled={isLoading}
           />
           <PhoneNumberFields
-            areaCode={formData?.emergencyContact?.phoneNumber?.areaCode || ''}
-            prefix={formData?.emergencyContact?.phoneNumber?.prefix || ''}
-            lineNum={formData?.emergencyContact?.phoneNumber?.lineNum || ''}
+            areaCode={formData?.emergencyContact?.phoneNum ? formData.emergencyContact.phoneNum.split('-')[0] : ''}
+            prefix={formData?.emergencyContact?.phoneNum ? formData.emergencyContact.phoneNum.split('-')[1] : ''}
+            lineNum={formData?.emergencyContact?.phoneNum ? formData.emergencyContact.phoneNum.split('-')[2] : ''}
             isLoading={isLoading}
             formAreaCode="emergencyAreaCode"
             formPrefix="emergencyPrefix"

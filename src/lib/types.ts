@@ -23,6 +23,6 @@ export interface UserAccountProps {
     firstName: string;
     lastName: string;
     relationship: string;
-    phoneNumber: PhoneNumProps;
+    phoneNum?: string;
   };
 }

@@ -54,12 +54,14 @@ export const updateUser = async (
       firstName?: string;
       lastName?: string;
       relationship?: string;
-      phoneNumber?: string;
+      phoneNum?: string;
     } }): Promise<UserFull> => {
   const { addressData, emergencyContactData,  ...userData } = data;
 
   const userEmergencyContact = emergencyContactData ? await getEmergencyContact(id) : null;
   const userAddress = addressData ? await getAddress(id) : null;
+
+  console.log(emergencyContactData)
 
   if (addressData && !userAddress) {
     await createAddress(id, {
@@ -87,14 +89,14 @@ export const updateUser = async (
       lastName: emergencyContactData.lastName || '',
       relationship: emergencyContactData.relationship || '',
       user: { connect: { id } },
-      phoneNum: emergencyContactData.phoneNumber || '',
+      phoneNum: emergencyContactData.phoneNum || '',
     });
   } else if (emergencyContactData && userEmergencyContact) {
     await updateEmergencyContact(id, {
       firstName: emergencyContactData.firstName,
       lastName: emergencyContactData.lastName,
       relationship: emergencyContactData.relationship,
-      phoneNum: emergencyContactData.phoneNumber || '',
+      phoneNum: emergencyContactData.phoneNum,
     });
   }
 
@@ -111,5 +113,8 @@ export const updateUser = async (
 
   // Get updated user with all related data
   const updatedUserFull = await getUser({ id });
+
+  console.log('Updated user with all related data:', updatedUserFull);
+
   return updatedUserFull!;
 };

@@ -31,6 +31,8 @@ export const getEmergencyContact = async (userId: string): Promise<Omit<Emergenc
 };
 
 export const updateEmergencyContact = async (userId: string, data: Prisma.EmergencyContactUpdateInput): Promise<EmergencyContact> => {
+
+  console.log('Updating emergency contact for userId:', userId, 'with data:', data);
   const contact = await db.emergencyContact.update({
     where: { userId },
     data: {

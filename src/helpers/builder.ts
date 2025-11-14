@@ -21,6 +21,29 @@ export const addressBuilder = (addressData: UserAccountProps['address']) => {
   };
 };
 
+export const emergencyContactBuilder = (emergencyContactData: UserAccountProps['emergencyContact']) => {
+  if (!emergencyContactData) {
+    return null;
+  }
+
+  const { firstName, lastName, relationship, phoneNumber } = emergencyContactData;
+
+  if (firstName === '' && lastName === '' && relationship === '') {
+    return null;
+  }
+
+  return {
+    firstName,
+    lastName,
+    relationship,
+    phoneNumber: phoneNumber ? {
+      areaCode: phoneNumber.areaCode,
+      prefix: phoneNumber.prefix,
+      lineNum: phoneNumber.lineNum,
+    } : undefined,
+  };
+};
+
 export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumber']) => {
   if (!phoneNumberData) {
     return null;

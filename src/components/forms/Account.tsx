@@ -7,7 +7,7 @@ import { Button } from '@/components/_ui/Button';
 import { UserAccountProps } from '@/lib/types';
 import { FullNameFields } from './fields/FullName';
 import { PhoneNumberFields } from './fields/PhoneNumber';
-import { addressBuilder, phoneNumberBuilder } from '@/helpers/builder';
+import { addressBuilder, emergencyContactBuilder, phoneNumberBuilder } from '@/helpers/builder';
 
 interface FormErrorProps {
   firstName?: {
@@ -55,6 +55,9 @@ interface FormErrorProps {
       errors: string[];
     };
     lastName?: {
+      errors: string[];
+    };
+    relationship?: {
       errors: string[];
     };
     phoneNumber?: {
@@ -120,6 +123,16 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
       zipCode: formData.get('zipCode') as string,
       country: formData.get('country') as string,
     });
+    const emergencyContact = emergencyContactBuilder({
+      firstName: formData.get('emergencyFirstName') as string,
+      lastName: formData.get('emergencyLastName') as string,
+      relationship: formData.get('emergencyRelationship') as string,
+      phoneNumber: {
+        areaCode: formData.get('emergencyAreaCode') as string,
+        prefix: formData.get('emergencyPrefix') as string,
+        lineNum: formData.get('emergencyLineNum') as string,
+      },
+    });
     const phoneNumber = phoneNumberBuilder({
       areaCode: formData.get('areaCode') as string,
       prefix: formData.get('prefix') as string,
@@ -135,6 +148,7 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
     const payload = {
       ...data,
       address,
+      emergencyContact,
       phoneNumber
     };
 
@@ -258,6 +272,14 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
               firstName: formErrors.emergencyContact?.firstName?.errors,
               lastName: formErrors.emergencyContact?.lastName?.errors,
             }}
+          />
+          <TextField
+            label="Relationship"
+            name="emergencyRelationship"
+            type="text"
+            initialValue={formData?.emergencyContact?.relationship || ''}
+            disabled={isLoading}
+            errorMsg={formErrors.emergencyContact?.relationship?.errors[0]}
           />
           <PhoneNumberFields
             areaCode={formData?.emergencyContact?.phoneNumber?.areaCode || ''}

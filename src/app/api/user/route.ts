@@ -53,8 +53,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
 
-    console.log({ user });
-
     return NextResponse.json({ user }, { status: 200 });
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -73,13 +71,14 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "User ID is required." }, { status: 400 });
     }
 
-    const { email, firstName, lastName, address, phoneNumber } = await request.json();
+    const { email, firstName, lastName, address, emergencyContact, phoneNumber } = await request.json();
 
     const updatedUser = await updateUser(id, {
       email,
       firstName,
       lastName,
       addressData: address || undefined,
+      emergencyContactData: emergencyContact || undefined,
       phoneData: phoneNumber || undefined,
     });
 

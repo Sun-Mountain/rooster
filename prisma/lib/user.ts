@@ -1,11 +1,13 @@
 import { db } from '@db/index';
-import { Address, Phone, User, Prisma } from '@prisma/client';
+import { Address, EmergencyContact, Phone, User, Prisma } from '@prisma/client';
 import { createAddress, getAddress, updateAddress } from './address';
+import { getEmergencyContact } from './emergencyContact';
 import { createPhone, getPhone, updatePhone } from './phone';
 
 interface UserFull extends Omit<User, 'password'> {
   address: Omit<Address, 'userId' | 'createdAt' | 'updatedAt'> | null;
-  phone: Omit<Phone, 'userId' | 'createdAt' | 'updatedAt'> | null;
+  emergencyContact: Omit<EmergencyContact & Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'>, 'userId' | 'createdAt' | 'updatedAt'> | null;
+  phone: Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'> | null;
 };
 
 export const createUser = async (data: Prisma.UserCreateInput): Promise<User> => {
@@ -21,11 +23,12 @@ export const getUser = async ({email, id}: {email?: string, id?: string}): Promi
   });
 
   const address = user ? await getAddress(user.id) : null;
+  const emergencyContact = user ? await getEmergencyContact(user.id) : null;
   const phoneNumber = user ? await getPhone(user.id) : null;
 
   const { password: _, ...userWithoutPassword } = user || {};
 
-  const result = userWithoutPassword ? { ...userWithoutPassword, address, phoneNumber } : null;
+  const result = userWithoutPassword ? { ...userWithoutPassword, address, emergencyContact, phoneNumber } : null;
 
   return result as UserFull | null;
 };
@@ -38,7 +41,33 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
   return user;
 }
 
-export const updateUser = async (id: string, data: Prisma.UserUpdateInput & { addressData?: { street?: string; street2?: string; city?: string; state?: string; zipCode?: string; country?: string } } & { phoneData?: { areaCode?: string; prefix?: string; lineNum?: string } }): Promise<User> => {
+export const updateUser = async (
+  id: string,
+  data: Prisma.UserUpdateInput & {
+    addressData?: {
+      street?: string;
+      street2?: string;
+      city?: string;
+      state?: string;
+      zipCode?: string;
+      country?: string
+    }
+  } & {
+    emergencyContactData?: {
+      firstName?: string;
+      lastName?: string;
+      relationship?: string;
+      phoneNumber?: {
+        areaCode?: string;
+        prefix?: string;
+        lineNum?: string;
+      }
+    } } & { 
+    phoneData?: {
+      areaCode?: string;
+      prefix?: string;
+      lineNum?: string
+    } }): Promise<User> => {
   console.log('Updating user with data:', data);
 
   const { addressData, phoneData, ...userData } = data;

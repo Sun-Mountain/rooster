@@ -1,13 +1,11 @@
 import { db } from '@db/index';
-import { Address, EmergencyContact, Phone, User, Prisma } from '@prisma/client';
+import { Address, EmergencyContact, User, Prisma } from '@prisma/client';
 import { createAddress, getAddress, updateAddress } from './address';
 import { createEmergencyContact, getEmergencyContact, updateEmergencyContact } from './emergencyContact';
-import { createPhone, getPhone, updatePhone } from './phone';
 
 interface UserFull extends Omit<User, 'password' | 'createdAt' | 'updatedAt'> {
   address: Omit<Address, 'userId' | 'createdAt' | 'updatedAt'> | null;
-  emergencyContact: Omit<EmergencyContact & Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'>, 'userId' | 'createdAt' | 'updatedAt'> | null;
-  phone: Omit<Phone, 'userId' | 'contactId' | 'createdAt' | 'updatedAt'> | null;
+  emergencyContact: Omit<EmergencyContact, 'userId' | 'createdAt' | 'updatedAt'> | null;
 };
 
 export const createUser = async (data: Prisma.UserCreateInput): Promise<User> => {
@@ -24,11 +22,10 @@ export const getUser = async ({email, id}: {email?: string, id?: string}): Promi
 
   const address = user ? await getAddress(user.id) : null;
   const emergencyContact = user ? await getEmergencyContact(user.id) : null;
-  const phoneNumber = user ? await getPhone(user.id) : null;
 
   const { password: _, ...userWithoutPassword } = user || {};
 
-  const result = userWithoutPassword ? { ...userWithoutPassword, address, emergencyContact, phoneNumber } : null;
+  const result = userWithoutPassword ? { ...userWithoutPassword, address, emergencyContact } : null;
 
   return result as UserFull | null;
 };
@@ -57,20 +54,10 @@ export const updateUser = async (
       firstName?: string;
       lastName?: string;
       relationship?: string;
-      phoneNumber?: {
-        areaCode?: string;
-        prefix?: string;
-        lineNum?: string;
-      }
-    } } & { 
-    phoneData?: {
-      areaCode?: string;
-      prefix?: string;
-      lineNum?: string
+      phoneNumber?: string;
     } }): Promise<UserFull> => {
-  const { addressData, emergencyContactData, phoneData,  ...userData } = data;
-  
-  const userPhone = phoneData ? await getPhone(id) : null;
+  const { addressData, emergencyContactData,  ...userData } = data;
+
   const userEmergencyContact = emergencyContactData ? await getEmergencyContact(id) : null;
   const userAddress = addressData ? await getAddress(id) : null;
 
@@ -100,37 +87,15 @@ export const updateUser = async (
       lastName: emergencyContactData.lastName || '',
       relationship: emergencyContactData.relationship || '',
       user: { connect: { id } },
-      phoneNumber: {
-        areaCode: emergencyContactData.phoneNumber?.areaCode || '',
-        prefix: emergencyContactData.phoneNumber?.prefix || '',
-        lineNum: emergencyContactData.phoneNumber?.lineNum || '',
-      },
+      phoneNum: emergencyContactData.phoneNumber || '',
     });
   } else if (emergencyContactData && userEmergencyContact) {
     await updateEmergencyContact(id, {
       firstName: emergencyContactData.firstName,
       lastName: emergencyContactData.lastName,
       relationship: emergencyContactData.relationship,
-      phoneNumber: {
-        areaCode: emergencyContactData.phoneNumber?.areaCode,
-        prefix: emergencyContactData.phoneNumber?.prefix,
-        lineNum: emergencyContactData.phoneNumber?.lineNum,
-      },
+      phoneNum: emergencyContactData.phoneNumber || '',
     });
-  }
-
-  if (phoneData && !userPhone) {
-    await createPhone({userId: id, contactId: undefined, data: {
-      areaCode: phoneData.areaCode || '',
-      prefix: phoneData.prefix || '',
-      lineNum: phoneData.lineNum || '',
-    }});
-  } else if (phoneData && userPhone) {
-      await updatePhone(id, {
-        areaCode: phoneData.areaCode,
-        prefix: phoneData.prefix,
-        lineNum: phoneData.lineNum,
-      });
   }
 
   await db.user.update({
@@ -139,6 +104,7 @@ export const updateUser = async (
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
+      phoneNum: userData.phoneNum || undefined,
       updatedAt: new Date(),
     }
   });

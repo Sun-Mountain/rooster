@@ -77,9 +77,9 @@ export async function PUT(request: Request) {
       email,
       firstName,
       lastName,
+      phoneNum: phoneNumber || undefined,
       addressData: address || undefined,
       emergencyContactData: emergencyContact || undefined,
-      phoneData: phoneNumber || undefined,
     });
 
     if (!updatedUser) {

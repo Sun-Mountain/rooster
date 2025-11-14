@@ -55,11 +55,7 @@ export const phoneNumberBuilder = (phoneNumberData: UserAccountProps['phoneNumbe
     return null;
   }
 
-  return {
-    areaCode,
-    prefix,
-    lineNum,
-  };
+  return `${areaCode}-${prefix}-${lineNum}`;
 };
 
 export const userProfileBuilder = (userData: UserAccountProps) => {

@@ -8,6 +8,13 @@ import { UserAccountProps } from '@/lib/types';
 import { FullNameFields } from './fields/FullName';
 import { PhoneNumberFields } from './fields/PhoneNumber';
 import { addressBuilder, emergencyContactBuilder, phoneNumberBuilder } from '@/helpers/builder';
+import * as z from 'zod';
+
+const AccountFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required").max(100),
+  lastName: z.string().min(1, "Last name is required").max(100),
+  email: z.email("Invalid email address").min(1, "Email is required").max(100),
+})
 
 interface FormErrorProps {
   firstName?: {
@@ -18,59 +25,6 @@ interface FormErrorProps {
   };
   email?: {
     errors: string[];
-  };
-  address?: {
-    street?: {
-      errors: string[];
-    };
-    street2?: {
-      errors: string[];
-    };
-    city?: {
-      errors: string[];
-    };
-    state?: {
-      errors: string[];
-    };
-    zipCode?: {
-      errors: string[];
-    };
-    country?: {
-      errors: string[];
-    };
-  };
-  phoneNumber?: {
-    areaCode?: {
-      errors: string[];
-    };
-    prefix?: {
-      errors: string[];
-    };
-    lineNum?: {
-      errors: string[];
-    };
-  };
-  emergencyContact?: {
-    firstName?: {
-      errors: string[];
-    };
-    lastName?: {
-      errors: string[];
-    };
-    relationship?: {
-      errors: string[];
-    };
-    phoneNumber?: {
-      areaCode?: {
-        errors: string[];
-      };
-      prefix?: {
-        errors: string[];
-      };
-      lineNum?: {
-        errors: string[];
-      };
-    };
   };
 }
 
@@ -153,6 +107,16 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
     };
 
     try {
+      const validationResult = z.object({
+        ...AccountFormSchema.shape
+      }).safeParse(payload);
+
+      if (!validationResult.success) {
+        const errorTree = z.treeifyError(validationResult.error);
+        setFormErrors(errorTree.properties || {});
+        setIsLoading(false);
+        return;
+      }
       const response = await fetch(`/api/user?id=${userId}`, {
         method: 'PUT',
         headers: {
@@ -168,9 +132,10 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
         const updatedUser = await response.json();
         setFormData(updatedUser.user);
       }
+      setIsLoading(false);
+      if (onCancel) onCancel();
     } catch (error) {
       console.error('Error updating user data:', error);
-    } finally {
       setIsLoading(false);
       if (onCancel) onCancel();
     }
@@ -202,7 +167,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             type="text"
             initialValue={formData?.address?.street || ''}
             disabled={isLoading}
-            errorMsg={formErrors.address?.street?.errors[0]}
           />
           <TextField
             label="Street 2"
@@ -210,7 +174,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             type="text"
             initialValue={formData?.address?.street2 || ''}
             disabled={isLoading}
-            errorMsg={formErrors.address?.street2?.errors[0]}
           />
           <div className="two-thirds-group">
             <TextField
@@ -219,7 +182,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
               type="text"
               initialValue={formData?.address?.city || ''}
               disabled={isLoading}
-              errorMsg={formErrors.address?.city?.errors[0]}
             />
             <TextField
               label="State"
@@ -227,7 +189,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
               type="text"
               initialValue={formData?.address?.state || ''}
               disabled={isLoading}
-              errorMsg={formErrors.address?.state?.errors[0]}
             />
           </div>
           <div className="flex-fields-container">
@@ -237,7 +198,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
               type="text"
               initialValue={formData?.address?.zipCode || ''}
               disabled={isLoading}
-              errorMsg={formErrors.address?.zipCode?.errors[0]}
             />
             <TextField
               label="Country"
@@ -245,7 +205,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
               type="text"
               initialValue={formData?.address?.country || 'USA'}
               disabled={isLoading}
-              errorMsg={formErrors.address?.country?.errors[0]}
             />
           </div>
         </div>
@@ -254,11 +213,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
           prefix={formData?.phoneNumber?.prefix || ''}
           lineNum={formData?.phoneNumber?.lineNum || ''}
           isLoading={isLoading}
-          errors={{
-            areaCode: formErrors.phoneNumber?.areaCode?.errors,
-            prefix: formErrors.phoneNumber?.prefix?.errors,
-            lineNum: formErrors.phoneNumber?.lineNum?.errors,
-          }}
         />
         <div className="field-group divider-top">
           <h3>Emergency Contact</h3>
@@ -268,10 +222,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             isLoading={isLoading}
             formFirstName="emergencyFirstName"
             formLastName="emergencyLastName"
-            errors={{
-              firstName: formErrors.emergencyContact?.firstName?.errors,
-              lastName: formErrors.emergencyContact?.lastName?.errors,
-            }}
           />
           <TextField
             label="Relationship"
@@ -279,7 +229,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             type="text"
             initialValue={formData?.emergencyContact?.relationship || ''}
             disabled={isLoading}
-            errorMsg={formErrors.emergencyContact?.relationship?.errors[0]}
           />
           <PhoneNumberFields
             areaCode={formData?.emergencyContact?.phoneNumber?.areaCode || ''}
@@ -289,11 +238,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
             formAreaCode="emergencyAreaCode"
             formPrefix="emergencyPrefix"
             formLineNum="emergencyLineNum"
-            errors={{
-              areaCode: formErrors.emergencyContact?.phoneNumber?.areaCode?.errors,
-              prefix: formErrors.emergencyContact?.phoneNumber?.prefix?.errors,
-              lineNum: formErrors.emergencyContact?.phoneNumber?.lineNum?.errors,
-            }}
           />
         </div>
         <div className="two-thirds-group reverse">

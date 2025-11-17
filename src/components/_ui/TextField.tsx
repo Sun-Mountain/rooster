@@ -8,6 +8,8 @@ interface TextFieldProps {
   name: string;
   initialValue?: string;
   disabled?: boolean;
+  multiline?: boolean;
+  rows?: number;
   type?: 'text' | 'password' | 'email' | 'number';
   errorMsg?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -19,6 +21,8 @@ export const TextField = ({
   initialValue = '',
   disabled = false,
   type,
+  multiline = false,
+  rows,
   errorMsg,
   onChange
 }: TextFieldProps) => {
@@ -41,6 +45,8 @@ export const TextField = ({
         onChange={handleOnChange}
         helperText={errorMsg}
         error={!!errorMsg}
+        multiline={multiline}
+        rows={rows}
       />
     </div>
   );

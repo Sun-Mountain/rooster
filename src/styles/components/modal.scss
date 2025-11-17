@@ -1,0 +1,40 @@
+@use '../resources/breakpoints' as *;
+@use '../resources/color' as *;
+@use '../resources/variables' as *;
+
+.modal-container {
+  background-color: $modal-bg-color-light;
+  border: 1px solid $modal-border-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  min-width: $xs;
+  max-width: $sm;
+
+  .modal-content-container {
+    border: 3px solid $modal-border-color;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $onyx;
+
+    &:hover {
+      color: $french-gray-2;
+    }
+  }
+}

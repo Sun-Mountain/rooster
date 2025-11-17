@@ -65,5 +65,4 @@ export async function signOut(page: Page) {
   await page.locator('button[aria-label="Sign out of the application"]').click();
   await expect(page.locator('button[aria-label="Open account menu"]')).not.toBeVisible();
   await expect(page.getByRole('link', { name: 'Sign In' })).toBeVisible();
-  
 };

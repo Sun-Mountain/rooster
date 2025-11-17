@@ -2,9 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export const AdminDashLinks = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  if (!session || !session.user || session.user.role === 'USER') {
+    return null; // Return null if the user is not an admin
+  }
 
   return (
     <ul>
@@ -28,6 +34,15 @@ export const AdminDashLinks = () => {
           Students
         </Link>
       </li>
+      {session.user.role === 'SUPER' && (
+        <div className="divider-top">
+          <li>
+            <Link href="/super/users" className={pathname === "/super/users" ? "active" : ""}>
+              Users
+            </Link>
+          </li>
+        </div>
+      )}
     </ul>
   )
 }

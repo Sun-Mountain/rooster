@@ -27,6 +27,12 @@ const SuperUserList = () => {
     <div>
       {users.length > 0 ? (
         <ul className="table">
+          <li>
+            <Checkbox />
+            <div className="row-content">
+              <strong>Name</strong>
+            </div>
+          </li>
           {users.map(user => (
             <li key={user.id}>
               <Checkbox />

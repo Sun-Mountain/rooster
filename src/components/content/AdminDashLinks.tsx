@@ -37,6 +37,9 @@ export const AdminDashLinks = () => {
       {session.user.role === 'SUPER' && (
         <div className="divider-top">
           <li>
+            <h4>Super Dash Links</h4>
+          </li>
+          <li>
             <Link href="/super/users" className={pathname === "/super/users" ? "active" : ""}>
               Users
             </Link>

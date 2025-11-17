@@ -1,9 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
-
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+/**
+ * See https://playwright.dev/docs/test-configuration.
+ */
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -12,9 +14,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
+    baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
   },
+
   projects: [
     {
       name: 'chromium',
@@ -52,10 +55,9 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm run dev',
-    url: process.env.NEXTAUTH_URL || 'http://localhost:3000',
+    command: 'pnpm dev',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
 });

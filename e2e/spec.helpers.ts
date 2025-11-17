@@ -17,7 +17,7 @@ export function testContext(): TestContext {
       firstName: `Test${timestamp}`,
       lastName: `User${timestamp}`,
       email: `${timestamp}+testuser@example.com`,
-      password: "tD20xt6h0m3!",
+      password: "tD20xt6h0m3!"
     };
   }
   return cachedTestCtx;
@@ -31,7 +31,7 @@ export const createTestContext = () => {
     email: `${timestamp}+testuser@example.com`,
     password: 'S0me-R@ndom-P@ssword!'
   };
-};
+}
 
 export async function signUp(page: Page, ctx: TestContext) {
   await page.goto("/sign-up");
@@ -50,11 +50,12 @@ export async function signUp(page: Page, ctx: TestContext) {
 };
 
 export async function signIn(page: Page, ctx: TestContext) {
+  await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
   await page.getByLabel("Email").click();
   await page.getByLabel("Email").fill(ctx.email);
   await page.getByRole("textbox", { name: "Password", exact: true }).click();
   await page.getByRole("textbox", { name: "Password", exact: true }).fill(ctx.password);
-  await page.getByRole("button", { name: "Sign In", exact: true }).click();
+  await page.getByRole("button", { name: "Sign In", exact: true }).click({force:true});
   await expect(page.locator('button[aria-label="Open account menu"]')).toBeVisible();
 };
 

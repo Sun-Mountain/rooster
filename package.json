@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "exec playwright test"
+    "test": "exec playwright test",
+    "test:ui": "playwright test --ui"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

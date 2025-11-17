@@ -144,7 +144,7 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
 
   return (
     <div className="form-container full-page">
-      <h2>Account Info</h2>
+      <h2>Edit Account Info</h2>
       <form onSubmit={handleSubmit}>
         <FullNameFields
           firstName={formData.firstName}

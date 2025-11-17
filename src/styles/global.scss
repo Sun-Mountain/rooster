@@ -13,7 +13,7 @@ body {
   background-color: $bg-color-light;
   color: $text-color-light;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   box-sizing: border-box;
 }
 

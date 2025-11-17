@@ -10,7 +10,7 @@
   padding: 0.5rem;
 
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -36,5 +36,12 @@
     &:hover {
       color: $french-gray-2;
     }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .modal-container {
+    min-width: 400px;
+    max-width: none;
   }
 }

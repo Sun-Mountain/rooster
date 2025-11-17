@@ -8,8 +8,8 @@
   margin-bottom: 1rem;
 
   li {
-    padding: 1rem;
     border-bottom: 1px solid $border-color-light;
+    display: flex;
 
     &:last-child {
       border-bottom: none;
@@ -18,5 +18,12 @@
     &:nth-child(even) {
       background-color: $alt-table-row;
     }
+  }
+
+  .row-content {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.5rem;
   }
 }

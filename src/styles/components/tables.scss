@@ -1,0 +1,22 @@
+@use '../resources/breakpoints' as *;
+@use '../resources/color' as *;
+@use '../resources/variables' as *;
+
+.table {
+  width: 100%;
+  border: 1px solid $border-color-light;
+  margin-bottom: 1rem;
+
+  li {
+    padding: 1rem;
+    border-bottom: 1px solid $border-color-light;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:nth-child(even) {
+      background-color: $alt-table-row;
+    }
+  }
+}

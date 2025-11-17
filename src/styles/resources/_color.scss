@@ -1,0 +1,62 @@
+$tekhelet: rgba(66, 44, 114, 1);
+$african-violet: rgba(142, 123, 183, 1);
+$barn-red: hsla(0, 100%, 24%, 1);
+$fire-brick: hsla(356, 83%, 41%, 1);
+$mikado-yellow: rgba(255, 195, 0, 1);
+$gold: rgba(255, 214, 10, 1);
+$pistachio: rgba(144, 190, 109, 1);
+$zomp: rgba(67, 170, 139, 1);
+
+$eerie-black: rgba(33, 37, 41, 1);
+$onyx: rgba(52, 58, 64, 1);
+$outer-space: rgba(73, 80, 87, 1);
+$slate-gray: rgba(108, 117, 125, 1);
+$french-gray-2: rgba(173, 181, 189, 1);
+$french-gray: rgba(206, 212, 218, 1);
+$seasalt: rgba(248, 249, 250, 1);
+$antiflash-white: rgba(233, 236, 239, 1);
+$platinum: rgba(222, 226, 230, 1);
+$white: rgba(255, 255, 255, 1);
+
+$tekhelet-soft: rgba(66, 44, 114, .5);
+$fire-brick-soft: hsla(356, 83%, 41%, 0.05);
+
+$color-primary: $tekhelet;
+$color-secondary: $african-violet;
+$color-accent: $barn-red;
+$color-accent-2: $fire-brick;
+
+// Variables for light mode
+// Background colors
+$bg-color-light: $seasalt;
+$footer-bg-color-light: $outer-space;
+$nav-bg-color-light: $tekhelet;
+
+$border-color-light: $french-gray;
+
+// Text colors
+$text-color-light: $onyx;
+$nav-text-color-light: $seasalt;
+$button-text-color: $white;
+
+// Link colors
+$nav-link-color-light: $seasalt;
+$nav-link-hover-color-light: $french-gray;
+
+$admin-link-hover-bg-color: $tekhelet;
+$admin-link-hover-color: $seasalt;
+$admin-link-active-bg-color: $tekhelet-soft;
+$admin-link-active-color: $seasalt;
+
+// Error colors
+$error-color: $barn-red;
+$error-color-light: $fire-brick;
+$error-color-soft: $fire-brick-soft;
+
+// Warning colors
+$warning-color: $mikado-yellow;
+$warning-color-soft: rgba(255, 195, 0, 0.5);  
+
+// Success colors
+$success-color: $pistachio;
+$success-color-soft: rgba(144, 190, 109, 0.5);

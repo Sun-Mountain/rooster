@@ -1,0 +1,101 @@
+@use '../resources/breakpoints' as *;
+@use '../resources/color' as *;
+
+.form-container {
+  max-width: $xs;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .links-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    a {
+      text-decoration: none;
+      margin: 0 0.5rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .field-group {
+    margin: 2rem 0 0.5rem 0;
+  }
+
+  .text-field-container {
+    margin: 1rem 0 0 0;
+  }
+
+  .text-field {
+    width: 100%;
+  }
+
+  .two-thirds-group {
+    display: flex;
+    gap: 1rem;
+
+    & > *:first-child {
+      flex: 2;
+    }
+
+    & > *:last-child {
+      flex: 1;
+    }
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    button {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &.full-page {
+    box-shadow: none;
+    max-width: $sm;
+  }
+}
+
+.form-error {
+  background-color: $error-color-soft;
+  border: 2px solid $error-color-light;
+  border-radius: 8px;
+  color: $error-color;
+  line-height: 1.75;
+  margin: 1rem 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.flex-fields-container {
+  display: flex;
+  gap: 1rem;
+
+  .text-field-container {
+    flex: 1;
+  }
+}
+
+.phone-field-container {
+  display: flex;
+  gap: 1rem;
+
+  .phone-separator {
+    align-items: center;
+    display: flex;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: $sm) {
+  .flex-fields-container {
+    flex-direction: column;
+    gap: 0;
+  }
+}

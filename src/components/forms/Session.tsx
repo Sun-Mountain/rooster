@@ -60,22 +60,37 @@ export const SessionForm = ({ setIsLoading, isLoading, editId }: SessionFormProp
     };
 
     try {
-      const response = await fetch ('/api/admin/session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sessionData),
-      });
+      if (!!editId) {
+        const response = await fetch(`/api/admin/session?id=${editId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sessionData),
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to create session');
+        if (!response.ok) {
+          throw new Error('Failed to update session');
+        }
+
+        const result = await response.json();
+        console.log('Session updated:', result);
+      } else {
+        const response = await fetch ('/api/admin/session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sessionData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create session');
+        }
+
+        const result = await response.json();
+        console.log('Session created:', result);
       }
-
-      // Optionally, you can handle the response data here
-      const result = await response.json();
-      console.log('Session created:', result);
-
     } catch (error) {
       console.error('Error creating session:', error);
     } finally {

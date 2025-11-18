@@ -18,7 +18,6 @@ export const SessionList = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Fetched sessions:', data.sessions);
       setSessions(data.sessions);
     })
     .catch(error => {

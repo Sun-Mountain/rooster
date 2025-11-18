@@ -41,3 +41,18 @@ export const deleteSession = async (sessionId: string): Promise<void> => {
     },
   });
 };
+
+export const updateSession = async (sessionId: string, data: Prisma.SessionUpdateInput): Promise<Session> => {
+  const updatedSession = await db.session.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      title: data.title,
+      description: data.description,
+      startDate: data.startDate,
+      endDate: data.endDate,
+    },
+  });
+  return updatedSession;
+};

@@ -8,27 +8,27 @@ import { Button } from '@/components/_ui/Button';
 interface ModalProps {
   buttonContent: ReactNode;
   children: ReactNode;
+  modalOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-export const Modal = ({ buttonContent, children }: ModalProps) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export const Modal = ({ buttonContent, children, modalOpen = false, onOpen, onClose }: ModalProps) => {
 
   return (
     <>
-      <Button onClick={handleOpen}>
+      <Button onClick={onOpen}>
         {buttonContent}
       </Button>
       <ModalUI
-        open={open}
-        onClose={handleClose}
+        open={modalOpen}
+        onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <div className="modal-container">
           <div className="modal-content-container">
-            <Button onClick={handleClose} aria-label="Close modal" className="close-button icon transparent">
+            <Button onClick={onClose} aria-label="Close modal" className="close-button icon transparent">
               <Close />
             </Button>
             <div className="modal-content">

@@ -105,8 +105,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
       phoneNumber
     };
 
-    console.log({payload})
-
     try {
       const validationResult = z.object({
         ...AccountFormSchema.shape

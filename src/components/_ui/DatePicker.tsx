@@ -9,8 +9,9 @@ interface DatePickerProps {
   label: string;
   name: string;
   initialDate?: Date;
+  disabled?: boolean;
 }
-export const DatePicker = ({ label, name, initialDate }: DatePickerProps) => {
+export const DatePicker = ({ label, name, initialDate, disabled = false }: DatePickerProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(initialDate ? dayjs(initialDate) : null);
 
   const handleDateChange = (date: Dayjs | null) => {
@@ -20,7 +21,13 @@ export const DatePicker = ({ label, name, initialDate }: DatePickerProps) => {
   return (
     <LocalizationProvider>
       <div className="text-field-container">
-        <DatePickerUI label={label} name={name} value={selectedDate} onChange={handleDateChange} />
+        <DatePickerUI
+          label={label}
+          name={name}
+          value={selectedDate}
+          onChange={handleDateChange}
+          disabled={disabled}
+        />
       </div>
     </LocalizationProvider>
   );

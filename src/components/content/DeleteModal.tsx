@@ -48,6 +48,7 @@ export const DeleteModal = ({ item, itemName, itemId, isLoading, setIsLoading }:
       modalOpen={modalOpen}
       onOpen={handleModalOpen}
       onClose={handleModalClose}
+      danger
     >
       <p>
         Are you sure you want to delete the {item}: <strong>{itemName}</strong>?

@@ -12,9 +12,18 @@ interface ModalProps {
   onOpen: () => void;
   onClose: () => void;
   buttonClassName?: string;
+  danger?: boolean;
 }
 
-export const Modal = ({ buttonContent, children, modalOpen = false, onOpen, onClose, buttonClassName }: ModalProps) => {
+export const Modal = ({
+  buttonContent,
+  children,
+  modalOpen = false,
+  onOpen,
+  onClose,
+  buttonClassName,
+  danger
+}: ModalProps) => {
 
   return (
     <>
@@ -27,8 +36,8 @@ export const Modal = ({ buttonContent, children, modalOpen = false, onOpen, onCl
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="modal-container">
-          <div className="modal-content-container">
+        <div className={`modal-container${danger ? ' danger-modal' : ''}`}>
+          <div className={`modal-content-container${danger ? ' danger-modal' : ''}`}>
             <Button onClick={onClose} aria-label="Close modal" className="close-button icon transparent">
               <Close />
             </Button>

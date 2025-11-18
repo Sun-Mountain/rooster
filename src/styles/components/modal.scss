@@ -17,10 +17,18 @@
   min-width: $xs;
   max-width: $sm;
 
+  &.danger-modal {
+    border-color: $error-color;
+  }
+
   .modal-content-container {
     border: 3px solid $modal-border-color;
     border-radius: 8px;
     padding: 1.5rem;
+
+    &.danger-modal {
+      border-color: $error-color;
+    }
   }
 
   .close-button {

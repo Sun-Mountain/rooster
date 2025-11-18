@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Session } from "@prisma/client";
 import { SessionForm } from "@/components/forms/Session";
+import { DeleteModal } from "../content/DeleteModal";
 
 export const SessionList = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -31,16 +32,28 @@ export const SessionList = () => {
       <div className="divider-top">
         <h2>Sessions</h2>
         {sessions && sessions.length > 0 ? (
-          <>
+          <ul className="table">
             {sessions.map((session) => (
-              <div key={session.id} className="session-item">
-                <h3>{session.title}</h3>
-                <p>{session.description}</p>
-                <p>Start: {new Date(session.startDate).toLocaleString()}</p>
-                <p>End: {new Date(session.endDate).toLocaleString()}</p>
-              </div>
+              <li key={session.id} className="session-item">
+                <div className="row-content">
+                  <div>{session.title}</div>
+                  <div>
+                    <div>Start: {new Date(session.startDate).toDateString()}</div>
+                    <div>End: {new Date(session.endDate).toDateString()}</div>
+                  </div>
+                </div>
+                <div className="row-content actions">
+                  <SessionForm setIsLoading={setIsLoading} isLoading={isLoading} editMode />
+                  <DeleteModal
+                    item="session"
+                    itemName={session.title}
+                    itemId={session.id}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading} />
+                </div>
+              </li>
             ))}
-          </>
+          </ul>
         ) : <p>No sessions found.</p>}
       </div>
     </>

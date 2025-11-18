@@ -11,13 +11,14 @@ interface ModalProps {
   modalOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  buttonClassName?: string;
 }
 
-export const Modal = ({ buttonContent, children, modalOpen = false, onOpen, onClose }: ModalProps) => {
+export const Modal = ({ buttonContent, children, modalOpen = false, onOpen, onClose, buttonClassName }: ModalProps) => {
 
   return (
     <>
-      <Button onClick={onOpen}>
+      <Button onClick={onOpen} className={buttonClassName}>
         {buttonContent}
       </Button>
       <ModalUI

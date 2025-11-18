@@ -1,7 +1,7 @@
 'use client';
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Add as AddIcon, EditSquare as EditIcon } from "@mui/icons-material";
 import { Modal } from "../_ui/Modal";
 import { Button } from "../_ui/Button";
 import { TextField } from "../_ui/TextField";
@@ -10,9 +10,10 @@ import { DatePicker } from "../_ui/DatePicker";
 interface SessionFormProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
+  editMode?: boolean;
 }
 
-export const SessionForm = ({ setIsLoading, isLoading }: SessionFormProps) => {
+export const SessionForm = ({ setIsLoading, isLoading, editMode }: SessionFormProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
@@ -59,10 +60,16 @@ export const SessionForm = ({ setIsLoading, isLoading }: SessionFormProps) => {
     <>
       <Modal
         buttonContent={
-          <div className="with-icon">
+          editMode ? (
+            <>
+              <EditIcon />
+            </>
+          ) : (
+          <>
             <AddIcon /> Session
-          </div>
-        }
+          </>
+        )}
+        buttonClassName={editMode ? "icon transparent no-border" : "with-icon"}
         modalOpen={modalOpen}
         onOpen={handleModalOpen}
         onClose={handleModalClose}

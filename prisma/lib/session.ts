@@ -24,3 +24,11 @@ export const getAllSessions = async (): Promise<Session[]> => {
   });
   return sessions;
 };
+
+export const deleteSession = async (sessionId: string): Promise<void> => {
+  await db.session.delete({
+    where: {
+      id: sessionId,
+    },
+  });
+};

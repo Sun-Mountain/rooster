@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { createSession } from '@db/session';
+import { createSession, deleteSession } from '@db/session';
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession();
@@ -32,6 +32,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Session created successfully' }, { status: 201 });
   } catch (error) {
     console.error('Error creating session:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+export async function DELETE (request: NextRequest) {
+  const session = await getServerSession();
+
+  if (!session || !session.user || session.user.role === 'USER') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const sessionId = searchParams.get('id');
+
+    if (!sessionId) {
+      return NextResponse.json({ error: 'Missing session ID' }, { status: 400 });
+    }
+
+    await deleteSession(sessionId);
+    
+    return NextResponse.json({ message: 'Session deleted successfully' }, { status: 200 });
+  } catch (error) {
+    console.error('Error deleting session:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

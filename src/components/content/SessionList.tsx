@@ -43,7 +43,11 @@ export const SessionList = () => {
                   </div>
                 </div>
                 <div className="row-content actions">
-                  <SessionForm setIsLoading={setIsLoading} isLoading={isLoading} editMode />
+                  <SessionForm
+                    setIsLoading={setIsLoading}
+                    isLoading={isLoading}
+                    editId={session.id}
+                  />
                   <DeleteModal
                     item="session"
                     itemName={session.title}

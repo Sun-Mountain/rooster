@@ -8,7 +8,7 @@ import dayjs, { Dayjs } from 'dayjs';
 interface DatePickerProps {
   label: string;
   name: string;
-  initialDate?: Date;
+  initialDate?: string;
   disabled?: boolean;
 }
 export const DatePicker = ({ label, name, initialDate, disabled = false }: DatePickerProps) => {

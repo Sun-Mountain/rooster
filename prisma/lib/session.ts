@@ -25,6 +25,15 @@ export const getAllSessions = async (): Promise<Session[]> => {
   return sessions;
 };
 
+export const getSessionById = async (sessionId: string): Promise<Session | null> => {
+  const session = await db.session.findUnique({
+    where: {
+      id: sessionId,
+    },
+  });
+  return session;
+};
+
 export const deleteSession = async (sessionId: string): Promise<void> => {
   await db.session.delete({
     where: {

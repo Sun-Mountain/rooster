@@ -42,7 +42,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
 
   useEffect(() => {
     if (!userId) return;
-    
     fetch(`/api/user?id=${userId}`, {
       method: 'GET',
       headers: {

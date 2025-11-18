@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Add as AddIcon, EditSquare as EditIcon } from "@mui/icons-material";
 import { Modal } from "../_ui/Modal";
 import { Button } from "../_ui/Button";
@@ -10,13 +10,41 @@ import { DatePicker } from "../_ui/DatePicker";
 interface SessionFormProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
-  editMode?: boolean;
+  editId?: string;
 }
 
-export const SessionForm = ({ setIsLoading, isLoading, editMode }: SessionFormProps) => {
+export const SessionForm = ({ setIsLoading, isLoading, editId }: SessionFormProps) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+  });
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+
+  useEffect(() => {
+    if (editId) {
+      fetch(`/api/admin/session?id=${editId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        setFormData({
+          title: data.session.title,
+          description: data.session.description,
+          startDate: new Date(data.session.startDate).toISOString().split('T')[0],
+          endDate: new Date(data.session.endDate).toISOString().split('T')[0],
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching session data:', error);
+      });
+    }}, [editId]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,7 +88,7 @@ export const SessionForm = ({ setIsLoading, isLoading, editMode }: SessionFormPr
     <>
       <Modal
         buttonContent={
-          editMode ? (
+          !!editId ? (
             <>
               <EditIcon />
             </>
@@ -69,22 +97,45 @@ export const SessionForm = ({ setIsLoading, isLoading, editMode }: SessionFormPr
             <AddIcon /> Session
           </>
         )}
-        buttonClassName={editMode ? "icon transparent no-border" : "with-icon"}
+        buttonClassName={!!editId ? "icon transparent no-border" : "with-icon"}
         modalOpen={modalOpen}
         onOpen={handleModalOpen}
         onClose={handleModalClose}
       >
-        <h2>Add Session</h2>
+        <h2>{!!editId ? 'Edit' : 'Add'} Session</h2>
         <div className="form-container full-page in-modal">
           <form onSubmit={handleSubmit}>
-            <TextField label="Session Name" name="title" disabled={isLoading} />
-            <TextField label="Description" name="description" multiline rows={2} disabled={isLoading} />
+            <TextField
+              label="Session
+              Name"
+              name="title"
+              disabled={isLoading}
+              initialValue={!!editId ? formData.title : undefined}
+            />
+            <TextField
+              label="Description"
+              name="description"
+              multiline
+              rows={2}
+              disabled={isLoading}
+              initialValue={!!editId ? formData.description : undefined}
+            />
             <div className="flex-fields-container">
-              <DatePicker label="Start Date" name="startDate" disabled={isLoading} />
-              <DatePicker label="End Date" name="endDate" disabled={isLoading} />
+              <DatePicker
+                label="Start Date"
+                name="startDate"
+                disabled={isLoading}
+                initialDate={!!editId ? formData.startDate : undefined}
+              />
+              <DatePicker
+                label="End Date"
+                name="endDate"
+                disabled={isLoading}
+                initialDate={!!editId ? formData.endDate : undefined}
+              />
             </div>
             <div className="two-thirds-group reverse">
-              <Button ariaLabel="Update Account" type="submit" disabled={isLoading}>Create Session</Button>
+              <Button ariaLabel={!!editId ? "Update Session" : "Create Session"} type="submit" disabled={isLoading}>{!!editId ? 'Update' : 'Create'} Session</Button>
               <Button ariaLabel="Cancel Changes" className="text-style-btn danger" type="button" onClick={handleModalClose} disabled={isLoading}>Cancel</Button>
             </div>
           </form>

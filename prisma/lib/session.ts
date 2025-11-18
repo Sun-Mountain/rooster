@@ -19,7 +19,7 @@ export const createSession = async (data: Prisma.SessionCreateInput): Promise<Se
 export const getAllSessions = async (): Promise<Session[]> => {
   const sessions = await db.session.findMany({
     orderBy: {
-      startDate: 'asc'
+      startDate: 'desc'
     }
   });
   return sessions;

@@ -23,7 +23,7 @@ export const SessionList = () => {
     .catch(error => {
       console.error('Error fetching sessions:', error);
     });
-  }, []);
+  }, [isLoading]);
 
   return (
     <>

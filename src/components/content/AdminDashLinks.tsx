@@ -34,6 +34,11 @@ export const AdminDashLinks = () => {
           Students
         </Link>
       </li>
+      <li>
+        <Link href="/admin/coaches" className={pathname === "/admin/coaches" ? "active" : ""}>
+          Admin & Coaches
+        </Link>
+      </li>
       {session.user.role === 'SUPER' && (
         <div className="divider-top">
           <li>

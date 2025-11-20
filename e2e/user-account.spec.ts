@@ -13,6 +13,7 @@ test.describe('User Account', () => {
     const accountLink = page.getByRole('link', { name: 'Account' });
     await accountLink.click();
     await expect(page).toHaveURL('/account');
+    await signOut(page);
   });
 
   test('account form is populated with user data', async ({ page }) => {
@@ -27,6 +28,7 @@ test.describe('User Account', () => {
     await expect(firstNameInput.first()).toHaveValue(ctx.firstName);
     await expect(lastNameInput.first()).toHaveValue(ctx.lastName);
     await expect(emailInput.first()).toHaveValue(ctx.email);
+    await signOut(page);
   });
 
   test('can update account information', async ({ page }) => {
@@ -46,6 +48,7 @@ test.describe('User Account', () => {
     await page.getByRole('button', { name: 'Update Account' }).click();
     await expect(page.getByText(`Name: ${newFirstName} ${newLastName}`)).toBeVisible();
     await expect(page.getByText(`Email: ${newEmail}`)).toBeVisible();
+    await signOut(page);
   });
 
   test('can add address and phone number', async ({ page }) => {
@@ -75,6 +78,7 @@ test.describe('User Account', () => {
     await expect(page.getByText('123 Main St')).toBeVisible();
     await expect(page.getByText('Anytown, CA, 12345')).toBeVisible();
     await expect(page.getByText('555-123-4567')).toBeVisible();
+    await signOut(page);
   });
 
   test('can add emergency contact', async ({ page }) => {
@@ -99,5 +103,6 @@ test.describe('User Account', () => {
     await expect(page.getByText('No emergency contact on file.')).not.toBeVisible();
     await expect(page.getByText('Jane Doe (Sister)')).toBeVisible();
     await expect(page.getByText('555-987-6543')).toBeVisible();
+    await signOut(page);
   });
 });

@@ -20,6 +20,7 @@ $white: rgba(255, 255, 255, 1);
 
 $tekhelet-soft: rgba(66, 44, 114, .5);
 $fire-brick-soft: hsla(356, 83%, 41%, 0.05);
+$african-violet-softest: rgba(142, 123, 183, 0.25);
 
 $color-primary: $tekhelet;
 $color-secondary: $african-violet;
@@ -34,6 +35,9 @@ $nav-bg-color-light: $tekhelet;
 
 $border-color-light: $french-gray;
 
+// Table colors
+$alt-table-row: $african-violet-softest;
+
 // Text colors
 $text-color-light: $onyx;
 $nav-text-color-light: $seasalt;
@@ -47,6 +51,10 @@ $admin-link-hover-bg-color: $tekhelet;
 $admin-link-hover-color: $seasalt;
 $admin-link-active-bg-color: $tekhelet-soft;
 $admin-link-active-color: $seasalt;
+
+// Modal colors
+$modal-bg-color-light: $seasalt;
+$modal-border-color: $tekhelet;
 
 // Error colors
 $error-color: $barn-red;

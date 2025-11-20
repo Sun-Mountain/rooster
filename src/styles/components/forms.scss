@@ -62,6 +62,11 @@
   }
 }
 
+.in-modal {
+  max-width: 100%;
+  padding: 0;
+}
+
 .form-error {
   background-color: $error-color-soft;
   border: 2px solid $error-color-light;
@@ -90,6 +95,21 @@
     align-items: center;
     display: flex;
     padding: 0 0.5rem;
+  }
+}
+
+.checkbox-container {
+  border-right: 1px solid $border-color-light;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
+  padding: 0 !important; // Remove default padding from MUI Checkbox
+
+  .PrivateSwitchBase-input, .MuiTouchRipple-root {
+    padding: 0 !important; // Remove default padding from MUI Checkbox
   }
 }
 

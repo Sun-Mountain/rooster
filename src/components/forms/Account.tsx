@@ -42,7 +42,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
 
   useEffect(() => {
     if (!userId) return;
-    
     fetch(`/api/user?id=${userId}`, {
       method: 'GET',
       headers: {
@@ -104,8 +103,6 @@ export const AccountForm: FC<AccountFormProps> = ({ onCancel }) => {
       emergencyContact,
       phoneNumber
     };
-
-    console.log({payload})
 
     try {
       const validationResult = z.object({

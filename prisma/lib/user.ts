@@ -118,3 +118,12 @@ export const updateUser = async (
 
   return updatedUserFull!;
 };
+
+export const getAllUsers = async (): Promise<User[]> => {
+  const users = await db.user.findMany({
+    orderBy: {
+      firstName: 'asc',
+    },
+  });
+  return users;
+};

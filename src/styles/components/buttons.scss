@@ -23,8 +23,15 @@ button {
 }
 
 .icon {
-  margin: 0;
+  margin: auto 0;
   padding: 0.5rem;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 4px 4px 0 4px; 
+    fill: currentColor;
+  }
 }
 
 .w-icon {
@@ -42,6 +49,28 @@ button {
   &:hover {
     background-color: $color-secondary;
     color: $color-secondary;
+  }
+}
+
+.no-border {
+  background-color: transparent;
+  border: none;
+  color: $color-primary;
+  padding: 0;
+
+  &:hover {
+    background-color: transparent;
+    color: $color-secondary;
+  }
+}
+
+.danger {
+  background-color: $error-color;
+  color: $button-text-color;
+
+  &:hover {
+    background-color: $seasalt;
+    color: $error-color-light;
   }
 }
 
@@ -66,5 +95,16 @@ button {
       color: $error-color;
       border-bottom: 1px solid $error-color;
     }
+  }
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .icon {
+    margin: 0;
+    padding: 0.5rem;
   }
 }

@@ -20,6 +20,10 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
+  if (nextUrl.pathname.startsWith('/super') && nextUrl.pathname.startsWith('/api/super') && role !== 'SUPER') {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+
   return NextResponse.next();
 }
 

@@ -5,13 +5,15 @@
 @forward './components/buttons.scss';
 @forward './components/drawer.scss';
 @forward './components/forms.scss';
+@forward './components/modal.scss';
+@forward './components/tables.scss';
 
 body {
   font-family: $font-family-base;
   background-color: $bg-color-light;
   color: $text-color-light;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   box-sizing: border-box;
 }
 

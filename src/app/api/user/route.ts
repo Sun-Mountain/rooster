@@ -72,7 +72,6 @@ export async function PUT(request: Request) {
     }
 
     const { email, firstName, lastName, address, emergencyContact, phoneNumber } = await request.json();
-    console.log(emergencyContact)
 
     const updatedUser = await updateUser(id, {
       email,

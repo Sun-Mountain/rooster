@@ -61,8 +61,6 @@ export const updateUser = async (
   const userEmergencyContact = emergencyContactData ? await getEmergencyContact(id) : null;
   const userAddress = addressData ? await getAddress(id) : null;
 
-  console.log(emergencyContactData)
-
   if (addressData && !userAddress) {
     await createAddress(id, {
       street: addressData.street || '',
@@ -113,8 +111,6 @@ export const updateUser = async (
 
   // Get updated user with all related data
   const updatedUserFull = await getUser({ id });
-
-  console.log('Updated user with all related data:', updatedUserFull);
 
   return updatedUserFull!;
 };

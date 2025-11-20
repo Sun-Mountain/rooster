@@ -32,8 +32,6 @@ export const AccountInfo = () => {
     });
   }, [userId, showForm]);
 
-  console.log({ accountInfo });
-
   return (
     <div className="account-info-container">
       <h1>Account Information</h1>

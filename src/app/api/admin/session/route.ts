@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    console.log('Received session data:', body);
     const { title, description, startDate, endDate } = body;
 
     if (!title || !startDate || !endDate) {

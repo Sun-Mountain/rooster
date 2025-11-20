@@ -39,15 +39,9 @@ export const emergencyContactBuilder = (emergencyContactData: {
     lineNum: string;
   };
 }): UserAccountProps['emergencyContact'] => {
-  console.log('Building emergency contact with data:', emergencyContactData);
-
   const { firstName, lastName, relationship, phoneNumber } = emergencyContactData;
 
-  console.log(phoneNumber)
-
   const phoneNum = phoneNumber ? phoneNumberBuilder(phoneNumber.areaCode, phoneNumber.prefix, phoneNumber.lineNum) : undefined;
-
-  console.log('Built phone number:', phoneNum);
 
   return {
     firstName,

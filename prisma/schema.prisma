@@ -1,10 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // uses connection pooling
+  url      = env("DATABASE_URL") // You can safely ignore the error on this line.
 }
 
 enum Role {
@@ -17,6 +18,16 @@ enum Status {
   ACTIVE
   INACTIVE
   PENDING
+}
+
+enum Weekday {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }
 
 model Address {
@@ -34,6 +45,47 @@ model Address {
   user User @relation(fields: [userId], references: [id])
 
   @@map ("addresses")
+}
+
+model Class {
+  id            String  @id @default(cuid())
+  title         String
+  details       ClassDetails[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map ("classes")
+}
+
+model ClassDayTime {
+  id          String  @id @default(cuid())
+  classId     String @unique
+  weekday     Weekday
+  startTime   DateTime
+  endTime     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  class ClassDetails @relation(fields: [classId], references: [id])
+
+  @@map ("class_day_times") 
+}
+
+model ClassDetails {
+  id          String  @id @default(cuid())
+  classId     String  @unique
+  description String?
+  location    String
+  dayTimes    ClassDayTime[]
+  workshop    Boolean @default(false)
+  Session     Session? @relation(fields: [sessionId], references: [id])
+  sessionId   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  class Class @relation(fields: [classId], references: [id])
+
+  @@map ("class_details")
 }
 
 model EmergencyContact {
@@ -54,6 +106,7 @@ model Session {
   id          String  @id @default(cuid())
   title       String
   description String?
+  classes     ClassDetails[]
   startDate   DateTime
   endDate     DateTime
   createdAt   DateTime @default(now())

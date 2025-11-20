@@ -12,8 +12,6 @@ export async function GET() {
   try {
     const sessions = await getAllSessions();
 
-    console.log('Fetched sessions:', sessions);
-
     if (!sessions) {
       throw new Error('Failed to fetch sessions');
     }

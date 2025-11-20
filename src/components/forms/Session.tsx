@@ -109,13 +109,9 @@ export const SessionForm = ({ setIsLoading, isLoading, editId }: SessionFormProp
         if (!response.ok) {
           throw new Error('Failed to update session');
         }
-
-        const result = await response.json();
-        console.log('Session updated:', result);
       } else {
         if (!validationResult.success) {
           const errorTree = z.treeifyError(validationResult.error);
-          console.log('Validation errors:', errorTree);
           setFormErrors(errorTree.properties || {});
           setIsLoading(false);
           return;
@@ -131,9 +127,6 @@ export const SessionForm = ({ setIsLoading, isLoading, editId }: SessionFormProp
         if (!response.ok) {
           throw new Error('Failed to create session');
         }
-
-        const result = await response.json();
-        console.log('Session created:', result);
       }
       setIsLoading(false);
       handleModalClose();

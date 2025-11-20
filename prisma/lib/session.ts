@@ -2,8 +2,6 @@ import { db } from '@db/index';
 import { Session, Prisma } from '@prisma/client';
 
 export const createSession = async (data: Prisma.SessionCreateInput): Promise<Session> => {
-  console.log(data)
-
   const session = await db.session.create({
     data: {
       title: data.title,

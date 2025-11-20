@@ -31,6 +31,7 @@ export const DatePicker = ({ label, name, initialDate, disabled = false, errorMs
           slotProps={{
             textField: {
               helperText: errorMsg,
+              error: !!errorMsg,
             },
           }}
         />

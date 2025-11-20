@@ -59,3 +59,42 @@ The Rooster web app provides a full platform for managing classes, student regis
 - Yarn or NPM or pnpm (project currently uses pnpm)
 
 ### Installation
+```
+git clone git@github.com:Sun-Mountain/rooster.git
+cd rooster
+pnpm install
+```
+### Environment Variables
+Create a `.env` file:
+
+```
+APP_ENV=development
+NEXTAUTH_SECRET="secret"
+NEXTAUTH_URL="http://localhost:3000"
+DATABASE_URL=postgresql://###User###:###Password###@localhost:5432/rooster_db
+TEST_DATABASE_URL=postgresql://###User###:###Password###@localhost:5432/rooster_test_db
+```
+
+Make sure that psql database is running on localhost:5432 (or another of your choice).
+
+To create the database run:
+```
+npx prisma generate
+npx prisma migrate dev
+```
+
+Once the database is up and running, you can run the app.
+```
+pnpm dev
+```
+
+## Project Structure
+```bash
+rooster/
+  ├── .github   # Github workflows and scripts
+  ├── .vscode   # VsCode work
+  ├── e2e       # Tests file
+  ├── prisma    # Backend and database
+  ├── public    # Public files
+  ├── src/      # Main application
+```

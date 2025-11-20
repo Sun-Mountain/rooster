@@ -21,7 +21,7 @@ export const AdminDashLinks = () => {
       </li>
       <li>
         <Link href="/admin/classes" className={pathname === "/admin/classes" ? "active" : ""}>
-          Classes
+          Classes & Workshops
         </Link>
       </li>
       <li>

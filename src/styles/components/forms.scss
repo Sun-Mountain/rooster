@@ -113,6 +113,13 @@
   }
 }
 
+.form-container {
+  .checkbox-container {
+    border-right: none;
+    margin-top: 1rem;
+  }
+}
+
 @media (max-width: $sm) {
   .flex-fields-container {
     flex-direction: column;

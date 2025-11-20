@@ -2,13 +2,21 @@
 
 import { useState } from "react";
 import { Checkbox as CheckboxUI } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface CheckboxProps {
   defaultChecked?: boolean;
+  label?: string;
+  name?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({ defaultChecked, onChange }: CheckboxProps) => {
+export const Checkbox = ({
+  defaultChecked,
+  label,
+  name,
+  onChange
+}: CheckboxProps) => {
   const [checked, setChecked] = useState(defaultChecked || false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +28,14 @@ export const Checkbox = ({ defaultChecked, onChange }: CheckboxProps) => {
 
   return (
     <div className="checkbox-container">
-      <CheckboxUI className="checkbox" checked={checked} onChange={handleChange} />
+      <FormControlLabel control={
+        <CheckboxUI
+          checked={checked}
+          onChange={handleChange}
+          name={name} />
+        }
+        label={label}
+      />
     </div>
   )
 };

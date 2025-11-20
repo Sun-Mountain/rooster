@@ -60,7 +60,8 @@ model Class {
 model ClassDayTime {
   id          String  @id @default(cuid())
   classId     String @unique
-  weekday     Weekday
+  weekday     Weekday?
+  date        DateTime?
   startTime   DateTime
   endTime     DateTime
   createdAt   DateTime @default(now())

@@ -50,3 +50,15 @@ export const emergencyContactBuilder = (emergencyContactData: {
     phoneNum: phoneNum,
   };
 };
+
+export const classBuilder = (formData: FormData) => {
+
+  return {
+    title: formData.get('title') as string,
+    description: formData.get('description') as string,
+    workshop: formData.get('workshop') === 'on',
+    session: formData.get('session') as string || undefined,
+    dayTimes: formData.getAll('dayTimes') as unknown as { weekday: string; startTime: string; endTime: string }[] || [],
+    workshopDate: formData.get('workshopDate') as string || undefined,
+  };
+};

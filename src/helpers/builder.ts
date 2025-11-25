@@ -1,4 +1,5 @@
 import { UserAccountProps } from '@/lib/types';
+import dayjs from 'dayjs';
 
 export const addressBuilder = (addressData: UserAccountProps['address']) => {
   if (!addressData) {
@@ -51,34 +52,60 @@ export const emergencyContactBuilder = (emergencyContactData: {
   };
 };
 
+function convertTo24HourFormat(timeString: string): string {
+    const [time, period] = timeString.split(' ');
+    const [hour, minute] = time.split(':');
+    let formattedHour = parseInt(hour);
+
+    if (period === 'PM') {
+        formattedHour += 12;
+    }
+
+    return `${formattedHour}:${minute}`;
+}
+
 export const classBuilder = (formData: { [key: string]: string }, classNum: number) => {
-  console.log(formData);
   const workshop = formData.workshop === 'on' ? true : false;
 
   let details;
 
   if (workshop) {
-    const startTime = formData[`startTime`] as string;
-    const endTime = formData[`endTime`] as string;
+    let startTime = formData[`startTime`] as string;
+    let endTime = formData[`endTime`] as string;
     const date = formData[`date`] as string;
+
+    startTime = convertTo24HourFormat(startTime)
+    endTime = convertTo24HourFormat(endTime)
+
+    console.log("Raw times:", startTime, endTime);
+    
+    startTime = new Date(`1970-01-01T${startTime}`).toISOString()
+    endTime = new Date(`1970-01-01T${endTime}`).toISOString()
 
     const dayTimes = [{ date, startTime, endTime }];
 
-    details = { workshop: true, dayTimes };
+    details = { workshop, dayTimes };
   } else {
     const session = formData[`session`] as string;
-    const dayTimes = [];
+    const daysTimes = [];
     
     for (let i = 0; i < classNum; i++) {
       const weekday = formData[`weekday-${i}`] as string;
-      const startTime = formData[`startTime-${i}`] as string;
-      const endTime = formData[`endTime-${i}`] as string;
+      let startTime = formData[`startTime-${i}`] as string;
+      let endTime = formData[`endTime-${i}`] as string;
+
+      startTime = convertTo24HourFormat(startTime)
+      endTime = convertTo24HourFormat(endTime)
+
+      startTime = new Date(`1970-01-01T${startTime}`).toISOString()
+      endTime = new Date(`1970-01-01T${endTime}`).toISOString()
+
       if (weekday && startTime && endTime) {
-        dayTimes.push({ weekday, startTime, endTime });
+        daysTimes.push({ weekday, startTime, endTime });
       }
     }
 
-    details = { workshop: false, session, dayTimes };
+    details = { workshop: false, session, daysTimes };
   }
 
   return {

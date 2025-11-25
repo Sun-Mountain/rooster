@@ -92,7 +92,21 @@ export const ClassForm = () => {
     
     try {
       const newClass = classBuilder(data as { [key: string]: string }, daysTimes.length);
-      console.log(newClass);
+
+      const response = await fetch('/api/admin/class', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ classData: newClass }),
+      });
+
+      if (response.ok) {
+        console.log("Class created successfully");
+        // handleModalClose();
+      } else {
+        console.error("Failed to create class");
+      }
     } catch (error) {
       console.error("Error creating class:", error);
     }

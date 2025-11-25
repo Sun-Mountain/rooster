@@ -24,6 +24,7 @@ import * as z from 'zod';
 export const ClassForm = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [daysTimes, setDaysTimes] = useState<{ weekday: Weekday | ''; startTime: string; endTime: string }[]>([{ weekday: '', startTime: '', endTime: '' }]);
+  const [isWorkshop, setIsWorkshop] = useState(false);
 
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
@@ -73,77 +74,106 @@ export const ClassForm = () => {
             <Checkbox
               label="Workshop"
               name="isActive"
+              defaultChecked={isWorkshop}
+              onChange={() => setIsWorkshop(!isWorkshop)}
             />
-            <SessionSelect />
-            <div className="days-times-section text-field-container">
-              {daysTimes.map((dayTime, index) => (
-                <div key={index} className={`day-time-row flex-fields-container` + (index > 0 ? ' divider-top' : '')}>
-                  {/* TODO: Change this to use the DropDownSelect TimePicker components */}
-                  <div>
-                    {index === 0 && <label>Days & Times</label>}
-                    <div className="">
-                      <SelectUI
-                        fullWidth
-                        name={`weekday-${index}`}
-                        value={dayTime.weekday}
-                        label="Weekday"
-                        onChange={(e) => {
-                          const newDaysTimes = [...daysTimes];
-                          newDaysTimes[index].weekday = e.target.value as Weekday;
-                          setDaysTimes(newDaysTimes);
-                        }}
-                      >
-                        {Object.values(Weekday).map((day) => (
-                          <MenuItem key={day} value={day}>
-                            {day.charAt(0).toUpperCase() + day.slice(1).toLowerCase()}
-                          </MenuItem>
-                        ))}
-                      </SelectUI>
-                    </div>
-
-                    <div className='flex-fields-container text-field-container'>
-                      <LocalizationProvider>
-                        <TimePickerUI
-                          label="Start Time"
-                          name={`startTime-${index}`}
-                          value={dayTime.startTime ? dayjs(dayTime.startTime) : null}
-                          onChange={(time) => {
-                            const newDaysTimes = [...daysTimes];
-                            newDaysTimes[index].startTime = time ? time.toISOString() : '';
-                            setDaysTimes(newDaysTimes);
-                          }}
-                        />
-                        <TimePickerUI
-                          label="End Time"
-                          name={`endTime-${index}`}
-                          value={dayTime.endTime ? dayjs(dayTime.endTime) : null}
-                          onChange={(time) => {
-                            const newDaysTimes = [...daysTimes];
-                            newDaysTimes[index].endTime = time ? time.toISOString() : '';
-                            setDaysTimes(newDaysTimes);
-                          }}
-                        />
-                      </LocalizationProvider>
-                    </div>
-                  </div>
-                  {daysTimes.length > 1 && (
-                    <Button
-                      className="icon transparent danger rounded"
-                      onClick={() => removeDayTime(index, setDaysTimes)}
-                    >
-                      <RemoveCircle />
-                    </Button>
-                  )}
+            {isWorkshop ? (
+              <>
+                <DatePicker
+                  label="Date"
+                  name="date"
+                />
+                <div className='flex-fields-container text-field-container'>
+                  <LocalizationProvider>
+                    <TimePickerUI
+                      label="Start Time"
+                      name="startTime"
+                    />
+                    <TimePickerUI
+                      label="End Time"
+                      name="endTime"
+                    />
+                  </LocalizationProvider>
                 </div>
-              ))}
-              <div className="btn-container">
-                <Button
-                  className="with-icon rounded"
-                  onClick={addDayTime}
-                >
-                  <AddIcon /> Add Day & Time
-                </Button>
-              </div>
+              </>
+            ) : (
+              <>
+                <SessionSelect />
+                <div className="days-times-section text-field-container">
+                  {daysTimes.map((dayTime, index) => (
+                    <div key={index} className={`day-time-row flex-fields-container` + (index > 0 ? ' divider-top' : '')}>
+                      {/* TODO: Change this to use the DropDownSelect TimePicker components */}
+                      <div>
+                        {index === 0 && <label>Days & Times</label>}
+                        <div className="">
+                          <SelectUI
+                            fullWidth
+                            name={`weekday-${index}`}
+                            value={dayTime.weekday}
+                            label="Weekday"
+                            onChange={(e) => {
+                              const newDaysTimes = [...daysTimes];
+                              newDaysTimes[index].weekday = e.target.value as Weekday;
+                              setDaysTimes(newDaysTimes);
+                            }}
+                          >
+                            {Object.values(Weekday).map((day) => (
+                              <MenuItem key={day} value={day}>
+                                {day.charAt(0).toUpperCase() + day.slice(1).toLowerCase()}
+                              </MenuItem>
+                            ))}
+                          </SelectUI>
+                        </div>
+
+                        <div className='flex-fields-container text-field-container'>
+                          <LocalizationProvider>
+                            <TimePickerUI
+                              label="Start Time"
+                              name={`startTime-${index}`}
+                              value={dayTime.startTime ? dayjs(dayTime.startTime) : null}
+                              onChange={(time) => {
+                                const newDaysTimes = [...daysTimes];
+                                newDaysTimes[index].startTime = time ? time.toISOString() : '';
+                                setDaysTimes(newDaysTimes);
+                              }}
+                            />
+                            <TimePickerUI
+                              label="End Time"
+                              name={`endTime-${index}`}
+                              value={dayTime.endTime ? dayjs(dayTime.endTime) : null}
+                              onChange={(time) => {
+                                const newDaysTimes = [...daysTimes];
+                                newDaysTimes[index].endTime = time ? time.toISOString() : '';
+                                setDaysTimes(newDaysTimes);
+                              }}
+                            />
+                          </LocalizationProvider>
+                        </div>
+                      </div>
+                      {daysTimes.length > 1 && (
+                        <Button
+                          className="icon transparent danger rounded"
+                          onClick={() => removeDayTime(index, setDaysTimes)}
+                        >
+                          <RemoveCircle />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                  <div className="btn-container">
+                    <Button
+                      className="with-icon rounded"
+                      onClick={addDayTime}
+                    >
+                      <AddIcon /> Add Day & Time
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="two-thirds-group reverse">
+              <Button ariaLabel={"Create Class"} type="submit">{'Create'} Class</Button>
+              <Button ariaLabel="Cancel Changes" className="text-style-btn danger" type="button" onClick={handleModalClose}>Cancel</Button>
             </div>
           </form>
         </div>

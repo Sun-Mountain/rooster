@@ -21,8 +21,62 @@ import {
 
 import * as z from 'zod';
 
+interface ClassFormData {
+  title: string;
+  description?: string;
+  workshop: boolean;
+  date?: string;
+  startTime: string;
+  endTime: string;
+  sessions: string[];
+  daysTimes?: {
+    weekday: Weekday;
+    startTime: string;
+    endTime: string;
+  }[];
+}
+
+const ClassSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  workshop: z.boolean(),
+  date: z.string().optional(),
+  startTime: z.string(),
+  endTime: z.string(),
+  sessions: z.array(z.string()),
+  daysTimes: z.array(z.object({
+    weekday: z.enum(Object.values(Weekday) as [Weekday, ...Weekday[]]),
+    startTime: z.string(),
+    endTime: z.string(),
+  })).optional(),
+}).refine((data) => {
+  if (data.workshop) {
+    return data.startTime && data.startTime.length > 0;
+  }
+  return true;
+}, {
+  message: "Start time is required for workshops",
+  path: ["startTime"],
+}).refine((data) => {
+  if (data.workshop) {
+    return data.endTime && data.endTime.length > 0;
+  }
+  return true;
+}, {
+  message: "End time is required for workshops",
+  path: ["endTime"],
+}).refine((data) => {
+  if (!data.workshop) {
+    return data.sessions.length > 0;
+  }
+  return true;
+}, {
+  message: "At least one session must be selected for non-workshops",
+  path: ["sessions"],
+});
+
 export const ClassForm = () => {
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const [daysTimes, setDaysTimes] = useState<{ weekday: Weekday | ''; startTime: string; endTime: string }[]>([{ weekday: '', startTime: '', endTime: '' }]);
   const [isWorkshop, setIsWorkshop] = useState(false);
 
@@ -35,8 +89,13 @@ export const ClassForm = () => {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
-    console.log(data)
+    
+    try {
+      const newClass = classBuilder(data as { [key: string]: string }, daysTimes.length);
+      console.log(newClass);
+    } catch (error) {
+      console.error("Error creating class:", error);
+    }
   };
 
   const addDayTime = () => {
@@ -73,7 +132,7 @@ export const ClassForm = () => {
             />
             <Checkbox
               label="Workshop"
-              name="isActive"
+              name="workshop"
               defaultChecked={isWorkshop}
               onChange={() => setIsWorkshop(!isWorkshop)}
             />

@@ -62,8 +62,8 @@ model ClassDayTime {
   classId     String @unique
   weekday     Weekday?
   date        DateTime?
-  startTime   DateTime
-  endTime     DateTime
+  startTime   DateTime?
+  endTime     DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -76,7 +76,6 @@ model ClassDetails {
   id          String  @id @default(cuid())
   classId     String  @unique
   description String?
-  location    String
   dayTimes    ClassDayTime[]
   workshop    Boolean @default(false)
   Session     Session? @relation(fields: [sessionId], references: [id])

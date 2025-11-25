@@ -51,14 +51,39 @@ export const emergencyContactBuilder = (emergencyContactData: {
   };
 };
 
-export const classBuilder = (formData: FormData) => {
+export const classBuilder = (formData: { [key: string]: string }, classNum: number) => {
+  console.log(formData);
+  const workshop = formData.workshop === 'on' ? true : false;
+
+  let details;
+
+  if (workshop) {
+    const startTime = formData[`startTime`] as string;
+    const endTime = formData[`endTime`] as string;
+    const date = formData[`date`] as string;
+
+    const dayTimes = [{ date, startTime, endTime }];
+
+    details = { workshop: true, dayTimes };
+  } else {
+    const session = formData[`session`] as string;
+    const dayTimes = [];
+    
+    for (let i = 0; i < classNum; i++) {
+      const weekday = formData[`weekday-${i}`] as string;
+      const startTime = formData[`startTime-${i}`] as string;
+      const endTime = formData[`endTime-${i}`] as string;
+      if (weekday && startTime && endTime) {
+        dayTimes.push({ weekday, startTime, endTime });
+      }
+    }
+
+    details = { workshop: false, session, dayTimes };
+  }
 
   return {
-    title: formData.get('title') as string,
-    description: formData.get('description') as string,
-    workshop: formData.get('workshop') === 'on',
-    session: formData.get('session') as string || undefined,
-    dayTimes: formData.getAll('dayTimes') as unknown as { weekday: string; startTime: string; endTime: string }[] || [],
-    workshopDate: formData.get('workshopDate') as string || undefined,
-  };
+    title: formData[`title`] as string,
+    description: formData[`description`] as string,
+    ...details,
+  }
 };

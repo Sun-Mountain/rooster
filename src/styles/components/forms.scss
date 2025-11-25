@@ -113,6 +113,18 @@
   }
 }
 
+.day-time-row + .divider-top {
+    padding-bottom: 0;
+}
+
+.day-time-row {
+  label {
+    margin-bottom: 1rem;
+    width: 100%;
+    display: block;
+  }
+}
+
 .form-container {
   .checkbox-container {
     border-right: none;

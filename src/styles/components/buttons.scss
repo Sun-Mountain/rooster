@@ -22,6 +22,12 @@ button {
   }
 }
 
+.btn-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .icon {
   margin: auto 0;
   padding: 0.5rem;
@@ -98,6 +104,18 @@ button {
   }
 }
 
+.icon {
+  margin: auto 0;
+  padding: 0.25rem;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 4px 4px 0 4px; 
+    fill: currentColor;
+  }
+}
+
 .with-icon {
   display: flex;
   align-items: center;
@@ -107,4 +125,8 @@ button {
     margin: 0;
     padding: 0.5rem;
   }
+}
+
+.rounded {
+  border-radius: 9999px;
 }

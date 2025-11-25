@@ -38,12 +38,12 @@ export const Modal = ({
       >
         <div className={`modal-container${danger ? ' danger-modal' : ''}`}>
           <div className={`modal-content-container${danger ? ' danger-modal' : ''}`}>
-            <Button onClick={onClose} aria-label="Close modal" className="close-button icon transparent">
-              <Close />
-            </Button>
-            <div className="modal-content">
-              {children}
-            </div>
+              <Button onClick={onClose} aria-label="Close modal" className="close-button icon transparent">
+                <Close />
+              </Button>
+              <div className="modal-content">
+                {children}
+              </div>
           </div>
         </div>
       </ModalUI>

@@ -10,7 +10,7 @@
   padding: 0.5rem;
 
   position: fixed;
-  top: 35%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -24,11 +24,20 @@
   .modal-content-container {
     border: 3px solid $modal-border-color;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 2rem;
 
     &.danger-modal {
       border-color: $error-color;
     }
+  }
+
+  .modal-content {
+    border: 2px solid $seasalt;
+    border-radius: 6px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 1.5rem;
   }
 
   .close-button {

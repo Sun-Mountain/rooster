@@ -7,16 +7,23 @@ import { Modal } from "@/components/_ui/Modal";
 import { Button } from "@/components/_ui/Button";
 import { Checkbox } from "@/components/_ui/Checkbox";
 import { DatePicker } from "@/components/_ui/DatePicker";
-import { DropDownSelect } from "../_ui/DropDownSelect";
 import { TextField } from "@/components/_ui/TextField";
-import { TimePicker } from "@/components/_ui/TimePicker";
 import { SessionSelect } from "@/components/content/SessionSelect";
+import { TimePicker as TimePickerUI } from '@mui/x-date-pickers/TimePicker';
+import LocalizationProvider from "@/components/providers/Localizer";
+import dayjs from 'dayjs';
 import { classBuilder } from "@/helpers/builder";
+
+import {
+  MenuItem,
+  Select as SelectUI,
+} from "@mui/material";
+
 import * as z from 'zod';
 
 export const ClassForm = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isWorkshop, setIsWorkshop] = useState<"on" | "off">("off");
+  const [modalOpen, setModalOpen] = useState(true);
+  const [daysTimes, setDaysTimes] = useState<{ weekday: Weekday | ''; startTime: string; endTime: string }[]>([{ weekday: '', startTime: '', endTime: '' }]);
 
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
@@ -26,10 +33,18 @@ export const ClassForm = () => {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const classData = classBuilder(formData)
+    const data = Object.fromEntries(formData.entries());
 
-    console.log(classData)
+    console.log(data)
   };
+
+  const addDayTime = () => {
+    setDaysTimes([...daysTimes, { weekday: '', startTime: '', endTime: '' }]);
+  }
+
+  const removeDayTime = (index: number, setDaysTimes: Dispatch<SetStateAction<{ weekday: Weekday | ''; startTime: string; endTime: string }[]>>) => {
+    setDaysTimes((prev) => prev.filter((_, i) => i !== index));
+  }
 
   return (
     <>
@@ -46,76 +61,89 @@ export const ClassForm = () => {
         <div className="form-container full-page in-modal">
           <form onSubmit={handleSubmit}>
             <TextField
-              label="Class Name"
+              label="Class Title"
               name="title"
             />
             <TextField
               label="Description"
               name="description"
               multiline
-              rows={2}
+              rows={4}
             />
             <Checkbox
-              name="workshop"
               label="Workshop"
-              defaultChecked={isWorkshop === "on"}
-              onChange={(e) => setIsWorkshop(e.target.checked ? "on" : "off")}
+              name="isActive"
             />
-            {isWorkshop === "on" ? (
-              <>
-                <DatePicker label="Workshop Date" name="workshopDate" />
-                <div className="flex-fields-container">
-                  <TimePicker
-                    label="Start Time"
-                    name="startTime"
-                  />
-                  <TimePicker
-                    label="End Time"
-                    name="endTime"
-                  />
-                </div>
-              </>
-            ) : (
-              <>
-                <SessionSelect />
-                <div className="day-time-group">
+            <SessionSelect />
+            <div className="days-times-section text-field-container">
+              {daysTimes.map((dayTime, index) => (
+                <div key={index} className={`day-time-row flex-fields-container` + (index > 0 ? ' divider-top' : '')}>
+                  {/* TODO: Change this to use the DropDownSelect TimePicker components */}
                   <div>
-                    <DropDownSelect
-                      label="Week Day"
-                      name="weekday"
-                      options={Object.values(Weekday)}
-                    />
-                    <div className="flex-fields-container">
-                      <TimePicker
-                        label="Start Time"
-                        name="startTime"
-                      />
-                      <TimePicker
-                        label="End Time"
-                        name="endTime"
-                      />
+                    {index === 0 && <label>Days & Times</label>}
+                    <div className="">
+                      <SelectUI
+                        fullWidth
+                        name={`weekday-${index}`}
+                        value={dayTime.weekday}
+                        label="Weekday"
+                        onChange={(e) => {
+                          const newDaysTimes = [...daysTimes];
+                          newDaysTimes[index].weekday = e.target.value as Weekday;
+                          setDaysTimes(newDaysTimes);
+                        }}
+                      >
+                        {Object.values(Weekday).map((day) => (
+                          <MenuItem key={day} value={day}>
+                            {day.charAt(0).toUpperCase() + day.slice(1).toLowerCase()}
+                          </MenuItem>
+                        ))}
+                      </SelectUI>
+                    </div>
+
+                    <div className='flex-fields-container text-field-container'>
+                      <LocalizationProvider>
+                        <TimePickerUI
+                          label="Start Time"
+                          name={`startTime-${index}`}
+                          value={dayTime.startTime ? dayjs(dayTime.startTime) : null}
+                          onChange={(time) => {
+                            const newDaysTimes = [...daysTimes];
+                            newDaysTimes[index].startTime = time ? time.toISOString() : '';
+                            setDaysTimes(newDaysTimes);
+                          }}
+                        />
+                        <TimePickerUI
+                          label="End Time"
+                          name={`endTime-${index}`}
+                          value={dayTime.endTime ? dayjs(dayTime.endTime) : null}
+                          onChange={(time) => {
+                            const newDaysTimes = [...daysTimes];
+                            newDaysTimes[index].endTime = time ? time.toISOString() : '';
+                            setDaysTimes(newDaysTimes);
+                          }}
+                        />
+                      </LocalizationProvider>
                     </div>
                   </div>
+                  {daysTimes.length > 1 && (
+                    <Button
+                      className="icon transparent danger rounded"
+                      onClick={() => removeDayTime(index, setDaysTimes)}
+                    >
+                      <RemoveCircle />
+                    </Button>
+                  )}
                 </div>
-              </>
-            )}
-            <div className="two-thirds-group reverse">
-              <Button
-                ariaLabel={"Create Class"}
-                type="submit"
-                // disabled={isLoading}
-              >
-                Create Class
-              </Button>
-              <Button
-                ariaLabel="Cancel Changes"
-                className="text-style-btn danger"
-                type="button"
-                onClick={handleModalClose}
-                // disabled={isLoading}
-              >
-                Cancel
-              </Button>
+              ))}
+              <div className="btn-container">
+                <Button
+                  className="with-icon rounded"
+                  onClick={addDayTime}
+                >
+                  <AddIcon /> Add Day & Time
+                </Button>
+              </div>
             </div>
           </form>
         </div>

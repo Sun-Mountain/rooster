@@ -22,11 +22,16 @@ $tekhelet-soft: rgba(66, 44, 114, .5);
 $fire-brick-soft: hsla(356, 83%, 41%, 0.05);
 $african-violet-softest: rgba(142, 123, 183, 0.25);
 
-// Font
-$text-color-light: $onyx;
-
 // Body
 $bg-color-light: $seasalt;
+
+// Button
+$button-color: $tekhelet;
+$button-text-color: $seasalt;
+$button-hover: $tekhelet-soft;
+
+// Font
+$text-color-light: $onyx;
 
 // Navigation
 $nav-bg-color-light: $tekhelet;

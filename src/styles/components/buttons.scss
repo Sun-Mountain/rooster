@@ -1,0 +1,50 @@
+@use "@/styles/_resources/_color" as *;
+@use "@/styles/_resources/_variable" as *;
+
+button {
+  background-color: $button-color;
+  color: $button-text-color;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: $font-family;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $button-hover;
+  }
+
+  &[type="submit"] {
+    margin-top: 1.5rem;
+  }
+}
+
+.icon {
+  margin: auto 0;
+  padding: 0.5rem;
+
+  svg {
+    color: $button-text-color;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 4px 4px 0 4px;
+  }
+}
+
+.transparent {
+  background-color: transparent;
+  border: 1px solid $button-color;
+  color: $button-color;
+  padding-bottom: 0;
+
+  &:hover {
+    background-color: $button-hover;
+    color: $button-hover;
+  }
+
+  svg {
+    color: $button-color;
+  }
+}

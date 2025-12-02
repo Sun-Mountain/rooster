@@ -67,7 +67,7 @@ model ClassDayTime {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  class ClassDetails @relation(fields: [classId], references: [id])
+  class ClassDetails @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@map ("class_day_times") 
 }
@@ -84,7 +84,7 @@ model ClassDetails {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  class Class @relation(fields: [classId], references: [id])
+  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@map ("class_details")
 }

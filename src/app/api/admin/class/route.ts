@@ -1,13 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { createClass } from "@db/class";
+import { createClass, deleteClass } from "@db/class";
 
-interface DayTime {
-  date?: string;
-  weekday?: string;
-  startTime: string;
-  endTime: string;
-}
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession();
@@ -59,3 +53,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 };
+
+export async function DELETE (request: NextRequest) {
+  const session = await getServerSession();
+
+  if (!session || !session.user || session.user.role === "USER") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const classId = searchParams.get("id");
+
+    if (!classId) {
+      return NextResponse.json({ error: "Missing class ID" }, { status: 400 });
+    }
+
+    await deleteClass(classId);
+
+    return NextResponse.json({ message: "Class deleted successfully" }, { status: 200 });
+  } catch (error) {
+    console.error("Error deleting class:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}

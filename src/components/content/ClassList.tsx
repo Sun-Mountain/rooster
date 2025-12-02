@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Class, ClassDetails, ClassDayTime } from "@prisma/client";
 import { ClassForm } from '../forms/Class';
+import { DeleteModal } from "../content/DeleteModal";
 
 interface ClassWithDetails extends Class {
   details: ClassDetails | null;
@@ -42,6 +43,14 @@ export const ClassList = () => {
                 <div className="row-content">
                   <div>{cls.title}</div>
                   <div>{cls.details?.description}</div>
+                </div>
+                <div className="row-content actions">
+                  <DeleteModal
+                    item="class"
+                    itemName={cls.title}
+                    itemId={cls.id}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading} />
                 </div>
               </li>
             ))}

@@ -1,14 +1,17 @@
 [
   {
     "href": "/",
-    "label": "Home"
+    "label": "Home",
+    "public": true
   },
   {
     "href": "/classes",
-    "label": "Classes"
+    "label": "Classes",
+    "public": true
   },
   {
     "href": "/sign-in",
-    "label": "Sign In"
+    "label": "Sign In",
+    "authOnly": false
   }
 ]

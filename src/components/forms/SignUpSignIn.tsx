@@ -164,7 +164,9 @@ export const SignUpSignIn = ({ signUp }: SignInSignUpFormProps) => {
                       disabled={isLoading}
                       errorMsg={signUpErrors.confirmPassword?.errors[0]}
                     />}
-        <Button type="submit" disabled={isLoading}>{signUp ? "Sign Up" : "Sign In"}</Button>
+        <div className="btn-container">
+          <Button type="submit" disabled={isLoading}>{signUp ? "Sign Up" : "Sign In"}</Button>
+        </div>
       </form>
       <div className="links-container">
         {signUp ? (

@@ -35,12 +35,14 @@ enum Status {
 
 model EmergencyContact {
   id            String   @id @default(cuid())
+  userId        String   @unique
   firstName     String
   lastName      String
   relationship  String
   phoneNumber   String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("emergency_contacts")
 }
@@ -48,7 +50,8 @@ model EmergencyContact {
 model UserContact {
   id                      String   @id @default(cuid())
   userId                  String   @unique
-  preferredContactMethod  String
+  preferredContact        Contact
+  email2                  String
   phoneNumber             String
   secondEmail             String?
   addressLine1            String
@@ -59,24 +62,25 @@ model UserContact {
   country                 String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("contact_info")
 }
 
 model User {
-  id              String  @id @default(cuid())
-  email           String  @unique
-  firstName       String
-  lastName        String
-  pronouns        Pronouns
-  otherPronouns   String?
-  password        String
-  contactInfo     UserContact?
-  role            Role    @default(USER)
-  status          Status  @default(ACTIVE)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String  @id @default(cuid())
+  email             String  @unique
+  firstName         String
+  lastName          String
+  pronouns          Pronouns
+  otherPronouns     String?
+  password          String
+  contactInfo       UserContact?
+  emergencyContact  EmergencyContact?
+  role              Role    @default(USER)
+  status            Status  @default(ACTIVE)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@map("users")
 }

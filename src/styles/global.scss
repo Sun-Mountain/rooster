@@ -27,6 +27,8 @@ main {
 
 footer {
   @include base-size;
+  background-color: $footer-bg-color-light;
+  color: $footer-text-color-light;
   min-height: 15vh;
   display: flex;
 }

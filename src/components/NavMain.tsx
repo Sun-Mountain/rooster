@@ -52,7 +52,7 @@ export const NavMain = () => {
           </div>
           {!isMobile && (
             <>
-              {isAdmin ? <Link href="/admin/dashboard">Admin</Link> : <Link className="title" href="/">In The Dark Circus Arts</Link>}
+              {isAdmin ? <Link href="/admin">Admin</Link> : <Link className="title" href="/">In The Dark Circus Arts</Link>}
             </>
           )}
         </div>
@@ -62,7 +62,7 @@ export const NavMain = () => {
               <ul className="drawer-links">
                 {isAdmin && (
                   <li>
-                    <Link href="/admin/dashboard">Admin Dashboard</Link>
+                    <Link href="/admin">Admin Dashboard</Link>
                   </li>
                 )}
                 {links()}

@@ -1,4 +1,5 @@
 @use "@/styles/_resources/_color.scss" as *;
+@use "@/styles/_resources/_variable.scss" as *;
 
 .navigation-content {
   align-items: center;
@@ -50,4 +51,46 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+// Side Navigation
+
+.side-nav-layout {
+  display: flex;
+}
+
+.side-nav-container {
+  border-right: 1px solid $border-color-light;
+  min-width: 220px;
+  max-width: $xxs;
+  padding: 1rem 0;
+}
+
+.side-nav-link-container {
+  a, a:visited {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;;
+
+    &:hover {
+      background-color: $admin-link-hover-bg-color;
+      color: $admin-link-hover-color;
+      text-decoration: none;
+    }
+  }
+
+  .active {
+    background-color: $admin-link-active-bg-color;
+    color: $admin-link-active-color;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .side-nav-container {
+    border-right: none;
+  }
+
+  .side-nav-layout {
+    flex-direction: column;
+  }
 }

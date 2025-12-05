@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 main {
   @include base-size;
-  min-height: 75vh;
+  min-height: 77vh;
 }
 
 footer {
@@ -37,7 +37,7 @@ nav {
   @include base-size;
   background-color: $nav-bg-color-light;
   display: flex;
-  min-height: 10vh;
+  min-height: 8vh;
 }
 
 ul {

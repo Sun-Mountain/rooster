@@ -79,7 +79,6 @@ model User {
   lastName          String
   pronouns          Pronouns @default(NONE_SPECIFIED)
   otherPronouns     String?
-  password          String
   contactInfo       UserContact?
   emergencyContact  EmergencyContact?
   role              Role    @default(USER)

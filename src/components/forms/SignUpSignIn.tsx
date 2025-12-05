@@ -67,6 +67,11 @@ export const SignUpSignIn = ({ signUp }: SignInSignUpFormProps) => {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
+    if (signUp) {
+      setSignUpErrors({});
+    } else {
+      setSignInErrors({});
+    }
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
@@ -95,7 +100,7 @@ export const SignUpSignIn = ({ signUp }: SignInSignUpFormProps) => {
         setIsLoading(false);
         return;
       } else {
-        router.push("/dashboard");
+        router.push("/sign-in");
       }
     } else {
       validation = SignInSchema.safeParse(data);

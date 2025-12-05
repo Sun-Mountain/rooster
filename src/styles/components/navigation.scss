@@ -3,7 +3,7 @@
 .navigation-content {
   align-items: center;
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1rem;
   justify-content: space-between;
   padding: 0 1rem;
   width: 100%;
@@ -21,6 +21,10 @@
   ul {
     display: flex;
     gap: 2rem;
+  }
+  
+  button {
+    padding: 0;
   }
 }
 

@@ -15,6 +15,7 @@
     "@mui/material": "^7.3.5",
     "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.1",
+    "better-auth": "^1.4.5",
     "dotenv": "^17.2.3",
     "next": "16.0.6",
     "next-auth": "^4.24.13",

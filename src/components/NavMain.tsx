@@ -14,6 +14,7 @@ export const NavMain = () => {
   const { data: session } = useSession();
 
   const user = session?.user;
+  const isAdmin = session?.user?.role?.includes("ADMIN") || session?.user?.role?.includes("SUPER");
 
   const links = () => {
     return (
@@ -49,12 +50,23 @@ export const NavMain = () => {
           <div className="logo-container">
             <CircleIcon />
           </div>
-          {!isMobile && <Link className="title" href="/">In The Dark Circus Arts</Link>}
+          {!isMobile && (
+            <>
+              {isAdmin ? <Link href="/admin/dashboard">Admin</Link> : <Link className="title" href="/">In The Dark Circus Arts</Link>}
+            </>
+          )}
         </div>
         <ul>
           {isMobile ? (
             <Drawer>
-              <ul className="drawer-links">{links()}</ul>
+              <ul className="drawer-links">
+                {isAdmin && (
+                  <li>
+                    <Link href="/admin/dashboard">Admin Dashboard</Link>
+                  </li>
+                )}
+                {links()}
+              </ul>
             </Drawer>
           ) : (
             <ul>{links()}</ul>

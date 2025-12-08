@@ -1,0 +1,47 @@
+@use './_resources/color.scss' as *;
+@use './_resources/variable.scss' as *;
+
+@forward './components/navigation.scss';
+
+body {
+  font-family: $font-family-base;
+  background-color: $bg-color-light;
+  color: $text-color-light;
+  margin: 0;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $heading-color-light;
+  font-family: $font-family-base;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  background-color: $slate-gray;
+  color: $seasalt;
+  margin-top: 2rem;
+  min-height: 8vh;
+  padding: 1rem 0; 
+  text-align: center;
+}
+
+main {
+  padding: 2rem;
+  max-width: $xl;
+  margin: 0 auto;
+  min-height: 70vh;
+}
+
+nav {
+  background-color: $nav-bg-color;
+  color: $nav-text-color;
+  min-height: 8vh;
+
+  a, a:visited, h1 {
+    color: $nav-text-color;
+    text-decoration: none;
+  }
+}

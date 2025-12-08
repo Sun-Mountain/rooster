@@ -1,0 +1,27 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+#nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  max-width: $lg;
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+
+    a, a:visited {
+      border-bottom: 1px solid $nav-bg-color;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        border-bottom: 1px solid $gold;
+        color: $gold;
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import * as z from 'zod';
+import { Role } from "../../../generated/prisma/enums";
 
 interface SignInSignUpFormProps {
   signUp?: boolean;

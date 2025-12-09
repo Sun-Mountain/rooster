@@ -63,7 +63,24 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
 
+    const formData = new FormData(event.currentTarget);
+
+    if (signUp) {
+      const res = await signUp.email({
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      });
+
+      if (res.error) {
+        setFormError(res.error.message || "Something went wrong.");
+      } else {
+        router.push("/dashboard");
+      }
+
+    }
   }
 
   return (

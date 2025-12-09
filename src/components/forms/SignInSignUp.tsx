@@ -74,9 +74,18 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    let response, validation;
 
     if (signUp) {
-      const res = await signUpAuth.email({
+      validation = SignUpSchema.safeParse(data);
+      if (!validation.success) {
+        setSignUpErrors(z.treeifyError(validation.error).properties || {});
+        setIsLoading(false);
+        return;
+      }
+      response = await signUpAuth.email({
         name: `${formData.get("firstName")} ${formData.get("lastName")}` as string,
         firstName: formData.get("firstName") as string,
         lastName: formData.get("lastName") as string,
@@ -84,19 +93,25 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
         password: formData.get("password") as string,
       });
 
-      if (res.error) {
-        setFormError(res.error.message || "Something went wrong.");
+      if (response.error) {
+        setFormError(response.error.message || "Something went wrong.");
       } else {
         router.push("/");
       }
     } else {
-      const res = await signInAuth.email({
+      validation = SignInSchema.safeParse(data);
+      if (!validation.success) {
+        setSignInErrors(z.treeifyError(validation.error).properties || {});
+        setIsLoading(false);
+        return;
+      }
+      response = await signInAuth.email({
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       });
 
-      if (res.error) {
-        setFormError(res.error.message || "Something went wrong.");
+      if (response.error) {
+        setFormError(response.error.message || "Something went wrong.");
       } else {
         router.push("/profile");
       }

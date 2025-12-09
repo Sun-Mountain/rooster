@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { AuthLinks } from '@/components/content/AuthLinks';
+import { signUp as signUpAuth } from "@/lib/auth-client";
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -68,8 +69,10 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
     const formData = new FormData(event.currentTarget);
 
     if (signUp) {
-      const res = await signUp.email({
-        name: formData.get("name") as string,
+      const res = await signUpAuth.email({
+        name: `${formData.get("firstName")} ${formData.get("lastName")}` as string,
+        firstName: formData.get("firstName") as string,
+        lastName: formData.get("lastName") as string,
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       });

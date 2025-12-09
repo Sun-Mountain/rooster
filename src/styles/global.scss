@@ -1,6 +1,8 @@
 @use './_resources/color.scss' as *;
 @use './_resources/variable.scss' as *;
 
+@forward './components/buttons.scss';
+@forward './components/forms.scss';
 @forward './components/navigation.scss';
 
 body {

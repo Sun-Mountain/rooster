@@ -1,10 +1,9 @@
-import { AuthLinks } from '@/components/content/AuthLinks';
+import { SignInSignUpForm } from "@/components/forms/SignInSignUp";
 
 export default function SignUpPage() {
   return (
     <>
-      <h1>Sign Up</h1>
-      <AuthLinks />
+      <SignInSignUpForm signUp />
     </>
   );
 }

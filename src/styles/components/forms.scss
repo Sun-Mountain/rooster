@@ -1,0 +1,35 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.form-container {
+  border: $basic-border;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: $md;
+  padding: 2rem;
+
+  button {
+    width: 100%;
+  }
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .links-container {
+    border-top: solid 1px $tekhelet-soft;
+    margin: 2rem auto 1rem auto;
+    padding-top: 2rem;
+    text-align: center;
+    max-width: $xs;
+
+    li {
+      margin: 0.5rem 0;
+    }
+  }
+
+  .text-field-container {
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,25 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+button {
+  background-color: $primary-btn;
+  color: $primary-btn-text;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: $primary-btn-hover;
+    color: $seasalt;
+  }
+
+  &:disabled {
+    background-color: $slate-gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

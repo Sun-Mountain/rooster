@@ -7,9 +7,12 @@ export default async function ProfilePage() {
 
   if (!user) unauthorized();
 
+  console.log(user )
+
   return (
     <>
       Welcome, {user.firstName} {user.lastName}!
+      {user.role}
     </>
   );
 }

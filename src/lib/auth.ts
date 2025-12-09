@@ -1,6 +1,9 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { customSession } from "better-auth/plugins";
+
 import db from '@/lib/prisma';
+
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -21,8 +24,12 @@ export const auth = betterAuth({
         required: true,
         input: true
       },
+      role: {
+        type: 'string',
+        input: false
+      }
     },
-  },
+  }
 })
 
 export type Session = typeof auth.$Infer.Session;

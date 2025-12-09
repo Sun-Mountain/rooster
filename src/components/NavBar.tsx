@@ -17,10 +17,15 @@ const NavBar = () => {
             Home
           </Link>
           {user ? (
-            <Link href="/" className="nav-link" onClick={() => signOut()}>
-              Sign Out
-            </Link>
-          ) :(
+            <>
+              <Link href="/profile" className="nav-link">
+                Profile
+              </Link>
+              <Link href="/" className="nav-link" onClick={() => signOut()}>
+                Sign Out
+              </Link>
+            </>
+          ) : (
             <Link href="/sign-in" className="nav-link">
               Sign In
             </Link>

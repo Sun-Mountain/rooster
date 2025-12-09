@@ -6,6 +6,7 @@ import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { AuthLinks } from '@/components/content/AuthLinks';
 import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -64,6 +65,12 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setFormError(null);
+    if (signUp) {
+      setSignInErrors({});
+    } else {
+      setSignUpErrors({});
+    }
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
@@ -91,15 +98,25 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
       if (res.error) {
         setFormError(res.error.message || "Something went wrong.");
       } else {
-        router.push("/");
+        router.push("/profile");
       }
     }
+    setIsLoading(false);
   }
 
   return (
     <div className="form-container">
-      {formError && <div className="form-error">{formError}</div>}
       <h1>{signUp ? "Sign Up" : "Sign In"}</h1>
+      {formError && (
+        <div className="form-error">
+          <div className="alert-icon">
+            <ReportProblemIcon />
+          </div>
+          <div className="alert-text">
+            {formError}
+          </div>
+        </div>
+      )}
       <form onSubmit={onSubmit}>
         {signUp && <TextField
                       label="First Name"

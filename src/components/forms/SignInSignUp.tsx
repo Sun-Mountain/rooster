@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { AuthLinks } from '@/components/content/AuthLinks';
-import { signUp as signUpAuth } from "@/lib/auth-client";
+import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -80,9 +80,19 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
       if (res.error) {
         setFormError(res.error.message || "Something went wrong.");
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
+    } else {
+      const res = await signInAuth.email({
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      });
 
+      if (res.error) {
+        setFormError(res.error.message || "Something went wrong.");
+      } else {
+        router.push("/");
+      }
     }
   }
 

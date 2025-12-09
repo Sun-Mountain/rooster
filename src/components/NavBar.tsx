@@ -1,8 +1,11 @@
 'use client';
 
 import Link from "next/link";
+import { useSession, signOut } from "@/lib/auth-client";
 
 const NavBar = () => {
+  const { data: session } = useSession();
+  const user = session?.user;
   return (
     <nav>
       <div id="nav-container">
@@ -13,9 +16,15 @@ const NavBar = () => {
           <Link href="/" className="nav-link">
             Home
           </Link>
-          <Link href="/sign-in" className="nav-link">
-            Sign In
-          </Link>
+          {user ? (
+            <Link href="/" className="nav-link" onClick={() => signOut()}>
+              Sign Out
+            </Link>
+          ) :(
+            <Link href="/sign-in" className="nav-link">
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </nav>

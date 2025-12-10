@@ -28,11 +28,6 @@ export const AdminDashLinks = () => {
           Students
         </Link>
       </li>
-      <li>
-        <Link href="/admin/coaches" className={pathname === "/admin/coaches" ? "active" : ""}>
-          Admin & Coaches
-        </Link>
-      </li>
     </ul>
   )
 }

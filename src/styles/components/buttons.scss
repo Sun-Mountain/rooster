@@ -23,3 +23,32 @@ button {
     opacity: 0.6;
   }
 }
+
+.icon {
+  margin: auto 0;
+  padding: 0.5rem;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 4px 4px 0 4px; 
+    fill: currentColor;
+  }
+}
+
+.w-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.transparent {
+  background-color: transparent;
+  border: 1px solid $primary-btn;
+  color: $primary-btn;
+
+  &:hover {
+    background-color: $primary-btn-hover;
+    color: $primary-btn-text;
+  }
+}

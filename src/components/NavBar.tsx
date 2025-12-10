@@ -21,6 +21,9 @@ const NavBar = () => {
               <Link href="/profile" className="nav-link">
                 Profile
               </Link>
+              <Link href="/admin" className="nav-link">
+                Admin Dash    
+              </Link>
               <Link href="/" className="nav-link" onClick={() => signOut()}>
                 Sign Out
               </Link>

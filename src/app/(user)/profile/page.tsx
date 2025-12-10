@@ -1,3 +1,4 @@
+import { SignOutBtn } from '@/components/SignOutBtn';
 import { isSignedIn } from '@/helpers/isSignedIn';
 import { getSession } from '@/lib/get-session';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -14,6 +15,10 @@ export default async function ProfilePage() {
   return (
     <>
       Welcome, {user.firstName} {user.lastName}!
+
+      <div>
+        <SignOutBtn />
+      </div>
 
       {!user.emailVerified && (
         <div className="alert-warning">

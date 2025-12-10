@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
-import { getSession } from "./lib/get-session";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 import { PUBLIC_ROUTES } from "./lib/routes";
 
 export async function proxy(req: NextResponse) {
   const { pathname } = new URL(req.url);
-  const session = await getSession();
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
   const user = session?.user;
 
   if (PUBLIC_ROUTES.includes(pathname)) {

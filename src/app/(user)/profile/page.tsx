@@ -1,14 +1,15 @@
-import { getSession } from "@/lib/get-session";
-import { unauthorized } from "next/navigation";
+import { isSignedIn } from '@/helpers/isSignedIn';
+import { getSession } from '@/lib/get-session';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { notFound } from 'next/navigation';
 
 export default async function ProfilePage() {
+  await isSignedIn();
+
   const session = await getSession();
   const user = session?.user;
 
-  if (!user) unauthorized();
-
-  console.log(user )
+  if (!user) notFound();
 
   return (
     <>

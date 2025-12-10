@@ -12,6 +12,7 @@
   .nav-links {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
 
     a, a:visited {
       border-bottom: 1px solid $nav-bg-color;
@@ -23,6 +24,31 @@
         border-bottom: 1px solid $gold;
         color: $gold;
       }
+    }
+  }
+
+  .MuiAvatar-colorDefault {
+    background-color: $seasalt;
+    color: $tekhelet;
+  }
+
+  .active, .active:visited {
+    border-bottom: 1px solid $nav-text-color !important;
+
+    &:hover {
+      border-bottom: 1px solid $gold !important;
+    }
+
+    .MuiAvatar-colorDefault {
+      background-color: $gold;
+    }
+  }
+
+  .avatar-link {
+    border-bottom: none !important;
+
+    &:hover {
+      border-bottom: none !important;
     }
   }
 }

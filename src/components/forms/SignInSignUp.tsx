@@ -6,7 +6,7 @@ import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { AuthLinks } from '@/components/content/AuthLinks';
 import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import ErrorIcon from '@mui/icons-material/Error';
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -125,7 +125,7 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
       {formError && (
         <div className="form-error">
           <div className="alert-icon">
-            <ReportProblemIcon />
+            <ErrorIcon />
           </div>
           <div className="alert-text">
             {formError}

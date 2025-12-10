@@ -1,0 +1,10 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.alert-warning {
+  background-color: $alert-warning-bg;
+  border: $alert-warning-border;
+  border-radius: $border-radius;
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+}

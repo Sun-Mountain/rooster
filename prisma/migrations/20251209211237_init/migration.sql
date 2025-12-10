@@ -6,6 +6,7 @@ CREATE TABLE "user" (
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailVerified" BOOLEAN NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'user',
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

@@ -1,6 +1,5 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { customSession } from "better-auth/plugins";
 
 import db from '@/lib/prisma';
 
@@ -27,7 +26,7 @@ export const auth = betterAuth({
       role: {
         type: 'string',
         input: false
-      }
+      },
     },
   }
 })

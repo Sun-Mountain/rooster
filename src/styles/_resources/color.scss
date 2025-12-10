@@ -21,6 +21,7 @@ $white: rgba(255, 255, 255, 1);
 $tekhelet-soft: rgba(66, 44, 114, .5);
 $fire-brick-soft: hsla(356, 83%, 41%, 0.05);
 $african-violet-softest: rgba(142, 123, 183, 0.25);
+$mikado-yellow-soft: rgba(255, 195, 0, 0.1);
 
 // Base Colors
 $bg-color-light: $seasalt;
@@ -42,3 +43,6 @@ $primary-btn-hover: $african-violet;
 $alert-error-border: 2px solid $barn-red;
 $alert-error-text: $barn-red;
 $alert-error-bg: $fire-brick-soft;
+
+$alert-warning-border: 2px solid $gold;
+$alert-warning-bg: $mikado-yellow-soft;

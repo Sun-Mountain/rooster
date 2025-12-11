@@ -1,20 +1,14 @@
 'use client';
 
-import Link from "next/link";
-import { usePathname } from 'next/navigation';
 import { useSession } from "@/lib/auth-client";
-import { Avatar } from '@mui/material';
+import { useWindowSize } from "@/helpers/useWindowSize";
+import { Drawer } from "@/components/_ui/Drawer";
+import { MainNavLinks } from "./content/MainNavLinks";
 
 const NavBar = () => {
-  const pathname = usePathname();
+  const { width } = useWindowSize();
   const { data: session } = useSession();
   const user = session?.user;
-
-    function stringAvatar(name: string) {
-      return {
-        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-      };
-    }
 
   return (
     <nav>
@@ -23,22 +17,12 @@ const NavBar = () => {
           <h1 className="nav-logo">Rooster</h1>
         </div>
         <div className="nav-links">
-          <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`}>
-            Home
-          </Link>
-          {user ? (
-            <>
-              <Link href="/admin" className={`nav-link ${pathname === "/dashboard" ? "active" : ""}`}>
-                Admin Panel
-              </Link>
-              <Link href="/profile" className={`nav-link avatar-link ${pathname === "/profile" ? "active" : ""}`}>
-                <Avatar alt={user.name || ''} src={user.image || ''} {...stringAvatar(user.name || '')} />
-              </Link>
-            </>
+          {width && width < 768 ? (
+            <Drawer anchor="right">
+              <MainNavLinks user={user} inDrawer />
+            </Drawer>
           ) : (
-            <Link href="/sign-in" className="nav-link">
-              Sign In
-            </Link>
+            <MainNavLinks user={user} />
           )}
         </div>
       </div>

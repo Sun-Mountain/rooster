@@ -12,7 +12,7 @@ export const SideNavMenu = ({ children }: { children: ReactNode }) => {
       <div className="side-nav-container">
         <div>
           {width && width <= 768 ? (
-            <Drawer anchor="left">
+            <Drawer anchor="left" transparent>
               {children}
             </Drawer>
           ) : (

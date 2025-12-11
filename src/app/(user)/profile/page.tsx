@@ -1,8 +1,8 @@
 import { SignOutBtn } from '@/components/SignOutBtn';
 import { isSignedIn } from '@/helpers/isSignedIn';
 import { getSession } from '@/lib/get-session';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { notFound } from 'next/navigation';
+import { AccountInfoForm } from '@/components/forms/AccountInfo';
 
 export default async function ProfilePage() {
   await isSignedIn();
@@ -14,18 +14,13 @@ export default async function ProfilePage() {
 
   return (
     <>
-      Welcome, {user.firstName} {user.lastName}!
-
+      <div>
+        Welcome, {user.firstName} {user.lastName}!
+      </div>
+      <AccountInfoForm />
       <div>
         <SignOutBtn />
       </div>
-
-      {!user.emailVerified && (
-        <div className="alert-warning">
-          <ReportProblemIcon />
-          Your email address is not verified. Please check your inbox to verify your email.
-        </div>
-      )}
     </>
   );
 }

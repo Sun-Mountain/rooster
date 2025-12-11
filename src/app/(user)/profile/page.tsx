@@ -15,17 +15,19 @@ export default async function ProfilePage() {
 
   if (!user) notFound();
 
+  console.log(user);
+
   return (
     <>
       <h1>Account Information</h1>
       <div>
         Welcome, {user.firstName} {user.lastName}!
       </div>
-      <AccountInfoForm />
+      <AccountInfoForm user={user} />
       <AccountContactForm />
       <AccountAddressForm />
       <AccountEmergencyContactForm />
-      <div>
+      <div className="btn-center">
         <SignOutBtn />
       </div>
     </>

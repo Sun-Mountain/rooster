@@ -24,6 +24,17 @@ button {
   }
 }
 
+.danger {
+  background-color: $danger-btn;
+  border: 1px solid $danger-btn;
+  color: $primary-btn-text;
+
+  &:hover {
+    background-color: $primary-btn-text;
+    color: $danger-btn;
+  }
+}
+
 .icon {
   margin: auto 0;
   padding: 0.5rem;
@@ -38,6 +49,7 @@ button {
 
 .w-icon {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
 }
@@ -50,5 +62,15 @@ button {
   &:hover {
     background-color: $primary-btn-hover;
     color: $primary-btn-text;
+  }
+}
+
+.btn-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  button {
+    width: 50%;
   }
 }

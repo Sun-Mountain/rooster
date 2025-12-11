@@ -14,7 +14,7 @@ enum Role {
 }
 
 model Term {
-  id          String   @id
+  id          String   @id @default(cuid())
   name        String
   description String?
   createdAt   DateTime  @default(now())
@@ -23,14 +23,36 @@ model Term {
   @@map("term")
 }
 
+model ContactAddress {
+  id                String   @id @default(cuid())
+  street1           String
+  street2           String?
+  city              String
+  state             String
+  zip               String
+  country           String @default("USA")
+  secondEmail       String?
+  phone             String
+  preferredContact  String @default("phone")
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId])
+  @@map("contact_address")
+}
+
 model User {
-  id            String    @id
+  id            String    @id @default(cuid())
   name          String
   firstName     String
   lastName      String
   email         String
   emailVerified Boolean
   role          Role      @default(USER)
+  contact       ContactAddress?
+  pronouns      String?
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -42,7 +64,7 @@ model User {
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   expiresAt DateTime
   token     String
   createdAt DateTime  @default(now())
@@ -57,7 +79,7 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
+  id                    String    @id @default(cuid())
   accountId             String
   providerId            String
   userId                String
@@ -76,7 +98,7 @@ model Account {
 }
 
 model Verification {
-  id         String    @id
+  id         String    @id @default(cuid())
   identifier String
   value      String
   expiresAt  DateTime

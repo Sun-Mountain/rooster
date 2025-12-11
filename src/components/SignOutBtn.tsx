@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { signOut } from "@/lib/auth-client";
 import { Button } from "@/components/_ui/Button";
+import { Logout } from '@mui/icons-material';
 
 export const SignOutBtn = () => {
   const router = useRouter();
@@ -13,8 +14,8 @@ export const SignOutBtn = () => {
   }
 
   return (
-    <Button onClick={handleSignOut}>
-      Sign Out
+    <Button onClick={handleSignOut} className="danger w-icon">
+      <Logout /> Sign Out
     </Button>
   )
 }

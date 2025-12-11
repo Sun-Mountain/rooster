@@ -27,6 +27,10 @@ export const auth = betterAuth({
         type: 'string',
         input: false
       },
+      pronouns: {
+        type: 'string',
+        input: true
+      }
     },
   }
 })

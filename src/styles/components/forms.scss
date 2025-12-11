@@ -32,6 +32,21 @@
   .text-field-container {
     margin-bottom: 1rem;
   }
+
+  .flex-fields-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    .text-field-container {
+      flex: 1;
+    }
+  }
+
+  .flex-fields-container+.flex-fields-container {
+    margin-top: 0;
+  }
 }
 
 .form-error {
@@ -55,3 +70,32 @@
     margin: auto 0;
   }
 }
+
+.editor {
+  border: 2px solid $border-color;
+  box-shadow: none;
+  padding: 1rem;
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      max-width: 8rem;
+    }
+  }
+
+  h2,h3 {
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+
+@media screen and (max-width: $sm) {
+  .form-container {
+    .flex-fields-container {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+};

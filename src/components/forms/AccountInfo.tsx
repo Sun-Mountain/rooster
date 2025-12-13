@@ -63,6 +63,9 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
               label="pronouns"
               onChange={handleChange}
             >
+              <MenuItem value="">
+                <em>-</em>
+              </MenuItem>
               <MenuItem value="he/him">He/Him</MenuItem>
               <MenuItem value="she/her">She/Her</MenuItem>
               <MenuItem value="they/them">They/Them</MenuItem>

@@ -53,6 +53,7 @@ model User {
   role          Role      @default(USER)
   contact       ContactAddress?
   pronouns      String?
+  otherPronouns String?
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

@@ -1,10 +1,58 @@
 @use '../_resources/color.scss' as *;
 @use '../_resources/variable.scss' as *;
 
-.alert-warning {
-  background-color: $alert-warning-bg;
-  border: $alert-warning-border;
-  border-radius: $border-radius;
-  margin: 1rem 0;
-  padding: 1rem 1.5rem;
+.alert-container {
+  display: flex;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+
+  .alert-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .alert-text {
+    display: inline-block;
+    vertical-align: middle;
+    margin: auto 0;
+  }
+
+  &.error {
+    background-color: $alert-error-bg;
+    border: $alert-error-border;
+    border-radius: $border-radius;
+    color: $alert-error-text;
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+  }
+
+  &.success {
+    background-color: $alert-success-bg;
+    border: $alert-success-border;
+    border-radius: $border-radius;
+    color: $alert-success-text;
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+  }
+
+  &.warning {
+    background-color: $alert-warning-bg;
+    border: $alert-warning-border;
+    border-radius: $border-radius;
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+  }
+
+  &.transparent {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
 }

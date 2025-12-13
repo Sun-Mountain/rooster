@@ -49,28 +49,6 @@
   }
 }
 
-.form-error {
-  background-color: $alert-error-bg;
-  border: $alert-error-border;
-  border-radius: $border-radius;
-  color: $alert-error-text;
-  display: flex;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-
-  .alert-icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
-
-  .alert-text {
-    display: inline-block;
-    vertical-align: middle;
-    margin: auto 0;
-  }
-}
-
 .editor {
   border: 2px solid $border-color;
   box-shadow: none;

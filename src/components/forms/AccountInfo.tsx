@@ -1,13 +1,11 @@
 'use client';
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/router";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 import { Button } from "@/components/_ui/Button";
 import { TextField } from "@/components/_ui/TextField";
 import { User } from "@/lib/auth";
-import { z } from "zod";
 import { updateUser } from "@/lib/auth-client";
 
 interface AccountInfoFormProps {
@@ -45,15 +43,15 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
   }
 
   return (
-    <div className="form-container editor">
+    <div className="form-container section-container">
       <div className="form-header">
         <h3>Identity</h3>
         {alertMsg && <Alert type={alertMsg.type} className="transparent">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
-          <TextField label="First Name" name="firstName" initialValue={formData.firstName} />
-          <TextField label="Last Name" name="lastName" initialValue={formData.lastName} />
+          <TextField label="First Name*" name="firstName" initialValue={formData.firstName} />
+          <TextField label="Last Name*" name="lastName" initialValue={formData.lastName} />
           <FormControl fullWidth className="text-field-container">
             <InputLabel id="demo-simple-select-label">Pronouns</InputLabel>
             <Select
@@ -69,6 +67,8 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
               <MenuItem value="he/him">He/Him</MenuItem>
               <MenuItem value="she/her">She/Her</MenuItem>
               <MenuItem value="they/them">They/Them</MenuItem>
+              <MenuItem value="ze/zir">Ze/Zir</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
             </Select>
           </FormControl>
         </div>

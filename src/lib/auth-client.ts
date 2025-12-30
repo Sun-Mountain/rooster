@@ -3,6 +3,7 @@ import { inferAdditionalFields } from "better-auth/client/plugins";
 import { adminClient } from "better-auth/client/plugins";
 
 export const {
+  changeEmail,
   signIn,
   signUp,
   signOut,

@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "contact_address" ALTER COLUMN "street1" DROP NOT NULL,
+ALTER COLUMN "city" DROP NOT NULL,
+ALTER COLUMN "state" DROP NOT NULL,
+ALTER COLUMN "zip" DROP NOT NULL,
+ALTER COLUMN "country" DROP NOT NULL,
+ALTER COLUMN "phone" DROP NOT NULL,
+ALTER COLUMN "preferredContact" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "user" ADD COLUMN     "otherPronouns" TEXT;

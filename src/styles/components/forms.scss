@@ -49,7 +49,16 @@
   }
 }
 
-.editor {
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  
+  h3 {
+    margin-bottom: 1rem;
+  }
+}
+
+.section-container {
   border: 2px solid $border-color;
   box-shadow: none;
   padding: 1rem;

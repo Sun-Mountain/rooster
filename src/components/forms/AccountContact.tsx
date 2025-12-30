@@ -33,7 +33,6 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
-          console.log({ data });
           setUserContactInfo({
             primaryEmail: userEmail,
             secondaryEmail: data.secondaryEmail || '',

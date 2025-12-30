@@ -43,6 +43,21 @@ model ContactAddress {
   @@map("contact_address")
 }
 
+model EmergencyContact {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  relationship  String
+  phone         String
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@unique([userId])
+  @@map("emergency_contact")
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -52,6 +67,7 @@ model User {
   emailVerified Boolean
   role          Role      @default(USER)
   contact       ContactAddress?
+  emergency     EmergencyContact?
   pronouns      String?
   otherPronouns String?
   image         String?

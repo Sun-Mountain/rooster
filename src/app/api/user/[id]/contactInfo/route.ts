@@ -3,7 +3,7 @@ import {
   createContactInfo,
   getContactInfoByUserId,
   updateContactInfo
-} from "@/lib/lib/contactInfo";
+} from "@/lib/prisma/contactInfo";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -20,6 +20,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: { msg: 'Contact info not found', status: 404 } });
     }
 
+    console.log({ contactInfo }); // --- IGNORE ---
+
     return NextResponse.json(contactInfo, { status: 200 });
   } catch (error) {
     console.error('Error fetching contact info:', error);
@@ -31,8 +33,6 @@ export async function POST(request: NextRequest) {
   const url = new URL(request.url);
   const userId = url.pathname.split('/')[3];
   const body = await request.json();
-
-  console.log({ body });
 
   if (!userId) {
     return NextResponse.json({ error: 'User ID is required' }, { status: 400 });

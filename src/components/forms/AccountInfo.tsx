@@ -22,16 +22,21 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
   });
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handlePronounChange = (event: SelectChangeEvent) => {
     setPronoun(event.target.value as string);
+  };
+
+  const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => prev ? { ...prev, [name]: value } : prev);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
     const { error } = await updateUser({
       firstName: formData.firstName,
       lastName: formData.lastName,
+      name: `${formData.firstName} ${formData.lastName}`,
       pronouns: pronoun
     });
 
@@ -50,8 +55,18 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
-          <TextField label="First Name*" name="firstName" initialValue={formData.firstName} />
-          <TextField label="Last Name*" name="lastName" initialValue={formData.lastName} />
+          <TextField
+            label="First Name*"
+            name="firstName"
+            initialValue={formData.firstName}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Last Name*"
+            name="lastName"
+            initialValue={formData.lastName}
+            onChange={handleChange}
+          />
           <FormControl fullWidth className="text-field-container">
             <InputLabel id="demo-simple-select-label">Pronouns</InputLabel>
             <Select
@@ -59,7 +74,7 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
               id="demo-simple-select"
               value={pronoun}
               label="pronouns"
-              onChange={handleChange}
+              onChange={handlePronounChange}
             >
               <MenuItem value="">
                 <em>-</em>

@@ -5,7 +5,7 @@ import { TextField } from "@/components/_ui/TextField";
 
 export const AccountEmergencyContactForm = () => {
   return (
-    <div className="form-container editor">
+    <div className="form-container section-container">
       <h3>Emergency Contact</h3>
       <form>
         <div className="flex-fields-container">

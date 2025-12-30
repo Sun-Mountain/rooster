@@ -45,8 +45,6 @@ export const MainNavLinks = ({ user, inDrawer = false }: MainNavLinksProps) => {
             </li>
           )}
           <li>
-          </li>
-          <li>
             <Link href="/profile" className={`nav-link avatar-link ${pathname === "/profile" ? "active" : ""}`}>
               {inDrawer ? 'Profile' : (
                 <Avatar alt={user.name || ''} src={user.image || ''} {...stringAvatar(user.name || '')} />

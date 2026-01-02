@@ -1,0 +1,63 @@
+$tekhelet: rgba(66, 44, 114, 1);
+$african-violet: rgba(142, 123, 183, 1);
+$barn-red: hsla(0, 100%, 24%, 1);
+$fire-brick: hsla(356, 83%, 41%, 1);
+$mikado-yellow: rgba(255, 195, 0, 1);
+$gold: rgba(255, 214, 10, 1);
+$pistachio: rgba(144, 190, 109, 1);
+$zomp: rgba(67, 170, 139, 1);
+$turf-green: rgba(34, 111, 84, 1);
+$pine-teal: rgba(52, 78, 65, 1);
+
+$eerie-black: rgba(33, 37, 41, 1);
+$onyx: rgba(52, 58, 64, 1);
+$outer-space: rgba(73, 80, 87, 1);
+$slate-gray: rgba(108, 117, 125, 1);
+$french-gray-2: rgba(173, 181, 189, 1);
+$french-gray: rgba(206, 212, 218, 1);
+$seasalt: rgba(248, 249, 250, 1);
+$antiflash-white: rgba(233, 236, 239, 1);
+$platinum: rgba(222, 226, 230, 1);
+$white: rgba(255, 255, 255, 1);
+
+$tekhelet-soft: rgba(66, 44, 114, .5);
+$fire-brick-soft: hsla(356, 83%, 41%, 0.05);
+$african-violet-softest: rgba(142, 123, 183, 0.25);
+$mikado-yellow-soft: rgba(255, 195, 0, 0.1);
+$pistachio-soft: rgba(144, 190, 109, 0.25);
+
+// Base Colors
+$bg-color-light: $seasalt;
+$text-color-light: $onyx;
+$heading-color-light: $tekhelet;
+
+$nav-bg-color: $tekhelet;
+$nav-text-color: $seasalt;
+
+$border-color: $french-gray-2;
+$basic-border: 1px solid $border-color;
+$border-radius: 8px;
+
+$primary-btn: $tekhelet;
+$primary-btn-text: $seasalt;
+$primary-btn-hover: $african-violet;
+
+$danger-btn: $fire-brick;
+
+// Alerts
+$alert-error-border: 2px solid $barn-red;
+$alert-error-text: $barn-red;
+$alert-error-bg: $fire-brick-soft;
+
+$alert-warning-border: 2px solid $gold;
+$alert-warning-bg: $mikado-yellow-soft;
+
+$alert-success-border: 2px solid $pine-teal;
+$alert-success-text: $turf-green;
+$alert-success-bg: $pistachio-soft;
+
+// Admin Dashboard
+$admin-link-hover-bg-color: $tekhelet;
+$admin-link-hover-color: $seasalt;
+$admin-link-active-bg-color: $tekhelet-soft;
+$admin-link-active-color: $seasalt;

@@ -47,6 +47,7 @@ export const TextField = ({
         error={!!errorMsg}
         multiline={multiline}
         rows={rows}
+        fullWidth
       />
     </div>
   );

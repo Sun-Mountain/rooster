@@ -1,28 +1,28 @@
 'use client';
 
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { AccountMenu } from "./content/AccountMenu";
+import { useSession } from "@/lib/auth-client";
+import { useWindowSize } from "@/helpers/useWindowSize";
+import { Drawer } from "@/components/_ui/Drawer";
+import { MainNavLinks } from "./content/MainNavLinks";
 
 const NavBar = () => {
+  const { width } = useWindowSize();
   const { data: session } = useSession();
-  const isAuthenticated = !!session;
+  const user = session?.user;
+
   return (
     <nav>
       <div id="nav-container">
-        <Link href="/" className="nav-link">
-          Home
-        </Link>
-
         <div>
-          {isAuthenticated ? (
-            <AccountMenu />
+          <h1 className="nav-logo">Rooster</h1>
+        </div>
+        <div className="nav-links">
+          {width && width < 768 ? (
+            <Drawer anchor="right">
+              <MainNavLinks user={user} inDrawer />
+            </Drawer>
           ) : (
-            <>
-              <Link href="/sign-in" className="nav-link">
-                Sign In
-              </Link>
-            </>
+            <MainNavLinks user={user} />
           )}
         </div>
       </div>

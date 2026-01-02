@@ -2,10 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
-import { AccountFormLinks } from "../content/SignInLinks";
+import { AuthLinks } from '@/components/content/AuthLinks';
+import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
+import ErrorIcon from '@mui/icons-material/Error';
 import * as z from 'zod';
 
 interface SignInSignUpFormProps {
@@ -64,7 +65,12 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setFormError(null);
+    if (signUp) {
+      setSignInErrors({});
+    } else {
+      setSignUpErrors({});
+    }
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
@@ -79,26 +85,19 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
         setIsLoading(false);
         return;
       }
-
-      response = await fetch('/api/user', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      response = await signUpAuth.email({
+        name: `${formData.get("firstName")} ${formData.get("lastName")}` as string,
+        firstName: formData.get("firstName") as string,
+        lastName: formData.get("lastName") as string,
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setFormError(errorData.error || 'An error occurred during sign up. Please try again later.');
-        setIsLoading(false);
-        return;
+      if (response.error) {
+        setFormError(response.error.message || "Something went wrong.");
       } else {
-        router.push('/sign-in');
+        router.push("/");
       }
-
-      setIsLoading(false);
-      return;
     } else {
       validation = SignInSchema.safeParse(data);
       if (!validation.success) {
@@ -106,28 +105,33 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
         setIsLoading(false);
         return;
       }
-
-      response = await signIn("credentials", {
-        email: data.email as string,
-        password: data.password as string,
-        callbackUrl: `${window.location.origin}/`
+      response = await signInAuth.email({
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
       });
 
-      if (response?.error) {
-        setFormError(response.error || 'An error occurred during sign in. Please try again later.');
-        setIsLoading(false);
-        return;
+      if (response.error) {
+        setFormError(response.error.message || "Something went wrong.");
+      } else {
+        router.push("/profile");
       }
-
-      setIsLoading(false);
-      return;
     }
+    setIsLoading(false);
   }
 
   return (
     <div className="form-container">
-      {formError && <div className="form-error">{formError}</div>}
       <h1>{signUp ? "Sign Up" : "Sign In"}</h1>
+      {formError && (
+        <div className="form-error">
+          <div className="alert-icon">
+            <ErrorIcon />
+          </div>
+          <div className="alert-text">
+            {formError}
+          </div>
+        </div>
+      )}
       <form onSubmit={onSubmit}>
         {signUp && <TextField
                       label="First Name"
@@ -166,7 +170,7 @@ export const SignInSignUpForm = ({ signUp }: SignInSignUpFormProps) => {
                     />}
         <Button type="submit" disabled={isLoading}>{signUp ? "Sign Up" : "Sign In"}</Button>
       </form>
-      <AccountFormLinks signUp={signUp} />
+      <AuthLinks />
     </div>
   );
 }

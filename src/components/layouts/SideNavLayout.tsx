@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { SideNavMenu } from "../SideNavMenu";
+import { SideNavMenu } from "@/components/SideNavMenu";
 
 interface SideNavLayoutProps {
   children: ReactNode;

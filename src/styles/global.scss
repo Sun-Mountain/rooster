@@ -1,12 +1,11 @@
-@use './resources/breakpoints' as *;
-@use './resources/color' as *;
-@use './resources/variables' as *;
+@use './_resources/color.scss' as *;
+@use './_resources/variable.scss' as *;
 
+@forward './components/alerts.scss';
 @forward './components/buttons.scss';
 @forward './components/drawer.scss';
 @forward './components/forms.scss';
-@forward './components/modal.scss';
-@forward './components/tables.scss';
+@forward './components/navigation.scss';
 
 body {
   font-family: $font-family-base;
@@ -18,143 +17,98 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $color-primary;
-  margin: 0 0 1rem 0;
-}
-
-main, #footer-container, #nav-container {
-  max-width: $max-main-width;
-  margin: 0 auto;
-  padding: 1rem;
+  color: $heading-color-light;
+  font-family: $font-family-base;
+  margin: 0;
+  padding: 0;
 }
 
 footer {
-  background-color: $footer-bg-color-light;
-  color: $nav-text-color-light;
-
-  .copyright {
-    text-align: center;
-    padding: 1rem 0;
-  }
+  background-color: $slate-gray;
+  color: $seasalt;
+  margin-top: 2rem;
+  min-height: 8vh;
+  padding: 1rem 0; 
+  text-align: center;
 }
 
 main {
-  min-height: 80vh;
-
-  a, a:visited {
-    color: $color-primary;
-    text-decoration: none;
-
-    &:hover {
-      color: $color-primary;
-      text-decoration: underline;
-    }
-  }
+  padding: 2rem;
+  max-width: $xl;
+  margin: 0 auto;
+  min-height: 70vh;
 }
 
 nav {
-  background-color: $nav-bg-color-light;
-  color: $nav-text-color-light;
+  background-color: $nav-bg-color;
+  color: $nav-text-color;
+  min-height: 8vh;
+
+  a, a:visited, h1 {
+    color: $nav-text-color;
+    text-decoration: none;
+  }
+}
+
+a, a:visited {
+  color: $tekhelet;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $african-violet;
+  }
 }
 
 ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-#main-container {
-  padding: 2rem 1rem;
-}
-
-#nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-link {
-  color: $nav-link-color-light;
-  text-decoration: none;
-  margin-right: 1rem;
-
-  &:hover {
-    border-bottom: 2px solid $nav-link-color-light;
-  }
-}
-
-#account-menu-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  min-width: 220px;
-
-  a, a:visited {
-    border-bottom: 1px solid $seasalt;
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-
-    &:hover {
-      border-bottom: 1px solid $color-primary;
-    }
-  }
-}
-
-.content-container {
-  padding: 1rem;
-  width: 100%;
-}
-
-.divider-top {
-  border-top: 1px solid $french-gray;
-  margin: 2rem 0;
-  padding: 2rem 0;
-}
-
 .side-nav-layout {
   display: flex;
-}
 
-.side-nav-container {
-  border-right: 1px solid $border-color-light;
-  min-width: 220px;
-  max-width: $xxs;
-}
-
-.side-nav-link-container {
-  a, a:visited {
-    display: block;
-    padding: 0.5rem;
-    text-decoration: none;;
-
-    &:hover {
-      background-color: $admin-link-hover-bg-color;
-      color: $admin-link-hover-color;
-      text-decoration: none;
-    }
+  .content-container {
+    padding: 1rem;
   }
 
-  .active {
-    background-color: $admin-link-active-bg-color;
-    color: $admin-link-active-color;
+  .side-nav-container {
+    border-right: $basic-border;
+    min-width: 220px;
+    max-width: $xxs;
+
+    .side-nav-link-container {
+      a, a:visited {
+        display: block;
+        padding: 0.5rem;
+        text-decoration: none;;
+
+        &:hover {
+          background-color: $admin-link-hover-bg-color;
+          color: $admin-link-hover-color;
+          text-decoration: none;
+        }
+      }
+
+      .active {
+        background-color: $admin-link-active-bg-color;
+        color: $admin-link-active-color;
+      }
+    }
   }
 }
 
 @media screen and (max-width: $sm) {
-  .side-nav-container {
-    border-right: none;
-  }
-
   .side-nav-layout {
     flex-direction: column;
-  }
 
-  .content-container {
-    padding: 1rem 0rem;
-  }
+    .content-container {
+      padding: 1rem 0;
+    }
 
-  #main-container {
-    padding: 1rem 0.5rem;
+    .side-nav-container {
+      border-right: none;
+    }
   }
 }

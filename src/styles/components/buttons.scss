@@ -1,24 +1,37 @@
-@use '../resources/breakpoints' as *;
-@use '../resources/color' as *;
-@use '../resources/variables' as *;
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
 
 button {
-  background-color: $color-primary;
-  color: $button-text-color;
+  background-color: $primary-btn;
+  color: $primary-btn-text;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: $font-family-base;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
-    background-color: $tekhelet-soft;
+    background-color: $primary-btn-hover;
+    color: $seasalt;
   }
 
-  &[type="submit"] {
-    margin-top: 1.5rem;
+  &:disabled {
+    background-color: $slate-gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.danger {
+  background-color: $danger-btn;
+  border: 1px solid $danger-btn;
+  color: $primary-btn-text;
+
+  &:hover {
+    background-color: $primary-btn-text;
+    color: $danger-btn;
   }
 }
 
@@ -36,75 +49,28 @@ button {
 
 .w-icon {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
 }
 
 .transparent {
   background-color: transparent;
-  border: 1px solid $color-primary;
-  color: $color-primary;
-  padding-bottom: 0;
+  border: 1px solid $primary-btn;
+  color: $primary-btn;
 
   &:hover {
-    background-color: $color-secondary;
-    color: $color-secondary;
+    background-color: $primary-btn-hover;
+    color: $primary-btn-text;
   }
 }
 
-.no-border {
-  background-color: transparent;
-  border: none;
-  color: $color-primary;
-  padding: 0;
-
-  &:hover {
-    background-color: transparent;
-    color: $color-secondary;
-  }
-}
-
-.danger {
-  background-color: $error-color;
-  color: $button-text-color;
-
-  &:hover {
-    background-color: $seasalt;
-    color: $error-color-light;
-  }
-}
-
-.text-style-btn {
-  background-color: transparent;
-  border-bottom: 1px solid $seasalt;
-  color: $color-primary;
-  padding: 0;
-  cursor: pointer;
-
-  &:hover {
-    background-color: transparent;
-    border-bottom: 1px solid $color-secondary;
-    border-radius: 0;
-    color: $color-secondary;
-  }
-
-  &.danger {
-    color: $error-color-light;
-
-    &:hover {
-      color: $error-color;
-      border-bottom: 1px solid $error-color;
-    }
-  }
-}
-
-.with-icon {
-  display: flex;
+.btn-center {
   align-items: center;
-  gap: 0.5rem;
+  display: flex;
+  justify-content: center;
 
-  .icon {
-    margin: 0;
-    padding: 0.5rem;
+  button {
+    width: 50%;
   }
 }

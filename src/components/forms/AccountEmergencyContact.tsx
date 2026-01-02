@@ -1,9 +1,22 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/_ui/Button";
 import { TextField } from "@/components/_ui/TextField";
 
-export const AccountEmergencyContactForm = () => {
+interface AccountEmergencyContactFormProps {
+  userId: string;
+}
+
+interface EmergencyContactInfoProps {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+}
+
+export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactFormProps) => {
+  const [emergencyContactInfo, setEmergencyContactInfo] = useState<EmergencyContactInfoProps | null>(null);
+
   return (
     <div className="form-container section-container">
       <h3>Emergency Contact</h3>

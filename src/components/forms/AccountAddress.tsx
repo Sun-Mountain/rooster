@@ -47,10 +47,6 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
       });
   }, [userId]);
 
-  if (!addressInfo) {
-    return <div>Loading...</div>;
-  }
-
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddressInfo(prev => prev ? { ...prev, [name]: value } : prev);
@@ -64,7 +60,7 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
     const street2 = formData.get('street2') as string;
     const city = formData.get('city') as string;
     const state = formData.get('state') as string;
-    const zip = formData.get('zip') as string;
+    const zip = formData.get('zip') as string
 
     fetch(`/api/user/${userId}/contactInfo`, {
       method: 'PUT',

@@ -45,10 +45,6 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
       });
   }, [userId, userEmail]);
 
-  if (!userContactInfo) {
-    return <div>Loading...</div>;
-  }
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

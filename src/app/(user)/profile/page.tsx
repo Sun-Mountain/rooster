@@ -24,7 +24,7 @@ export default async function ProfilePage() {
       <AccountInfoForm user={user} />
       <AccountContactForm userId={user.id} userEmail={user.email} />
       <AccountAddressForm userId={user.id} />
-      <AccountEmergencyContactForm />
+      <AccountEmergencyContactForm userId={user.id} />
       <div className="btn-center">
         <SignOutBtn />
       </div>

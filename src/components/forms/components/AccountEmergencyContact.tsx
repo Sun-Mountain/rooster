@@ -1,11 +1,14 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, SetStateAction, Dispatch } from "react";
+import { MissingInfoProps } from "@/components/forms/AccountForm";
 import { Button } from "@/components/_ui/Button";
 import { TextField } from "@/components/_ui/TextField";import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 
 interface AccountEmergencyContactFormProps {
   userId: string;
+  setMissingInfo: Dispatch<SetStateAction<MissingInfoProps>>;
+  missingInfo: MissingInfoProps;
 }
 
 interface EmergencyContactInfoProps {
@@ -15,7 +18,7 @@ interface EmergencyContactInfoProps {
   relationship?: string;
 }
 
-export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactFormProps) => {
+export const AccountEmergencyContactForm = ({ userId, setMissingInfo, missingInfo }: AccountEmergencyContactFormProps) => {
   const [emergencyContactInfo, setEmergencyContactInfo] = useState<EmergencyContactInfoProps | null>(null);
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
 
@@ -43,6 +46,16 @@ export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactF
         console.error('Error fetching emergency contact info:', error);
       });
   }, [userId]);
+
+  useEffect(() => {
+    // Update missing info state
+    setMissingInfo(prev => ({
+      ...prev,
+      emergencyFirstName: !emergencyContactInfo?.firstName,
+      emergencyLastName: !emergencyContactInfo?.lastName,
+      emergencyPhone: !emergencyContactInfo?.phone,
+    }));
+  }, [emergencyContactInfo, setMissingInfo]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,7 +102,7 @@ export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactF
     <div className="form-container section-container">
       <div className="form-header">
         <h3>Emergency Contact</h3>
-        {alertMsg && <Alert type={alertMsg.type} className="transparent">{alertMsg.message}</Alert>}
+        {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
@@ -97,11 +110,13 @@ export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactF
             label="First Name*"
             name="firstName"
             initialValue={emergencyContactInfo?.firstName || ''}
+            errorMsg={missingInfo.emergencyFirstName ? "Emergency Contact First Name is required" : undefined}
           />
           <TextField
             label="Last Name*"
             name="lastName"
             initialValue={emergencyContactInfo?.lastName || ''}
+            errorMsg={missingInfo.emergencyLastName ? "Emergency Contact Last Name is required" : undefined}
           />
         </div>
         <div className="flex-fields-container">
@@ -109,6 +124,7 @@ export const AccountEmergencyContactForm = ({ userId }: AccountEmergencyContactF
             label="Phone Number*"
             name="phone"
             initialValue={emergencyContactInfo?.phone || ''}
+            errorMsg={missingInfo.emergencyPhone ? "Emergency Contact Phone Number is required" : undefined}
           />
           <TextField
             label="Relationship"

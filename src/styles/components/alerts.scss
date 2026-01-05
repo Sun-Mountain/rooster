@@ -1,10 +1,8 @@
 @use '../_resources/color.scss' as *;
 @use '../_resources/variable.scss' as *;
 
-.alert-container {
+.alert {
   display: flex;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
   align-items: center;
 
   .alert-icon {
@@ -41,6 +39,7 @@
     background-color: $alert-warning-bg;
     border: $alert-warning-border;
     border-radius: $border-radius;
+    color: $alert-warning-border;
     margin: 1rem 0;
     padding: 1rem 1.5rem;
   }
@@ -48,7 +47,19 @@
   &.transparent {
     background-color: transparent;
     border: none;
-    margin: 0;
+  }
+
+  &.no-padding {
     padding: 0;
+  }
+
+  &.no-margin {
+    margin: 0;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 1rem;
+    padding-left: 1rem;
   }
 }

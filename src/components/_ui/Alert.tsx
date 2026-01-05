@@ -33,7 +33,7 @@ export const Alert = ({ children, type, className }: AlertProps) => {
   }
 
   return (
-    <div className={`alert-container ${type} ${className || ''}`}>
+    <div className={`alert ${type} ${className || ''}`}>
       <div className="alert-icon">
         {icon()}
       </div>

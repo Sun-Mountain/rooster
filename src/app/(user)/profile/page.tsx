@@ -2,10 +2,10 @@ import { SignOutBtn } from '@/components/SignOutBtn';
 import { isSignedIn } from '@/helpers/isSignedIn';
 import { getSession } from '@/lib/get-session';
 import { notFound } from 'next/navigation';
-import { AccountInfoForm } from '@/components/forms/AccountInfo';
 import { AccountContactForm } from '@/components/forms/AccountContact';
 import { AccountAddressForm } from '@/components/forms/AccountAddress';
 import { AccountEmergencyContactForm } from '@/components/forms/AccountEmergencyContact';
+import { AccountInfoForm } from '@/components/forms/AccountInfo';
 
 export default async function ProfilePage() {
   await isSignedIn();

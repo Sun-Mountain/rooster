@@ -1,6 +1,9 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, SetStateAction, Dispatch } from "react";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+
+import { MissingInfoProps } from "@/components/forms/AccountForm";
 import { Button } from "@/components/_ui/Button";
 import { TextField } from "@/components/_ui/TextField";
 import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
@@ -8,15 +11,18 @@ import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 interface AccountContactFormProps {
   userId: string;
   userEmail: string;
+  setMissingInfo: Dispatch<SetStateAction<MissingInfoProps>>;
+  missingInfo: MissingInfoProps;
 }
 
 interface AccountContactInfoProps {
   primaryEmail: string;
   secondaryEmail?: string;
   phone: string;
+  preferredContact?: string;
 }
 
-export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProps
+export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingInfo }: AccountContactFormProps
 ) => {
   const [userContactInfo, setUserContactInfo] = useState<AccountContactInfoProps | null>(null);
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
@@ -32,11 +38,13 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
     })
       .then(response => response.json())
       .then(data => {
+        console.log('Fetched contact info:', data);
         if (!data.error) {
           setUserContactInfo({
             primaryEmail: userEmail,
             secondaryEmail: data.secondaryEmail || '',
             phone: data.phone || '',
+            preferredContact: data.preferredContact || '',
           });
         }
       })
@@ -45,12 +53,27 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
       });
   }, [userId, userEmail]);
 
+  useEffect(() => {
+    // Update missing info state
+    setMissingInfo(prev => ({
+      ...prev,
+      userPhone: !userContactInfo?.phone,
+    }));
+  }, [userContactInfo, setMissingInfo]);
+
+  const handleContactMethodChange = (event: SelectChangeEvent) => {
+    if (userContactInfo) {
+      setUserContactInfo({ ...userContactInfo, preferredContact: event.target.value as string });
+    }
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const secondaryEmail = formData.get('secondaryEmail') as string;
     const phone = formData.get('phone') as string;
+    const preferredContact = formData.get('preferredContact') as string;
 
     if (!userContactInfo) {
       // Create new contact info
@@ -62,6 +85,7 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
         body: JSON.stringify({
           secondaryEmail,
           phone,
+          preferredContact
         }),
       })
         .then(async (res) => {
@@ -88,6 +112,7 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
         body: JSON.stringify({
           secondaryEmail,
           phone,
+          preferredContact,
         }),
       })
         .then(async (res) => {
@@ -105,22 +130,51 @@ export const AccountContactForm = ({ userId, userEmail }: AccountContactFormProp
           setAlertMsg({ type: 'error', message: 'An unexpected error occurred.' });
         });
     }
-
   };
 
   return (
     <div className="form-container section-container">
       <div className="form-header">
         <h3>Contact</h3>
-        {alertMsg && <Alert type={alertMsg.type} className="transparent">{alertMsg.message}</Alert>}
+        {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={onSubmit}>
         <div className="flex-fields-container">
-          <TextField label="Primary Email*" name="primaryEmail" initialValue={userEmail} disabled />
-          <TextField label="Secondary Email" name="secondaryEmail" initialValue={userContactInfo?.secondaryEmail || ''} />
+          <TextField
+            label="Primary Email*"
+            name="primaryEmail"
+            initialValue={userEmail}
+            disabled
+          />
+          <TextField
+            label="Secondary Email"
+            name="secondaryEmail"
+            initialValue={userContactInfo?.secondaryEmail || ''}
+          />
         </div>
-        <div>
-          <TextField label="Phone Number*" name="phone" initialValue={userContactInfo?.phone || ''} />
+        <div className="flex-fields-container">
+          <TextField
+            label="Phone Number*"
+            name="phone"
+            initialValue={userContactInfo?.phone || ''}
+            errorMsg={missingInfo.userPhone ? "Phone number is required" : undefined}
+          />
+          <FormControl fullWidth className="text-field-container">
+            <InputLabel id="demo-simple-select-label">Preferred Contact</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={userContactInfo?.preferredContact || ''}
+              label="preferredContact"
+              name="preferredContact"
+              onChange={handleContactMethodChange}
+            >
+              <MenuItem value="phone">Phone</MenuItem>
+              <MenuItem value="text">Text</MenuItem>
+              <MenuItem value="email">Email</MenuItem>
+              <MenuItem value="secondaryEmail">Secondary Email</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div className="btn-container">
           <Button type="submit" className="btn btn-primary">Update</Button>

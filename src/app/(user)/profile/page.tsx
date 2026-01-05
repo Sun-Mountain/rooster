@@ -2,10 +2,10 @@ import { SignOutBtn } from '@/components/SignOutBtn';
 import { isSignedIn } from '@/helpers/isSignedIn';
 import { getSession } from '@/lib/get-session';
 import { notFound } from 'next/navigation';
-import { AccountForm } from '@/components/forms/UserAccount';
 import { AccountContactForm } from '@/components/forms/AccountContact';
 import { AccountAddressForm } from '@/components/forms/AccountAddress';
 import { AccountEmergencyContactForm } from '@/components/forms/AccountEmergencyContact';
+import { AccountInfoForm } from '@/components/forms/AccountInfo';
 
 export default async function ProfilePage() {
   await isSignedIn();
@@ -21,7 +21,10 @@ export default async function ProfilePage() {
       <div>
         Welcome, {user.firstName} {user.lastName}!
       </div>
-      <AccountForm user={user} />
+      <AccountInfoForm user={user} />
+      <AccountContactForm userId={user.id} userEmail={user.email} />
+      <AccountAddressForm userId={user.id} />
+      <AccountEmergencyContactForm userId={user.id} />
       <div className="btn-center">
         <SignOutBtn />
       </div>

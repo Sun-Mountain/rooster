@@ -45,10 +45,10 @@ model ContactAddress {
 
 model EmergencyContact {
   id            String    @id @default(cuid())
-  firstName     String
-  lastName      String
+  firstName     String?
+  lastName      String?
   relationship  String?
-  phone         String
+  phone         String?
   userId        String
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime  @default(now())

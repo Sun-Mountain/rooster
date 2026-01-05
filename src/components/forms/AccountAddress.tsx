@@ -63,7 +63,7 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
     const zip = formData.get('zip') as string
 
     fetch(`/api/user/${userId}/contactInfo`, {
-      method: 'PUT',
+      method: addressInfo ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -99,7 +99,7 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
           <TextField
-            label="Street 1"
+            label="Street 1*"
             name="street1"
             initialValue={addressInfo?.street1 || ''}
             onChange={handleChange}
@@ -113,19 +113,19 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
         </div>
         <div className="flex-fields-container">
           <TextField 
-            label="City"
+            label="City*"
             name="city"
             initialValue={addressInfo?.city || ''}
             onChange={handleChange}
           />
           <TextField
-            label="State"
+            label="State*"
             name="state"
             initialValue={addressInfo?.state || ''}
             onChange={handleChange}
           />
           <TextField
-            label="Zip Code"
+            label="Zip Code*"
             name="zip"
             initialValue={addressInfo?.zip || ''}
             onChange={handleChange}

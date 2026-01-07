@@ -10,6 +10,8 @@ interface Term {
   id: string;
   name: string;
   description: string | null;
+  startDate: string;
+  endDate: string;
 }
 
 export default function EditTermPage() {
@@ -22,14 +24,16 @@ export default function EditTermPage() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    startDate: "",
+    endDate: "",
   });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchTerm();
+    fetchTerm(id);
   }, [id]);
 
-  const fetchTerm = async () => {
+  const fetchTerm = async (id: string) => {
     try {
       setLoading(true);
       const response = await fetch(`/api/term/${id}`);
@@ -38,6 +42,8 @@ export default function EditTermPage() {
       setFormData({
         name: term.name,
         description: term.description || "",
+        startDate: term.startDate.split("T")[0],
+        endDate: term.endDate.split("T")[0],
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load term");
@@ -105,6 +111,26 @@ export default function EditTermPage() {
             }
             multiline
             rows={4}
+          />
+
+          <TextField
+            label="Start Date"
+            name="startDate"
+            type="date"
+            initialValue={formData.startDate}
+            onChange={(e) =>
+              setFormData({ ...formData, startDate: e.target.value })
+            }
+          />
+
+          <TextField
+            label="End Date"
+            name="endDate"
+            type="date"
+            initialValue={formData.endDate}
+            onChange={(e) =>
+              setFormData({ ...formData, endDate: e.target.value })
+            }
           />
 
           {error && (

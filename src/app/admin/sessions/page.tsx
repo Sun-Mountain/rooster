@@ -18,6 +18,8 @@ interface Term {
   id: string;
   name: string;
   description: string | null;
+  startDate: string;
+  endDate: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -30,6 +32,8 @@ export default function AdminSessionsPage() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    startDate: "",
+    endDate: "",
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -70,7 +74,7 @@ export default function AdminSessionsPage() {
         throw new Error(errorData.error || "Failed to create term");
       }
 
-      setFormData({ name: "", description: "" });
+      setFormData({ name: "", description: "", startDate: "", endDate: "" });
       await fetchTerms();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create term");
@@ -102,6 +106,32 @@ export default function AdminSessionsPage() {
             }
             multiline
             rows={4}
+          />
+
+          <TextField
+            label="Start Date"
+            name="startDate"
+            type="date"
+            initialValue={formData.startDate}
+            onChange={(e) =>
+              setFormData({ ...formData, startDate: e.target.value })
+            }
+            InputLabelProps={{
+              shrink: true, // Forces the label to move to the top
+            }}
+          />
+
+          <TextField
+            label="End Date"
+            name="endDate"
+            type="date"
+            initialValue={formData.endDate}
+            onChange={(e) =>
+              setFormData({ ...formData, endDate: e.target.value })
+            }
+            InputLabelProps={{
+              shrink: true, // Forces the label to move to the top
+            }}
           />
 
           {error && (
@@ -141,6 +171,14 @@ export default function AdminSessionsPage() {
                       {term.description}
                     </Typography>
                   )}
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    component="div"
+                  >
+                    Start: {new Date(term.startDate).toLocaleDateString()} -
+                    End: {new Date(term.endDate).toLocaleDateString()}
+                  </Typography>
                   <Typography
                     variant="caption"
                     color="text.secondary"

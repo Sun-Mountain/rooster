@@ -1,7 +1,10 @@
-'use client';
+"use client";
 
 import { ChangeEvent, useState } from "react";
-import { TextField as TextFieldComponent } from "@mui/material";
+import {
+  TextField as TextFieldComponent,
+  InputLabelProps,
+} from "@mui/material";
 
 interface TextFieldProps {
   label: string;
@@ -10,21 +13,23 @@ interface TextFieldProps {
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: 'text' | 'password' | 'email' | 'number';
+  type?: "text" | "password" | "email" | "number" | "date";
   errorMsg?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  InputLabelProps?: InputLabelProps;
 }
 
 export const TextField = ({
   label,
   name,
-  initialValue = '',
+  initialValue = "",
   disabled = false,
   type,
   multiline = false,
   rows,
   errorMsg,
-  onChange
+  onChange,
+  InputLabelProps,
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
 
@@ -48,7 +53,8 @@ export const TextField = ({
         multiline={multiline}
         rows={rows}
         fullWidth
+        slotProps={{ inputLabel: InputLabelProps }}
       />
     </div>
   );
-}
+};

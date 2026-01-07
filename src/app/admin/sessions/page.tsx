@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Typography,
@@ -22,6 +23,7 @@ interface Term {
 }
 
 export default function AdminSessionsPage() {
+  const router = useRouter();
   const [terms, setTerms] = useState<Term[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -153,6 +155,15 @@ export default function AdminSessionsPage() {
                   >
                     Updated: {new Date(term.updatedAt).toLocaleDateString()}
                   </Typography>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      onClick={() =>
+                        router.push(`/admin/sessions/${term.id}/edit`)
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </Box>
                 </CardContent>
               </Card>
             ))}

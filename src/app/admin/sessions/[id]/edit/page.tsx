@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { Alert, CircularProgress, Box } from "@mui/material";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { Checkbox } from "@/components/_ui/Checkbox";
+import { Alert } from "@/components/_ui/Alert";
 
 interface Term {
   id: string;
@@ -87,9 +87,7 @@ export default function EditTermPage() {
   if (loading) {
     return (
       <div className="form-container">
-        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-          <CircularProgress />
-        </Box>
+        <h1>Loading...</h1>
       </div>
     );
   }
@@ -138,21 +136,15 @@ export default function EditTermPage() {
             }
           />
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 2 }}>
-            <Checkbox
-              checked={formData.live}
-              onChange={(e) =>
-                setFormData({ ...formData, live: e.target.checked })
-              }
-            />
-            <label htmlFor="live">Live (Active Session)</label>
-          </Box>
+          <Checkbox
+            checked={formData.live}
+            onChange={(e) =>
+              setFormData({ ...formData, live: e.target.checked })
+            }
+          />
+          <label htmlFor="live">Live (Active Session)</label>
 
-          {error && (
-            <Alert severity="error" onClose={() => setError(null)}>
-              {error}
-            </Alert>
-          )}
+          {error && <Alert type="error">{error}</Alert>}
 
           <div className="flex-fields-container">
             <Button type="submit" disabled={submitting}>

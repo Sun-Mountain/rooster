@@ -2,17 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Alert,
-  CircularProgress,
-  Stack,
-} from "@mui/material";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
+import { Alert } from "@/components/_ui/Alert";
 
 interface Term {
   id: string;
@@ -142,24 +134,18 @@ export default function AdminSessionsPage() {
             }}
           />
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 2 }}>
-            <input
-              type="checkbox"
-              id="live"
-              name="live"
-              checked={formData.live}
-              onChange={(e) =>
-                setFormData({ ...formData, live: e.target.checked })
-              }
-            />
-            <label htmlFor="live">Live (Active Session)</label>
-          </Box>
+          <input
+            type="checkbox"
+            id="live"
+            name="live"
+            checked={formData.live}
+            onChange={(e) =>
+              setFormData({ ...formData, live: e.target.checked })
+            }
+          />
+          <label htmlFor="live">Live (Active Session)</label>
 
-          {error && (
-            <Alert severity="error" onClose={() => setError(null)}>
-              {error}
-            </Alert>
-          )}
+          {error && <Alert type="error">{error}</Alert>}
 
           <Button type="submit" disabled={submitting}>
             {submitting ? "Creating..." : "Create Session"}
@@ -170,71 +156,34 @@ export default function AdminSessionsPage() {
       <section>
         <h2>Sessions</h2>
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-            <CircularProgress />
-          </Box>
+          <p>loading...</p>
         ) : terms.length === 0 ? (
           <p>No sessions found.</p>
         ) : (
-          <Stack spacing={2} component="section">
+          <section>
             {terms.map((term) => (
-              <Card key={term.id} variant="outlined">
-                <CardContent>
-                  <Typography variant="h6" component="h3" gutterBottom>
-                    {term.name}
-                  </Typography>
-                  {term.description && (
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      paragraph
-                    >
-                      {term.description}
-                    </Typography>
-                  )}
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    component="div"
-                  >
-                    Start: {new Date(term.startDate).toLocaleDateString()} -
-                    End: {new Date(term.endDate).toLocaleDateString()}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color={term.live ? "success.main" : "text.secondary"}
-                    component="div"
-                    fontWeight={term.live ? "bold" : "normal"}
-                  >
-                    Status: {term.live ? "Live" : "Inactive"}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    component="div"
-                  >
-                    Created: {new Date(term.createdAt).toLocaleDateString()}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    component="div"
-                  >
-                    Updated: {new Date(term.updatedAt).toLocaleDateString()}
-                  </Typography>
-                  <Box sx={{ mt: 2 }}>
-                    <Button
-                      onClick={() =>
-                        router.push(`/admin/sessions/${term.id}/edit`)
-                      }
-                    >
-                      Edit
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
+              <article key={term.id}>
+                <h4>{term.name}</h4>
+                {term.description && <p>{term.description}</p>}
+                <div>
+                  Start: {new Date(term.startDate).toLocaleDateString()} - End:{" "}
+                  {new Date(term.endDate).toLocaleDateString()}
+                </div>
+                <div>Status: {term.live ? "Live" : "Inactive"}</div>
+                <div>
+                  Created: {new Date(term.createdAt).toLocaleDateString()}
+                </div>
+                <div>
+                  Updated: {new Date(term.updatedAt).toLocaleDateString()}
+                </div>
+                <Button
+                  onClick={() => router.push(`/admin/sessions/${term.id}/edit`)}
+                >
+                  Edit
+                </Button>
+              </article>
             ))}
-          </Stack>
+          </section>
         )}
       </section>
     </div>

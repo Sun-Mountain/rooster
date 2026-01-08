@@ -24,8 +24,8 @@ export const AdminDashLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/admin/students" className={pathname === "/admin/students" ? "active" : ""}>
-          Students
+        <Link href="/admin/users" className={pathname === "/admin/users" ? "active" : ""}>
+          Users
         </Link>
       </li>
     </ul>

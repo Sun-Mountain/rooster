@@ -22,6 +22,17 @@ button {
     cursor: not-allowed;
     opacity: 0.6;
   }
+
+  .transparent {
+    background-color: transparent;
+    border: 1px solid $primary-btn;
+    color: $primary-btn;
+
+    &:hover {
+      background-color: $primary-btn-hover;
+      color: $primary-btn-text;
+    }
+  }
 }
 
 .danger {
@@ -52,17 +63,6 @@ button {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-}
-
-.transparent {
-  background-color: transparent;
-  border: 1px solid $primary-btn;
-  color: $primary-btn;
-
-  &:hover {
-    background-color: $primary-btn-hover;
-    color: $primary-btn-text;
-  }
 }
 
 .btn-center {

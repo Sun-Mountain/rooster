@@ -1,12 +1,15 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useEffect, useState, SetStateAction, Dispatch } from "react";
+import { MissingInfoProps } from "@/components/forms/AccountForm";
 import { Button } from "@/components/_ui/Button";
 import { TextField } from "@/components/_ui/TextField";
 import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 
 interface AccountAddressFormProps {
   userId: string;
+  setMissingInfo: Dispatch<SetStateAction<MissingInfoProps>>;
+  missingInfo: MissingInfoProps;
 }
 
 interface AddressInfoProps {
@@ -17,7 +20,7 @@ interface AddressInfoProps {
   zip: string;
 }
 
-export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
+export const AccountAddressForm = ({ userId, setMissingInfo, missingInfo }: AccountAddressFormProps) => {
   const [addressInfo, setAddressInfo] = useState<AddressInfoProps | null>(null);
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
 
@@ -47,6 +50,17 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
       });
   }, [userId]);
 
+  useEffect(() => {
+    // Update missing info state
+    setMissingInfo(prev => ({
+      ...prev,
+      street1: !addressInfo?.street1,
+      city: !addressInfo?.city,
+      state: !addressInfo?.state,
+      zip: !addressInfo?.zip,
+    }));
+  }, [addressInfo, setMissingInfo]);
+
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddressInfo(prev => prev ? { ...prev, [name]: value } : prev);
@@ -63,7 +77,7 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
     const zip = formData.get('zip') as string
 
     fetch(`/api/user/${userId}/contactInfo`, {
-      method: 'PUT',
+      method: addressInfo ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -94,15 +108,16 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
     <div className="form-container section-container">
       <div className="form-header">
         <h3>Address</h3>
-        {alertMsg && <Alert type={alertMsg.type} className="transparent">{alertMsg.message}</Alert>}
+        {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
           <TextField
-            label="Street 1"
+            label="Street 1*"
             name="street1"
             initialValue={addressInfo?.street1 || ''}
             onChange={handleChange}
+            errorMsg={missingInfo.street1 ? "Street address is required" : undefined}
           />
           <TextField
             label="Street 2"
@@ -113,22 +128,25 @@ export const AccountAddressForm = ({ userId }: AccountAddressFormProps) => {
         </div>
         <div className="flex-fields-container">
           <TextField 
-            label="City"
+            label="City*"
             name="city"
             initialValue={addressInfo?.city || ''}
             onChange={handleChange}
+            errorMsg={missingInfo.city ? "City is required" : undefined}
           />
           <TextField
-            label="State"
+            label="State*"
             name="state"
             initialValue={addressInfo?.state || ''}
             onChange={handleChange}
+            errorMsg={missingInfo.state ? "State is required" : undefined}
           />
           <TextField
-            label="Zip Code"
+            label="Zip Code*"
             name="zip"
             initialValue={addressInfo?.zip || ''}
             onChange={handleChange}
+            errorMsg={missingInfo.zip ? "Zip code is required" : undefined}
           />
         </div>
         <div className="btn-container">

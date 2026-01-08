@@ -1,6 +1,7 @@
 'use client';
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState, Dispatch, SetStateAction } from "react";
+import { MissingInfoProps } from "@/components/forms/AccountForm";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 import { Button } from "@/components/_ui/Button";
@@ -10,9 +11,11 @@ import { updateUser } from "@/lib/auth-client";
 
 interface AccountInfoFormProps {
   user: User;
+  setMissingInfo: Dispatch<SetStateAction<MissingInfoProps>>;
+  missingInfo: MissingInfoProps;
 }
 
-export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
+export const AccountInfoForm = ({ user, setMissingInfo, missingInfo }: AccountInfoFormProps) => {
   // const router = useRouter();
   const [pronoun, setPronoun] = useState(user.pronouns || '');
   const [formData, setFormData] = useState({
@@ -21,6 +24,15 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
     pronouns: pronoun
   });
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
+
+  useEffect(() => {
+    // Update missing info state
+    setMissingInfo(prev => ({
+      ...prev,
+      firstName: !formData.firstName,
+      lastName: !formData.lastName,
+    }));
+  }, [formData, setMissingInfo]);
 
   const handlePronounChange = (event: SelectChangeEvent) => {
     setPronoun(event.target.value as string);
@@ -51,7 +63,7 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
     <div className="form-container section-container">
       <div className="form-header">
         <h3>Identity</h3>
-        {alertMsg && <Alert type={alertMsg.type} className="transparent">{alertMsg.message}</Alert>}
+        {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex-fields-container">
@@ -60,12 +72,14 @@ export const AccountInfoForm = ({ user }: AccountInfoFormProps) => {
             name="firstName"
             initialValue={formData.firstName}
             onChange={handleChange}
+            errorMsg={missingInfo.firstName ? "First name is required" : undefined}
           />
           <TextField
             label="Last Name*"
             name="lastName"
             initialValue={formData.lastName}
             onChange={handleChange}
+            errorMsg={missingInfo.lastName ? "Last name is required" : undefined}
           />
           <FormControl fullWidth className="text-field-container">
             <InputLabel id="demo-simple-select-label">Pronouns</InputLabel>

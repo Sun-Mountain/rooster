@@ -14,8 +14,7 @@ pnpm dev
 bun dev
 ```
 
-`prisma generate` //this will be commited
-`prisma db push`
+Initially and on any change the `prisma/schema.prisma` file run `prisma generate` to update a local development database run `prisma db push`.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

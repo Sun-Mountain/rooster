@@ -139,16 +139,18 @@ export default function EditTermPage() {
             </Alert>
           )}
 
-          <Button type="submit" disabled={submitting}>
-            {submitting ? "Updating..." : "Update Term"}
-          </Button>
-          <Button
-            type="button"
-            onClick={() => router.push("/admin/sessions")}
-            disabled={submitting}
-          >
-            Cancel
-          </Button>
+          <div className="flex-fields-container">
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Updating..." : "Update Term"}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => router.push("/admin/sessions")}
+              disabled={submitting}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       </section>
     </div>

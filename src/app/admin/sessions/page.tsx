@@ -89,7 +89,7 @@ export default function AdminSessionsPage() {
 
       <section>
         <form onSubmit={handleSubmit} noValidate>
-          <h2>Create New Term</h2>
+          <h2>Create New Session</h2>
           <TextField
             label="Name"
             name="name"
@@ -141,19 +141,19 @@ export default function AdminSessionsPage() {
           )}
 
           <Button type="submit" disabled={submitting}>
-            {submitting ? "Creating..." : "Create Term"}
+            {submitting ? "Creating..." : "Create Session"}
           </Button>
         </form>
       </section>
 
       <section>
-        <h2>Current Terms</h2>
+        <h2>Sessions</h2>
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
             <CircularProgress />
           </Box>
         ) : terms.length === 0 ? (
-          <p>No terms found.</p>
+          <p>No sessions found.</p>
         ) : (
           <Stack spacing={2} component="section">
             {terms.map((term) => (

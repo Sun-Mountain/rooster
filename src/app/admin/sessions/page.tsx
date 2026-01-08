@@ -20,6 +20,7 @@ interface Term {
   description: string | null;
   startDate: string;
   endDate: string;
+  live: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -34,6 +35,7 @@ export default function AdminSessionsPage() {
     description: "",
     startDate: "",
     endDate: "",
+    live: false,
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -74,7 +76,13 @@ export default function AdminSessionsPage() {
         throw new Error(errorData.error || "Failed to create term");
       }
 
-      setFormData({ name: "", description: "", startDate: "", endDate: "" });
+      setFormData({
+        name: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        live: false,
+      });
       await fetchTerms();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create term");
@@ -134,6 +142,19 @@ export default function AdminSessionsPage() {
             }}
           />
 
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 2 }}>
+            <input
+              type="checkbox"
+              id="live"
+              name="live"
+              checked={formData.live}
+              onChange={(e) =>
+                setFormData({ ...formData, live: e.target.checked })
+              }
+            />
+            <label htmlFor="live">Live (Active Session)</label>
+          </Box>
+
           {error && (
             <Alert severity="error" onClose={() => setError(null)}>
               {error}
@@ -178,6 +199,14 @@ export default function AdminSessionsPage() {
                   >
                     Start: {new Date(term.startDate).toLocaleDateString()} -
                     End: {new Date(term.endDate).toLocaleDateString()}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color={term.live ? "success.main" : "text.secondary"}
+                    component="div"
+                    fontWeight={term.live ? "bold" : "normal"}
+                  >
+                    Status: {term.live ? "Live" : "Inactive"}
                   </Typography>
                   <Typography
                     variant="caption"

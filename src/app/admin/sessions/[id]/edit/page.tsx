@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { Alert, CircularProgress, Box } from "@mui/material";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
+import { Checkbox } from "@/components/_ui/Checkbox";
 
 interface Term {
   id: string;
@@ -12,6 +13,7 @@ interface Term {
   description: string | null;
   startDate: string;
   endDate: string;
+  live: boolean;
 }
 
 export default function EditTermPage() {
@@ -26,6 +28,7 @@ export default function EditTermPage() {
     description: "",
     startDate: "",
     endDate: "",
+    live: false,
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -39,11 +42,13 @@ export default function EditTermPage() {
       const response = await fetch(`/api/term/${id}`);
       if (!response.ok) throw new Error("Failed to fetch term");
       const term: Term = await response.json();
+      console.log(term);
       setFormData({
         name: term.name,
         description: term.description || "",
         startDate: term.startDate.split("T")[0],
         endDate: term.endDate.split("T")[0],
+        live: term.live,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load term");
@@ -132,6 +137,16 @@ export default function EditTermPage() {
               setFormData({ ...formData, endDate: e.target.value })
             }
           />
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 2 }}>
+            <Checkbox
+              checked={formData.live}
+              onChange={(e) =>
+                setFormData({ ...formData, live: e.target.checked })
+              }
+            />
+            <label htmlFor="live">Live (Active Session)</label>
+          </Box>
 
           {error && (
             <Alert severity="error" onClose={() => setError(null)}>

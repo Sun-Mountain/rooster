@@ -6,6 +6,8 @@
 @forward './components/drawer.scss';
 @forward './components/forms.scss';
 @forward './components/navigation.scss';
+@forward './components/profile.scss';
+@forward './components/tables.scss';
 
 body {
   font-family: $font-family-base;
@@ -71,6 +73,7 @@ ul {
 
   .content-container {
     padding: 1rem;
+    width: 100%;
   }
 
   .side-nav-container {
@@ -110,5 +113,22 @@ ul {
     .side-nav-container {
       border-right: none;
     }
+  }
+}
+
+.back-link {
+  color: $tekhelet;
+  display: inline-block;
+  font-size: 15px;
+  margin-bottom: 1rem;
+
+  &:hover {
+    color: $african-violet;
+    text-decoration: none;
+  }
+
+  svg {
+    margin-right: 0.25rem;
+    vertical-align: middle;
   }
 }

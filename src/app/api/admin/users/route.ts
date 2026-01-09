@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { getAllUsers } from "@/lib/prisma/user";
 
 export async function GET() {

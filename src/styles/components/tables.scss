@@ -1,0 +1,41 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.table-container {
+  width: 100%;
+  margin-top: 2rem;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: $table-header-bg;
+      color: $table-header-text;
+    }
+
+    tr {
+      border-bottom: $basic-border;
+      border-top: $basic-border;
+    }
+
+    tr:nth-child(even) {
+      background-color: $alt-row-bg;
+    }
+  }
+
+  #admin-user-table {
+    td:first-child {
+      width: 10px;
+    }
+
+    td:last-child {
+      width: 40px;
+    }
+  }
+}

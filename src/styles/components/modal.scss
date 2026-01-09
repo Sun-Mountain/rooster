@@ -1,0 +1,21 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.modal-container {
+  background-color: $bg-color-light;
+  border: $modal-border;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: $md;
+  margin: 0 auto;
+  padding: 1.5rem;
+  position: relative;
+  top: 20%;
+
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}

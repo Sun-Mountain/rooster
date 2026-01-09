@@ -10,3 +10,9 @@ export const getUserById = async (id: string): Promise<User | null> => {
     where: { id },
   });
 };
+
+export const deleteUserById = async (id: string): Promise<User> => {
+  return await db.user.delete({
+    where: { id },
+  });
+};

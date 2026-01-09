@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
+import { DeleteUserModal } from "@/components/modals/DeleteUser";
 
 interface UserData {
   id?: string;
@@ -24,10 +25,17 @@ interface ContactInfo {
   zip?: string;
 }
 
+interface EmergencyContact {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  relationship?: string;
+}
+
 export const UserProfile = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userContact, setUserContact] = useState<ContactInfo | null>(null);
-  const [userEmergencyContact, setUserEmergencyContact] = useState<string | null>(null);
+  const [userEmergencyContact, setUserEmergencyContact] = useState<EmergencyContact | null>(null);
 
   const pathname = usePathname();
   const userId = pathname.split('/').pop();
@@ -59,11 +67,29 @@ export const UserProfile = () => {
     fetchUserContacts();
   }, [userId]);
 
+  useEffect(() => {
+    const fetchEmergencyContact = async () => {
+      if (!userId) return;
+
+      const response = await fetch(`/api/user/${userId}/emergencyContact`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setUserEmergencyContact(data);
+    };
+    fetchEmergencyContact();
+  }, [userId]);
+
+  console.log(userEmergencyContact)
+
   if (!userData) {
     return <div>Loading...</div>;
   }
   
-  if (userData?.error) {
+  if (userData?.error || !userData.id) {
     return <div>{userData.error}</div>;
   }
 
@@ -84,6 +110,17 @@ export const UserProfile = () => {
         <p><strong>Phone:</strong> {userContact?.phone || 'N/A'}</p>
         <p><strong>Preferred Contact Method:</strong> {userContact?.preferredContact || 'N/A'}</p>
         <p><strong>Address:</strong></p>
+      </div>
+
+      <h3>Emergency Contact</h3>
+      <div className="profile-container">
+        <p><strong>Name:</strong> {userEmergencyContact?.firstName} {userEmergencyContact?.lastName}</p>
+        <p><strong>Phone:</strong> {userEmergencyContact?.phone || 'N/A'}</p>
+        <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
+      </div>
+
+      <div>
+        <DeleteUserModal userId={userData.id} />
       </div>
     </div>
   );

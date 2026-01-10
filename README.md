@@ -1,38 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-## Getting Started
+# 🐓 Rooster Web App
 
-First, run the development server:
+Rooster Web App is built and maintained by the Electric Sheep Cooperative.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Rooster is a web application that allows students to sign up for classes, track their session progress, manage profiles, and interact with program administrators. Admin users can manage sessions, classes, students, payments, and more through a dedicated dashboard.
+
+## 📖 Table of Contents
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#💡-about-rooster">About Rooster</a>
+      <ul>
+        <li>
+          <a href="#🚧-built-with">Built With</a>
+        </li>
+        <li>
+          <a href="🧩-features">Features</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#🌱-getting-started">Getting Started</a>
+      <ul>
+        <li>
+          <a href="#📋-prerequisites">Prerequisites</a>
+        </li>
+        <li>
+          <a href="#🛠️-installation">Installation</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#📢-acknowledgements">Acknowledgements</a>
+    </li>
+  </ol>
+</details>
+
+## 💡 About Rooster
+
+The Rooster Web App provides a full platform for managing classes, student registration, and progress tracking. It supports both student-facing and admin-facing functionality. Students can register for accounts, select classes, pay for sessions, and track progress. Admins can manage all program data from a clean dashboard.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 🚧 Built With
+
+* [![Next][Next.js]][Next-url]
+* [![Prisma][Prisma.io]][Prisma-url]
+* [![PostgreSQL][PostgreSQL.org]][Postgres-url]
+* [![TypeScript][Typescript.ts]][Typescript-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 🧩 Features
+
+✅ - Complete
+⏳ - In Progress
+❌ - Not Yet
+
+* Student-Facing
+  * ✅ Create and manage user profile (including emergency contacts and pronouns)
+  * ❌ Auth via email + password
+  * ❌ Email confirmation + password recovery
+  * ❌ Browse available live classes
+  * ❌ Sign up and pay for classes
+  * ❌ View schedule and enrollment status
+* Admin-Facing
+  * ⏳ Admin dashboard with filtering, sorting, pagination
+  * Create and manage:
+    * ✅ Sessions
+    * ⏳ Classes
+    * ❌ Student profiles
+    * ✅ User accounts
+  * ❌ Mark sessions as live for enrollment
+  * ❌ Copy sessions and classes for quick reuse
+  * ❌ Sort sessions by date (ASC/DESC)
+  * ❌ Manage payments and enrollment
+  * ❌ Send alerts and notifications
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 🌱 Getting Started
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 📋 Prerequisites
+
+* Node ≥ 22
+* PostgreSQL ≥ 17
+* NPM or Yarn or PNPM
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 🛠️ Installation
+
+Clone and navigate to the project folder:
+```
+git clone git@github.com:Sun-Mountain/rooster.git
+cd rooster
 ```
 
-Initially and on any change the `prisma/schema.prisma` file run `prisma generate` to update a local development database run `prisma db push`.
+Use preferred package manager to install 
+```
+pnpm / yarn / npm install
+npx prisma generate
+```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env` file in the root folder:
+```
+APP_ENV=development
+DATABASE_URL=
+TEST_DATABASE_URL=
+BETTER_AUTH_URL=http://localhost:3000
+BETTER_AUTH_SECRET=
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the app:
+```
+pnpm / yarn / npm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Learn More
+## 📢 Acknowledgements
 
-To learn more about Next.js, take a look at the following resources:
+* [Material UI](https://mui.com/material-ui/getting-started/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Sun-Mountain/Rooster.svg?style=for-the-badge
+[contributors-url]: https://github.com/Sun-Mountain/Rooster/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Sun-Mountain/Rooster.svg?style=for-the-badge
+[forks-url]: https://github.com/Sun-Mountain/Rooster/network/members
+[stars-shield]: https://img.shields.io/github/stars/Sun-Mountain/Rooster.svg?style=for-the-badge
+[stars-url]: https://github.com/Sun-Mountain/Rooster/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Sun-Mountain/Rooster.svg?style=for-the-badge
+[issues-url]: https://github.com/Sun-Mountain/Rooster/issues
+[license-shield]: https://img.shields.io/github/license/Sun-Mountain/Rooster.svg?style=for-the-badge
+[license-url]: https://github.com/Sun-Mountain/Rooster/blob/master/LICENSE.txtp
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[Prisma.io]: https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white
+[Prisma-url]: https://www.prisma.io
+[PostgreSQL.org]: https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&style=for-the-badge&logoColor=white
+[Postgres-url]: https://www.postgresql.org
+[Typescript.ts]: https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&style=for-the-badge&logoColor=fff
+[Typescript-url]: https://www.typescriptlang.org

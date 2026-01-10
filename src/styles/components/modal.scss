@@ -1,0 +1,33 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.modal-container {
+  margin: 0 auto;
+  max-width: $md;
+  
+  .modal-content-container {
+    background-color: $bg-color-light;
+    border: $modal-border;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 25% 1rem;
+    padding: 1.5rem;
+    position: relative;
+
+    &.danger {
+      border-color: $barn-red;
+      font-size: 1.15rem;
+    }
+
+    h2 {
+      color: $barn-red;
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}

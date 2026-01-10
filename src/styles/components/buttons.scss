@@ -23,7 +23,7 @@ button {
     opacity: 0.6;
   }
 
-  .transparent {
+  &.transparent {
     background-color: transparent;
     border: 1px solid $primary-btn;
     color: $primary-btn;
@@ -33,16 +33,20 @@ button {
       color: $primary-btn-text;
     }
   }
-}
 
-.danger {
-  background-color: $danger-btn;
-  border: 1px solid $danger-btn;
-  color: $primary-btn-text;
+  &.no-border {
+    border: none;
+  }
 
-  &:hover {
-    background-color: $primary-btn-text;
-    color: $danger-btn;
+  &.danger {
+    background-color: $danger-btn;
+    border: 1px solid $danger-btn;
+    color: $primary-btn-text;
+
+    &:hover {
+      background-color: $primary-btn-text;
+      color: $danger-btn;
+    }
   }
 }
 

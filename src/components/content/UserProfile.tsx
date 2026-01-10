@@ -7,6 +7,8 @@ import { DeleteUserModal } from "@/components/modals/DeleteUser";
 interface UserData {
   id?: string;
   name?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
   error?: string;
   role?: string;
@@ -95,9 +97,10 @@ export const UserProfile = () => {
 
   return (
     <div className="content-container">
-      <h2>User Profile</h2>
+      <h2>User: {userData.name}</h2>
       <div className="profile-container">
-        <p><strong>Name:</strong> {userData.name}</p>
+        <p><strong>First Name:</strong> {userData.firstName}</p>
+        <p><strong>Last Name:</strong> {userData.lastName}</p>
         <p><strong>ID:</strong> {userData.id}</p>
         <p><strong>Role:</strong> {userData.role}</p>
         <p><strong>Email:</strong> {userData.email}</p>
@@ -120,7 +123,7 @@ export const UserProfile = () => {
       </div>
 
       <div>
-        <DeleteUserModal userId={userData.id} />
+        <DeleteUserModal userId={userData.id} userName={userData.name} />
       </div>
     </div>
   );

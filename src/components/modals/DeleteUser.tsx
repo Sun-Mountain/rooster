@@ -6,10 +6,12 @@ import { Button } from "@/components/_ui/Button";
 
 interface DeleteUserModalProps {
   userId: string;
+  userName?: string;
 }
 
 export const DeleteUserModal = ({
   userId,
+  userName
 }: DeleteUserModalProps) => {
   const router = useRouter();
 
@@ -34,23 +36,27 @@ export const DeleteUserModal = ({
     }
   }
 
+  const confirmDelete = () => {
+    return (
+      <Button className="danger" onClick={deleteUser}>
+        Confirm Delete
+      </Button>
+    )
+  }
+
   return (
     <>
       <Modal
         btnContent="Delete User"
+        btnAction={confirmDelete()}
         btnClassName="danger w-icon"
+        includeCancel={true}
+        danger={true}
       >
         <div className="modal-content">
           <h2>Confirm Delete User</h2>
-          <p>Are you sure you want to delete this user? If deleted, this action cannot be undone and will erase all associated data.</p>
-          <div className="btn-group">
-            <Button className="danger" onClick={deleteUser}>
-              Confirm Delete
-            </Button>
-            <Button className="transparent no-border">
-              Cancel
-            </Button>
-          </div>
+          <p>Are you sure you want to delete {userName ? <strong>{userName}</strong> : 'this user'}?</p>
+          <p>If deleted, this action cannot be undone and will erase all associated data.</p>
         </div>
       </Modal>
     </>

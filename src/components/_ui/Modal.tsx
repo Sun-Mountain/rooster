@@ -6,29 +6,29 @@ import { Button } from '@/components/_ui/Button';
 interface ModalProps {
   children: ReactNode;
   btnContent: ReactNode;
+  btnAction: ReactNode;
   btnClassName?: string;
+  includeCancel?: boolean;
   open?: boolean;
-  onOpen?: () => void;
-  onClose?: () => void;
+  danger?: boolean;
 }
 
 export const Modal =({
   children,
   btnContent,
+  btnAction,
   btnClassName,
-  onOpen: propOnOpen,
-  onClose: propOnClose,
+  includeCancel = false,
+  danger = false,
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
-    if (propOnOpen) propOnOpen();
   };
 
   const handleClose = () => {
-    setOpen(false);
-    if (propOnClose) propOnClose();
+    setOpen(false)
   };
 
   return (
@@ -45,8 +45,18 @@ export const Modal =({
         aria-describedby="modal-modal-description"
       >
         <div className="modal-container">
-          <div className="modal-content">
-            {children}
+          <div className={`modal-content-container${danger ? ' danger' : ''}`}>
+            <div>
+              {children}
+            </div>
+            <div className="btn-group">
+              {btnAction}
+              {includeCancel && ( 
+                <Button onClick={handleClose} className="transparent no-border">
+                  Cancel
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </ModalComponent>

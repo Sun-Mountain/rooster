@@ -37,16 +37,16 @@ button {
   &.no-border {
     border: none;
   }
-}
 
-.danger {
-  background-color: $danger-btn;
-  border: 1px solid $danger-btn;
-  color: $primary-btn-text;
+  &.danger {
+    background-color: $danger-btn;
+    border: 1px solid $danger-btn;
+    color: $primary-btn-text;
 
-  &:hover {
-    background-color: $primary-btn-text;
-    color: $danger-btn;
+    &:hover {
+      background-color: $primary-btn-text;
+      color: $danger-btn;
+    }
   }
 }
 

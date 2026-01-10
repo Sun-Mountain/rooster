@@ -2,6 +2,33 @@
 @use '../_resources/variable.scss' as *;
 
 // .table-container {
+//   margin-left: -1rem;
+
+//   table, thead, tbody, th, td, tr {
+//     display: block;
+//   }
+
+//   th {
+//     position: absolute;
+//     top: -9999px;
+//     left: -9999px;
+//   }
+
+//   th:first-child,td:first-child {
+//     display: none;
+//   }
+
+//   tr, td {
+//     max-width: 100vw;
+//   }
+
+//   tr:nth-child(even) {
+//     background-color: $alt-row-bg;
+  
+//   }
+// }
+
+// .table-container {
 //   width: 100%;
 //   margin-top: 2rem;
 

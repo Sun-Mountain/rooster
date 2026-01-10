@@ -96,7 +96,7 @@ export const UserProfile = () => {
   }
 
   return (
-    <div className="content-container">
+    <div className="page-container">
       <h2>User: {userData.name}</h2>
         <div className="profile-container">
           <p><strong>First Name:</strong> {userData.firstName}</p>

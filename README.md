@@ -7,6 +7,8 @@
 
 Rooster Web App is built and maintained by the Electric Sheep Cooperative.
 
+Rooster is currently under construction and not ready for use.
+
 Rooster is a web application that allows students to sign up for classes, track their session progress, manage profiles, and interact with program administrators. Admin users can manage sessions, classes, students, payments, and more through a dedicated dashboard.
 
 ## 📖 Table of Contents

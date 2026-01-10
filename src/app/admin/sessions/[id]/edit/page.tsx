@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
+import { Checkbox } from "@/components/_ui/Checkbox";
 import { Alert } from "@/components/_ui/Alert";
 
 interface Term {
@@ -13,13 +14,13 @@ interface Term {
   startDate: string;
   endDate: string;
   live: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
-export default function AdminSessionsPage() {
+export default function EditTermPage() {
   const router = useRouter();
-  const [terms, setTerms] = useState<Term[]>([]);
+  const params = useParams();
+  const id = params.id as string;
+
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,18 +33,25 @@ export default function AdminSessionsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchTerms();
-  }, []);
+    fetchTerm(id);
+  }, [id]);
 
-  const fetchTerms = async () => {
+  const fetchTerm = async (id: string) => {
     try {
       setLoading(true);
-      const response = await fetch("/api/term");
-      if (!response.ok) throw new Error("Failed to fetch terms");
-      const data = await response.json();
-      setTerms(data);
+      const response = await fetch(`/api/term/${id}`);
+      if (!response.ok) throw new Error("Failed to fetch term");
+      const term: Term = await response.json();
+      console.log(term);
+      setFormData({
+        name: term.name,
+        description: term.description || "",
+        startDate: term.startDate.split("T")[0],
+        endDate: term.endDate.split("T")[0],
+        live: term.live,
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load terms");
+      setError(err instanceof Error ? err.message : "Failed to load term");
     } finally {
       setLoading(false);
     }
@@ -56,40 +64,40 @@ export default function AdminSessionsPage() {
 
     try {
       const response = await fetch("/api/term", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ id, ...formData }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create term");
+        throw new Error(errorData.error || "Failed to update term");
       }
 
-      setFormData({
-        name: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        live: false,
-      });
-      await fetchTerms();
+      router.push("/admin/sessions");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create term");
+      setError(err instanceof Error ? err.message : "Failed to update term");
     } finally {
       setSubmitting(false);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="form-container">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="form-container">
-      <h1>Session Management</h1>
+      <h1>Edit Term</h1>
 
       <section>
         <form onSubmit={handleSubmit} noValidate>
-          <h2>Create New Session</h2>
           <TextField
             label="Name"
             name="name"
@@ -116,9 +124,6 @@ export default function AdminSessionsPage() {
             onChange={(e) =>
               setFormData({ ...formData, startDate: e.target.value })
             }
-            InputLabelProps={{
-              shrink: true, // Forces the label to move to the top
-            }}
           />
 
           <TextField
@@ -129,15 +134,9 @@ export default function AdminSessionsPage() {
             onChange={(e) =>
               setFormData({ ...formData, endDate: e.target.value })
             }
-            InputLabelProps={{
-              shrink: true, // Forces the label to move to the top
-            }}
           />
 
-          <input
-            type="checkbox"
-            id="live"
-            name="live"
+          <Checkbox
             checked={formData.live}
             onChange={(e) =>
               setFormData({ ...formData, live: e.target.checked })
@@ -147,44 +146,19 @@ export default function AdminSessionsPage() {
 
           {error && <Alert type="error">{error}</Alert>}
 
-          <Button type="submit" disabled={submitting}>
-            {submitting ? "Creating..." : "Create Session"}
-          </Button>
+          <div className="flex-fields-container">
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Updating..." : "Update Term"}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => router.push("/admin/sessions")}
+              disabled={submitting}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
-      </section>
-
-      <section>
-        <h2>Sessions</h2>
-        {loading ? (
-          <p>loading...</p>
-        ) : terms.length === 0 ? (
-          <p>No sessions found.</p>
-        ) : (
-          <section>
-            {terms.map((term) => (
-              <article key={term.id}>
-                <h4>{term.name}</h4>
-                {term.description && <p>{term.description}</p>}
-                <div>
-                  Start: {new Date(term.startDate).toLocaleDateString()} - End:{" "}
-                  {new Date(term.endDate).toLocaleDateString()}
-                </div>
-                <div>Status: {term.live ? "Live" : "Inactive"}</div>
-                <div>
-                  Created: {new Date(term.createdAt).toLocaleDateString()}
-                </div>
-                <div>
-                  Updated: {new Date(term.updatedAt).toLocaleDateString()}
-                </div>
-                <Button
-                  onClick={() => router.push(`/admin/sessions/${term.id}/edit`)}
-                >
-                  Edit
-                </Button>
-              </article>
-            ))}
-          </section>
-        )}
       </section>
     </div>
   );

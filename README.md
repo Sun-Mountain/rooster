@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+Initially and on any change the `prisma/schema.prisma` file run `prisma generate` to update a local development database run `prisma db push`.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

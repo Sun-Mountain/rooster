@@ -17,62 +17,65 @@ model Term {
   id          String   @id @default(cuid())
   name        String
   description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  startDate   DateTime
+  endDate     DateTime
+  live        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("term")
 }
 
 model ContactAddress {
-  id                String   @id @default(cuid())
-  street1           String?
-  street2           String?
-  city              String?
-  state             String?
-  zip               String?
-  country           String? @default("USA")
-  secondaryEmail    String?
-  phone             String?
-  preferredContact  String? @default("phone")
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id               String   @id @default(cuid())
+  street1          String?
+  street2          String?
+  city             String?
+  state            String?
+  zip              String?
+  country          String?  @default("USA")
+  secondaryEmail   String?
+  phone            String?
+  preferredContact String?  @default("phone")
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@unique([userId])
   @@map("contact_address")
 }
 
 model EmergencyContact {
-  id            String    @id @default(cuid())
-  firstName     String?
-  lastName      String?
-  relationship  String?
-  phone         String?
-  userId        String
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  
+  id           String   @id @default(cuid())
+  firstName    String?
+  lastName     String?
+  relationship String?
+  phone        String?
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
   @@unique([userId])
   @@map("emergency_contact")
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String            @id @default(cuid())
   name          String
   firstName     String
   lastName      String
   email         String
   emailVerified Boolean
-  role          Role      @default(USER)
+  role          Role              @default(USER)
   contact       ContactAddress?
   emergency     EmergencyContact?
   pronouns      String?
   otherPronouns String?
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
   sessions      Session[]
   accounts      Account[]
 
@@ -84,8 +87,8 @@ model Session {
   id        String   @id @default(cuid())
   expiresAt DateTime
   token     String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
   userId    String
@@ -119,8 +122,8 @@ model Verification {
   identifier String
   value      String
   expiresAt  DateTime
-  createdAt  DateTime?  @default(now())
-  updatedAt  DateTime?  @updatedAt
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
 
   @@map("verification")
 }

@@ -13,12 +13,12 @@ export default async function ProfilePage() {
   if (!user) notFound();
 
   return (
-    <>
+    <div className="profile-page-content">
       <h1>Account Information</h1>
       <AccountForm user={user} />
       <div className="btn-center">
         <SignOutBtn />
       </div>
-    </>
+    </div>
   );
 }

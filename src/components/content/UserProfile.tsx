@@ -98,30 +98,29 @@ export const UserProfile = () => {
   return (
     <div className="content-container">
       <h2>User: {userData.name}</h2>
-      <div className="profile-container">
-        <p><strong>First Name:</strong> {userData.firstName}</p>
-        <p><strong>Last Name:</strong> {userData.lastName}</p>
-        <p><strong>ID:</strong> {userData.id}</p>
-        <p><strong>Role:</strong> {userData.role}</p>
-        <p><strong>Email:</strong> {userData.email}</p>
-      </div>
+        <div className="profile-container">
+          <p><strong>First Name:</strong> {userData.firstName}</p>
+          <p><strong>Last Name:</strong> {userData.lastName}</p>
+          <p><strong>ID:</strong> {userData.id}</p>
+          <p><strong>Role:</strong> {userData.role}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
+        </div>
 
-      <h3>Contact Information</h3>
-      <div className="profile-container">
-        <p><strong>Primary Email:</strong> {userData.email}</p>
-        <p><strong>Secondary Email:</strong> {userContact?.secondaryEmail || 'N/A'}</p>
-        <p><strong>Phone:</strong> {userContact?.phone || 'N/A'}</p>
-        <p><strong>Preferred Contact Method:</strong> {userContact?.preferredContact || 'N/A'}</p>
-        <p><strong>Address:</strong></p>
-      </div>
+        <h3>Contact Information</h3>
+        <div className="profile-container">
+          <p><strong>Primary Email:</strong> {userData.email}</p>
+          <p><strong>Secondary Email:</strong> {userContact?.secondaryEmail || 'N/A'}</p>
+          <p><strong>Phone:</strong> {userContact?.phone || 'N/A'}</p>
+          <p><strong>Preferred Contact Method:</strong> {userContact?.preferredContact || 'N/A'}</p>
+          <p><strong>Address:</strong></p>
+        </div>
 
-      <h3>Emergency Contact</h3>
-      <div className="profile-container">
-        <p><strong>Name:</strong> {userEmergencyContact?.firstName} {userEmergencyContact?.lastName}</p>
-        <p><strong>Phone:</strong> {userEmergencyContact?.phone || 'N/A'}</p>
-        <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
-      </div>
-
+        <h3>Emergency Contact</h3>
+        <div className="profile-container">
+          <p><strong>Name:</strong> {userEmergencyContact?.firstName} {userEmergencyContact?.lastName}</p>
+          <p><strong>Phone:</strong> {userEmergencyContact?.phone || 'N/A'}</p>
+          <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
+        </div>
       <div>
         <DeleteUserModal userId={userData.id} userName={userData.name} />
       </div>

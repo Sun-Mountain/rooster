@@ -38,6 +38,15 @@ button {
     border: none;
   }
 
+  &.no-padding {
+    padding: 0;
+  }
+
+  &.side-btn {
+    display: inline-block;
+    margin: auto 0 auto 5px;
+  }
+
   &.danger {
     background-color: $danger-btn;
     border: 1px solid $danger-btn;

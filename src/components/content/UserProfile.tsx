@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { Role } from "@client";
 import { usePathname } from 'next/navigation';
 import { DeleteUserModal } from "@/components/modals/DeleteUser";
 
@@ -11,8 +12,7 @@ interface UserData {
   lastName?: string;
   email?: string;
   error?: string;
-  role?: string;
-  // Add other user properties as needed
+  role?: Role;
 }
 
 interface ContactInfo {

@@ -71,11 +71,10 @@ ul {
   display: flex;
 
   h1 {
-    margin: 1rem 0 0 0;
+    margin: 1rem 0 0 1rem;
   }
 
   .page-container {
-    padding: 1rem;
     flex: auto;
     width: 100%;
   }
@@ -130,10 +129,6 @@ ul {
 
     .page-container {
       padding: 0;
-
-      .content-container {
-        padding: 1rem;
-      }
     }
 
     .side-nav-container {

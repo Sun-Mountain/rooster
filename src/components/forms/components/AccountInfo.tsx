@@ -82,10 +82,10 @@ export const AccountInfoForm = ({ user, setMissingInfo, missingInfo }: AccountIn
             errorMsg={missingInfo.lastName ? "Last name is required" : undefined}
           />
           <FormControl fullWidth className="text-field-container">
-            <InputLabel id="demo-simple-select-label">Pronouns</InputLabel>
+            <InputLabel id="pronoun-label">Pronouns</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="pronoun-label"
+              id="pronoun-select"
               value={pronoun}
               label="pronouns"
               onChange={handlePronounChange}

@@ -17,9 +17,8 @@ export const getTermById = async (id: string): Promise<Term | null> => {
   });
 };
 
-export const createTerm = async (
-  data: Prisma.TermCreateInput,
-): Promise<Term> => {
+export const createTerm = async (data: Prisma.TermCreateInput): Promise<Term> => {
+  console.log(data);
   return await db.term.create({
     data,
   });

@@ -81,7 +81,7 @@ The Rooster Web App provides a full platform for managing classes, student regis
     * ⏳ Classes
     * ❌ Student profiles
     * ✅ User accounts
-  * ❌ Mark sessions as live for enrollment
+  * ✅ Mark sessions as live for enrollment
   * ❌ Copy sessions and classes for quick reuse
   * ❌ Sort sessions by date (ASC/DESC)
   * ❌ Manage payments and enrollment

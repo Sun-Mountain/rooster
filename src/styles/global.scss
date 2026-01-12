@@ -71,11 +71,10 @@ ul {
   display: flex;
 
   h1 {
-    margin: 1rem 0 0 0;
+    margin: 1rem 0 0 1rem;
   }
 
-  .content-container {
-    padding: 1rem;
+  .page-container {
     flex: auto;
     width: 100%;
   }
@@ -124,15 +123,12 @@ ul {
 }
 
 @media screen and (max-width: $sm) {
+
   .side-nav-layout {
     flex-direction: column;
 
-    .content-container {
-      padding: 1rem;
-
-      h1 {
-        margin: 0;
-      }
+    .page-container {
+      padding: 0;
     }
 
     .side-nav-container {

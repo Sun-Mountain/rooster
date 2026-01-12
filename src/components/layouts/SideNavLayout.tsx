@@ -14,8 +14,10 @@ export function SideNavLayout({ children, linkNode }: SideNavLayoutProps) {
           {linkNode}
         </div>
       </SideNavMenu>
-      <div className="content-container">
-        {children}
+      <div className="page-container">
+        <div className="content-container">
+          {children}
+        </div>
       </div>
     </section>
   )

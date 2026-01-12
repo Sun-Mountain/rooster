@@ -1,8 +1,8 @@
 "use client";
 
-import { User } from "@client";
+import { User, Role } from "@client";
 import { useEffect, useState } from "react";
-import { ManageAccounts, Star } from "@mui/icons-material";
+import { ManageAccounts, Shield, Star } from "@mui/icons-material";
 
 export const AdminUserList = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -36,7 +36,7 @@ export const AdminUserList = () => {
             <tbody>
               {users.map((user) => (
                 <tr key={user.id}>
-                  <td>{user.role !== "USER" ? <Star /> : null}</td>
+                  <td>{user.role === "ADMIN" ? <Shield /> : user.role === "SUPER" ? <Star /> : null}</td>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>

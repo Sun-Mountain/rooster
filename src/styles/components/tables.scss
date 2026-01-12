@@ -1,90 +1,70 @@
 @use '../_resources/color.scss' as *;
 @use '../_resources/variable.scss' as *;
 
-// .table-container {
-//   width: 100%;
-//   margin-top: 2rem;
+.table-container {
+  margin: 2rem auto;
+  max-width: $md;
 
-//   table {
-//     border-collapse: collapse;
-//     width: 100%;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
 
-//     th, td {
-//       padding: 0.5rem;
-//       text-align: left;
-//     }
+  thead {
+    background-color: $table-header-bg;
+    color: $table-header-text;
+    text-align: left;
+  }
 
-//     th {
-//       background-color: $table-header-bg;
-//       color: $table-header-text;
-//     }
+  tr:nth-child(even) {
+    background-color: $alt-row-bg;
+  }
+}
 
-//     tr {
-//       border-bottom: $basic-border;
-//       border-top: $basic-border;
-//     }
+@media screen and (max-width: $sm) {
+  .table-container {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
 
-//     tr:nth-child(even) {
-//       background-color: $alt-row-bg;
-//     }
-//   }
+    th {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
 
-//   #admin-user-table {
-//     td:first-child {
-//       width: 10px;
-//     }
+    tr:nth-child(even) {
+      background-color: $alt-row-bg;
+    }
 
-//     td:last-child {
-//       width: 40px;
-//     }
-//   }
-// }
+    td {
+      border: none;
+      border-top: $basic-border;
+      padding-left: 9rem;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      position: relative;
 
-// @media screen and (max-width: $sm) {
-//   .table-container {
-//     table, thead, tbody, th, td, tr {
-//       display: block;
-//     }
+      &.last-child {
+        border-bottom: $basic-border;
+      }
 
-//     th {
-//       position: absolute;
-//       top: -9999px;
-//       left: -9999px;
-//     }
+      &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 45%;
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+    }
 
-//     tr {
-//       border: none !important;
-//     }
-
-//     td {
-//       border: none;
-//       border-top: $basic-border;
-//       position: relative;
-//       padding-left: 50% !important;
-//       width: 100% !important;
-
-//       &.last-child {
-//         border-bottom: $basic-border !important;
-//       }
-
-//       &:before {
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         width: 45%;
-//         padding-top: 0.5rem;
-//         padding-left: 0.5rem;
-//         white-space: nowrap;
-//         font-weight: bold;
-//       }
-//     }
-
-//     td:first-child {
-//       display: none;
-//     }
-//     td:nth-of-type(2):before { content: "Name"; }
-//     td:nth-of-type(3):before { content: "Email"; }
-//     td:nth-of-type(4):before { content: "Role"; }
-//     td:nth-of-type(5):before { content: "Actions"; }
-//   }
-// }
+    td:first-child { display: none; }
+    td:nth-of-type(2):before { content: "Name"; }
+    td:nth-of-type(3):before { content: "Email"; }
+    td:nth-of-type(4):before { content: "Role"; }
+    td:nth-of-type(5):before { content: "Actions"; }
+  }
+}

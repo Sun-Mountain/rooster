@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { Role } from "@client";
 import { usePathname } from 'next/navigation';
 import { DeleteUserModal } from "@/components/modals/DeleteUser";
 
@@ -11,8 +12,7 @@ interface UserData {
   lastName?: string;
   email?: string;
   error?: string;
-  role?: string;
-  // Add other user properties as needed
+  role?: Role;
 }
 
 interface ContactInfo {
@@ -96,7 +96,7 @@ export const UserProfile = () => {
   }
 
   return (
-    <div className="content-container">
+    <div className="page-container">
       <h2>User: {userData.name}</h2>
         <div className="profile-container">
           <p><strong>First Name:</strong> {userData.firstName}</p>

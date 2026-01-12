@@ -24,6 +24,9 @@ Rooster is a web application that allows students to sign up for classes, track 
         <li>
           <a href="🧩-features">Features</a>
         </li>
+        <li>
+          <a href="📝-important-notes">Important Notes</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -125,6 +128,18 @@ Run the app:
 ```
 pnpm / yarn / npm dev
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 📝 Important Notes
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### Sessions vs. Terms
+
+There is a discrepancy in the database and the website. What are called "sessions" on the frontend are referred to "terms" on the backend.
+
+This is because Sessions is the default word for a group of classes that repeat over a period of time and we did not want to confuse end users. However, sessions is used by `better-auth`, which is what Rooster uses for user authorization.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

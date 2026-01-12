@@ -36,7 +36,7 @@ export const AdminUserList = () => {
             <tbody>
               {users.map((user) => (
                 <tr key={user.id}>
-                  <td></td>
+                  <td>{user.role === "ADMIN" ? <Shield /> : user.role === "SUPER" ? <Star /> : null}</td>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>

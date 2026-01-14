@@ -1,0 +1,23 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+
+  svg {
+    vertical-align: middle;
+  }
+
+  &.inactive {
+    background-color: $inactive-bg-color;
+    color: $inactive-font-color;
+  }
+
+  &.live {
+    background-color: $live-bg-color;
+    color: $live-font-color;
+  }
+}

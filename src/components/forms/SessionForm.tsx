@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
@@ -19,6 +19,19 @@ interface TermProps {
 }
 
 export const SessionForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    live: false,
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+  };
+
   return (
     <div className="form-container no-border">
       <div className="form-header">

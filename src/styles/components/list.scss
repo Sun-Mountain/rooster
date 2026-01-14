@@ -1,0 +1,30 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.admin-list {
+  border-top: $basic-border;
+  padding: 2rem;
+
+  .list-item {
+    border: $admin-list-border;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      padding: 1rem;
+      align-items: center;
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .admin-list {
+    padding: 1rem;
+
+    .list-item {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}

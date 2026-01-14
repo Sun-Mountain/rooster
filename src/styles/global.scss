@@ -5,9 +5,11 @@
 @forward './components/buttons.scss';
 @forward './components/drawer.scss';
 @forward './components/forms.scss';
+@forward './components/list.scss';
 @forward './components/modal.scss';
 @forward './components/navigation.scss';
 @forward './components/profile.scss';
+@forward './components/session.scss';
 @forward './components/tables.scss';
 
 body {
@@ -126,6 +128,14 @@ ul {
 
   .side-nav-layout {
     flex-direction: column;
+
+    .header-container {
+      width: 100%;
+
+      h1 {
+        margin: 1.5rem 0 0 2rem;
+      }
+    }
 
     .page-container {
       padding: 0;

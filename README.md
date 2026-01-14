@@ -69,7 +69,7 @@ The Rooster Web App provides a full platform for managing classes, student regis
 
 * Student-Facing
   * ✅ Create and manage user profile (including emergency contacts and pronouns)
-  * ❌ Auth via email + password
+  * ✅ Auth via email + password
   * ❌ Email confirmation + password recovery
   * ❌ Browse available live classes
   * ❌ Sign up and pay for classes
@@ -80,8 +80,8 @@ The Rooster Web App provides a full platform for managing classes, student regis
     * ✅ Sessions
     * ⏳ Classes
     * ❌ Student profiles
-    * ✅ User accounts
-  * ✅ Mark sessions as live for enrollment
+    * ⏳ User accounts
+  * ⏳ Mark sessions as live for enrollment
   * ❌ Copy sessions and classes for quick reuse
   * ❌ Sort sessions by date (ASC/DESC)
   * ❌ Manage payments and enrollment

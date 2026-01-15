@@ -10,6 +10,7 @@ interface UserData {
   name?: string;
   firstName?: string;
   lastName?: string;
+  pronouns?: string;
   email?: string;
   error?: string;
   role?: Role;
@@ -97,10 +98,11 @@ export const UserProfile = () => {
 
   return (
     <div className="page-container">
-      <h2>User: {userData.name}</h2>
+      <h2>User: {userData.name} {userData.pronouns && `(${userData.pronouns})`}</h2>
         <div className="profile-container">
           <p><strong>First Name:</strong> {userData.firstName}</p>
           <p><strong>Last Name:</strong> {userData.lastName}</p>
+          <p><strong>Pronouns:</strong> {userData.pronouns ? userData.pronouns : 'not given'}</p>
           <p><strong>ID:</strong> {userData.id}</p>
           <p><strong>Role:</strong> {userData.role}</p>
           <p><strong>Email:</strong> {userData.email}</p>

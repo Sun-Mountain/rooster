@@ -3,8 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Term } from "@client";
+import { Button } from "@/components/_ui/Button";
 import { BackLink } from "@/components/BackLink";
 import { DeleteModal } from "@/components/modals/DeleteModal";
+import { AddClassModal } from "@/components/modals/AddClass";
+import { EditSquare } from "@mui/icons-material";
 
 export const SingleSession = () => {
   const pathname = usePathname();
@@ -37,15 +40,29 @@ export const SingleSession = () => {
   return (
     <div className="page-content-container">
       <BackLink href="/admin/sessions" label="Sessions" />
-      <h1>Session: {session?.name}</h1>
+      <div className="page-header">
+        <h1>Session: {session?.name}</h1>
+        <Button className="w-icon small">
+          <EditSquare /> Edit
+        </Button>
+      </div>
       <div>
         {session ? (<h3>
           {new Date(session?.startDate).toLocaleDateString()} - {new Date(session?.endDate).toLocaleDateString()}
         </h3>) : "Loading..."}
       </div>
+      <div className="session-description">
+        {session?.description || (<em>No description/notes provided.</em>)}
+      </div>
+      <div>
+        <AddClassModal />
+      </div>
       {
-        session &&
-        <DeleteModal id={session?.id} name={session?.name} type="term" altType="session" />
+        session && (
+          <div className="danger-zone">
+            <DeleteModal id={session?.id} name={session?.name} type="term" altType="session" />
+          </div>
+        )
       }
     </div>
   );

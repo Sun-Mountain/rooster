@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 
 interface TextFieldProps {
-  label: string;
+  label?: string;
   name: string;
   initialValue?: string;
   disabled?: boolean;

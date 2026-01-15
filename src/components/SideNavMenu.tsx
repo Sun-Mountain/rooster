@@ -11,7 +11,7 @@ export const SideNavMenu = ({ children }: { children: ReactNode }) => {
     <>
       <div className="side-nav-container">
         <div>
-          {width && width <= 900 ? (
+          {width && width <= 1000 ? (
             <Drawer anchor="left" transparent>
               {children}
             </Drawer>

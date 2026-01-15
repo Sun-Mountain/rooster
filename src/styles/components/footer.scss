@@ -1,0 +1,20 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+
+  a, a:visited {
+    border-bottom: 1px solid $slate-gray;
+    color: $seasalt;
+    text-decoration: none;
+    margin: 0.25rem auto;
+    width: fit-content;
+
+    &:hover {
+      color: $seasalt;
+      border-bottom: 1px solid $seasalt;
+    }
+  }
+}

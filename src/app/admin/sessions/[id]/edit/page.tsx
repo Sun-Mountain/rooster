@@ -136,6 +136,8 @@ export default function EditTermPage() {
           />
 
           <Checkbox
+            name="live"
+            label="Live (Active Session)"
             checked={formData.live}
             onChange={(e) =>
               setFormData({ ...formData, live: e.target.checked })

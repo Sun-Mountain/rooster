@@ -21,6 +21,10 @@ export const AddClassModal = () => {
     setFormData(prev => prev ? { ...prev, [name]: value } : prev);
   }
 
+  const handleWeekdayChange = (event: SelectChangeEvent) => {
+    setFormData(prev => prev ? { ...prev, weekDay: event.target.value as string } : prev);
+  }
+
   const addClass = async () => {
     try {
       console.log(formData);
@@ -83,6 +87,7 @@ export const AddClassModal = () => {
                 id="weekday-select"
                 label="Week Day"
                 value={formData.weekDay}
+                onChange={handleWeekdayChange}
               >
                 <MenuItem value="">-</MenuItem>
                 <MenuItem value="Sunday">Sunday</MenuItem>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Role } from "@client";
 import { usePathname } from 'next/navigation';
-import { DeleteUserModal } from "@/components/modals/DeleteUser";
+import { DeleteModal } from "@/components/modals/DeleteModal";
 
 interface UserData {
   id?: string;
@@ -122,7 +122,7 @@ export const UserProfile = () => {
           <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
         </div>
       <div>
-        <DeleteUserModal userId={userData.id} userName={userData.name} />
+        <DeleteModal id={userData.id} name={userData.name} type="user" />
       </div>
     </div>
   );

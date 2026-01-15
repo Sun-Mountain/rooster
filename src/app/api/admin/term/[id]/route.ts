@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getTermById } from "@/lib/prisma/term";
+import { deleteTerm, getTermById } from "@/lib/prisma/term";
 
 export async function GET(
   request: NextRequest,
@@ -27,3 +27,25 @@ export async function GET(
     );
   }
 }
+
+export async function DELETE( request: NextRequest ) {
+  try {
+    const url = new URL(request.url);
+    const userId = url.pathname.split('/')[4];
+    const id = userId as string;
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    await deleteTerm(id);
+    return NextResponse.json({ message: "Term deleted successfully" }, { status: 200 });
+
+  } catch (error) {
+    console.error("Error processing delete request:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+};

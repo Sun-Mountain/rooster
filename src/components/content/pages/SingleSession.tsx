@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Term } from "@client";
+import { BackLink } from "@/components/BackLink";
+import { DeleteModal } from "@/components/modals/DeleteModal";
 
 export const SingleSession = () => {
   const pathname = usePathname();
@@ -34,12 +36,17 @@ export const SingleSession = () => {
 
   return (
     <div className="page-content-container">
+      <BackLink href="/admin/sessions" label="Sessions" />
       <h1>Session: {session?.name}</h1>
       <div>
         {session ? (<h3>
           {new Date(session?.startDate).toLocaleDateString()} - {new Date(session?.endDate).toLocaleDateString()}
         </h3>) : "Loading..."}
       </div>
+      {
+        session &&
+        <DeleteModal id={session?.id} name={session?.name} type="term" altType="session" />
+      }
     </div>
   );
 }

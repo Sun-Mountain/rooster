@@ -13,12 +13,54 @@ enum Role {
   SUPER
 }
 
+model Class {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  classDetails  ClassTermDetails[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("class")
+}
+
+model ClassTermDetails {
+  id          String   @id @default(cuid())
+  classId     String
+  termId      String
+  details     String?
+  daysTimes   DayTimes[] @relation("ClassDaysTimes")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  term        Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, termId])
+  @@map("class_term_details")
+}
+
+model DayTimes {
+  id                  String   @id @default(cuid())
+  dayOfWeek           String
+  startTime           String
+  endTime             String
+  classTermDetailsId  String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  classDetails        ClassTermDetails @relation("ClassDaysTimes", fields: [classTermDetailsId], references: [id], onDelete: Cascade)
+
+  @@map("day_time")
+}
+
 model Term {
   id          String   @id @default(cuid())
   name        String
   description String?
   startDate   DateTime
   endDate     DateTime
+  classes     ClassTermDetails[]
   live        Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

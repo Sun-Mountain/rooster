@@ -47,6 +47,11 @@ button {
     margin: auto 0 auto 5px;
   }
 
+  &.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
   &.danger {
     background-color: $danger-btn;
     border: 1px solid $danger-btn;

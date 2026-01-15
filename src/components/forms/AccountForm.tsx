@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import { AccountContactForm } from '@/components/forms/components/AccountContact';
 import { AccountAddressForm } from '@/components/forms/components/AccountAddress';
 import { AccountEmergencyContactForm } from '@/components/forms/components/AccountEmergencyContact';

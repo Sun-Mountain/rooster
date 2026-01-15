@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 
 interface CheckboxProps {
+  name: string;
   label: string;
   checked?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
+export const Checkbox = ({ name, label, checked = false, onChange }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ export const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) =>
               checked={isChecked}
               onChange={handleChange}
               slotProps={{
-                input: { "aria-label": "controlled" },
+                input: { "aria-label": "controlled", name },
               }}
             />
           }

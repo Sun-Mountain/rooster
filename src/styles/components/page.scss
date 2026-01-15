@@ -30,6 +30,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+
+  .header-with-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 .session-description {

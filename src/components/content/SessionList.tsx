@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { DoNotDisturb, Circle } from "@mui/icons-material";
 import { Term } from "@client";
-import { Button } from "@/components/_ui/Button";
+import { SessionLiveBtn } from "../SessionLiveBtn";
 
 export const SessionList = () => {
   const [sessions, setSessions] = useState([]);
@@ -45,22 +44,12 @@ export const SessionList = () => {
                   {session.name}
                 </a>
               </div>
-              <div className={session.live ? "status live" : "status inactive"}>
-                {session.live ? (
-                  <>
-                    <Circle fontSize="small" /> Live
-                  </>
-                ) : (
-                  <>
-                    <DoNotDisturb fontSize="small" /> Inactive
-                  </>
-                )}
-              </div>
-              <div>
+              <SessionLiveBtn live={session.live} />
+              {/* <div>
                 <Button className="small">
                   {session.live ? 'Set Inactive' : 'Set Live'}
                 </Button>
-              </div>
+              </div> */}
               <div>
                 {new Date(session.startDate).toLocaleDateString()} - {new Date(session.endDate).toLocaleDateString()}
               </div>

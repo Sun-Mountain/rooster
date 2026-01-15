@@ -8,6 +8,7 @@ import { BackLink } from "@/components/BackLink";
 import { DeleteModal } from "@/components/modals/DeleteModal";
 import { AddClassModal } from "@/components/modals/AddClass";
 import { EditSquare } from "@mui/icons-material";
+import { SessionLiveBtn } from "@/components/SessionLiveBtn";
 
 export const SingleSession = () => {
   const pathname = usePathname();
@@ -41,7 +42,10 @@ export const SingleSession = () => {
     <div className="page-content-container">
       <BackLink href="/admin/sessions" label="Sessions" />
       <div className="page-header">
-        <h1>Session: {session?.name}</h1>
+        <div className="header-with-status">
+          <h2>Session: {session?.name}</h2>
+          <SessionLiveBtn live={session?.live || false} className="w-icon small" />
+        </div>
         <Button className="w-icon small">
           <EditSquare /> Edit
         </Button>

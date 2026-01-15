@@ -2,6 +2,7 @@
 @use '../_resources/variable.scss' as *;
 
 .status {
+  border-radius: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -14,10 +15,22 @@
   &.inactive {
     background-color: $inactive-bg-color;
     color: $inactive-font-color;
+
+    &:hover {
+      background-color: $inactive-font-color;
+    }
   }
 
   &.live {
     background-color: $live-bg-color;
     color: $live-font-color;
+
+    &:hover {
+      background-color: $live-font-color;
+    }
+  }
+
+  &:hover {
+    color: $seasalt;
   }
 }

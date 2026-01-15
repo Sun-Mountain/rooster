@@ -86,8 +86,6 @@ export const UserProfile = () => {
     fetchEmergencyContact();
   }, [userId]);
 
-  console.log(userEmergencyContact)
-
   if (!userData) {
     return <div>Loading...</div>;
   }

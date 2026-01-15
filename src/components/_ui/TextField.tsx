@@ -13,7 +13,7 @@ interface TextFieldProps {
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: "text" | "password" | "email" | "number" | "date";
+  type?: "text" | "password" | "email" | "number" | "date" | "time";
   errorMsg?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   InputLabelProps?: InputLabelProps;

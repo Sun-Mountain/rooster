@@ -38,7 +38,6 @@ export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingI
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched contact info:', data);
         if (!data.error) {
           setUserContactInfo({
             primaryEmail: userEmail,

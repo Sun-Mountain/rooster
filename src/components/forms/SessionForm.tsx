@@ -35,7 +35,6 @@ export const SessionForm = () => {
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    console.log("Checkbox changed:", name, checked);
     setFormData(prev => prev ? { ...prev, [name]: checked } : prev);
   }
 

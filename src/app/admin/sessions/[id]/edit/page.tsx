@@ -42,7 +42,6 @@ export default function EditTermPage() {
       const response = await fetch(`/api/admin/term/${id}`);
       if (!response.ok) throw new Error("Failed to fetch term");
       const term: Term = await response.json();
-      console.log(term);
       setFormData({
         name: term.name,
         description: term.description || "",

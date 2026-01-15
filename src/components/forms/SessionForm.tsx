@@ -43,7 +43,7 @@ export const SessionForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/term", {
+      const response = await fetch("/api/admin/term", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

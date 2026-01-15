@@ -1,0 +1,21 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.page-content-container {
+  max-width: $lg;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+
+  h1 {
+    margin: 0 !important;
+  }
+
+  h3 {
+    color: $outer-space;
+    margin-top: 0.75rem;
+  }
+
+  @media screen and (max-width: $sm) {
+    padding: 1rem;
+  }
+}

@@ -16,7 +16,7 @@ export const SingleSession = () => {
   useEffect(() => {
     const fetchSession = async () => {
       try {
-        const response = await fetch(`/api/term/${sessionId}`);
+        const response = await fetch(`/api/admin/term/${sessionId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch session");
         }
@@ -33,13 +33,13 @@ export const SingleSession = () => {
   }, [sessionId]);
 
   return (
-    <>
+    <div className="page-content-container">
       <h1>Session: {session?.name}</h1>
-      <div className="content-container">
+      <div>
         {session ? (<h3>
           {new Date(session?.startDate).toLocaleDateString()} - {new Date(session?.endDate).toLocaleDateString()}
         </h3>) : "Loading..."}
       </div>
-    </>
+    </div>
   );
 }

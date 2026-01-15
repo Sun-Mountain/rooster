@@ -13,7 +13,7 @@ export const SessionList = () => {
     const fetchSessions = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/term");
+        const response = await fetch("/api/admin/term");
         if (!response.ok) throw new Error("Failed to fetch terms");
         const data = await response.json();
         setSessions(data);

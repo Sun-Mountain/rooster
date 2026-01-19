@@ -105,7 +105,7 @@ export const SingleSession = () => {
         )}
       </div>
       <div>
-        <AddClassModal />
+        <AddClassModal sessionId={sessionId} />
       </div>
       {
         session && (

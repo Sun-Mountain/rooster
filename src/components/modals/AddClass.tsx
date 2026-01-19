@@ -5,29 +5,48 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
 import { Button } from "@/components/_ui/Button";
 import { Modal } from "@/components/_ui/Modal";
 import { TextField } from "@/components/_ui/TextField";
+import { Close } from "@mui/icons-material";
 
-export const AddClassModal = () => {
+interface dayTimeProps {
+  weekDay: string;
+  startTime: string;
+  endTime: string;
+}
+
+interface ClassModalProps {
+  sessionId?: string;
+}
+
+export const AddClassModal = ({ sessionId }: ClassModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     details: "",
-    weekDay: "",
-    startTime: "",
-    endTime: "",
+    sessionId: sessionId || ""
   });
+  const [dayTime, setDayTime] = useState<dayTimeProps[]>([
+    { weekDay: "", startTime: "", endTime: "" }
+  ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => prev ? { ...prev, [name]: value } : prev);
   }
-
-  const handleWeekdayChange = (event: SelectChangeEvent) => {
-    setFormData(prev => prev ? { ...prev, weekDay: event.target.value as string } : prev);
+  
+  const handleWeekdayChange = (event: SelectChangeEvent, index: number) => {
+    const { name, value } = event.target;
+    const updatedDayTime = [...dayTime];
+    updatedDayTime[index] = {
+      ...updatedDayTime[index],
+      [name]: value,
+    };
+    setDayTime(updatedDayTime);
   }
 
   const addClass = async () => {
     try {
       console.log(formData);
+      console.log(dayTime);
     } catch (error) {
       console.error('Error adding class:', error);
     }
@@ -39,6 +58,10 @@ export const AddClassModal = () => {
         Add Class
       </Button>
     )
+  }
+
+  const addDayTime = () => {
+    setDayTime(prev => ([...prev, { weekDay: "", startTime: "", endTime: "" }]));
   }
 
   return (
@@ -79,54 +102,74 @@ export const AddClassModal = () => {
             initialValue={formData.details}
             onChange={handleChange}
           />
-          <div>
-            <FormControl fullWidth className="text-field-container">
-              <InputLabel id="weekday-label">Week Day</InputLabel>
-              <Select
-                labelId="weekday-label"
-                id="weekday-select"
-                label="Week Day"
-                value={formData.weekDay}
-                onChange={handleWeekdayChange}
-              >
-                <MenuItem value="">-</MenuItem>
-                <MenuItem value="Sunday">Sunday</MenuItem>
-                <MenuItem value="Monday">Monday</MenuItem>
-                <MenuItem value="Tuesday">Tuesday</MenuItem>
-                <MenuItem value="Wednesday">Wednesday</MenuItem>
-                <MenuItem value="Thursday">Thursday</MenuItem>
-                <MenuItem value="Friday">Friday</MenuItem>
-                <MenuItem value="Saturday">Saturday</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <div className="flex-fields-container">
-            <TextField
-              label="Start Time"
-              name="startTime"
-              type="time"
-              InputLabelProps={{
-                shrink: true, // Forces the label to move to the top
-              }}
-              initialValue={formData.startTime}
-              onChange={handleChange}
-            />
-            <TextField
-              label="End Time"
-              name="endTime"
-              type="time"
-              InputLabelProps={{
-                shrink: true, // Forces the label to move to the top
-              }}
-              initialValue={formData.endTime}
-              onChange={handleChange}
-            />
-          </div>
-          {/* <div className="modal-actions">
-            <Button>
+          {dayTime.map((dt, index) => (
+            <div key={index} className="repeatable-section">
+              <div>
+                <div>
+                  <FormControl fullWidth className="text-field-container">
+                    <InputLabel id={`weekday-label-${index}`}>Week Day</InputLabel>
+                    <Select
+                      labelId={`weekday-label-${index}`}
+                      id={`weekday-select-${index}`}
+                      label="Week Day"
+                      name="weekDay"
+                      value={dt.weekDay}
+                      onChange={(event) => handleWeekdayChange(event, index)}
+                    >
+                      <MenuItem value="">-</MenuItem>
+                      <MenuItem value="Sunday">Sunday</MenuItem>
+                      <MenuItem value="Monday">Monday</MenuItem>
+                      <MenuItem value="Tuesday">Tuesday</MenuItem>
+                      <MenuItem value="Wednesday">Wednesday</MenuItem>
+                      <MenuItem value="Thursday">Thursday</MenuItem>
+                      <MenuItem value="Friday">Friday</MenuItem>
+                      <MenuItem value="Saturday">Saturday</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="flex-fields-container">
+                  <TextField
+                    label="Start Time"
+                    name="startTime"
+                    type="time"
+                    InputLabelProps={{
+                      shrink: true, // Forces the label to move to the top
+                    }}
+                    initialValue={dt.startTime}
+                    onChange={(event) => handleWeekdayChange(event, index)}
+                  />
+                  <TextField
+                    label="End Time"
+                    name="endTime"
+                    type="time"
+                    InputLabelProps={{
+                      shrink: true, // Forces the label to move to the top
+                    }}
+                    initialValue={dt.endTime}
+                    onChange={(event) => handleWeekdayChange(event, index)}
+                  />
+                </div>
+              </div>
+              {dayTime.length > 1 && (
+                <div className="remove-section-btn-container">
+                  <Button
+                    className="danger small icon circle"
+                    onClick={() => {
+                      const updatedDayTime = dayTime.filter((_, i) => i !== index);
+                      setDayTime(updatedDayTime);
+                    }}
+                  >
+                    <Close />
+                  </Button>
+                </div>
+              )}
+            </div>
+          ))}
+          <div className="modal-actions">
+            <Button onClick={addDayTime}>
               Add Day/Time
             </Button>
-          </div> */}
+          </div>
         </form>
       </div>
     </Modal>

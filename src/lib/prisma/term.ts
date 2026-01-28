@@ -14,6 +14,9 @@ export const getTermById = async (id: string): Promise<Term | null> => {
     where: {
       id,
     },
+    include: {
+      classes: true,
+    },
   });
 };
 
@@ -31,7 +34,7 @@ export const updateTerm = async (
     where: {
       id,
     },
-    data,
+    data
   });
 };
 

@@ -11,9 +11,22 @@ import { EditSquare } from "@mui/icons-material";
 import { SessionLiveBtn } from "@/components/SessionLiveBtn";
 import { TextField } from "@/components/_ui/TextField";
 
+interface SessionProps {
+  id: string;
+  name: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+  live: boolean;
+  classes: Array<{
+    classId: string;
+    details?: string;
+  }>;
+}
+
 export const SingleSession = () => {
   const pathname = usePathname();
-  const [session, setSession] = useState<Term | null>(null);
+  const [session, setSession] = useState<SessionProps | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   
   const sessionId = useMemo(() => {
@@ -28,7 +41,7 @@ export const SingleSession = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch session");
         }
-        const data: Term = await response.json();
+        const data: SessionProps = await response.json();
         setSession(data);
       } catch (error) {
         console.error("Error fetching session:", error);
@@ -106,6 +119,24 @@ export const SingleSession = () => {
       </div>
       <div>
         <AddClassModal sessionId={sessionId} />
+      </div>
+      <div>
+        <h3>Classes in this Session:</h3>
+        {session ? (
+          session.classes.length > 0 ? (
+            <ul className="item-list">
+              {session.classes.map((cls) => (
+                <li key={cls.classId}>
+                  <strong>{cls.classId}</strong>: {cls.details || <em>No description provided.</em>}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No classes added to this session yet.</p>
+          )
+        ) : (
+          <p>Loading classes...</p>
+        )}
       </div>
       {
         session && (

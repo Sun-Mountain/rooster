@@ -14,6 +14,8 @@ export async function GET(
 
     const term = await getTermById(id);
 
+    console.log(term);
+
     if (!term) {
       return NextResponse.json({ error: "Term not found" }, { status: 404 });
     }

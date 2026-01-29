@@ -20,6 +20,7 @@ interface TermProps {
 
 export const SessionForm = () => {
   const router = useRouter();
+  const [alertMsg, setAlertMsg] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -64,6 +65,7 @@ export const SessionForm = () => {
       });
     } catch (err) {
       console.error(err);
+      setAlertMsg({ type: 'error', message: 'Failed to create session.' });
     } finally {
       router.refresh();
     }
@@ -74,7 +76,7 @@ export const SessionForm = () => {
     <div className="form-container no-border">
       <div className="form-header">
         <h2>New Session</h2>
-        {/* {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>} */}
+        {alertMsg && <Alert type={alertMsg.type} className="transparent no-margin no-padding">{alertMsg.message}</Alert>}
       </div>
       <form onSubmit={handleSubmit}>
         <TextField

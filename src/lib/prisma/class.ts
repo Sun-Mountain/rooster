@@ -12,14 +12,18 @@ export type ClassCreateInput = Prisma.ClassCreateInput & {
 export async function createClass(data: ClassCreateInput): Promise<Class> {
   const { daysTimes, classDetails, sessionId, ...classData } = data;
 
-  console.log('Creating class with data:', data);
-
   const createdClass = await db.class.create({
     data: {
       ...classData,
       classDetails: {
         create: [
-          { details: classDetails, term: { connect: { id: sessionId } } }
+          { details:
+            classDetails,
+            daysTimes: {
+              create: daysTimes || []
+            },
+            term: { connect: { id: sessionId } }
+          }
         ]
       }
     }
@@ -28,4 +32,17 @@ export async function createClass(data: ClassCreateInput): Promise<Class> {
   console.log('Created class:', createdClass);
 
   return createdClass;
+}
+
+export async function getAllClasses(): Promise<Class[]> {
+  return db.class.findMany({
+    include: {
+      classDetails: {
+        include: {
+          daysTimes: true,
+          term: true,
+        }
+      }
+    }
+  });
 }

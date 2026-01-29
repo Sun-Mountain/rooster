@@ -9,7 +9,7 @@ import { Close } from "@mui/icons-material";
 import * as z from 'zod';
 
 const dayTimeSchema = z.object({
-  weekDay: z.string().min(1, "Week day is required"),
+  dayOfWeek: z.string().min(1, "Week day is required"),
   startTime: z.string().min(1, "Start time is required"),
   endTime: z.string().min(1, "End time is required"),
 }).refine((data) => {
@@ -45,7 +45,7 @@ interface ClassFormErrorProps {
     items?: {
       errors?: string[];
       properties?: {
-        weekDay?: {
+        dayOfWeek?: {
           errors: string[];
         };
         startTime?: {
@@ -60,7 +60,7 @@ interface ClassFormErrorProps {
 }
 
 interface dayTimeProps {
-  weekDay: string;
+  dayOfWeek: string;
   startTime: string;
   endTime: string;
 }
@@ -79,7 +79,7 @@ export const AddClassModal = ({ sessionId }: ClassModalProps) => {
     sessionId: sessionId || ""
   });
   const [dayTime, setDayTime] = useState<dayTimeProps[]>([
-    { weekDay: "", startTime: "", endTime: "" }
+    { dayOfWeek: "", startTime: "", endTime: "" }
   ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,7 +132,7 @@ export const AddClassModal = ({ sessionId }: ClassModalProps) => {
   }
 
   const addDayTime = () => {
-    setDayTime(prev => ([...prev, { weekDay: "", startTime: "", endTime: "" }]));
+    setDayTime(prev => ([...prev, { dayOfWeek: "", startTime: "", endTime: "" }]));
   }
 
   return (
@@ -182,16 +182,16 @@ export const AddClassModal = ({ sessionId }: ClassModalProps) => {
               <div>
                 <div>
                   <FormControl fullWidth className="text-field-container">
-                    <InputLabel id={`weekday-label-${index}`}>Week Day</InputLabel>
+                    <InputLabel id={`dayOfWeek-label-${index}`}>Week Day</InputLabel>
                     <Select
-                      labelId={`weekday-label-${index}`}
-                      id={`weekday-select-${index}`}
+                      labelId={`dayOfWeek-label-${index}`}
+                      id={`dayOfWeek-select-${index}`}
                       label="Week Day"
-                      name="weekDay"
-                      value={dt.weekDay}
+                      name="dayOfWeek"
+                      value={dt.dayOfWeek}
                       onChange={(event) => handleWeekdayChange(event, index)}
                       disabled={isLoading}
-                      error={!!errors.daysTimes && !!errors.daysTimes.items && !!errors.daysTimes.items[index]?.properties?.weekDay?.errors?.length}
+                      error={!!errors.daysTimes && !!errors.daysTimes.items && !!errors.daysTimes.items[index]?.properties?.dayOfWeek?.errors?.length}
                     >
                       <MenuItem value="">-</MenuItem>
                       <MenuItem value="Sunday">Sunday</MenuItem>
@@ -202,9 +202,9 @@ export const AddClassModal = ({ sessionId }: ClassModalProps) => {
                       <MenuItem value="Friday">Friday</MenuItem>
                       <MenuItem value="Saturday">Saturday</MenuItem>
                     </Select>
-                    {errors.daysTimes && errors.daysTimes.items && errors.daysTimes.items[index]?.properties?.weekDay?.errors?.length && (
+                    {errors.daysTimes && errors.daysTimes.items && errors.daysTimes.items[index]?.properties?.dayOfWeek?.errors?.length && (
                       <FormHelperText error>
-                        {errors.daysTimes.items[index].properties?.weekDay?.errors[0]}
+                        {errors.daysTimes.items[index].properties?.dayOfWeek?.errors[0]}
                       </FormHelperText>
                     )}
                   </FormControl>

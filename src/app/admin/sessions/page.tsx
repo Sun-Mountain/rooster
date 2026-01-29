@@ -3,7 +3,7 @@ import { SessionList } from "@/components/content/SessionList";
 
 export default function AdminSessionsPage() {
   return (
-    <div className="admin-sessions-page">
+    <div className="admin-page">
       <div className="header-container">
         <h1>Session Management</h1>
       </div>

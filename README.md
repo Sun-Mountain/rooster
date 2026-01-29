@@ -77,7 +77,7 @@ The Rooster Web App provides a full platform for managing classes, student regis
 * Admin-Facing
   * ⏳ Admin dashboard with filtering, sorting, pagination
   * Create and manage:
-    * ✅ Sessions
+    * ⏳ Sessions
     * ⏳ Classes
     * ❌ Student profiles
     * ⏳ User accounts

@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Term } from "@client";
 import { Button } from "@/components/_ui/Button";
 import { BackLink } from "@/components/BackLink";
 import { DeleteModal } from "@/components/modals/DeleteModal";
 import { AddClassModal } from "@/components/modals/AddClass";
-import { EditSquare } from "@mui/icons-material";
+import { EditSquare, Save } from "@mui/icons-material";
 import { SessionLiveBtn } from "@/components/SessionLiveBtn";
 import { TextField } from "@/components/_ui/TextField";
 
@@ -75,7 +74,7 @@ export const SingleSession = () => {
           <SessionLiveBtn live={session?.live || false} className="w-icon small" />
         </div>
         <Button className="w-icon small" onClick={toggleEdit}>
-          <EditSquare /> Edit
+          {isEditing ? <Save /> : <EditSquare />} {isEditing ? "Save" : "Edit"}
         </Button>
       </div>
       <div>

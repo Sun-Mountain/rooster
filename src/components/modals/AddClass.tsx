@@ -103,7 +103,6 @@ export const AddClassModal = ({ sessionId }: ClassModalProps) => {
 
     const validation = classFormSchema.safeParse({ ...formData, daysTimes: dayTime });
     if (!validation.success) {
-      console.log('Validation errors:', z.treeifyError(validation.error).properties);
       setErrors(z.treeifyError(validation.error).properties || {});
       setIsLoading(false);
       return;

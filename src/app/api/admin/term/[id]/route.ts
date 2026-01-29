@@ -1,8 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
-import { deleteTerm, getTermById } from "@/lib/prisma/term";
+import { deleteTerm, getTermById, updateTerm } from "@/lib/prisma/term";
 
 export async function GET(
-  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
@@ -13,8 +12,6 @@ export async function GET(
     }
 
     const term = await getTermById(id);
-
-    console.log(term);
 
     if (!term) {
       return NextResponse.json({ error: "Term not found" }, { status: 404 });
@@ -33,8 +30,8 @@ export async function GET(
 export async function DELETE( request: NextRequest ) {
   try {
     const url = new URL(request.url);
-    const userId = url.pathname.split('/')[4];
-    const id = userId as string;
+    const termId = url.pathname.split('/')[4];
+    const id = termId as string;
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
@@ -45,6 +42,31 @@ export async function DELETE( request: NextRequest ) {
 
   } catch (error) {
     console.error("Error processing delete request:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+};
+
+export async function PUT( request: NextRequest ) {
+  try {
+    const url = new URL(request.url);
+    const termId = url.pathname.split('/')[4];
+    const id = termId as string;
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    const body = await request.json();
+
+    const updatedTerm = await updateTerm(id, body);
+
+    return NextResponse.json(updatedTerm, { status: 200 });
+
+  } catch (error) {
+    console.error("Error updating term:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 },

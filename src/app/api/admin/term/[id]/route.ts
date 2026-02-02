@@ -63,7 +63,13 @@ export async function PUT( request: NextRequest ) {
 
     const body = await request.json();
 
-    const updatedTerm = await updateTerm(id, body);
+    const updatedTerm = await updateTerm(id, {
+      name: body.name,
+      description: body.description,
+      startDate: new Date(body.startDate),
+      endDate: new Date(body.endDate),
+      live: body.live,
+    });
 
     return NextResponse.json(updatedTerm, { status: 200 });
 

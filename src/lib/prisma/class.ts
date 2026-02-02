@@ -29,8 +29,6 @@ export async function createClass(data: ClassCreateInput): Promise<Class> {
     }
   });
 
-  console.log('Created class:', createdClass);
-
   return createdClass;
 }
 

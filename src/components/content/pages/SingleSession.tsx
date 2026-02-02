@@ -56,9 +56,111 @@ export const SingleSession = () => {
     setIsEditing(!isEditing);
   }
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    const formData = new FormData(event.currentTarget);
+    const updatedSession = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      startDate: formData.get("startDate") as string,
+      endDate: formData.get("endDate") as string,
+    };
+
+    fetch(`/api/admin/term/${sessionId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedSession),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update session");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Session updated successfully:", data);
+        setSession((prev) => prev ? { ...prev, ...updatedSession } : prev);
+        setIsEditing(false);
+      })
+      .catch((error) => {
+        console.error("Error updating session:", error);
+      });
+  }
+
   return (
     <div className="page-content-container">
       <BackLink href="/admin/sessions" label="Sessions" />
+      {isEditing ? (
+        <form onSubmit={handleSubmit}>
+          <div className="page-header">
+            <div className="header-with-status">
+              <h2>
+                Session:&nbsp;
+                <TextField
+                  label="Session Name"
+                  name="name"
+                  initialValue={session?.name || ""}
+                />
+              </h2>
+            </div>
+            <Button className="w-icon small" type="submit">
+              <Save /> Save
+            </Button>
+          </div>
+          <div className="form-container no-border no-padding session-dates">
+            <div className="flex-fields-container">
+              <TextField
+                label="Start Date"
+                name="startDate"
+                type="date"
+                initialValue={session ? new Date(session.startDate).toISOString().split('T')[0] : ""}
+              />
+              <TextField
+                label="End Date"
+                name="endDate"
+                type="date"
+                initialValue={session ? new Date(session.endDate).toISOString().split('T')[0] : ""}
+              />
+            </div>
+          </div>
+          <div className="session-description">
+            <TextField
+              label="Session Description"
+              name="description"
+              multiline
+              rows={4}
+              initialValue={session?.description || ""}
+            />
+          </div>
+        </form>
+      ) : (
+        <>
+          <div className="page-header">
+            <div className="header-with-status">
+              <h2>
+                Session:&nbsp;
+                {session?.name}
+              </h2>
+              <SessionLiveBtn live={session?.live || false} className="w-icon small" />
+            </div>
+            <Button className="w-icon small" onClick={toggleEdit}>
+              <EditSquare /> Edit
+            </Button>
+          </div>
+          <div className="session-dates">
+            {session ? (<h3>
+              {new Date(session?.startDate).toLocaleDateString()} - {new Date(session?.endDate).toLocaleDateString()}
+            </h3>) : "Loading..."}
+          </div>
+          <div className="session-description">
+            {session?.description || <em>No description/notes provided.</em>}
+          </div>
+        </>
+      )}
+    {/* <form onSubmit={handleSubmit}>
       <div className="page-header">
         <div className="header-with-status">
           <h2>
@@ -73,9 +175,21 @@ export const SingleSession = () => {
           </h2>
           <SessionLiveBtn live={session?.live || false} className="w-icon small" />
         </div>
-        <Button className="w-icon small" onClick={toggleEdit}>
-          {isEditing ? <Save /> : <EditSquare />} {isEditing ? "Save" : "Edit"}
-        </Button>
+        {isEditing ? (
+          <Button
+            className="w-icon small"
+            type="submit"
+          >
+            <Save /> Save
+          </Button>
+        ) : (
+          <Button
+            className="w-icon small"
+            onClick={toggleEdit}
+          >
+            <EditSquare /> Edit
+          </Button>
+        )}
       </div>
       <div>
         {isEditing ? (
@@ -137,6 +251,7 @@ export const SingleSession = () => {
           <p>Loading classes...</p>
         )}
       </div>
+    </form> */}
       {
         session && (
           <div className="danger-zone">

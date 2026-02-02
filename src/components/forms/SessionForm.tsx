@@ -7,17 +7,6 @@ import { Button } from "@/components/_ui/Button";
 import { Alert } from "@/components/_ui/Alert";
 import { Checkbox } from "@/components/_ui/Checkbox";
 
-interface TermProps {
-  id: string;
-  name: string;
-  startDate: string;
-  endDate: string;
-  live: boolean;
-  createdAt: string;
-  updatedAt: string;
-  description?: string;
-}
-
 export const SessionForm = () => {
   const router = useRouter();
   const [alertMsg, setAlertMsg] = useState<{ type: 'success' | 'error'; message: string } | null>(null);

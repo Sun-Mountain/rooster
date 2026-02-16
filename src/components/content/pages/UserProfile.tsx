@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { Role } from "@client";
 import { usePathname } from 'next/navigation';
-import { DeleteUserModal } from "@/components/modals/DeleteUser";
+import { DeleteModal } from "@/components/modals/DeleteModal";
 
 interface UserData {
   id?: string;
   name?: string;
   firstName?: string;
   lastName?: string;
+  pronouns?: string;
   email?: string;
   error?: string;
   role?: Role;
@@ -85,8 +86,6 @@ export const UserProfile = () => {
     fetchEmergencyContact();
   }, [userId]);
 
-  console.log(userEmergencyContact)
-
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -97,10 +96,11 @@ export const UserProfile = () => {
 
   return (
     <div className="page-container">
-      <h2>User: {userData.name}</h2>
+      <h2>User: {userData.name} {userData.pronouns && `(${userData.pronouns})`}</h2>
         <div className="profile-container">
           <p><strong>First Name:</strong> {userData.firstName}</p>
           <p><strong>Last Name:</strong> {userData.lastName}</p>
+          <p><strong>Pronouns:</strong> {userData.pronouns ? userData.pronouns : 'not given'}</p>
           <p><strong>ID:</strong> {userData.id}</p>
           <p><strong>Role:</strong> {userData.role}</p>
           <p><strong>Email:</strong> {userData.email}</p>
@@ -122,7 +122,7 @@ export const UserProfile = () => {
           <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
         </div>
       <div>
-        <DeleteUserModal userId={userData.id} userName={userData.name} />
+        <DeleteModal id={userData.id} name={userData.name} type="user" />
       </div>
     </div>
   );

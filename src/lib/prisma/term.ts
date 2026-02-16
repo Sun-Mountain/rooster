@@ -4,7 +4,7 @@ import { Term, Prisma } from "../../../generated/prisma/client";
 export const getAllTerms = async (): Promise<Term[]> => {
   return await db.term.findMany({
     orderBy: {
-      createdAt: "desc",
+      startDate: "desc",
     },
   });
 };
@@ -14,12 +14,13 @@ export const getTermById = async (id: string): Promise<Term | null> => {
     where: {
       id,
     },
+    include: {
+      classes: true,
+    },
   });
 };
 
-export const createTerm = async (
-  data: Prisma.TermCreateInput,
-): Promise<Term> => {
+export const createTerm = async (data: Prisma.TermCreateInput): Promise<Term> => {
   return await db.term.create({
     data,
   });
@@ -29,12 +30,11 @@ export const updateTerm = async (
   id: string,
   data: Prisma.TermUpdateInput,
 ): Promise<Term> => {
-  console.log(data);
   return await db.term.update({
     where: {
       id,
     },
-    data,
+    data
   });
 };
 

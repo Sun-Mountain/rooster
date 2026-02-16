@@ -6,11 +6,12 @@ import { Button } from '@/components/_ui/Button';
 interface ModalProps {
   children: ReactNode;
   btnContent: ReactNode;
-  btnAction: ReactNode;
+  btnAction?: ReactNode;
   btnClassName?: string;
   includeCancel?: boolean;
   open?: boolean;
   danger?: boolean;
+  bigModal?: boolean;
 }
 
 export const Modal =({
@@ -20,6 +21,7 @@ export const Modal =({
   btnClassName,
   includeCancel = false,
   danger = false,
+  bigModal: big = false,
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -45,7 +47,7 @@ export const Modal =({
         aria-describedby="modal-modal-description"
       >
         <div className="modal-container">
-          <div className={`modal-content-container${danger ? ' danger' : ''}`}>
+          <div className={`modal-content-container${danger ? ' danger' : ''}${big ? ' bigger-modal' : ''}`}>
             <div>
               {children}
             </div>

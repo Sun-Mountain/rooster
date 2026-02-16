@@ -3,11 +3,16 @@
 
 @forward './components/alerts.scss';
 @forward './components/buttons.scss';
+@forward './components/content.scss';
 @forward './components/drawer.scss';
+@forward './components/footer.scss';
 @forward './components/forms.scss';
+@forward './components/list.scss';
 @forward './components/modal.scss';
 @forward './components/navigation.scss';
+@forward './components/page.scss';
 @forward './components/profile.scss';
+@forward './components/session.scss';
 @forward './components/tables.scss';
 
 body {
@@ -35,7 +40,7 @@ footer {
 }
 
 main {
-  max-width: $xl;
+  max-width: $lg;
   margin: 0 auto;
   min-height: 70vh;
 }
@@ -122,10 +127,18 @@ ul {
   }
 }
 
-@media screen and (max-width: $sm) {
+@media screen and (max-width: $md) {
 
   .side-nav-layout {
     flex-direction: column;
+
+    .header-container {
+      width: 100%;
+
+      h1 {
+        margin: 1.5rem 0 0 2rem;
+      }
+    }
 
     .page-container {
       padding: 0;

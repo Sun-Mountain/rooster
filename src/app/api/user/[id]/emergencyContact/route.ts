@@ -20,8 +20,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: { msg: 'Emergency contact not found', status: 404 } });
     }
 
-    console.log({ emergencyContact }); // --- IGNORE ---
-
     return NextResponse.json(emergencyContact, { status: 200 });
   } catch (error) {
     console.error('Error fetching emergency contact:', error);

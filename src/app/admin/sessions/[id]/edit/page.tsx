@@ -39,10 +39,9 @@ export default function EditTermPage() {
   const fetchTerm = async (id: string) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/term/${id}`);
+      const response = await fetch(`/api/admin/term/${id}`);
       if (!response.ok) throw new Error("Failed to fetch term");
       const term: Term = await response.json();
-      console.log(term);
       setFormData({
         name: term.name,
         description: term.description || "",
@@ -63,7 +62,7 @@ export default function EditTermPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/term", {
+      const response = await fetch("/api/admin/term", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -137,6 +136,8 @@ export default function EditTermPage() {
           />
 
           <Checkbox
+            name="live"
+            label="Live (Active Session)"
             checked={formData.live}
             onChange={(e) =>
               setFormData({ ...formData, live: e.target.checked })

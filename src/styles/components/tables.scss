@@ -16,6 +16,10 @@
     text-align: left;
   }
 
+  th {
+    padding: 0.75rem 0;
+  }
+
   tr:nth-child(even) {
     background-color: $alt-row-bg;
   }

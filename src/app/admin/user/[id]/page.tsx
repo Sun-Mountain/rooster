@@ -1,13 +1,11 @@
-import { UserProfile } from "@/components/content/UserProfile";
-import { KeyboardDoubleArrowLeft } from "@mui/icons-material";
+import { UserProfile } from "@/components/content/pages/UserProfile";
+import { BackLink } from "@/components/BackLink";
 
 export default function AdminUserProfileView() {
   return (
     <>
       <div className="profile-page-content">
-        <a className="back-link" href="/admin/users">
-          <KeyboardDoubleArrowLeft /> Back to Users
-        </a>
+        <BackLink href="/admin/users" label="Users" />
         <UserProfile />
       </div>
     </>

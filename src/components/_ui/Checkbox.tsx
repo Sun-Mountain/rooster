@@ -1,14 +1,20 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Checkbox as CheckboxComponent } from "@mui/material";
+import {
+  Checkbox as CheckboxComponent,
+  FormGroup,
+  FormControlLabel
+} from "@mui/material";
 
 interface CheckboxProps {
-  checked: boolean;
+  name: string;
+  label: string;
+  checked?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({ checked = false, onChange }: CheckboxProps) => {
+export const Checkbox = ({ name, label, checked = false, onChange }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -17,12 +23,21 @@ export const Checkbox = ({ checked = false, onChange }: CheckboxProps) => {
   };
 
   return (
-    <CheckboxComponent
-      checked={isChecked}
-      onChange={handleChange}
-      slotProps={{
-        input: { "aria-label": "controlled" },
-      }}
-    />
+    <div className="checkbox-container">
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <CheckboxComponent
+              checked={isChecked}
+              onChange={handleChange}
+              slotProps={{
+                input: { "aria-label": "controlled", name },
+              }}
+            />
+          }
+          label={label}
+        />
+      </FormGroup>
+    </div>
   );
 };

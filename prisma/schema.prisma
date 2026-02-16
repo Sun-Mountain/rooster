@@ -28,6 +28,8 @@ model ClassTermDetails {
   id          String   @id @default(cuid())
   classId     String
   termId      String
+  price       Float @default(0)
+  capacity    Int @default(0)
   details     String?
   daysTimes   DayTimes[] @relation("ClassDaysTimes")
   createdAt   DateTime @default(now())

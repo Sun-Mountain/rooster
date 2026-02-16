@@ -25,7 +25,6 @@
       }
     }
 
-
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
@@ -41,7 +40,6 @@
 
       div {
         &:last-child {
-          padding-top: 0;
           text-align: left;
         }
       }

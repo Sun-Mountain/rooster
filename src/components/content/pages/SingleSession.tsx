@@ -9,23 +9,13 @@ import { AddClassModal } from "@/components/modals/AddClass";
 import { EditSquare, Save } from "@mui/icons-material";
 import { SessionLiveBtn } from "@/components/SessionLiveBtn";
 import { TextField } from "@/components/_ui/TextField";
-
-interface SessionProps {
-  id: string;
-  name: string;
-  description?: string;
-  startDate: string;
-  endDate: string;
-  live: boolean;
-  classes: Array<{
-    classId: string;
-    details?: string;
-  }>;
-}
+import { SessionClassList } from "@/components/content/SessionClassList";
+import { TermProps } from "@/lib/props";
+import { fetchSingleSession } from "@/lib/api/term";
 
 export const SingleSession = () => {
   const pathname = usePathname();
-  const [session, setSession] = useState<SessionProps | null>(null);
+  const [session, setSession] = useState<TermProps | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   
   const sessionId = useMemo(() => {
@@ -34,22 +24,8 @@ export const SingleSession = () => {
   }, [pathname]);
 
   useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch(`/api/admin/term/${sessionId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch session");
-        }
-        const data: SessionProps = await response.json();
-        setSession(data);
-      } catch (error) {
-        console.error("Error fetching session:", error);
-      }
-    };
-
-    if (sessionId) {
-      fetchSession();
-    }
+    if (!sessionId) return;
+    fetchSingleSession(sessionId, setSession);
   }, [sessionId]);
 
   const toggleEdit = () => {
@@ -160,98 +136,45 @@ export const SingleSession = () => {
           </div>
         </>
       )}
-    {/* <form onSubmit={handleSubmit}>
-      <div className="page-header">
-        <div className="header-with-status">
-          <h2>
-            Session:&nbsp;
-            {isEditing ? (
-              <TextField
-                label="Session Name"
-                name="name"
-                initialValue={session?.name || ""}
-              />
-            ) : session?.name}
-          </h2>
-          <SessionLiveBtn live={session?.live || false} className="w-icon small" />
-        </div>
-        {isEditing ? (
-          <Button
-            className="w-icon small"
-            type="submit"
-          >
-            <Save /> Save
-          </Button>
-        ) : (
-          <Button
-            className="w-icon small"
-            onClick={toggleEdit}
-          >
-            <EditSquare /> Edit
-          </Button>
-        )}
-      </div>
-      <div>
-        {isEditing ? (
-          <div className="form-container no-border no-padding">
-            <div className="flex-fields-container">
-              <TextField
-                label="Start Date"
-                name="startDate"
-                type="date"
-                initialValue={session ? new Date(session.startDate).toISOString().split('T')[0] : ""}
-              />
-              <TextField
-                label="End Date"
-                name="endDate"
-                type="date"
-                initialValue={session ? new Date(session.endDate).toISOString().split('T')[0] : ""}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="session-dates">
-            {session ? (<h3>
-              {new Date(session?.startDate).toLocaleDateString()} - {new Date(session?.endDate).toLocaleDateString()}
-            </h3>) : "Loading..."}
-          </div>
-        )}
-      </div>
-      <div className="session-description">
-        {isEditing ? (
-          <TextField
-            label="Session Description"
-            name="description"
-            multiline
-            rows={4}
-            initialValue={session?.description || ""}
-          />
-        ) : (
-          session?.description || <em>No description/notes provided.</em>
-        )}
-      </div>
-      <div>
-        <AddClassModal sessionId={sessionId} />
-      </div>
       <div>
         <h3>Classes in this Session:</h3>
-        {session ? (
-          session.classes.length > 0 ? (
-            <ul className="item-list">
-              {session.classes.map((cls) => (
-                <li key={cls.classId}>
-                  <strong>{cls.classId}</strong>: {cls.details || <em>No description provided.</em>}
-                </li>
-              ))}
-            </ul>
+        <div className="admin-list">
+          {session && session.classes.length > 0 ? (
+            <SessionClassList
+              sessionId={session.id}
+              classIds={session.classes.map(cls => cls.classId)}
+            />
+            // <>
+            //   {session ? (
+            //     session.classes.length > 0 ? (
+            //       <ul className="admin-list">
+            //         {session.classes.map((cls) => (
+            //           <li className="list-item" key={cls.classId}>
+            //             <div>
+            //               <a href={`/admin/classes/${cls.classId}`}>
+            //                 {cls.classId}
+            //               </a>
+            //             </div>
+            //           </li>
+            //         ))}
+            //       </ul>
+            //     ) : (
+            //       <p>No classes added to this session yet.</p>
+            //     )
+            //   ) : (
+            //     <p>Loading classes...</p>
+            //   )}
+            // </>
           ) : (
-            <p>No classes added to this session yet.</p>
-          )
-        ) : (
-          <p>Loading classes...</p>
-        )}
+            <>
+              No classes are in this session.
+            </>
+          )}
+        </div>
+        <div>
+          <AddClassModal sessionId={sessionId} />
+        </div>
       </div>
-    </form> */}
       {
         session && (
           <div className="danger-zone">

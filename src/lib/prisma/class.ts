@@ -9,6 +9,12 @@ export type ClassCreateInput = Prisma.ClassCreateInput & {
   classDetails?: string;
 };
 
+export type ClassProps = Prisma.ClassGetPayload<{
+  include: {
+    classDetails: true;
+  };
+}>;
+
 export async function createClass(data: ClassCreateInput): Promise<Class> {
   const { daysTimes, classDetails, sessionId, ...classData } = data;
 
@@ -41,6 +47,19 @@ export async function getAllClasses(): Promise<Class[]> {
           term: true,
         }
       }
+    }
+  });
+}
+
+export async function getClassGroupByIds(classIds: string[]): Promise<ClassProps[]> {
+  return db.class.findMany({
+    where: {
+      id: {
+        in: classIds,
+      },
+    },
+    include: {
+      classDetails: true
     }
   });
 }

@@ -25,7 +25,7 @@ export interface ClassTermDetails {
   price: number;
   capacity: number;
   details?: string;
-
+  daysTimes: ClassDayTimes[];
 }
 
 export interface ClassDayTimes {

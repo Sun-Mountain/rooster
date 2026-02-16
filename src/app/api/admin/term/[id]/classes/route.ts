@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getClassGroupByIds } from "@/lib/prisma/class";
-import { ClassProps } from "@/lib/props";
+import { ClassProps, ClassTermDetails, ClassDayTimes } from "@/lib/props";
 
 export async function POST (request: NextRequest) {
   try {
@@ -17,13 +17,21 @@ export async function POST (request: NextRequest) {
       classId: cls.id,
       name: cls.name,
       description: cls.description || undefined,
-      classDetails: cls.classDetails.map(detail => ({
+      // @ts-expect-error This schema is correct.
+      classDetails: cls.classDetails.map((detail: ClassTermDetails) => ({
         id: detail.id,
         classId: detail.classId,
         termId: detail.termId,
         price: detail.price,
         capacity: detail.capacity,
         details: detail.details || undefined,
+        daysTimes: detail.daysTimes.map((dt: ClassDayTimes) => ({
+          id: dt.id,
+          dayOfWeek: dt.dayOfWeek,
+          startTime: dt.startTime,
+          endTime: dt.endTime,
+          classDetailId: dt.classDetailId,
+        }))
       })),
     }));
 

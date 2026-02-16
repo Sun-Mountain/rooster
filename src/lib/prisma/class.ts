@@ -59,7 +59,11 @@ export async function getClassGroupByIds(classIds: string[]): Promise<ClassProps
       },
     },
     include: {
-      classDetails: true
+      classDetails: {
+        include: {
+          daysTimes: true,
+        }
+      }
     }
   });
 }

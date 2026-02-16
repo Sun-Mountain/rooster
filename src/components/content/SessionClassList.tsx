@@ -48,7 +48,7 @@ export const SessionClassList = ({ sessionId, classIds }: SessionClassListProps)
           <>
             Fetching classes...
             {classIds.map((_, index) => {
-              if (index >= 5) return null; // Limit to 3 skeletons for brevity
+              if (index >= 5) return null; // Limit to 5 skeletons for brevity
               return (
                 <div key={index} className="skeleton-container">
                   <Skeleton variant="rounded" width={735} height={60}/>
@@ -62,8 +62,14 @@ export const SessionClassList = ({ sessionId, classIds }: SessionClassListProps)
       </>
     ) : (
       <ul>
-        {classes.map((cls, index) => (
-          <li key={cls.classId}>{cls.name}</li>
+        {classes.map((cls) => (
+          <li key={cls.classId}>
+            {cls.name}
+
+            <ul>
+              {}
+            </ul>
+          </li>
         ))}
       </ul>
     )}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import { Alert } from "@/components/_ui/Alert";
@@ -12,22 +11,27 @@ import { fetchTerms } from "@/lib/api/term";
 import { TermForm } from "@/components/forms/TermForm";
 
 export default function TermPageContent() {
-  const router = useRouter();
-
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [termList, setTermList] = useState<TermProps[]>([]);
   
+  const fetchAllTerms = () => fetchTerms(setError, setIsLoading, setTermList)
+
   useEffect(() => {
-    fetchTerms(setError, setIsLoading, setTermList)
+    fetchAllTerms();
   }, [])
+
 
   return (
     <div className="admin-page-container">
       <h1>Session Management</h1>
       <div className="content-container">
         <TermForm />
-        {termList.length > 0 && !isLoading ? (
+        {error ? (
+          <>
+            {error}
+          </>
+        ) : termList.length > 0 && !isLoading ? (
           <>
             Yay Sessions!
           </>

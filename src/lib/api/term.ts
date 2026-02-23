@@ -8,7 +8,7 @@ export const fetchTerms = async (
 ) => {
   try {
     setIsLoading(true)
-    const res = await fetch("/api/term");
+    const res = await fetch("/api/admin/term");
     if (!res.ok) throw new Error("Failed to fetch sessions.")
     const data = await res.json();
     setTermList(data)
@@ -16,5 +16,50 @@ export const fetchTerms = async (
     setError(err instanceof Error ? err.message : "Failed to load sessions");
   } finally {
     setIsLoading(false);
+  }
+}
+
+export const createNewTerm = async (
+  formData: {
+    name: string,
+    description: string,
+    startDate: string,
+    endDate: string
+    live: boolean
+  },
+  setFormData: Dispatch<SetStateAction<{
+    name: string,
+    description: string,
+    startDate: string,
+    endDate: string
+    live: boolean
+  }>>,
+  setError: Dispatch<SetStateAction<string | null>>,
+  setSubmitting: Dispatch<SetStateAction<boolean>>,
+) => {
+  try {
+    const response = await fetch("/api/admin/term", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "failed to create term");
+    }
+
+    setFormData({
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+      live: false
+    })
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Failed to create term");
+  } finally {
+    setSubmitting(false);
   }
 }

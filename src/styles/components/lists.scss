@@ -1,0 +1,62 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.admin-list {
+  border-top: $basic-border;
+  padding: 2rem 0;
+
+  .list-item {
+    border: $admin-list-border;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      padding: 1rem 1rem 1rem 0;
+      align-items: center;
+
+      &:first-child {
+        max-width: 25rem;
+      }
+
+      &:last-child {
+        text-align: right;
+        width: 12rem;
+      }
+      
+      a, .link-container {
+        padding: 1rem;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+} 
+
+@media screen and (max-width: $sm) {
+  .admin-list {
+    padding: 1rem 0;
+
+    .list-item {
+      flex-direction: column;
+
+      div {
+        padding: 0.5rem 1rem;
+        align-items: center;
+        text-align: center;
+
+        &:first-child {
+          padding-top: 1rem;
+        }
+
+        &:last-child {
+          margin: 0 auto;
+          padding-bottom: 1rem;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

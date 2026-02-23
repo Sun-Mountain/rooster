@@ -4,7 +4,7 @@ import { Term, Prisma } from "../../../generated/prisma/client";
 export const getAllTerms = async (): Promise<Term[]> => {
   return await db.term.findMany({
     orderBy: {
-      createdAt: "desc",
+      startDate: "desc"
     },
   });
 };

@@ -32,17 +32,12 @@ export default function TermPageContent() {
           <ul className="admin-list">
             {termList.map((session: TermProps) => (
               <li className="list-item" key={session.id}>
-                <div>
+                <div className="link-container">
                   <a href={`/admin/sessions/${session.id}`}>
                     {session.name}
                   </a>
                 </div>
-                {/* <SessionLiveBtn live={session.live} />
-                {/* <div>
-                  <Button className="small">
-                    {session.live ? 'Set Inactive' : 'Set Live'}
-                  </Button>
-                </div> */}
+                {/* <SessionLiveBtn live={session.live} /> */}
                 <div>
                   {new Date(session.startDate).toLocaleDateString()} - {new Date(session.endDate).toLocaleDateString()}
                 </div>

@@ -1,44 +1,54 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TextField } from "@/components/_ui/TextField";
-import { Button } from "@/components/_ui/Button";
-import { Alert } from "@/components/_ui/Alert";
 import { TermProps } from "@/lib/props";
-
 import { fetchTerms } from "@/lib/api/term";
-
 import { TermForm } from "@/components/forms/TermForm";
 
 export default function TermPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [termList, setTermList] = useState<TermProps[]>([]);
-  
-  const fetchAllTerms = () => fetchTerms(setError, setIsLoading, setTermList)
 
   useEffect(() => {
-    fetchAllTerms();
-  }, [])
+    if (isLoading) fetchTerms(setError, setIsLoading, setTermList)
+  }, [isLoading])
 
 
   return (
     <div className="admin-page-container">
       <h1>Session Management</h1>
       <div className="content-container">
-        <TermForm />
+        <TermForm setIsLoading={setIsLoading} />
         {error ? (
           <>
             {error}
           </>
-        ) : termList.length > 0 && !isLoading ? (
+        ) : termList.length === 0 ? (
           <>
-            Yay Sessions!
+            {isLoading ? "Loading..." : "No sessions found."}
           </>
         ) : (
-          <>
-            No sessions
-          </>
+          <ul className="admin-list">
+            {termList.map((session: TermProps) => (
+              <li className="list-item" key={session.id}>
+                <div>
+                  <a href={`/admin/sessions/${session.id}`}>
+                    {session.name}
+                  </a>
+                </div>
+                {/* <SessionLiveBtn live={session.live} />
+                {/* <div>
+                  <Button className="small">
+                    {session.live ? 'Set Inactive' : 'Set Live'}
+                  </Button>
+                </div> */}
+                <div>
+                  {new Date(session.startDate).toLocaleDateString()} - {new Date(session.endDate).toLocaleDateString()}
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>

@@ -8,3 +8,11 @@ export interface TermProps {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TermFormProps {
+  name: string,
+  description: string,
+  startDate: string,
+  endDate: string
+  live: boolean
+}

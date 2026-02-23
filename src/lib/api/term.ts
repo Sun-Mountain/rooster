@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TermProps } from "@/lib/props";
+import { TermProps, TermFormProps } from "@/lib/props";
 
 export const fetchTerms = async (
   setError: Dispatch<SetStateAction<string | null>>,
@@ -20,20 +20,8 @@ export const fetchTerms = async (
 }
 
 export const createNewTerm = async (
-  formData: {
-    name: string,
-    description: string,
-    startDate: string,
-    endDate: string
-    live: boolean
-  },
-  setFormData: Dispatch<SetStateAction<{
-    name: string,
-    description: string,
-    startDate: string,
-    endDate: string
-    live: boolean
-  }>>,
+  formData: TermFormProps,
+  setFormData: Dispatch<SetStateAction<TermFormProps>>,
   setError: Dispatch<SetStateAction<string | null>>,
   setSubmitting: Dispatch<SetStateAction<boolean>>,
 ) => {

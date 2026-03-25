@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
-import { AuthLinks } from '@/components/content/AuthLinks';
+import { AuthLinks } from '@/components/AuthLinks';
 import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
 import ErrorIcon from '@mui/icons-material/Error';
 import * as z from 'zod';

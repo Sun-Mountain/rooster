@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { Avatar } from '@mui/material';
-import { User } from "@/lib/auth";
+import { UserProps } from "@/lib/props";
 
 interface MainNavLinksProps {
-  user?: User;
+  user?: UserProps;
   inDrawer?: boolean;
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { fetchTerms } from "@/lib/api/term";
 import { TermForm } from "@/components/forms/TermForm";
+import { AdminSessionList } from "../AdminSessionList";
 
 export default function TermPageContent() {
   const [error, setError] = useState<string | null>(null);
@@ -29,21 +30,7 @@ export default function TermPageContent() {
             {isLoading ? "Loading..." : "No sessions found."}
           </>
         ) : (
-          <ul className="admin-list">
-            {termList.map((session: TermProps) => (
-              <li className="list-item" key={session.id}>
-                <div className="link-container">
-                  <a href={`/admin/sessions/${session.id}`}>
-                    {session.name}
-                  </a>
-                </div>
-                {/* <SessionLiveBtn live={session.live} /> */}
-                <div>
-                  {new Date(session.startDate).toLocaleDateString()} - {new Date(session.endDate).toLocaleDateString()}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <AdminSessionList termList={termList} />
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Role } from "@client";
+import { Role, TermStatus } from "@client";
 
 export interface TermProps {
   id: string;
@@ -6,17 +6,17 @@ export interface TermProps {
   description: string | null;
   startDate: string;
   endDate: string;
-  live: boolean;
+  status: TermStatus;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface TermFormProps {
-  name: string,
-  description: string,
-  startDate: string,
-  endDate: string
-  live: boolean
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  status: TermStatus;
 }
 
 export interface UserProps {

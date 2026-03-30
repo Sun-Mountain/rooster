@@ -16,8 +16,7 @@ export const TermForm = ({
     name: "",
     description: "",
     startDate: "",
-    endDate: "",
-    live: false
+    endDate: ""
   })
 
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +46,7 @@ export const TermForm = ({
         name: "",
         description: "",
         startDate: "",
-        endDate: "",
-        live: false
+        endDate: ""
       })
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create term");

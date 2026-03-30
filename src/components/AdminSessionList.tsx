@@ -17,7 +17,7 @@ export const AdminSessionList = ({ termList }: AdminSessionListProps) => {
           name={session.name}
           startDate={session.startDate}
           endDate={session.endDate}
-          liveStatus={session.live}
+          liveStatus={session.status}
         />
       ))}
     </ul>

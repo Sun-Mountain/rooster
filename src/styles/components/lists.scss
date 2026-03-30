@@ -72,3 +72,15 @@
     }
   }
 }
+
+@media screen and (min-width: calc($sm + 1px)){
+  .admin-list {
+    .list-item {
+      div {
+        &:first-child {
+          width: 45%;
+        }
+      }
+    }
+  }
+}

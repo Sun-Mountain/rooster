@@ -1,9 +1,12 @@
+import { TermStatus } from "@client";
+import { Circle, Inventory, Drafts } from "@mui/icons-material";
+
 interface SessionListItemProps {
   sessionId: string;
   name: string;
   startDate: string;
   endDate: string;
-  liveStatus: boolean;
+  liveStatus: TermStatus;
 }
 
 export const SessionListItem = ({
@@ -13,25 +16,15 @@ export const SessionListItem = ({
   endDate,
   liveStatus
 }: SessionListItemProps) => {
-  let liveText = '';
 
-  if (endDate && new Date(endDate) < new Date()) {
-    liveText = ' (Ended)';
-  } else if (liveStatus) {
-    liveText = ' (Live)';
-  } else if (!liveStatus) {
-    liveText = ' (Draft)';
-  }
+  console.log("SessionListItem liveStatus:", liveStatus);
 
   return (
-    <li className="list-item" key={sessionId}>
+    <li className={`list-item`} key={sessionId}>
       <div className="link-container">
         <a href={`/admin/sessions/${sessionId}`}>
           {name}
         </a>
-      </div>
-      <div>
-        {liveText}
       </div>
       <div>
         {new Date(startDate).toLocaleDateString()} - {new Date(endDate).toLocaleDateString()}

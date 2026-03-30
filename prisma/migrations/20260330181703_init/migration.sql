@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN', 'SUPER');
 
+-- CreateEnum
+CREATE TYPE "TermStatus" AS ENUM ('LIVE', 'ENDED', 'DRAFT');
+
 -- CreateTable
 CREATE TABLE "term" (
     "id" TEXT NOT NULL,
@@ -8,7 +11,7 @@ CREATE TABLE "term" (
     "description" TEXT,
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3) NOT NULL,
-    "live" BOOLEAN NOT NULL DEFAULT false,
+    "status" "TermStatus" NOT NULL DEFAULT 'DRAFT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

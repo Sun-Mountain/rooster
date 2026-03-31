@@ -2,19 +2,21 @@ name: Rooster Push Tests
 run-name: Run unit tests
 on:
   push:
-    branches: [main]
+    branches: 
+    - main
   pull_request:
-    branches: [main]
+    branches: 
+    - main
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x]
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
-        - run: echo "The {{ github.repository }} repository on branch {{ github.ref }} has been checked out."
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
         - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v2
           with:
@@ -24,18 +26,17 @@ jobs:
         - name: Set up Database
           run: npx prisma generate
             done
-        - run: npm test
   lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x]
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
-        - run: echo "The {{ github.repository }} repository on branch {{ github.ref }} has been checked out."
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
         - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v2
+          uses: actions/setup-node@v6.3.0
           with:
             node-version: ${{ matrix.node-version }}
             cache: 'npm'

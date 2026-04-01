@@ -44,7 +44,7 @@ export const SessionListItem = ({
   return (
     <li className={`list-item` + itemClass()} key={sessionId}>
       <div className="link-container">
-        <a href={`/admin/sessions/${sessionId}`}>
+        <a href={`/admin/session/${sessionId}`}>
           {name}
         </a>
       </div>

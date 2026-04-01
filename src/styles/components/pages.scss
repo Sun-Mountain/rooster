@@ -4,5 +4,24 @@
 .admin-page-container {
   .content-container {
     margin: 1rem;
+
+    &.two-column {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+
+      div:last-child {
+        div {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+
+  .action-btns-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
   }
 }

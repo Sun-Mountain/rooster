@@ -43,11 +43,51 @@ export const createNewTerm = async (
       description: "",
       startDate: "",
       endDate: "",
-      live: false
     })
   } catch (err) {
     setError(err instanceof Error ? err.message : "Failed to create term");
   } finally {
     setSubmitting(false);
+  }
+}
+
+export const fetchSingleTermById = async (
+  termId: string,
+  setTermData: Dispatch<SetStateAction<TermProps | null>>,
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+) => {
+  try {
+    const res = await fetch(`/api/admin/term/${termId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    if (!res.ok) throw new Error("Failed to fetch term.")
+    const data = await res.json();
+    setTermData(data);
+    setIsLoading(false);
+  } catch (err) {
+    throw err instanceof Error ? err : new Error("Failed to load term");
+  }
+}
+
+export const updateTermStatusById = async (
+  termId: string,
+  newStatus: string
+) => {
+  try {
+    const res = await fetch(`/api/admin/term/${termId}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (!res.ok) throw new Error("Failed to update term status.")
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw err instanceof Error ? err : new Error("Failed to update term status");
   }
 }

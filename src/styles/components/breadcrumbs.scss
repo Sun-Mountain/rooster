@@ -14,5 +14,10 @@
       font-family: Georgia, 'Times New Roman', Times, serif;
       text-decoration: none;
     }
+
+    a:disabled {
+      color: $french-gray;
+      pointer-events: none;
+    }
   }
 }

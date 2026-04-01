@@ -16,7 +16,6 @@ export interface TermFormProps {
   description: string;
   startDate: string;
   endDate: string;
-  status: TermStatus;
 }
 
 export interface UserProps {

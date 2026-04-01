@@ -1,8 +1,7 @@
 "use client";
 
-import { JSX, use, useEffect, useState } from "react";
-import { Circle, Inventory, Drafts } from "@mui/icons-material";
 import { dateFormat } from "@/helpers/dateFormatting";
+import { getStatusIcon } from "@/components/_ui/TermStatusIcon";
 
 interface SessionListItemProps {
   sessionId: string;
@@ -19,19 +18,6 @@ export const SessionListItem = ({
   endDate,
   liveStatus
 }: SessionListItemProps) => {
-  const getStatusIcon = (status: "LIVE" | "ENDED" | "DRAFT"): JSX.Element => {
-    switch (status) {
-      case "LIVE":
-        return <Circle />;
-      case "ENDED":
-        return <Inventory />;
-      default:
-        if (endDate < new Date().toISOString()) {
-          return <Inventory />;
-        }
-        return <Drafts />;
-    }
-  };
 
   const itemClass = () => {
     if (endDate < new Date().toISOString()) {
@@ -49,7 +35,7 @@ export const SessionListItem = ({
         </a>
       </div>
       <div className="status-icon icon-container">
-        {getStatusIcon(liveStatus)}
+        {getStatusIcon(liveStatus, endDate)}
       </div>
       <div>
         {dateFormat(startDate)} - {dateFormat(endDate)}

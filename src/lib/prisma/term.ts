@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { Term, Prisma } from "../../../generated/prisma/client";
+import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
 export const getAllTerms = async (): Promise<Term[]> => {
   return await db.term.findMany({
@@ -44,6 +44,20 @@ export const deleteTerm = async (id: string): Promise<Term> => {
   return await db.term.delete({
     where: {
       id,
+    },
+  });
+};
+
+export const updateTermStatus = async (
+  id: string,
+  newStatus: TermStatus
+): Promise<Term> => {
+  return await db.term.update({
+    where: {
+      id,
+    },
+    data: {
+      status: newStatus,
     },
   });
 };

@@ -2,11 +2,12 @@ import { NextResponse, NextRequest } from "next/server";
 import { getTermById } from "@/lib/prisma/term";
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  request: NextRequest
 ) {
   try {
-    const { id } = await params;
+    const url = new URL(request.url);
+    const userId = url.pathname.split('/')[4];
+    const id = userId as string;
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });

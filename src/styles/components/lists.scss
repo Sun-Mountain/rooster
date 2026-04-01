@@ -32,6 +32,22 @@
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
+
+    &.ended {
+      border: $list-item-ended-border;
+      opacity: 0.75;
+
+      // .icon-container {
+      //   opacity: 0.75;
+      // }
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
   }
 } 
 

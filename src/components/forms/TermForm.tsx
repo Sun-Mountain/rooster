@@ -24,7 +24,7 @@ export const TermForm = ({
     setFormData(prev => prev ? { ...prev, [name]: value } : prev);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     setIsLoading(true)

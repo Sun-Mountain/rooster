@@ -1,4 +1,4 @@
-import { AuthLinks } from '@/components/content/AuthLinks';
+import { AuthLinks } from '@/components/AuthLinks';
 export default function ForgotPasswordPage() {
   return (
     <>

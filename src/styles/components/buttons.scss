@@ -47,6 +47,20 @@ button {
     margin: auto 0 auto 5px;
   }
 
+  &.small {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+
+    &.icon {
+      padding: 0.25rem;
+
+      svg {
+        width: 0.75rem;
+        height: 0.75rem;
+      }
+    }
+  }
+
   &.danger {
     background-color: $danger-btn;
     border: 1px solid $danger-btn;

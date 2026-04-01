@@ -15,6 +15,7 @@ interface TextFieldProps {
   rows?: number;
   type?: "text" | "password" | "email" | "number" | "date";
   errorMsg?: string;
+  shrink?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   InputLabelProps?: InputLabelProps;
 }

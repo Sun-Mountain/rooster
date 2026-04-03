@@ -1,0 +1,42 @@
+name: Rooster Push Tests
+run-name: Run unit tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [**]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - run: npm install
+        - name: Set up Database
+          run: npx prisma generate
+            done
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v6.3.0
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - run: npm install
+        - run: npm run lint

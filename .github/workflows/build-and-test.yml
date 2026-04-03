@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        pnpm-version: [10.x]
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
         - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
-        - name: Use Node.js ${{ matrix.node-version }}
+        - name: Use Node.js ${{ matrix.pnpm-version }}
           uses: pnpm/action-setup@v5
           with:
-            node-version: ${{ matrix.node-version }}
+            version: ${{ matrix.pnpm-version }}
             # cache: 'pnpm'
         - run: pnpm install
         - name: Set up Database
@@ -28,15 +28,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        pnpm-version: [10.x]
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
         - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
-        - name: Use Node.js ${{ matrix.node-version }}
+        - name: Use Node.js ${{ matrix.pnpm-version }}
           uses: pnpm/action-setup@v5
           with:
-            node-version: ${{ matrix.node-version }}
+            version: ${{ matrix.pnpm-version }}
             # cache: 'pnpm'
         - run: pnpm install
         - run: pnpm run lint

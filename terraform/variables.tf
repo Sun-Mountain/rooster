@@ -1,3 +1,8 @@
+variable "app_region" {
+  description = "Region the app is being installed to"
+  type        = string
+  default     = "us-east-1"
+}
 variable "app_instance_name" {
   description = "Value of the EC2 instance's Name tag."
   type        = string
@@ -11,25 +16,31 @@ variable "app_instance_type" {
 }
 
 variable "db_instance_name" {
-    description = "The name of the database to create when the DB instance is created."
-    type        = string
-    default     = "roosterdb" 
+  description = "The name of the database to create when the DB instance is created."
+  type        = string
+  default     = "roosterdb"
 }
 
 variable "db_instance_type" {
-    description = "The type of the database instance."
-    type        = string
-    default     = "db.t3.micro"
+  description = "The type of the database instance."
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_schema_name" {
+  description = "The name for the database."
+  type        = string
+  default     = "roosterdb"
 }
 
 variable "db_username" {
-    description = "The username for the database."
-    type        = string
-    default     = "roosteradmin"
+  description = "The username for the database."
+  type        = string
+  default     = "roosteradmin"
 }
 
 variable "db_password" {
-    description = "The password for the database."
-    type        = string
-    default     = "ChickenRun#1"
+  description = "The password for the database."
+  type        = string
+  default     = "ChickenRun#1"
 }

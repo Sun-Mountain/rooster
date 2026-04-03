@@ -1,5 +1,16 @@
 provider "aws" {
-  region = "us-east-2"
+  region = var.app_region
+}
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.92"
+    }
+  }
+
+  required_version = ">= 1.14"
 }
 
 data "aws_vpc" "default" {
@@ -50,7 +61,6 @@ resource "aws_security_group" "app_db_sg" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.app_db_sg.id]
   }
 
   egress {
@@ -77,9 +87,9 @@ resource "aws_db_subnet_group" "default" {
 
 resource "aws_db_instance" "app_db" {
   identifier             = "rooster-app-db"
-  engine                 = "mysql"
-  engine_version         = "8.0"
-  instance_class         = "db.t3.micro"
+  engine                 = "postgres"
+  engine_version         = "14"
+  instance_class         = var.db_instance_type
   allocated_storage      = 20
   max_allocated_storage  = 100
   storage_type           = "gp2"
@@ -88,21 +98,21 @@ resource "aws_db_instance" "app_db" {
   publicly_accessible    = false
   skip_final_snapshot    = true
 
-  db_name  = "roosterdb"
-  username = "roosteradmin"
-  password = "Rooster123!"
+  db_name  = var.db_schema_name
+  username = var.db_username
+  password = var.db_password
 
   tags = {
-    Name = "rooster-app-db"
+    Name = var.db_instance_name
   }
 }
 
 resource "aws_instance" "app_server" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  instance_type          = var.app_instance_type
   vpc_security_group_ids = [aws_security_group.app_db_sg.id]
 
   tags = {
-    Name = "rooster-app-server"
+    Name = var.app_instance_name
   }
 }

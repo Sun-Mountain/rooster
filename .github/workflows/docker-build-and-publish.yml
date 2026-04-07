@@ -31,8 +31,8 @@ jobs:
                     -backend-config='skip_metadata_api_check=true' \
                     -backend-config='skip_region_validation=true' \
                     -backend-config='skip_credentials_validation=true' \
-                    -backend-config='region=${{ inputs.aws_region }}' \
-                    -backend-config='bucket=${{ inputs.backend_s3_bucket }}' \
+                    -backend-config='region=${{ secrets.AWS_REGION }}' \
+                    -backend-config='bucket=${{ secrets.S3_BUCKET }}' \
                     -backend-config='key=docker-ecr/terraform-${{ env.ECR_REPO_NAME }}.tfstate' \
                     -backend-config='dynamodb_table=${{ inputs.backend_dynamodb_table }}' \
                     -backend-config='role_arn=arn:aws:iam::${{ inputs.aws_account_id }}:role/${{ inputs.backend_iam_role }}'

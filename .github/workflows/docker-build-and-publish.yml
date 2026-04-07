@@ -7,6 +7,18 @@ on:
                 description: 'Path to the Dockerfile to build (relative to the repository root)'
                 required: true
                 default: 'Dockerfile'
+            docker_build_dir:
+                description: 'Directory to use as the build context for the Docker build (relative to the repository root)'
+                required: true
+                default: '.'
+            image_tag:
+                description: 'Tag to apply to the built Docker image'
+                required: true
+                default: 'rooster:latest'
+            lifecycle_policy_file:
+                description: 'Path to the ECR lifecycle policy file (relative to the repository root)'
+                required: true
+                default: 'terraform/ecr-policy.json'
 
 # concurrency required to avoid terraform lock contention during ECR provisioning
 concurrency: ci-${{ github.repository }}-docker-pipeline
@@ -35,13 +47,14 @@ jobs:
               shell: bash
               run: |
                 set -eux
+                cd terraform
                 terraform init -upgrade -reconfigure \
                     -backend-config='skip_metadata_api_check=true' \
                     -backend-config='skip_region_validation=true' \
                     -backend-config='skip_credentials_validation=true' \
                     -backend-config='region=${{ secrets.AWS_REGION }}' \
-                    -backend-config='bucket=${{ secrets.S3_BUCKET }}' \
-                    -backend-config='key=docker-ecr/terraform-${{ env.ECR_REPO_NAME }}.tfstate' \
+                    -backend-config='bucket=${{ secrets.S3_TERRAFORM_BUCKET }}' \
+                    -backend-config='key=docker-ecr/terraform-${{ secrets.ECR_REPO_NAME }}.tfstate' \
                     -backend-config='dynamodb_table=${{ inputs.backend_dynamodb_table }}' \
                     -backend-config='role_arn=arn:aws:iam::${{ inputs.aws_account_id }}:role/${{ inputs.backend_iam_role }}'
               working-directory: ${{ github.action_path }}
@@ -49,8 +62,9 @@ jobs:
               shell: bash
               run: |
                 set -eux
+                cd terraform
                 terraform apply \
-                    -var 'repository_name=${{ env.ECR_REPO_NAME }}' \
+                    -var 'repository_name=${{ secrets.ECR_REPO_NAME }}' \
                     -var 'lifecycle_policy=${{ inputs.lifecycle_policy_file }}' \
                     -var 'iam_role=arn:aws:iam::${{ inputs.aws_account_id }}:role/${{ inputs.github_iam_role }}' \
                     -var 'aws_account_id=${{ inputs.aws_account_id }}' \
@@ -66,7 +80,7 @@ jobs:
               shell: bash
               env:
                 ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                ECR_REPOSITORY: ${{ env.ECR_REPO_NAME }}
+                ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
                 IMAGE_TAG: ${{ inputs.image_tag }}
               run: |
                 docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

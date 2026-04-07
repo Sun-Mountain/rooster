@@ -2,6 +2,10 @@ provider "aws" {
   region = var.app_region
 }
 
+locals {
+  account-id = data.aws_caller_identity.current.account_id
+}
+
 terraform {
   required_providers {
     aws = {
@@ -57,10 +61,10 @@ resource "aws_security_group" "app_db_sg" {
   }
 
   ingress {
-    description     = "RDS MySQL access from app server"
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
+    description = "RDS MySQL access from app server"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
   }
 
   egress {
@@ -114,5 +118,74 @@ resource "aws_instance" "app_server" {
 
   tags = {
     Name = var.app_instance_name
+  }
+}
+
+# ECR repository and policy
+resource "aws_ecr_repository" "repository" {
+  name                 = var.ecr_repository_name
+  image_tag_mutability = "IMMUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  encryption_configuration {
+    encryption_type = "KMS"
+  }
+}
+
+resource "aws_ecr_lifecycle_policy" "name" {
+  repository = aws_ecr_repository.repository.name
+  policy     = templatefile(var.lifecycle_policy, {})
+}
+
+resource "aws_ecr_registry_scanning_configuration" "scan_configuration" {
+  scan_type = "ENHANCED"
+
+  rule {
+    scan_frequency = "CONTINUOUS_SCAN"
+    repository_filter {
+      filter      = "*"
+      filter_type = "WILDCARD"
+    }
+  }
+}
+
+data "aws_iam_policy_document" "ecr_repo_policy" {
+  statement {
+    sid    = "All Accounts in the Org can pull"
+    effect = "Allow"
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+    actions = [
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:ListImages"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:PrincipalAccount"
+      values   = ["${var.aws_account_id}"]
+    }
+  }
+  statement {
+    sid    = "Allow push only from github actions"
+    effect = "Allow"
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${local.account-id}:role/${var.iam_role}"]
+    }
+    actions = ["ecr:BatchCheckLayerAvailability",
+      "ecr:CompleteLayerUpload",
+      "ecr:InitiateLayerUpload",
+      "ecr:PutImage",
+    "ecr:UploadLayerPart"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:PrincipalAccount"
+      values   = ["${var.aws_account_id}"]
+    }
   }
 }

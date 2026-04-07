@@ -2,7 +2,15 @@ name: Docker Build and Publish
 run-name: Build and publish Docker image
 on:
     workflow_dispatch:
-        # inputs:
+        inputs:
+            dockerfile_path:
+                description: 'Path to the Dockerfile to build (relative to the repository root)'
+                required: true
+                default: 'Dockerfile'
+
+# concurrency required to avoid terraform lock contention during ECR provisioning
+concurrency: ci-${{ github.repository }}-docker-pipeline
+
 jobs:
     docker:
         runs-on: ubuntus-latest

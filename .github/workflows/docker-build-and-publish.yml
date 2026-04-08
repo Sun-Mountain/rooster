@@ -22,7 +22,7 @@ on:
 
 jobs:
     docker-build-and-publish:
-        runs-on: ubuntus-latest
+        runs-on: ubuntu-latest
 
         permissions:
             id-token: write

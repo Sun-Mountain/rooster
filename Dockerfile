@@ -19,5 +19,8 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 3000
 
+# Update the database schema (if needed)
+# RUN pnpm run db:migrate
+
 # Command to run the application
 CMD ["pnpm", "dev"]

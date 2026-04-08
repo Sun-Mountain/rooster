@@ -24,7 +24,7 @@ on:
 concurrency: ci-${{ github.repository }}-docker-pipeline
 
 jobs:
-    docker:
+    docker-build-and-publish:
         runs-on: ubuntus-latest
         permissions:
             id-token: write
@@ -55,8 +55,7 @@ jobs:
                     -backend-config='region=${{ secrets.AWS_REGION }}' \
                     -backend-config='bucket=${{ secrets.S3_TERRAFORM_BUCKET }}' \
                     -backend-config='key=docker-ecr/terraform-${{ secrets.ECR_REPO_NAME }}.tfstate' \
-                    -backend-config='dynamodb_table=${{ inputs.backend_dynamodb_table }}' \
-                    -backend-config='role_arn=arn:aws:iam::${{ inputs.aws_account_id }}:role/${{ inputs.backend_iam_role }}'
+                    -backend-config='role_arn=arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ inputs.backend_iam_role }}'
               working-directory: ${{ github.action_path }}
             - name: Terraform apply
               shell: bash
@@ -66,15 +65,15 @@ jobs:
                 terraform apply \
                     -var 'repository_name=${{ secrets.ECR_REPO_NAME }}' \
                     -var 'lifecycle_policy=${{ inputs.lifecycle_policy_file }}' \
-                    -var 'iam_role=arn:aws:iam::${{ inputs.aws_account_id }}:role/${{ inputs.github_iam_role }}' \
-                    -var 'aws_account_id=${{ inputs.aws_account_id }}' \
+                    -var 'iam_role=arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ inputs.github_iam_role }}' \
+                    -var 'aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}' \
                     -auto-approve
               working-directory: ${{ github.action_path }}
             - name: Login to Amazon ECR
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
               with:
-                registries: ${{ inputs.aws_account_id }}
+                registries: ${{ secrets.AWS_ACCOUNT_ID }}
             - name: Build, tag, and push image to Amazon ECR
               id: build-publish
               shell: bash
@@ -88,3 +87,40 @@ jobs:
                 echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
                 echo "image_tag=$IMAGE_TAG" 
                 echo "full_image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    deploy:
+        needs: docker-build-and-publish
+        runs-on: ubuntu-latest
+
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsRole
+                aws-region: ${{ secrets.AWS_REGION }}
+            - name: Prep EC2 Key
+              run: |
+                echo "${{ secrets.EC2_SSH_KEY }}" > ec2-key.pem
+                chmod 600 ec2-key.pem
+            - name: Test SSH Connection
+              run: |
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ec2-user@${{ needs.docker-build-and-publish.outputs.ec2_public_ip }} "echo SSH connection successful"
+            - name: Deploy to EC2 and Run Docker Container
+              run: |
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ec2-user@${{ needs.docker-build-and-publish.outputs.ec2_public_ip }} << 'EOF'
+                # Stop and remove any existing container named rooster-app, if it exists
+                docker stop rooster-app || true
+                docker rm rooster-app || true
+
+                # Pull the new image and run it
+                aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+                    docker login --username AWS --password-stdin \
+                    ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+                docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster-app:latest
+
+                docker pull ${{ needs.docker-build-and-publish.outputs.full-image }}
+                docker run -d -p 80:3000 --name rooster-app ${{ needs.docker-build-and-publish.outputs.full-image }}
+                EOF

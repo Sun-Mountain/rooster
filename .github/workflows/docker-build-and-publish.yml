@@ -42,12 +42,16 @@ jobs:
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
 
-            - name: Build and Tag Docker Image
+            - name: Build Docker Image
               id: build-image
               run: |
                   docker build -t rooster:latest .
+            
+            - name: Tag Image
+              run: |
                   docker tag rooster:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
             
+
             - name: Push Docker Image to Amazon ECR
               run: |
                   docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest

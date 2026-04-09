@@ -16,10 +16,10 @@ variable "aws_account_id" {
   type        = string
 }
 
-variable "lifecycle_policy" {
-  type        = string
-  description = "the lifecycle policy to be applied to the ECR repo"
-}
+# variable "lifecycle_policy" {
+#   type        = string
+#   description = "the lifecycle policy to be applied to the ECR repo"
+# }
 
 variable "ecr_repository_name" {
   description = "Name of the ECR repository"

@@ -252,10 +252,10 @@ resource "aws_instance" "app_server" {
   vpc_security_group_ids = [aws_security_group.app_db_sg.id]
   subnet_id              = aws_subnet.rooster_subnet1.id
   # key_name = var.key_name
-  root_block_device {
-    volume_size = 150
-    volume_type = "gp3"
-  }
+  # root_block_device {
+  #   volume_size = 150
+  #   volume_type = "gp3"
+  # }
 
   user_data = <<-EOF
               #!/bin/bash

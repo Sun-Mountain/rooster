@@ -247,12 +247,10 @@ resource "aws_db_instance" "app_db" {
   }
 }
 
-
 resource "aws_key_pair" "generated_key" {
   key_name   = "my-generated-key"
   public_key = file("${var.public_key_path}")
 }
-
 
 resource "aws_instance" "app_server" {
   ami                    = data.aws_ami.ubuntu.id

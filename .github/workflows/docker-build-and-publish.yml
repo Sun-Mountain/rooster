@@ -83,11 +83,11 @@ jobs:
 
             - name: Test SSH Connection
               run: |
-                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} "echo SSH connection successful"
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ubuntu@${{ secrets.EC2_PUBLIC_IP }} "echo SSH connection successful"
 
             - name: Deploy to EC2 and Run Docker Container
               run: |
-                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
                 # Stop and remove any existing container named rooster, if it exists
                 docker stop rooster || true
                 docker rm rooster || true

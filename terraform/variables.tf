@@ -69,5 +69,10 @@ variable "db_username" {
 variable "db_password" {
   description = "The password for the database."
   type        = string
-  default     = "ChickenRun#1"
+  default     = "ChickenRun1"
+}
+
+variable "public_key_path" {
+  description = "Path to the public key file."
+  type        = string
 }

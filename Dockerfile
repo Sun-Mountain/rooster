@@ -9,6 +9,7 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
+COPY pnpm-lock.yaml ./
 
 # Install dependencies
 RUN pnpm install
@@ -16,11 +17,11 @@ RUN pnpm install
 # Copy the rest of the application code
 COPY . .
 
+RUN pnpm build
+
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Update the database schema (if needed)
-# RUN pnpm run db:migrate
-
 # Command to run the application
-CMD ["pnpm", "dev"]
+# CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && pnpm run start"]

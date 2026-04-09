@@ -30,17 +30,17 @@ data "aws_vpc" "rooster_vpc" {
 # }
 
 resource "aws_subnet" "rooster_subnet1" {
-  vpc_id            = data.aws_vpc.rooster_vpc.id
-  cidr_block        = cidrsubnet(data.aws_vpc.rooster_vpc.cidr_block, 8, 1)
+  vpc_id                  = data.aws_vpc.rooster_vpc.id
+  cidr_block              = cidrsubnet(data.aws_vpc.rooster_vpc.cidr_block, 8, 1)
   map_public_ip_on_launch = true
-  availability_zone = "${var.app_region}a"
+  availability_zone       = "${var.app_region}a"
 }
 
 resource "aws_subnet" "rooster_subnet2" {
-  vpc_id            = data.aws_vpc.rooster_vpc.id
-  cidr_block        = cidrsubnet(data.aws_vpc.rooster_vpc.cidr_block, 8, 2)
+  vpc_id                  = data.aws_vpc.rooster_vpc.id
+  cidr_block              = cidrsubnet(data.aws_vpc.rooster_vpc.cidr_block, 8, 2)
   map_public_ip_on_launch = true
-  availability_zone = "${var.app_region}c"
+  availability_zone       = "${var.app_region}c"
 }
 
 # resource "aws_internet_gateway" "rooster_gateway" {
@@ -96,10 +96,11 @@ resource "aws_security_group" "app_db_sg" {
   }
 
   ingress {
-    description = "RDS MySQL access from app server"
-    from_port   = 3306
-    to_port     = 3306
+    description = "RDS PostgreSQL access from app server"
+    from_port   = 5432
+    to_port     = 5432
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -246,12 +247,20 @@ resource "aws_db_instance" "app_db" {
   }
 }
 
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "my-generated-key"
+  public_key = file("${var.public_key_path}")
+}
+
+
 resource "aws_instance" "app_server" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.app_instance_type
   vpc_security_group_ids = [aws_security_group.app_db_sg.id]
   subnet_id              = aws_subnet.rooster_subnet1.id
-  # key_name = var.key_name
+  key_name               = aws_key_pair.generated_key.key_name
+
   # root_block_device {
   #   volume_size = 150
   #   volume_type = "gp3"

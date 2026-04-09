@@ -42,6 +42,12 @@ jobs:
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
 
+            - name: Create env File
+              id: env-file
+              run: |
+                  touch .env
+                  echo ${{ secrets.DEV_ENV_VALUES }} >> .env
+
             - name: Build Docker Image
               id: build-image
               run: |

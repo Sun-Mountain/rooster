@@ -37,7 +37,7 @@ variable "app_instance_name" {
 variable "app_instance_type" {
   description = "The EC2 instance's type."
   type        = string
-  default     = "t2.micro"
+  default     = "t3.small"
 }
 
 

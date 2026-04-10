@@ -96,6 +96,14 @@ resource "aws_security_group" "app_db_sg" {
   }
 
   ingress {
+    description = "HTTP from anywhere for dev"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "RDS PostgreSQL access from app server"
     from_port   = 5432
     to_port     = 5432
@@ -266,15 +274,18 @@ resource "aws_instance" "app_server" {
 
   user_data = <<-EOF
               #!/bin/bash
-              yum update -y
-              yum install -y docker.io
+              apt update -y
+              apt install -y docker.io
               systemctl start docker
               systemctl enable docker
-              usermod -aG docker ec2-user
+              usermod -aG docker ubuntu
 
-              $(aws ecr get-login-password --region ${var.app_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.repository.repository_url})
-              docker pull ${aws_ecr_repository.repository.repository_url}:latest
-              docker run -d -p 80:80 --name rooster-app ${aws_ecr_repository.repository.repository_url}:latest
+              curl -fsSL https://get.pnpm.io/install.sh | sh -
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+
+              # $(aws ecr get-login-password --region ${var.app_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.repository.repository_url})
+              # docker pull ${aws_ecr_repository.repository.repository_url}:latest
+              # docker run -d -p 3000:3000 --name rooster-app ${aws_ecr_repository.repository.repository_url}:latest
               EOF
 
   tags = {
@@ -285,7 +296,7 @@ resource "aws_instance" "app_server" {
 # ECR repository and policy
 resource "aws_ecr_repository" "repository" {
   name                 = var.ecr_repository_name
-  image_tag_mutability = "IMMUTABLE"
+  # image_tag_mutability = "IMMUTABLE"
   # image_scanning_configuration {
   #   scan_on_push = true
   # }

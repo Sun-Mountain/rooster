@@ -92,11 +92,29 @@ jobs:
                 docker stop rooster || true
                 docker rm rooster || true
 
-                # Pull the new image and run it
-                aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-                    docker login --username AWS --password-stdin \
-                    ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+                curl -fsSL https://get.pnpm.io/install.sh | sh -
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+                
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                nvm install node
+                source ~/.bashrc
 
-                docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
-                docker run -d -p 80:3000 --name rooster ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+                git clone https://github.com/${{ github.repository }}.git
+                cd ${{ github.event.repository.name }}
+
+                touch .env
+                echo ${{ secrets.DEV_ENV_VALUES }} >> .env
+                pnpm install
+
+                pnpm run dev &
+
+
+                # Pull the new image and run it
+                # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+                #     docker login --username AWS --password-stdin \
+                #     ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+                # docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+                # docker run -d -p 80:3000 --name rooster ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
                 EOF

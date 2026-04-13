@@ -1,6 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
 import { TermProps, TermFormProps } from "@/lib/props";
 
+interface TermFormPropsSansStatus {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+}
+
 export const fetchTerms = async (
   setError: Dispatch<SetStateAction<string | null>>,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
@@ -89,5 +96,31 @@ export const updateTermStatusById = async (
     return data;
   } catch (err) {
     throw err instanceof Error ? err : new Error("Failed to update term status");
+  }
+}
+
+// Update term sans status, which has its own dedicated function to ensure status updates are not accidentally made when updating other term details.
+export const updateTermById = async (
+  termId: string,
+  formData: TermFormPropsSansStatus,
+  setError: Dispatch<SetStateAction<string | null>>,
+  setSubmitting: Dispatch<SetStateAction<boolean>>,
+) => {
+  try {
+    const response = await fetch(`/api/admin/term/${termId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "failed to update term");
+    }
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Failed to update term");
+  } finally {
+    setSubmitting(false);
   }
 }

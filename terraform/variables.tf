@@ -16,10 +16,10 @@ variable "aws_account_id" {
   type        = string
 }
 
-variable "lifecycle_policy" {
-  type        = string
-  description = "the lifecycle policy to be applied to the ECR repo"
-}
+# variable "lifecycle_policy" {
+#   type        = string
+#   description = "the lifecycle policy to be applied to the ECR repo"
+# }
 
 variable "ecr_repository_name" {
   description = "Name of the ECR repository"
@@ -37,7 +37,7 @@ variable "app_instance_name" {
 variable "app_instance_type" {
   description = "The EC2 instance's type."
   type        = string
-  default     = "t2.micro"
+  default     = "t3.small"
 }
 
 
@@ -69,5 +69,10 @@ variable "db_username" {
 variable "db_password" {
   description = "The password for the database."
   type        = string
-  default     = "ChickenRun#1"
+  default     = "ChickenRun1"
+}
+
+variable "public_key_path" {
+  description = "Path to the public key file."
+  type        = string
 }

@@ -45,3 +45,5 @@ next-env.d.ts
 terraform/.terraform/*
 terraform/.terraform*
 terraform/*.tfstate*
+terraform/*.tfvars
+terraform/keys

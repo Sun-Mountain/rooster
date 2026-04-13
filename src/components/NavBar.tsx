@@ -3,12 +3,13 @@
 import { useSession } from "@/lib/auth-client";
 import { useWindowSize } from "@/helpers/useWindowSize";
 import { Drawer } from "@/components/_ui/Drawer";
-import { MainNavLinks } from "./content/MainNavLinks";
+import { MainNavLinks } from "./MainNavLinks";
+import { UserProps } from "@/lib/props";
 
 const NavBar = () => {
   const { width } = useWindowSize();
   const { data: session } = useSession();
-  const user = session?.user;
+  const user = session?.user as UserProps | undefined;
 
   return (
     <nav>

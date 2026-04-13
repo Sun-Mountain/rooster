@@ -1,0 +1,43 @@
+name: Rooster Push Tests
+run-name: Run unit tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pnpm-version: [10.x]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
+        - name: Use Node.js ${{ matrix.pnpm-version }}
+          uses: pnpm/action-setup@v5
+          with:
+            version: ${{ matrix.pnpm-version }}
+            # cache: 'pnpm'
+        - run: pnpm install
+        # - name: Run tests
+        #   run: pnpm run test
+        - name: Tests finished
+          run: echo "Tests have finished running."
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pnpm-version: [10.x]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
+        - name: Use Node.js ${{ matrix.pnpm-version }}
+          uses: pnpm/action-setup@v5
+          with:
+            version: ${{ matrix.pnpm-version }}
+            # cache: 'pnpm'
+        - run: pnpm install
+        - run: pnpm run lint

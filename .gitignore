@@ -48,3 +48,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+#terraform
+terraform/.terraform/*
+terraform/.terraform*
+terraform/*.tfstate*

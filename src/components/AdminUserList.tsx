@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Role } from "@client";
+import { User } from "@client";
 import { useEffect, useState } from "react";
 import { ManageAccounts, Shield, Star } from "@mui/icons-material";
 

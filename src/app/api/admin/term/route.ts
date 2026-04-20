@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       description,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      live,
+      // live,
     });
     return NextResponse.json(newTerm, { status: 201 });
   } catch (error) {
@@ -89,7 +89,7 @@ export async function PUT(request: NextRequest) {
       description,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      live,
+      // live,
     });
     return NextResponse.json(updatedTerm, { status: 200 });
   } catch (error) {

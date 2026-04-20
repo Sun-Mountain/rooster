@@ -133,3 +133,40 @@ model Verification {
 
   @@map("verification")
 }
+
+model Class {
+  id String @id @default(cuid())
+  name String
+  time DateTime
+  description String
+}
+
+model TermSignUp {
+  id String @id @default(cuid())
+  termid String
+  userid String
+}
+
+model TermTeacher {
+  id String @id @default(cuid())
+  termid String
+  classid String
+  teacherid String
+}
+
+model Equipment {
+  id String @id @default(cuid())
+  name String
+  description String
+  image String
+  location String
+}
+
+model EquipmentSignup {
+  id String @id @default(cuid())
+  equipmentid String
+  reservedTime String
+  userId String
+  termId String
+  notes String
+}

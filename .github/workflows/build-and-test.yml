@@ -42,6 +42,7 @@ jobs:
         - run: pnpm install
         - run: pnpm run lint
   playwright:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     strategy:
       matrix:

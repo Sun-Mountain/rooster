@@ -43,14 +43,17 @@ jobs:
         - run: pnpm run lint
   playwright:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pnpm-version: [10.x]
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
         - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
-        - name: Use Node.js
+        - name: Use Node.js ${{ matrix.pnpm-version }}
           uses: pnpm/action-setup@v5
           with:
-            version: lts/*
+            version: ${{ matrix.pnpm-version }}
             # cache: 'pnpm'
         - name: Install dependencies
           run: pnpm install

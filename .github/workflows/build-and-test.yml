@@ -19,7 +19,7 @@ jobs:
           uses: pnpm/action-setup@v5
           with:
             version: ${{ matrix.pnpm-version }}
-            # cache: 'pnpm'
+            cache: 'pnpm'
         - run: pnpm install
         # - name: Run tests
         #   run: pnpm run test
@@ -38,7 +38,7 @@ jobs:
           uses: pnpm/action-setup@v5
           with:
             version: ${{ matrix.pnpm-version }}
-            # cache: 'pnpm'
+            cache: 'pnpm'
         - run: pnpm install
         - run: pnpm run lint
   playwright:
@@ -55,11 +55,24 @@ jobs:
           uses: pnpm/action-setup@v5
           with:
             version: ${{ matrix.pnpm-version }}
-            # cache: 'pnpm'
+            cache: 'pnpm'
         - name: Install dependencies
           run: pnpm install
         - name: Install Playwright
           run: pnpm playwright install --with-deps
+        - name: Start Rooster
+          run: pnpm start &
+        - name: Wait for Rooster to be ready
+          run: |
+            echo "Waiting for Rooster to be ready..."
+            for i in {1..30}; do
+              if curl -s http://localhost:3000/; then
+                echo "Rooster is ready!"
+                break
+              fi
+              echo "Waiting for Rooster to be ready..."
+              sleep 2
+            done
         - name: Run Playwright tests
           run: pnpm playwright test
         - name: Upload Playwright report

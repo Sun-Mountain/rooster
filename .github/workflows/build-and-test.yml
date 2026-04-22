@@ -61,7 +61,7 @@ jobs:
         - name: Install Playwright
           run: pnpm playwright install --with-deps
         - name: Start Rooster
-          run: pnpm start &
+          run: pnpm dev &
         - name: Wait for Rooster to be ready
           run: |
             echo "Waiting for Rooster to be ready..."

@@ -1,6 +1,8 @@
 import db from "@/lib/prisma";
 import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
+type UpdateTermWithoutStatus = Omit<Prisma.TermUpdateInput, "status">;
+
 export const getAllTerms = async (): Promise<Term[]> => {
   return await db.term.findMany({
     orderBy: [
@@ -28,7 +30,7 @@ export const createTerm = async (
 
 export const updateTermById = async (
   id: string,
-  data: Prisma.TermUpdateInput,
+  data: UpdateTermWithoutStatus,
 ): Promise<Term> => {
   return await db.term.update({
     where: {

@@ -5,9 +5,9 @@ import { Button } from '@/components/_ui/Button';
 
 interface ModalProps {
   children: ReactNode;
-  btnContent: ReactNode;
+  modalBtnContent: ReactNode;
   btnAction: ReactNode;
-  btnClassName?: string;
+  modalBtnClassName?: string;
   includeCancel?: boolean;
   open?: boolean;
   danger?: boolean;
@@ -15,9 +15,9 @@ interface ModalProps {
 
 export const Modal =({
   children,
-  btnContent,
+  modalBtnContent,
   btnAction,
-  btnClassName,
+  modalBtnClassName,
   includeCancel = false,
   danger = false,
 }: ModalProps) => {
@@ -33,9 +33,9 @@ export const Modal =({
 
   return (
     <div>
-      <Button onClick={handleOpen} className={btnClassName}>
+      <Button onClick={handleOpen} className={modalBtnClassName}>
         <>
-          {btnContent}
+          {modalBtnContent}
         </>
       </Button>
       <ModalComponent

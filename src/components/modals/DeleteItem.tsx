@@ -3,17 +3,20 @@
 import { useRouter } from "next/navigation";
 import { Modal } from "@/components/_ui/Modal";
 import { Button } from "@/components/_ui/Button";
+import { deleteBtnContent } from "@/components/buttons/btnContent";
 
 interface DeleteItemModalProps {
   itemId: string;
-  type: "user" | "session";
+  type: "user" | "term";
   name?: string;
+  modalBtnSize?: "small" | "medium" | "large";
 }
 
 export const DeleteItemModal = ({
   itemId,
   type,
-  name
+  name,
+  modalBtnSize = "medium",
 }: DeleteItemModalProps) => {
   const router = useRouter();
 
@@ -27,7 +30,6 @@ export const DeleteItemModal = ({
       });
 
       if (response.ok) {
-        console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully`);
         router.back();
         // Optionally, you can add further actions here, like refreshing the user list
       } else {
@@ -49,15 +51,15 @@ export const DeleteItemModal = ({
   return (
     <>
       <Modal
-        btnContent={`Delete ${type === "user" ? "User" : "Term"}`}
+        modalBtnContent={deleteBtnContent()}
         btnAction={confirmDelete()}
-        btnClassName="danger w-icon"
+        modalBtnClassName={`danger w-icon ${modalBtnSize}`}
         includeCancel={true}
         danger={true}
       >
         <div className="modal-content">
-          <h2>Confirm Delete {type === "user" ? "User" : "Term"}</h2>
-          <p>Are you sure you want to delete {name ? <strong>{name}</strong> : `this ${type}`}?</p>
+          <h2>Confirm Delete {type === "user" ? "User" : "Session"}</h2>
+          <p>Are you sure you want to delete {name ? <strong>{name}</strong> : `this ${type === "user" ? "user" : "session"}`}?</p>
           <p>If deleted, this action cannot be undone and will erase all associated data.</p>
         </div>
       </Modal>

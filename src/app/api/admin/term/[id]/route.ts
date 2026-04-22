@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getTermById, updateTermById } from "@/lib/prisma/term";
+import { getTermById, updateTermById, deleteTerm } from "@/lib/prisma/term";
 
 export async function GET(
   request: NextRequest
@@ -50,6 +50,30 @@ export async function PUT(
     const updatedTerm = await updateTermById(id, { name, description, startDate, endDate });
 
     return NextResponse.json(updatedTerm, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(
+  request: NextRequest
+) {
+  try {
+    const url = new URL(request.url);
+    const termId = url.pathname.split('/')[4];
+    console.log("Deleting term with ID:", termId);
+    const id = termId as string;
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    await deleteTerm(id);
+
+    return NextResponse.json({ message: "Term deleted successfully" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },

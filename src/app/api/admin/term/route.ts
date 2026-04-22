@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getAllTerms, createTerm, updateTerm } from "@/lib/prisma/term";
+import { getAllTerms, createTerm, updateTermById } from "@/lib/prisma/term";
 
 export async function GET() {
   try {
@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
       description,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      live,
     });
     return NextResponse.json(newTerm, { status: 201 });
   } catch (error) {
@@ -84,12 +83,11 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updatedTerm = await updateTerm(id, {
+    const updatedTerm = await updateTermById(id, {
       name,
       description,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      live,
     });
     return NextResponse.json(updatedTerm, { status: 200 });
   } catch (error) {

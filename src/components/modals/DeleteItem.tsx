@@ -57,7 +57,7 @@ export const DeleteItemModal = ({
         includeCancel={true}
         danger={true}
       >
-        <div className="modal-content">
+        <div className="modal-content danger-modal">
           <h2>Confirm Delete {type === "user" ? "User" : "Session"}</h2>
           <p>Are you sure you want to delete {name ? <strong>{name}</strong> : `this ${type === "user" ? "user" : "session"}`}?</p>
           <p>If deleted, this action cannot be undone and will erase all associated data.</p>

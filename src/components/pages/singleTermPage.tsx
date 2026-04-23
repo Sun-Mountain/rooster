@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { usePathname } from "next/navigation";
-import { Edit, Delete } from "@mui/icons-material";
 import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById, updateTermStatusById } from "@/lib/api/term";
 import { dateFormat } from "@/helpers/dateFormatting";
 import { getStatusIcon } from "@/components/_ui/TermStatusIcon";
 import { Button } from "@/components/_ui/Button";
 import { DeleteItemModal } from "@/components/modals/DeleteItem";
+import { EditSessionModal } from "@/components/modals/EditSession";
 
 export default function SingleTermPageContent() {
   const pathname = usePathname();
@@ -19,7 +19,6 @@ export default function SingleTermPageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [termData, setTermData] = useState<TermProps | null>(null);
 
-  
   useEffect(() => {
     if (isLoading && termId) fetchSingleTermById(termId, setTermData, setIsLoading);
   }, [isLoading, termId]);
@@ -50,9 +49,9 @@ export default function SingleTermPageContent() {
         <div>
           <div className="action-btns-container">
             <div>
-              <Button className="w-icon small">
-                <Edit /> Edit
-              </Button>
+              {termData?.status !== "ENDED" && (
+                <EditSessionModal />
+              )}
             </div>
             <DeleteItemModal
               itemId={termId}

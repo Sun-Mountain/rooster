@@ -61,21 +61,21 @@ jobs:
         - name: Install Playwright
           run: pnpm playwright install --with-deps
         - name: Start Rooster
-          run: pnpm dev &
-        - name: Wait for Rooster to be ready
-          run: |
-            echo "Waiting for Rooster to be ready..."
-            for i in {1..30}; do
-              if curl -s http://localhost:3000/; then
-                echo "Rooster is ready!"
-                break
-              fi
-              echo "Waiting for Rooster to be ready..."
-              sleep 2
-            done
+          run: pnpm dev & pnpm playwright test
+        # - name: Wait for Rooster to be ready
+        #   run: |
+        #     echo "Waiting for Rooster to be ready..."
+        #     for i in {1..30}; do
+        #       if curl -s http://localhost:3000/; then
+        #         echo "Rooster is ready!"
+        #         break
+        #       fi
+        #       echo "Waiting for Rooster to be ready..."
+        #       sleep 2
+        #     done
 
-        - name: Run Playwright tests
-          run: pnpm playwright test
+        # - name: Run Playwright tests
+          # run: pnpm playwright test
         - name: Upload Playwright report
           uses: actions/upload-artifact@v4
           # if: ${{ !cancelled() }}

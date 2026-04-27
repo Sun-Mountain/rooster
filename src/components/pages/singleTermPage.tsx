@@ -49,8 +49,12 @@ export default function SingleTermPageContent() {
         <div>
           <div className="action-btns-container">
             <div>
-              {termData?.status !== "ENDED" && (
-                <EditSessionModal />
+              {termData && termData?.status !== "ENDED" && (
+                <EditSessionModal
+                  formData={{ ...termData, description: termData.description ?? undefined }}
+                  termId={termId}
+                  setTermData={setTermData}
+                />
               )}
             </div>
             <DeleteItemModal

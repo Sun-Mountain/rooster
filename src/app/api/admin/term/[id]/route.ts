@@ -44,10 +44,16 @@ export async function PUT(
     const { name, description, startDate, endDate } = body;
 
     if (!name || !startDate || !endDate) {
-      return NextResponse.json({ error: "Missing required field(s)" }, { status: 400 });
+      return NextResponse.json({ error: "Missing required field(s)" },
+                               { status: 400 });
     }
 
-    const updatedTerm = await updateTermById(id, { name, description, startDate, endDate });
+    const updatedTerm = await updateTermById(id, {
+      name,
+      description, 
+      startDate: new Date(startDate),
+      endDate: new Date(endDate)
+    });
 
     return NextResponse.json(updatedTerm, { status: 200 });
   } catch (error) {

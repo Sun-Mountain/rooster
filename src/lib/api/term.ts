@@ -1,12 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { TermProps, TermFormProps } from "@/lib/props";
-
-interface TermFormPropsSansStatus {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
+import { TermProps } from "@/lib/props";
+import { SessionFormDataProps } from "@/lib/props";
 
 export const fetchTerms = async (
   setError: Dispatch<SetStateAction<string | null>>,
@@ -27,8 +21,8 @@ export const fetchTerms = async (
 }
 
 export const createNewTerm = async (
-  formData: TermFormProps,
-  setFormData: Dispatch<SetStateAction<TermFormProps>>,
+  formData: SessionFormDataProps,
+  setFormData: Dispatch<SetStateAction<SessionFormDataProps>>,
   setError: Dispatch<SetStateAction<string | null>>,
   setSubmitting: Dispatch<SetStateAction<boolean>>,
 ) => {
@@ -102,7 +96,7 @@ export const updateTermStatusById = async (
 // Update term sans status, which has its own dedicated function to ensure status updates are not accidentally made when updating other term details.
 export const updateTermById = async (
   termId: string,
-  formData: TermFormPropsSansStatus,
+  formData: SessionFormDataProps,
   setError: Dispatch<SetStateAction<string | null>>,
   setSubmitting: Dispatch<SetStateAction<boolean>>,
 ) => {
@@ -118,6 +112,7 @@ export const updateTermById = async (
       const errorData = await response.json();
       throw new Error(errorData.error || "failed to update term");
     }
+    return response;
   } catch (err) {
     setError(err instanceof Error ? err.message : "Failed to update term");
   } finally {

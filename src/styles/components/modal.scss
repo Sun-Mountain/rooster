@@ -2,17 +2,24 @@
 @use '../_resources/variable.scss' as *;
 
 .modal-container {
-  margin: 0 auto;
-  max-width: $md;
+  // margin: auto auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 90%;
+  max-width: 100%;
+  max-height: 90vh;
   
   .modal-content-container {
     background-color: $bg-color-light;
     border: $modal-border;
     border-radius: $border-radius;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 25% 1rem;
+    // margin: 25% 1rem 25% 0rem;
     padding: 1.5rem;
-    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
 
     &.danger {
       border-color: $barn-red;
@@ -30,6 +37,5 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-top: 1.5rem;
   }
 }

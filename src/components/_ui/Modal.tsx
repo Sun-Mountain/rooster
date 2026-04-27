@@ -11,6 +11,7 @@ interface ModalProps {
   includeCancel?: boolean;
   open?: boolean;
   danger?: boolean;
+  closeOnAction?: boolean;
 }
 
 export const Modal =({
@@ -20,6 +21,7 @@ export const Modal =({
   modalBtnClassName,
   includeCancel = false,
   danger = false,
+  closeOnAction = false
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -30,6 +32,12 @@ export const Modal =({
   const handleClose = () => {
     setOpen(false)
   };
+
+  useEffect(() => {
+    if (closeOnAction) {
+      handleClose();
+    }
+  }, [open, closeOnAction])
 
   return (
     <div>

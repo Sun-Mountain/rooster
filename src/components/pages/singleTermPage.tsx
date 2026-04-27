@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { usePathname } from "next/navigation";
-import { Edit, Delete } from "@mui/icons-material";
 import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById, updateTermStatusById } from "@/lib/api/term";
 import { dateFormat } from "@/helpers/dateFormatting";
 import { getStatusIcon } from "@/components/_ui/TermStatusIcon";
 import { Button } from "@/components/_ui/Button";
+import { DeleteItemModal } from "@/components/modals/DeleteItem";
+import { EditSessionModal } from "@/components/modals/EditSession";
 
 export default function SingleTermPageContent() {
   const pathname = usePathname();
@@ -18,8 +19,6 @@ export default function SingleTermPageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [termData, setTermData] = useState<TermProps | null>(null);
 
-  console.log(termData);
-  
   useEffect(() => {
     if (isLoading && termId) fetchSingleTermById(termId, setTermData, setIsLoading);
   }, [isLoading, termId]);
@@ -49,12 +48,21 @@ export default function SingleTermPageContent() {
       <div className="content-container two-column">
         <div>
           <div className="action-btns-container">
-            <Button className="w-icon small">
-              <Edit /> Edit
-            </Button>
-            <Button className="w-icon danger small">
-              <Delete /> Delete
-            </Button>
+            <div>
+              {termData && termData?.status !== "ENDED" && (
+                <EditSessionModal
+                  formData={{ ...termData, description: termData.description ?? undefined }}
+                  termId={termId}
+                  setTermData={setTermData}
+                />
+              )}
+            </div>
+            <DeleteItemModal
+              itemId={termId}
+              type="term"
+              name={termData?.name}
+              modalBtnSize="small"
+            />
           </div>
         </div>
         <div>

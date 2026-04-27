@@ -5,21 +5,23 @@ import { Button } from '@/components/_ui/Button';
 
 interface ModalProps {
   children: ReactNode;
-  btnContent: ReactNode;
+  modalBtnContent: ReactNode;
   btnAction: ReactNode;
-  btnClassName?: string;
+  modalBtnClassName?: string;
   includeCancel?: boolean;
   open?: boolean;
   danger?: boolean;
+  closeOnAction?: boolean;
 }
 
 export const Modal =({
   children,
-  btnContent,
+  modalBtnContent,
   btnAction,
-  btnClassName,
+  modalBtnClassName,
   includeCancel = false,
   danger = false,
+  closeOnAction = false
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -31,11 +33,17 @@ export const Modal =({
     setOpen(false)
   };
 
+  useEffect(() => {
+    if (closeOnAction) {
+      handleClose();
+    }
+  }, [open, closeOnAction])
+
   return (
     <div>
-      <Button onClick={handleOpen} className={btnClassName}>
+      <Button onClick={handleOpen} className={modalBtnClassName}>
         <>
-          {btnContent}
+          {modalBtnContent}
         </>
       </Button>
       <ModalComponent

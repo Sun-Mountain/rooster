@@ -1,6 +1,30 @@
 import db from "@/lib/prisma";
 import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
+type UpdateTermWithoutStatus = Omit<Prisma.TermUpdateInput, "status">;
+
+// POST
+
+export const createTerm = async (
+  data: Prisma.TermCreateInput,
+): Promise<Term> => {
+  return await db.term.create({
+    data,
+  });
+};
+
+// DELETE
+
+export const deleteTerm = async (id: string): Promise<Term> => {
+  return await db.term.delete({
+    where: {
+      id,
+    },
+  });
+};
+
+// GET
+
 export const getAllTerms = async (): Promise<Term[]> => {
   return await db.term.findMany({
     orderBy: [
@@ -18,33 +42,17 @@ export const getTermById = async (id: string): Promise<Term | null> => {
   });
 };
 
-export const createTerm = async (
-  data: Prisma.TermCreateInput,
-): Promise<Term> => {
-  console.log(data);
-  return await db.term.create({
-    data,
-  });
-};
+// PUT
 
-export const updateTerm = async (
+export const updateTermById = async (
   id: string,
-  data: Prisma.TermUpdateInput,
+  data: UpdateTermWithoutStatus,
 ): Promise<Term> => {
-  console.log(data);
   return await db.term.update({
     where: {
       id,
     },
     data,
-  });
-};
-
-export const deleteTerm = async (id: string): Promise<Term> => {
-  return await db.term.delete({
-    where: {
-      id,
-    },
   });
 };
 

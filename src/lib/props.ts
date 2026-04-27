@@ -1,21 +1,21 @@
 import { Role, TermStatus } from "@client";
 
+export interface SessionFormDataProps {
+  name: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+}
+
 export interface TermProps {
   id: string;
   name: string;
-  description: string | null;
+  description: string;
   startDate: string;
   endDate: string;
   status: TermStatus;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface TermFormProps {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
 }
 
 export interface UserProps {

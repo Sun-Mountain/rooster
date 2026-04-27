@@ -1,0 +1,120 @@
+name: Docker Build and Publish
+run-name: Build and publish Docker image
+on:
+    workflow_dispatch:
+        # inputs:
+        #     dockerfile_path:
+        #         description: 'Path to the Dockerfile to build (relative to the repository root)'
+        #         required: true
+        #         default: 'Dockerfile'
+        #     docker_build_dir:
+        #         description: 'Directory to use as the build context for the Docker build (relative to the repository root)'
+        #         required: true
+        #         default: '.'
+        #     image_tag:
+        #         description: 'Tag to apply to the built Docker image'
+        #         required: true
+        #         default: 'rooster:latest'
+        #     lifecycle_policy_file:
+        #         description: 'Path to the ECR lifecycle policy file (relative to the repository root)'
+        #         required: true
+        #         default: 'terraform/ecr-policy.json'
+
+jobs:
+    docker-build-and-publish:
+        runs-on: ubuntu-latest
+
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v6
+              with:
+                  role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActions
+                  aws-region: ${{ secrets.AWS_REGION }}
+            
+            - name: Log in to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
+
+            - name: Create env File
+              id: env-file
+              run: |
+                  touch .env
+                  echo ${{ secrets.DEV_ENV_VALUES }} >> .env
+
+            - name: Build Docker Image
+              id: build-image
+              run: |
+                  docker build -t rooster:latest .
+            
+            - name: Tag Image
+              run: |
+                  docker tag rooster:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+            
+
+            - name: Push Docker Image to Amazon ECR
+              run: |
+                  docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+    deploy:
+        needs: docker-build-and-publish
+        runs-on: ubuntu-latest
+
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v6
+              with:
+                role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActions
+                aws-region: ${{ secrets.AWS_REGION }}
+
+            - name: Prep EC2 Key
+              run: |
+                echo "${{ secrets.EC2_SSH_KEY }}" > ec2-key.pem
+                chmod 600 ec2-key.pem
+
+            - name: Test SSH Connection
+              run: |
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ubuntu@${{ secrets.EC2_PUBLIC_IP }} "echo SSH connection successful"
+
+            - name: Deploy to EC2 and Run Docker Container
+              run: |
+                ssh -o "StrictHostKeyChecking=no" -i ec2-key.pem ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+                # Stop and remove any existing container named rooster, if it exists
+                docker stop rooster || true
+                docker rm rooster || true
+
+                curl -fsSL https://get.pnpm.io/install.sh | sh -
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+                
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                nvm install node
+                source ~/.bashrc
+
+                git clone https://github.com/${{ github.repository }}.git
+                cd ${{ github.event.repository.name }}
+
+                touch .env
+                echo ${{ secrets.DEV_ENV_VALUES }} >> .env
+                pnpm install
+
+                pnpm run dev &
+
+
+                # Pull the new image and run it
+                # aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+                #     docker login --username AWS --password-stdin \
+                #     ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+                # docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+                # docker run -d -p 80:3000 --name rooster ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rooster:latest
+                EOF

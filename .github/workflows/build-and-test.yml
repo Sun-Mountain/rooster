@@ -41,3 +41,51 @@ jobs:
             # cache: 'pnpm'
         - run: pnpm install
         - run: pnpm run lint
+  playwright:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pnpm-version: [10.x]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository on branch ${{ github.ref }} has been checked out."
+        - name: Create env File
+          id: env-file
+          run: |
+            touch .env
+            echo ${{ secrets.DEV_ENV_VALUES }} >> .env
+
+        - name: Use Node.js ${{ matrix.pnpm-version }}
+          uses: pnpm/action-setup@v5
+          with:
+            version: ${{ matrix.pnpm-version }}
+            # cache: 'pnpm'
+        - name: Install dependencies
+          run: pnpm install & npx prisma generate
+        - name: Install Playwright
+          run: pnpm playwright install --with-deps
+        - name: Start Rooster
+          run: pnpm dev & pnpm playwright test
+        # - name: Wait for Rooster to be ready
+        #   run: |
+        #     echo "Waiting for Rooster to be ready..."
+        #     for i in {1..30}; do
+        #       if curl -s http://localhost:3000/; then
+        #         echo "Rooster is ready!"
+        #         break
+        #       fi
+        #       echo "Waiting for Rooster to be ready..."
+        #       sleep 2
+        #     done
+
+        # - name: Run Playwright tests
+          # run: pnpm playwright test
+        - name: Upload Playwright report
+          uses: actions/upload-artifact@v4
+          # if: ${{ !cancelled() }}
+          with:
+            name: playwright-report
+            path: playwright-report/
+            retention-days: 30

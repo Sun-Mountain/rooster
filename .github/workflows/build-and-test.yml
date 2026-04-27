@@ -57,7 +57,7 @@ jobs:
             version: ${{ matrix.pnpm-version }}
             # cache: 'pnpm'
         - name: Install dependencies
-          run: pnpm install
+          run: pnpm install & npx prisma generate
         - name: Install Playwright
           run: pnpm playwright install --with-deps
         - name: Start Rooster

@@ -38,6 +38,9 @@ Rooster is a web application that allows students to sign up for classes, track 
         <li>
           <a href="#🛠️-installation">Installation</a>
         </li>
+        <li>
+          <a href="#🧪-e2e-tests-playwright">E2E tests (Playwright)</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -141,6 +144,51 @@ Run the app:
 ```
 pnpm / yarn / npm dev
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 🧪 E2E tests (Playwright)
+
+End-to-end tests live in `tests/` and use [`playwright.config.ts`](./playwright.config.ts). The config sets **baseURL** to `http://localhost:3000`, so specs should use relative URLs (e.g. `page.goto('/sign-in')`).
+
+**Prerequisites**
+
+- Install browser binaries once (per machine or CI image):
+
+  ```
+  npx playwright install
+  ```
+
+- **Start the Next.js dev server** before running tests (`npm run dev`, `pnpm dev`, etc.). The `webServer` block in `playwright.config.ts` is currently commented out, so Playwright does not start the app for you.
+
+**Commands**
+
+- Run all tests across configured projects (Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari, Edge, Chrome):
+
+  ```
+  npm run test:playwright
+  ```
+
+- Open [Playwright’s UI mode](https://playwright.dev/docs/test-ui-mode) for debugging:
+
+  ```
+  npm run test:playwright:ui
+  ```
+
+After a normal run, an **HTML report** is generated; open it with `npx playwright show-report` or follow the path printed in the terminal.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 📝 Important Notes
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### Sessions vs. Terms
+
+There is a discrepancy in the database and the website. What are called "sessions" on the frontend are referred to "terms" on the backend.
+
+This is because Sessions is the default word for a group of classes that repeat over a period of time and we did not want to confuse end users. However, sessions is used by `better-auth`, which is what Rooster uses for user authorization.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

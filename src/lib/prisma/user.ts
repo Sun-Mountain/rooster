@@ -16,3 +16,12 @@ export const deleteUserById = async (id: string): Promise<User> => {
     where: { id },
   });
 };
+
+export const updateUserInfo = async (userId: string, data: Prisma.UserUpdateInput): Promise<User> => {
+  return await db.contactAddress.update({
+    where: {
+      id: userId,
+    },
+    data,
+  });
+};

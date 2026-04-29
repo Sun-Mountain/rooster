@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ClassProps } from "@/lib/props";
 import { fetchClasses } from "@/lib/api/class";
 import { ClassForm } from "@/components/forms/ClassForm";
+import AdminClassList from "@/components/AdminClassList";
 
 export default function AdminClassContent() {
   const [classList, setClassList] = useState<ClassProps[]>([]);
@@ -18,7 +19,9 @@ export default function AdminClassContent() {
     <div className="admin-page-container">
       <h1>Class Management</h1>
       <div className="content-container">
-        <ClassForm />
+        <ClassForm
+          setIsLoading={setIsLoading}
+        />
         {error ? (
           <>
             {error}
@@ -29,7 +32,7 @@ export default function AdminClassContent() {
           </>
         ) : (
           <>
-            Yay classes!
+            <AdminClassList classList={classList} />
           </>
         )}
       </div>

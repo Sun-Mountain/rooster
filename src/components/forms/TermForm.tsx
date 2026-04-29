@@ -45,11 +45,11 @@ export const TermForm = ({
     // For now, only handle create action. Edit and modal actions are handled in the modal component, so we can avoid conflicts by just returning early here if those props are true.
     e.preventDefault();
     setSubmitting(true);
-    setIsLoading(true)
+    setIsLoading(true);
     setError(null);
 
     if (!isEditing) {
-      createNewTerm(formData, setFormData, setError, setSubmitting)
+      createNewTerm(formData, setFormData, setError, setSubmitting);
     }
   }
 

@@ -18,6 +18,7 @@ export const ClassForm = ({
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
+    description: "",
   })
 
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +31,29 @@ export const ClassForm = ({
     setSubmitting(true);
     setIsLoading(true);
     setError(null);
+
+    try {
+      const response = await fetch("/api/admin/class", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "failed to create class");
+      }
+
+      setFormData({
+        name: "",
+        description: "",
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create class");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

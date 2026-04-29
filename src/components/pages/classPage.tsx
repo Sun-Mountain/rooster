@@ -12,6 +12,7 @@ export default function AdminClassContent() {
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
+    console.log("Fetching classes...")
     if (isLoading) fetchClasses(setError, setIsLoading, setClassList)
   }, [isLoading])
 

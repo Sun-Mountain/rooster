@@ -23,7 +23,11 @@ export const deleteClass = async (id: string): Promise<Class> => {
 // GET
 
 export const getAllClasses = async (): Promise<Class[]> => {
-  return await db.class.findMany();
+  return await db.class.findMany({
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
 }
 
 export const getClassById = async (id: string): Promise<Class | null> => {

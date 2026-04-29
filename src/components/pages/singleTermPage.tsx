@@ -1,5 +1,6 @@
 
 "use client";
+
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { usePathname } from "next/navigation";

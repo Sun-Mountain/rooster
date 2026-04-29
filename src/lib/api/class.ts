@@ -18,3 +18,22 @@ export const fetchClasses = async (
     setIsLoading(false)
   }
 }
+
+export const fetchSingleClassById = async (
+  classId: string,
+  setClassData: Dispatch<SetStateAction<ClassProps | null>>,
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+) => {
+  try {
+    setIsLoading(true)
+    const res = await fetch(`/api/admin/class/${classId}`);
+    if (!res.ok) throw new Error("Failed to fetch class.")
+    const data = await res.json();
+    console.log("Fetched class data:", data);
+    setClassData(data)
+  } catch (err) {
+    throw err instanceof Error ? err : new Error("Failed to load class");
+  } finally {
+    setIsLoading(false);
+  }
+};

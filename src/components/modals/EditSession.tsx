@@ -36,7 +36,7 @@ export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionM
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to update session");
       }
-      if (response.ok) {
+      if (response && response.ok) {
         setTermData(sessionData);
         setCloseOnAction(true);
         resetCloseOnAction()

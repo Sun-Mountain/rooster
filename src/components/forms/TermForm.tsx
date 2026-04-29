@@ -41,7 +41,8 @@ export const TermForm = ({
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    if (isEditing || isModal ) return; // For now, only handle create action. Edit and modal actions will be implemented later.
+    if (isEditing || isModal ) return;
+    // For now, only handle create action. Edit and modal actions are handled in the modal component, so we can avoid conflicts by just returning early here if those props are true.
     e.preventDefault();
     setSubmitting(true);
     setIsLoading(true)

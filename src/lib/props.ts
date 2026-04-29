@@ -1,5 +1,11 @@
 import { Role, TermStatus } from "@client";
 
+export interface ClassProps {
+  id: string;
+  name: string;
+  description?: string;
+}
+
 export interface SessionFormDataProps {
   name: string;
   description?: string;

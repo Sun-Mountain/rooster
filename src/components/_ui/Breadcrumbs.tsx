@@ -30,6 +30,12 @@ export const Breadcrumbs = ({ currentPageTitle }: BreadcrumbsProps) => {
                 Sessions
               </Link>
             );
+          } else if (part === "class") {
+            return (
+              <Link key={href} href="/admin/classes" className="breadcrumb-item">
+                Classes
+              </Link>
+            );
           }
 
           return isLast ? (

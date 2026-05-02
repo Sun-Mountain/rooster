@@ -20,12 +20,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: { msg: 'Emergency contact not found', status: 404 } });
     }
 
-    console.log({ emergencyContact }); // --- IGNORE ---
-
     return NextResponse.json(emergencyContact, { status: 200 });
   } catch (error) {
-    console.error('Error fetching emergency contact:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }
 
@@ -42,8 +39,7 @@ export async function POST(request: NextRequest) {
     const newEmergencyContact = await createEmergencyContact({userId, ...body});
     return NextResponse.json(newEmergencyContact, { status: 201 });
   } catch (error) {
-    console.error('Error creating emergency contact:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }
 
@@ -60,7 +56,6 @@ export async function PUT(request: NextRequest) {
     const updatedEmergencyContact = await updateEmergencyContact(userId, body);
     return NextResponse.json(updatedEmergencyContact, { status: 200 });
   } catch (error) {
-    console.error('Error updating emergency contact:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }

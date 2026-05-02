@@ -20,12 +20,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: { msg: 'Contact info not found', status: 404 } });
     }
 
-    console.log({ contactInfo }); // --- IGNORE ---
-
     return NextResponse.json(contactInfo, { status: 200 });
   } catch (error) {
-    console.error('Error fetching contact info:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }
 
@@ -42,8 +39,7 @@ export async function POST(request: NextRequest) {
     const newContactInfo = await createContactInfo({userId, ...body});
     return NextResponse.json(newContactInfo, { status: 201 });
   } catch (error) {
-    console.error('Error creating contact info:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }
 
@@ -60,7 +56,6 @@ export async function PUT(request: NextRequest) {
     const updatedContactInfo = await updateContactInfo(userId, body);
     return NextResponse.json(updatedContactInfo, { status: 200 });
   } catch (error) {
-    console.error('Error updating contact info:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` }, { status: 500 });
   }
 }

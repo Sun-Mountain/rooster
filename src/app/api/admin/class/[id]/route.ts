@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getTermById, updateTermById, deleteTerm } from "@/lib/prisma/term";
+import { getClassById, deleteClass, updateClass } from "@/lib/prisma/class";
 
 export async function GET(
   request: NextRequest
@@ -13,13 +13,36 @@ export async function GET(
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const term = await getTermById(id);
+    const classData = await getClassById(id);
 
-    if (!term) {
-      return NextResponse.json({ error: "Term not found" }, { status: 404 });
+    if (!classData) {
+      return NextResponse.json({ error: "Class not found" }, { status: 404 });
     }
 
-    return NextResponse.json(term, { status: 200 });
+    return NextResponse.json(classData, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
+      { status: 500 },
+    );
+  }
+};
+
+export async function DELETE(
+  request: NextRequest
+) {
+  try {
+    const url = new URL(request.url);
+    const classId = url.pathname.split('/')[4];
+    const id = classId as string;
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    const deletedClass = await deleteClass(id);
+
+    return NextResponse.json(deletedClass, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
@@ -33,52 +56,17 @@ export async function PUT(
 ) {
   try {
     const url = new URL(request.url);
-    const termId = url.pathname.split('/')[4];
-    const id = termId as string;
+    const classId = url.pathname.split('/')[4];
+    const id = classId as string;
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
     const body = await request.json();
-    const { name, description, startDate, endDate } = body;
+    const updatedClass = await updateClass(id, body);
 
-    if (!name || !startDate || !endDate) {
-      return NextResponse.json({ error: "Missing required field(s)" },
-                               { status: 400 });
-    }
-
-    const updatedTerm = await updateTermById(id, {
-      name,
-      description, 
-      startDate: new Date(startDate),
-      endDate: new Date(endDate)
-    });
-
-    return NextResponse.json(updatedTerm, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
-      { status: 500 },
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest
-) {
-  try {
-    const url = new URL(request.url);
-    const termId = url.pathname.split('/')[4];
-    const id = termId as string;
-
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-
-    await deleteTerm(id);
-
-    return NextResponse.json({ message: "Term deleted successfully" }, { status: 200 });
+    return NextResponse.json(updatedClass, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },

@@ -17,7 +17,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, description, startDate, endDate, live } = body;
+    const { name, description, startDate, endDate } = body;
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, name, description, startDate, endDate, live } = body;
+    const { id, name, description, startDate, endDate } = body;
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });

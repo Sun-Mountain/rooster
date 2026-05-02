@@ -1,5 +1,6 @@
 
 "use client";
+
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { usePathname } from "next/navigation";
@@ -30,7 +31,7 @@ export default function SingleTermPageContent() {
     }
   }, [termData, termId]);
 
-  const pageTitle = termData ? termData.name : "Single Term Page";
+  const pageTitle = isLoading ? "Loading..." : termData ? termData.name : "Single Term Page";
 
   if (isLoading) {
     return (
@@ -53,7 +54,7 @@ export default function SingleTermPageContent() {
                 <EditSessionModal
                   formData={{ ...termData, description: termData.description ?? undefined }}
                   termId={termId}
-                  setTermData={setTermData}
+                  setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
                 />
               )}
             </div>

@@ -38,7 +38,6 @@ export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingI
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched contact info:', data);
         if (!data.error) {
           setUserContactInfo({
             primaryEmail: userEmail,
@@ -49,7 +48,7 @@ export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingI
         }
       })
       .catch(error => {
-        console.error('Error fetching contact info:', error);
+        setAlertMsg({ type: 'error', message: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` });
       });
   }, [userId, userEmail]);
 
@@ -99,8 +98,7 @@ export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingI
           }
         })
         .catch((error) => {
-          console.error('Error creating contact info:', error);
-          setAlertMsg({ type: 'error', message: 'An unexpected error occurred.' });
+          setAlertMsg({ type: 'error', message: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` });
         });
     } else {
       // Update existing contact info
@@ -126,8 +124,7 @@ export const AccountContactForm = ({ userId, userEmail, setMissingInfo, missingI
           }
         })
         .catch((error) => {
-          console.error('Error updating contact info:', error);
-          setAlertMsg({ type: 'error', message: 'An unexpected error occurred.' });
+          setAlertMsg({ type: 'error', message: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` });
         });
     }
   };

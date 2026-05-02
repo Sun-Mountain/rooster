@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import { Modal } from "@/components/_ui/Modal";
@@ -13,11 +12,14 @@ import { TermProps } from "@/lib/props";
 interface EditSessionModalProps {
   formData: SessionFormDataProps;
   termId: string;
-  setTermData: Dispatch<SetStateAction<TermProps>>
+  setTermData: Dispatch<SetStateAction<TermProps>> | null;
 }
 
-export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionModalProps) => {
-  const router = useRouter();
+export const EditSessionModal = ({
+  formData,
+  termId,
+  setTermData
+}: EditSessionModalProps) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionData, setSessionData] = useState<SessionFormDataProps | null>(formData);
@@ -28,6 +30,7 @@ export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionM
       setCloseOnAction(false)
     }, 500);
   }
+
   const updateSession = async () => {
     try {
       setSubmitting(true);
@@ -36,13 +39,15 @@ export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionM
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to update session");
       }
-      if (response.ok) {
-        setTermData(sessionData);
+      if (response && response.ok) {
+        if (setTermData && sessionData) {
+          setTermData(sessionData as TermProps);
+        }
         setCloseOnAction(true);
         resetCloseOnAction()
       }
     } catch (err) {
-      console.error("Error updating session:", err);
+      setError(err instanceof Error ? err.message : "Failed to update session");
     } finally {
       setSubmitting(false);
     }

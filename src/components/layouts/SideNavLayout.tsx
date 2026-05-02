@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { SideNavMenu } from "../SideNavMenu";
+import { SideNavMenu } from "@/components/SideNavMenu";
 
 interface SideNavLayoutProps {
   children: ReactNode;
@@ -14,8 +14,10 @@ export function SideNavLayout({ children, linkNode }: SideNavLayoutProps) {
           {linkNode}
         </div>
       </SideNavMenu>
-      <div className="content-container">
-        {children}
+      <div className="page-container">
+        <div className="content-container">
+          {children}
+        </div>
       </div>
     </section>
   )

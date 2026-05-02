@@ -1,0 +1,23 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.crumb-container {
+  margin: 1rem;
+
+  nav {
+    background: none;
+    padding: 0;
+    min-height: auto;
+
+    a, a:visited {
+      color: $link-color;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      text-decoration: none;
+    }
+
+    a:disabled {
+      color: $french-gray;
+      pointer-events: none;
+    }
+  }
+}

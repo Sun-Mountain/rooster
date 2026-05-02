@@ -1,26 +1,28 @@
-'use client';
+"use client";
 
-import { useState } from "react";
-import { Checkbox as CheckboxUI } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import { Checkbox as CheckboxComponent } from "@mui/material";
 
 interface CheckboxProps {
-  defaultChecked?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = ({ defaultChecked, onChange }: CheckboxProps) => {
-  const [checked, setChecked] = useState(defaultChecked || false);
+export const Checkbox = ({ checked = false, onChange }: CheckboxProps) => {
+  const [isChecked, setIsChecked] = useState(checked);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    if (onChange) {
-      onChange(event);
-    }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+    if (onChange) onChange(event);
   };
 
   return (
-    <div className="checkbox-container">
-      <CheckboxUI className="checkbox" checked={checked} onChange={handleChange} />
-    </div>
-  )
+    <CheckboxComponent
+      checked={isChecked}
+      onChange={handleChange}
+      slotProps={{
+        input: { "aria-label": "controlled" },
+      }}
+    />
+  );
 };

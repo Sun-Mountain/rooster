@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleClassById } from "@/lib/api/class";
 import { ClassProps } from "@/lib/props";
 import { DeleteItemModal } from "@/components/modals/DeleteItem";
+import { EditClassModal } from "@/components/modals/EditClass";
 
 export default function SingleClassPage() {
   const pathname = usePathname();
@@ -16,9 +17,7 @@ export default function SingleClassPage() {
 
   useEffect(() => {
     if (isLoading && classId) fetchSingleClassById(classId, setClassData, setIsLoading);
-  }, [isLoading, classId])
-
-  console.log("Class Data:", classData);
+  }, [isLoading, classId]);
 
   const pageTitle = classData ? classData.name : "Single Class Page";
 
@@ -30,13 +29,13 @@ export default function SingleClassPage() {
         <div>
           <div className="action-btns-container">
             <div>
-              {/* {termData && termData?.status !== "ENDED" && (
-                <EditSessionModal
-                  formData={{ ...termData, description: termData.description ?? undefined }}
-                  termId={termId}
-                  setTermData={setTermData}
+              {classData && (
+                <EditClassModal
+                  formData={{ ...classData, description: classData.description ?? undefined }}
+                  classId={classId}
+                  setClassData={setClassData as React.Dispatch<React.SetStateAction<ClassProps>>}
                 />
-              )} */}
+              )}
             </div>
             <DeleteItemModal
               itemId={classId}

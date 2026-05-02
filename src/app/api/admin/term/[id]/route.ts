@@ -70,7 +70,6 @@ export async function DELETE(
   try {
     const url = new URL(request.url);
     const termId = url.pathname.split('/')[4];
-    console.log("Deleting term with ID:", termId);
     const id = termId as string;
 
     if (!id) {

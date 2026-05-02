@@ -4,26 +4,36 @@ import { Dispatch, SetStateAction, useState  } from "react";
 import { TextField } from "@/components/_ui/TextField";
 import { Button } from "@/components/_ui/Button";
 import ErrorIcon from '@mui/icons-material/Error';
+import { ClassFormDataProps } from "@/lib/props";
 
 interface ClassFormProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isEditing?: boolean;
   isModal?: boolean;
+  formData?: ClassFormDataProps;
+  setInitialFormData?: Dispatch<SetStateAction<ClassFormDataProps | null>>;
 }
 
 export const ClassForm = ({
-  setIsLoading
+  setIsLoading,
+  isEditing = false,
+  isModal = false,
+  formData: initialFormData,
+  setInitialFormData,
 }: ClassFormProps) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
+    name: initialFormData?.name || "",
+    description: initialFormData?.description || "",
   })
 
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => prev ? { ...prev, [name]: value } : prev);
+    if (setInitialFormData) {
+      setInitialFormData(prev => prev ? { ...prev, [name]: value } : prev);
+    }
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -59,7 +69,7 @@ export const ClassForm = ({
   return (
     <div className="form-container no-border">
       <div className="form-header">
-        <h2>Create New Class</h2>
+        <h2>{isEditing ? "Edit Class" : "Create New Class"}</h2>
         {error && (
           <div className="form-error">
             <div className="alert-icon">
@@ -84,6 +94,7 @@ export const ClassForm = ({
           name="description"
           multiline
           rows={4}
+          initialValue={formData.description}
           onChange={handleChange}
           disabled={submitting}
         />
@@ -93,7 +104,7 @@ export const ClassForm = ({
             className="btn btn-primary"
             disabled={submitting}
           >
-            {submitting ? "Creating..." : "Create Class"}
+            {submitting ? (isEditing ? "Updating..." : "Creating...") : (isEditing ? "Update Class" : "Create Class")}
           </Button>
         </div>
       </form>

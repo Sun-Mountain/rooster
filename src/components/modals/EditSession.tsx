@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import { Modal } from "@/components/_ui/Modal";
@@ -21,7 +20,6 @@ export const EditSessionModal = ({
   termId,
   setTermData
 }: EditSessionModalProps) => {
-  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionData, setSessionData] = useState<SessionFormDataProps | null>(formData);
@@ -32,6 +30,7 @@ export const EditSessionModal = ({
       setCloseOnAction(false)
     }, 500);
   }
+
   const updateSession = async () => {
     try {
       setSubmitting(true);
@@ -48,7 +47,7 @@ export const EditSessionModal = ({
         resetCloseOnAction()
       }
     } catch (err) {
-      console.error("Error updating session:", err);
+      setError(err instanceof Error ? err.message : "Failed to update session");
     } finally {
       setSubmitting(false);
     }

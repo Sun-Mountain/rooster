@@ -13,10 +13,14 @@ import { TermProps } from "@/lib/props";
 interface EditSessionModalProps {
   formData: SessionFormDataProps;
   termId: string;
-  setTermData: Dispatch<SetStateAction<TermProps>>
+  setTermData: Dispatch<SetStateAction<TermProps>> | null;
 }
 
-export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionModalProps) => {
+export const EditSessionModal = ({
+  formData,
+  termId,
+  setTermData
+}: EditSessionModalProps) => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +41,9 @@ export const EditSessionModal = ({ formData, termId, setTermData }: EditSessionM
         throw new Error(errorData.error || "Failed to update session");
       }
       if (response && response.ok) {
-        setTermData(sessionData);
+        if (setTermData && sessionData) {
+          setTermData(sessionData as TermProps);
+        }
         setCloseOnAction(true);
         resetCloseOnAction()
       }

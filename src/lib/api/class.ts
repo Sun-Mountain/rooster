@@ -29,7 +29,6 @@ export const fetchSingleClassById = async (
     const res = await fetch(`/api/admin/class/${classId}`);
     if (!res.ok) throw new Error("Failed to fetch class.")
     const data = await res.json();
-    console.log("Fetched class data:", data);
     setClassData(data)
   } catch (err) {
     throw err instanceof Error ? err : new Error("Failed to load class");

@@ -7,7 +7,7 @@ import { deleteBtnContent } from "@/components/buttons/btnContent";
 
 interface DeleteItemModalProps {
   itemId: string;
-  type: "user" | "term";
+  type: "user" | "term" | "class";
   name?: string;
   modalBtnSize?: "small" | "medium" | "large";
 }
@@ -58,7 +58,7 @@ export const DeleteItemModal = ({
         danger={true}
       >
         <div className="modal-content danger-modal">
-          <h2>Confirm Delete {type === "user" ? "User" : "Session"}</h2>
+          <h2>Confirm Delete {type === "user" ? "User" : type === "term" ? "Session" : "Class"}</h2>
           <p>Are you sure you want to delete {name ? <strong>{name}</strong> : `this ${type === "user" ? "user" : "session"}`}?</p>
           <p>If deleted, this action cannot be undone and will erase all associated data.</p>
         </div>

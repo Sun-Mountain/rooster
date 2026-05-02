@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleClassById } from "@/lib/api/class";
 import { ClassProps } from "@/lib/props";
+import { DeleteItemModal } from "@/components/modals/DeleteItem";
 
 export default function SingleClassPage() {
   const pathname = usePathname();
@@ -23,8 +24,40 @@ export default function SingleClassPage() {
 
   return (
     <div className="admin-page-container">
-      <Breadcrumbs currentPageTitle={pageTitle} />
+      <Breadcrumbs currentPageTitle={`Class: ${pageTitle}`} />
       <h1>{pageTitle}</h1>
+      <div className ="content-container two-column">
+        <div>
+          <div className="action-btns-container">
+            <div>
+              {/* {termData && termData?.status !== "ENDED" && (
+                <EditSessionModal
+                  formData={{ ...termData, description: termData.description ?? undefined }}
+                  termId={termId}
+                  setTermData={setTermData}
+                />
+              )} */}
+            </div>
+            <DeleteItemModal
+              itemId={classId}
+              type="class"
+              name={classData?.name}
+              modalBtnSize="small"
+            />
+          </div>
+        </div>
+        <div>
+          {isLoading ? (
+            "Loading..."
+          ) : classData ? (
+            <div>
+              <p><strong>Description:</strong> {classData.description || "No description provided."}</p>
+            </div>
+          ) : (
+            "Class not found."
+          )}
+        </div>
+      </div>
     </div>
   )
 }

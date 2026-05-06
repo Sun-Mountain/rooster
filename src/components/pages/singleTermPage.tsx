@@ -11,6 +11,7 @@ import { getStatusIcon } from "@/components/_ui/TermStatusIcon";
 import { Button } from "@/components/_ui/Button";
 import { DeleteItemModal } from "@/components/modals/DeleteItem";
 import { EditSessionModal } from "@/components/modals/EditSession";
+import { AdminClassDetailsByTerm } from "@/components/AdminClassDetailsByTerm";
 
 export default function SingleTermPageContent() {
   const pathname = usePathname();
@@ -91,6 +92,7 @@ export default function SingleTermPageContent() {
         </div>
       </div>
       <div className="content-container admin-list">
+        <AdminClassDetailsByTerm termId={termId} />
       </div>
     </div>
   )

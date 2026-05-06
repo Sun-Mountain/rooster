@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { TermProps } from "@/lib/props";
-import { SessionFormDataProps } from "@/lib/props";
+import { SessionFormDataProps, TermProps } from "@/lib/props";
 
 export const fetchTerms = async (
   setError: Dispatch<SetStateAction<string | null>>,

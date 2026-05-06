@@ -29,6 +29,19 @@ export interface TermProps {
   updatedAt: string;
 }
 
+export interface ClassDetailProps {
+  id: string;
+  classId: string;
+  termId: string;
+  price: Float16Array;
+  capacity: number;
+  dayOfTheWeek: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface UserProps {
   id: string;
   name: string;

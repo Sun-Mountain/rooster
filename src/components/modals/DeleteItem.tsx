@@ -54,7 +54,6 @@ export const DeleteItemModal = ({
         modalBtnContent={deleteBtnContent()}
         btnAction={confirmDelete()}
         modalBtnClassName={`danger w-icon ${modalBtnSize}`}
-        includeCancel={true}
         danger={true}
       >
         <div className="modal-content danger-modal">

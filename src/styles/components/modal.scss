@@ -8,7 +8,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 90%;
-  max-width: 100%;
   max-height: 90vh;
   
   .modal-content-container {
@@ -19,6 +18,8 @@
     // margin: 25% 1rem 25% 0rem;
     padding: 1.5rem;
     max-height: 80vh;
+    max-width: $md;
+    margin: 0 auto;
     overflow-y: auto;
 
     &.danger {
@@ -38,4 +39,10 @@
     justify-content: flex-end;
     gap: 1rem;
   }
+}
+
+.modal-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }

@@ -75,7 +75,6 @@ export const EditSessionModal = ({
         modalBtnContent={editBtnContent()}
         btnAction={confirmUpdate()}
         modalBtnClassName="w-icon small"
-        includeCancel={true}
         closeOnAction={closeOnAction}
       >
         <div className="modal-content">

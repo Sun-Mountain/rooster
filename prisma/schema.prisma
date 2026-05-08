@@ -36,10 +36,8 @@ model ClassTermDetails {
   termId                  String
   price                   Float
   capacity                Int
-  dayOfTheWeek            String
-  startTime               String
-  endTime                 String
   termSpecificDescription String?
+  classTermRoster         ClassTermRoster[]
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())
@@ -47,6 +45,33 @@ model ClassTermDetails {
 
   @@unique([classId, termId])
   @@map("class_term_details")
+}
+
+model ClassTermRoster {
+  id                  String   @id @default(cuid())
+  classTermDetailsId  String
+  dayOfTheWeek        String
+  startTime           String
+  endTime             String
+  roster              RosterItem[]
+  classTermDetails    ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("class_term_roster")
+}
+
+model RosterItem {
+  id                  String   @id @default(cuid())
+  classTermRosterId   String
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classTermRoster     ClassTermRoster @relation(fields: [classTermRosterId], references: [id], onDelete: Cascade)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@unique([userId])
+  @@map("roster_item")
 }
 
 model Term {
@@ -115,6 +140,7 @@ model User {
   updatedAt     DateTime          @updatedAt
   sessions      Session[]
   accounts      Account[]
+  classes       RosterItem[]
 
   @@unique([email])
   @@map("user")

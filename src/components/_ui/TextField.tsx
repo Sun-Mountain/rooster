@@ -34,10 +34,6 @@ export const TextField = ({
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
 
-  useEffect(() => {
-    setDefaultValue(initialValue);
-  }, [initialValue]);
-
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDefaultValue(event.target.value);
     if (onChange) onChange(event);

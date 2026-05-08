@@ -19,7 +19,7 @@ export const Modal =({
   modalBtnContent,
   btnAction,
   modalBtnClassName,
-  includeCancel = false,
+  includeCancel = true,
   danger = false,
   closeOnAction = false
 }: ModalProps) => {
@@ -35,6 +35,7 @@ export const Modal =({
 
   useEffect(() => {
     if (closeOnAction) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       handleClose();
     }
   }, [open, closeOnAction])

@@ -2,13 +2,15 @@ import { NextResponse, NextRequest } from "next/server";
 import {
   createUser,
   getUserById,
-  updateUser
+  updateUserById
 } from "@/lib/prisma/user";
+
+import { sendVerificationEmail } from "@/helpers/email/verification";
 
 // Get a user's info based on the user id
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
-  const userId = url.pathname.split('/')pop();
+  const userId = url.pathname.split('/').pop();
 
   if (!userId) {
     return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
@@ -34,9 +36,9 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   try {
-    const newUser = await createUser({userId, ...body});
-	// sendVerificationEmail(newUser.email)
-    return NextResponse.json(newContactInfo, { status: 201 });
+    const newUser = await createUser({userId: body.userId, ...body});
+	  sendVerificationEmail(newUser.email)
+    return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
     console.error('Error creating user:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -54,7 +56,7 @@ export async function PUT(request: NextRequest) {
   }
 
   try {
-    const updatedUser = await updateUser(userId, body);
+    const updatedUser = await updateUserById(userId, body);
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
     console.error('Error updating user info:', error);

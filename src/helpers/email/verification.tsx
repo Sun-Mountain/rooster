@@ -1,5 +1,3 @@
-require nodemailer;
-
 const nodemailer = require("nodemailer");
 
 // Create a transporter using SMTP
@@ -13,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-function sendVerificationEmail(email: String){
+export async function sendVerificationEmail(email: String){
 	try {
  		const info = await transporter.sendMail({
 			from: '"No Reply" <no-reply@example.com>', // sender address

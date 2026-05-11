@@ -6,13 +6,6 @@ export const getAllUsers = async (): Promise<User[]> => {
   return await db.user.findMany();
 };
 
-// Get a list of all active users
-export const getAllActiveUsers = async (): Promise<User[]> => {
-	return await db.user.findMany({
-		where { active: true }
-	});
-};
-
 // Get user by a specified user id
 export const getUserById = async (id: string): Promise<User | null> => {
   return await db.user.findUnique({
@@ -27,9 +20,9 @@ export const deleteUserById = async (id: string): Promise<User> => {
   });
 };
 
-// Udate info for a single user based on a user id. The user id will remain the same but all other fields may be changed
-export const updateUserInfo = async (userId: string, data: Prisma.UserUpdateInput): Promise<User> => {
-  return await db.contactAddress.update({
+// Update info for a single user based on a user id. The user id will remain the same but all other fields may be changed
+export const updateUserById = async (userId: string, data: Prisma.UserUpdateInput): Promise<User> => {
+  return await db.user.update({
     where: {
       id: userId,
     },

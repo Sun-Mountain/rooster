@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Role } from "@client";
 import { usePathname } from 'next/navigation';
-import { DeleteUserModal } from "@/components/modals/DeleteUser";
+import { DeleteItemModal } from "@/components/modals/DeleteItem";
 
 interface UserData {
   id?: string;
@@ -85,8 +85,6 @@ export const UserProfile = () => {
     fetchEmergencyContact();
   }, [userId]);
 
-  console.log(userEmergencyContact)
-
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -122,7 +120,11 @@ export const UserProfile = () => {
           <p><strong>Relationship:</strong> {userEmergencyContact?.relationship || 'N/A'}</p>
         </div>
       <div>
-        <DeleteUserModal userId={userData.id} userName={userData.name} />
+        <DeleteItemModal
+          itemId={userData.id}
+          type="user"
+          name={userData.name}
+        />
       </div>
     </div>
   );

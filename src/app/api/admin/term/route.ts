@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getAllTerms, createTerm, updateTerm } from "@/lib/prisma/term";
+import { getAllTerms, createTerm, updateTermById } from "@/lib/prisma/term";
 
 export async function GET() {
   try {
@@ -17,10 +17,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
-    console.log(body)
-
-    const { name, description, startDate, endDate, live } = body;
+    const { name, description, startDate, endDate } = body;
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -60,7 +57,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, name, description, startDate, endDate, live } = body;
+    const { id, name, description, startDate, endDate } = body;
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
@@ -84,7 +81,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updatedTerm = await updateTerm(id, {
+    const updatedTerm = await updateTermById(id, {
       name,
       description,
       startDate: new Date(startDate),

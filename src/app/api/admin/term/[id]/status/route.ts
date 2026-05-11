@@ -23,9 +23,8 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(updatedTerm, { status: 200 });
   } catch (error) {
-    console.error("Error updating term status:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
       { status: 500 },
     );
   }

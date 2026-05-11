@@ -1,9 +1,27 @@
 import { Role, TermStatus } from "@client";
 
+export interface ClassProps {
+  id: string;
+  name: string;
+  description?: string;
+}
+
+export interface ClassFormDataProps {
+  name: string;
+  description?: string;
+}
+
+export interface SessionFormDataProps {
+  name: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+}
+
 export interface TermProps {
   id: string;
   name: string;
-  description: string | null;
+  description: string;
   startDate: string;
   endDate: string;
   status: TermStatus;
@@ -11,11 +29,17 @@ export interface TermProps {
   updatedAt: string;
 }
 
-export interface TermFormProps {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
+export interface ClassDetailProps {
+  id: string;
+  classId: string;
+  termId: string;
+  price: Float16Array;
+  capacity: number;
+  dayOfTheWeek: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserProps {

@@ -1,0 +1,7 @@
+.next
+terraform
+node_modules
+.vscode
+.github
+example.env
+.env

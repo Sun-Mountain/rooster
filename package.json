@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:playwright": "playwright test",
-    "test:playwright:ui": "playwright test --ui"
+    "test:playwright:ui": "playwright test --ui",
+    "test:jest": "jest"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -20,6 +21,7 @@
     "better-auth": "^1.4.6",
     "dotenv": "^17.2.3",
     "next": "16.0.7",
+    "nodemailer": "^8.0.7",
     "pg": "^8.16.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",

@@ -30,6 +30,21 @@ model Class {
   @@map("class")
 }
 
+model ClassTeacherProfile {
+  id          String    @id @default(cuid())
+  userId      String
+  classId     String
+  teacherName String?
+  bio         String?
+  classes     ClassTermDetails[] @relation("ClassTermTeachers")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId])
+  @@map("class_teacher_profile")
+}
+
 model ClassTermDetails {
   id                      String   @id @default(cuid())
   classId                 String
@@ -38,6 +53,7 @@ model ClassTermDetails {
   capacity                Int
   termSpecificDescription String?
   classTermRoster         ClassTermRoster[]
+  teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())
@@ -70,7 +86,7 @@ model RosterItem {
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
 
-  @@unique([userId])
+  @@unique([classTermRosterId, userId])
   @@map("roster_item")
 }
 
@@ -124,23 +140,24 @@ model EmergencyContact {
 }
 
 model User {
-  id            String            @id @default(cuid())
-  name          String
-  firstName     String
-  lastName      String
-  email         String
-  emailVerified Boolean
-  role          Role              @default(USER)
-  contact       ContactAddress?
-  emergency     EmergencyContact?
-  pronouns      String?
-  otherPronouns String?
-  image         String?
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  classes       RosterItem[]
+  id              String            @id @default(cuid())
+  name            String
+  firstName       String
+  lastName        String
+  email           String
+  emailVerified   Boolean
+  role            Role              @default(USER)
+  contact         ContactAddress?
+  emergency       EmergencyContact?
+  pronouns        String?
+  otherPronouns   String?
+  image           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  sessions        Session[]
+  accounts        Account[]
+  classes         RosterItem[]
+  teacherProfile  ClassTeacherProfile?
 
   @@unique([email])
   @@map("user")

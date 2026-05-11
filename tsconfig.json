@@ -20,8 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@db/*": ["./prisma/lib/*"],
-      "@lib/*": ["./src/lib/*"]
+      "@client": ["./generated/prisma/client"],
+      "@db": ["./prisma/*"]
     }
   },
   "include": [

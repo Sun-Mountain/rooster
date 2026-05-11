@@ -1,0 +1,16 @@
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
+
+.profile-page-content {
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.profile-container {
+  border: $basic-border;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  max-width: $md;
+  padding: 1rem;
+}

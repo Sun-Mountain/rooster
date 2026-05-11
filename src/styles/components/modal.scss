@@ -1,55 +1,41 @@
-@use '../resources/breakpoints' as *;
-@use '../resources/color' as *;
-@use '../resources/variables' as *;
+@use '../_resources/color.scss' as *;
+@use '../_resources/variable.scss' as *;
 
 .modal-container {
-  background-color: $modal-bg-color-light;
-  border: 1px solid $modal-border-color;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
-
-  position: fixed;
-  top: 35%;
+  // margin: auto auto;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  min-width: $xs;
-  max-width: $sm;
-
-  &.danger-modal {
-    border-color: $error-color;
-  }
-
+  min-width: 90%;
+  max-width: 100%;
+  max-height: 90vh;
+  
   .modal-content-container {
-    border: 3px solid $modal-border-color;
-    border-radius: 8px;
+    background-color: $bg-color-light;
+    border: $modal-border;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    // margin: 25% 1rem 25% 0rem;
     padding: 1.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
 
-    &.danger-modal {
-      border-color: $error-color;
+    &.danger {
+      border-color: $barn-red;
+      font-size: 1.15rem;
     }
   }
 
-  .close-button {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: $onyx;
-
-    &:hover {
-      color: $french-gray-2;
+  .danger-modal {
+    h2 {
+      color: $barn-red;
     }
   }
-}
 
-@media screen and (max-width: $sm) {
-  .modal-container {
-    min-width: 400px;
-    max-width: none;
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 }

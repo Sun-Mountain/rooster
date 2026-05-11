@@ -1,26 +1,24 @@
-import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
-import { PUBLIC_ROUTES } from '@/lib/routes';
-import { getToken } from 'next-auth/jwt';
+import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import { PUBLIC_ROUTES } from "./lib/routes";
 
-export async function proxy(req: NextRequest) {
-  const token = await getToken({ req });
-  const role = token?.role;
-  const { nextUrl } = req;
+export async function proxy(req: NextResponse) {
+  const { pathname } = new URL(req.url);
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+  const user = session?.user;
 
-  if (PUBLIC_ROUTES.includes(nextUrl.pathname)) {
+  if (PUBLIC_ROUTES.includes(pathname)) {
     return NextResponse.next();
   }
 
-  if (!token) {
+  if (!user) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  if ((nextUrl.pathname.startsWith('/admin') && nextUrl.pathname.startsWith('/api/admin')) && (role !== 'ADMIN' && role !== 'SUPER')) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
-
-  if (nextUrl.pathname.startsWith('/super') && nextUrl.pathname.startsWith('/api/super') && role !== 'SUPER') {
+  if (user.role === 'USER' && pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 

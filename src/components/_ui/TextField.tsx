@@ -9,11 +9,11 @@ import {
 interface TextFieldProps {
   label: string;
   name: string;
-  initialValue?: string;
+  initialValue?: string | number;
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: "text" | "password" | "email" | "number" | "date";
+  type?: "text" | "password" | "email" | "number" | "date" | "time";
   errorMsg?: string;
   shrink?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -31,12 +31,9 @@ export const TextField = ({
   errorMsg,
   onChange,
   InputLabelProps,
+  ...params
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
-
-  useEffect(() => {
-    setDefaultValue(initialValue);
-  }, [initialValue]);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDefaultValue(event.target.value);
@@ -59,6 +56,7 @@ export const TextField = ({
         rows={rows}
         fullWidth
         slotProps={{ inputLabel: InputLabelProps }}
+        {...params}
       />
     </div>
   );

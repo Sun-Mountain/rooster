@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
 
+import { AddClassToTermModal } from "@/components/modals/AddClassToTerm";
+
 interface TermClassesProps {
   termId: string;
 }
@@ -39,11 +41,12 @@ export const AdminClassDetailsByTerm = ({ termId }: TermClassesProps) => {
   return (
     <>
       <h2>Session Classes</h2>
+      <AddClassToTermModal termId={termId} />
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>
       ) : (
         <>
-          Yay, classes!
+          <p>Yay, classes!</p>
         </>
       )}
     </>

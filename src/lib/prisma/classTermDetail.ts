@@ -8,7 +8,17 @@ import { ClassTermDetails, Prisma } from "../../../generated/prisma/client";
 // GET
 
 export const getClassTermDetailsBySession = async (termId: string): Promise<ClassTermDetails[]> => {
-  return await db.classTermDetails.findMany({
+  const termIdExists = await db.term.findUnique({
+    where: {
+      id: termId
+    }
+  });
+
+  if (!termIdExists) {
+    throw new Error(`Term with id ${termId} does not exist.`);
+  }
+
+  const classTermDetails = await db.classTermDetails.findMany({
     where: {
       termId
     },
@@ -16,6 +26,8 @@ export const getClassTermDetailsBySession = async (termId: string): Promise<Clas
       createdAt: "desc"
     }
   });
+
+  return classTermDetails;
 }
 
 // UPDATE

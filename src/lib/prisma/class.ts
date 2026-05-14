@@ -38,6 +38,16 @@ export const getClassById = async (id: string): Promise<Class | null> => {
   })
 }
 
+export const getClassNamesAndIds = async (): Promise<{ id: string; name: string }[]> => {
+  const classes = await db.class.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  });
+  return classes.map(c => ({ id: c.id, name: c.name }));
+}
+
 // PUT
 
 export const updateClass = async (

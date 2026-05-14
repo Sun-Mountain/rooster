@@ -58,7 +58,6 @@ export const EditClassModal = ({
         modalBtnContent={<><Edit /> Edit</>}
         btnAction={<Button onClick={updateClass}>{submitting ? "Updating..." : "Update"}</Button>}
         modalBtnClassName="w-icon small"
-        includeCancel={true}
         closeOnAction={closeOnAction}
       >
         <div className="modal-content">

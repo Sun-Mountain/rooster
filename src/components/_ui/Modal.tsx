@@ -5,8 +5,8 @@ import { Button } from '@/components/_ui/Button';
 
 interface ModalProps {
   children: ReactNode;
-  modalBtnContent: ReactNode;
-  btnAction: ReactNode;
+  modalBtnContent?: ReactNode;
+  btnAction?: ReactNode;
   modalBtnClassName?: string;
   includeCancel?: boolean;
   open?: boolean;
@@ -19,7 +19,7 @@ export const Modal =({
   modalBtnContent,
   btnAction,
   modalBtnClassName,
-  includeCancel = false,
+  includeCancel = true,
   danger = false,
   closeOnAction = false
 }: ModalProps) => {
@@ -35,9 +35,16 @@ export const Modal =({
 
   useEffect(() => {
     if (closeOnAction) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       handleClose();
     }
   }, [open, closeOnAction])
+
+  const cancelBtn = includeCancel ? (
+    <Button onClick={handleClose} className="transparent no-border">
+      Cancel
+    </Button>
+  ) : null;
 
   return (
     <div>
@@ -57,14 +64,12 @@ export const Modal =({
             <div>
               {children}
             </div>
-            <div className="btn-group">
-              {btnAction}
-              {includeCancel && ( 
-                <Button onClick={handleClose} className="transparent no-border">
-                  Cancel
-                </Button>
-              )}
-            </div>
+            {btnAction || cancelBtn ? (
+              <div className="btn-group">
+                {btnAction}
+                {cancelBtn}
+              </div>
+            ) : null}
           </div>
         </div>
       </ModalComponent>

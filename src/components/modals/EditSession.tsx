@@ -75,8 +75,8 @@ export const EditSessionModal = ({
         modalBtnContent={editBtnContent()}
         btnAction={confirmUpdate()}
         modalBtnClassName="w-icon small"
-        includeCancel={true}
         closeOnAction={closeOnAction}
+        includeCancel={true}
       >
         <div className="modal-content">
           <TermForm

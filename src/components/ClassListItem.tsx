@@ -3,11 +3,13 @@
 interface ClassListItemProps {
   classId: string;
   name: string;
+  noDescription?: boolean;
 }
 
 export const ClassListItem = ({
   classId,
   name,
+  noDescription = false,
 }: ClassListItemProps) => {
   return (
     <li className="list-item" key={classId}>
@@ -17,6 +19,7 @@ export const ClassListItem = ({
         </a>
       </div>
       <div></div>
+      {noDescription ? <div className="missing-info">Missing description</div> : null}
     </li>
   )
 };

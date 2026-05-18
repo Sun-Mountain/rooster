@@ -29,6 +29,12 @@
       }
     }
 
+    .missing-info {
+      color: $soft-text-color;
+      font-size: 0.875rem;
+      font-style: italic;
+    }
+
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
@@ -47,6 +53,10 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+
+      .draft {
+        color: $soft-text-color;
+      }
     }
   }
 } 

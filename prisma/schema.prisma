@@ -207,3 +207,19 @@ model Verification {
 
   @@map("verification")
 }
+model Equipment {
+  id String @id @default(cuid())
+  name String
+  description String
+  image String
+  location String
+}
+
+model EquipmentSignup {
+  id String @id @default(cuid())
+  equipmentid String
+  reservedTime String
+  userId String
+  termId String
+  notes String
+}

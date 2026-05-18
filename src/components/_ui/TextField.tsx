@@ -14,7 +14,7 @@ interface TextFieldProps {
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: "text" | "password" | "email" | "number" | "date";
+  type?: "text" | "password" | "email" | "number" | "date" | "time";
   errorMsg?: string;
   shrink?: boolean;
   slotAdornment?: React.ReactNode;
@@ -36,10 +36,6 @@ export const TextField = ({
   slotAdornment,
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
-
-  useEffect(() => {
-    setDefaultValue(initialValue);
-  }, [initialValue]);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDefaultValue(event.target.value);

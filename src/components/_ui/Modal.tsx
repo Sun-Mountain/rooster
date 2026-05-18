@@ -35,9 +35,10 @@ export const Modal =({
 
   useEffect(() => {
     if (closeOnAction && open) {
-      handleClose();
+      const timer = setTimeout(() => setOpen(false), 0);
+      return () => clearTimeout(timer);
     }
-  }, [open, closeOnAction])
+  }, [closeOnAction, open]);
 
   return (
     <div>

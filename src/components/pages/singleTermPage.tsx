@@ -92,7 +92,7 @@ export default function SingleTermPageContent() {
         </div>
       </div>
       <div className="content-container admin-list">
-        <AdminClassDetailsByTerm termId={termId} />
+        <AdminClassDetailsByTerm termId={termId} termEnded={termData?.status === "ENDED"} />
       </div>
     </div>
   )

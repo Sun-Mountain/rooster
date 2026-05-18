@@ -59,7 +59,19 @@
       }
     }
   }
-} 
+}
+
+.admin-list-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+  }
+}
 
 @media screen and (max-width: $sm) {
   .admin-list {
@@ -95,6 +107,16 @@
           width: 100%;
         }
       }
+    }
+  }
+
+  .admin-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    h2 {
+      margin: 0;
     }
   }
 }

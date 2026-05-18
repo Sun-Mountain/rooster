@@ -6,7 +6,7 @@ import { Button } from '@/components/_ui/Button';
 interface ModalProps {
   children: ReactNode;
   modalBtnContent: ReactNode;
-  btnAction: ReactNode;
+  btnAction?: ReactNode;
   modalBtnClassName?: string;
   includeCancel?: boolean;
   open?: boolean;
@@ -34,7 +34,7 @@ export const Modal =({
   };
 
   useEffect(() => {
-    if (closeOnAction) {
+    if (closeOnAction && open) {
       handleClose();
     }
   }, [open, closeOnAction])

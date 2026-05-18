@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { User } from "@client";
+import { User, Prisma } from "@client";
 
 // DELETE
 

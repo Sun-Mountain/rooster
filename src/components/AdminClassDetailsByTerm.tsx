@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AddClassToSessionModal } from "@/components/modals/AddClassToSession";
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
 
 interface TermClassesProps {
   termId: string;
+  termEnded: boolean;
 }
 
-export const AdminClassDetailsByTerm = ({ termId }: TermClassesProps) => {
+export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps) => {
   const [classDetailsList, setClassDetailsList] = useState<ClassDetailProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +40,10 @@ export const AdminClassDetailsByTerm = ({ termId }: TermClassesProps) => {
 
   return (
     <>
-      <h2>Session Classes</h2>
+      <div className="admin-list-header">
+        <h2>Session Classes</h2>
+        {!termEnded && <AddClassToSessionModal />}
+      </div>
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>
       ) : (

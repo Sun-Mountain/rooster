@@ -30,16 +30,29 @@ model Class {
   @@map("class")
 }
 
+model ClassTeacherProfile {
+  id          String    @id @default(cuid())
+  userId      String
+  teacherName String?
+  bio         String?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes     ClassTermDetails[] @relation("ClassTermTeachers")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([userId])
+  @@map("class_teacher_profile")
+}
+
 model ClassTermDetails {
   id                      String   @id @default(cuid())
   classId                 String
   termId                  String
   price                   Float
   capacity                Int
-  dayOfTheWeek            String
-  startTime               String
-  endTime                 String
   termSpecificDescription String?
+  teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
+  classTermRoster         ClassTermRoster[]
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())
@@ -47,6 +60,34 @@ model ClassTermDetails {
 
   @@unique([classId, termId])
   @@map("class_term_details")
+}
+
+model ClassTermRoster {
+  id                 String   @id @default(cuid())
+  classTermDetailsId String
+  dayOfWeek          String
+  startTime          String
+  endTime            String
+  roster             RosterItem[]
+  classTermDetails   ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@unique([classTermDetailsId])
+  @@map("class_term_roster")
+}
+
+model RosterItem {
+  id                String   @id @default(cuid())
+  classTermRosterId  String
+  userId             String
+  classTermRoster    ClassTermRoster @relation(fields: [classTermRosterId], references: [id], onDelete: Cascade)
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@unique([classTermRosterId, userId])
+  @@map("roster_item")
 }
 
 model Term {
@@ -99,22 +140,24 @@ model EmergencyContact {
 }
 
 model User {
-  id            String            @id @default(cuid())
-  name          String
-  firstName     String
-  lastName      String
-  email         String
-  emailVerified Boolean
-  role          Role              @default(USER)
-  contact       ContactAddress?
-  emergency     EmergencyContact?
-  pronouns      String?
-  otherPronouns String?
-  image         String?
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id              String            @id @default(cuid())
+  name            String
+  firstName       String
+  lastName        String
+  email           String
+  emailVerified   Boolean
+  role            Role              @default(USER)
+  classes         RosterItem[]
+  contact         ContactAddress?
+  emergency       EmergencyContact?
+  pronouns        String?
+  otherPronouns   String?
+  image           String?
+  teacherProfile  ClassTeacherProfile?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  sessions        Session[]
+  accounts        Account[]
 
   @@unique([email])
   @@map("user")

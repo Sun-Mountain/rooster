@@ -33,6 +33,9 @@ export interface ClassDetailProps {
   id: string;
   classId: string;
   termId: string;
+  class: {
+    name: string;
+  }
   price: Float16Array;
   capacity: number;
   dayOfTheWeek: string;

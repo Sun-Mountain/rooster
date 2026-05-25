@@ -7,8 +7,13 @@ import { TextField } from "@/components/_ui/TextField";
 import { Autocomplete } from "@/components/_ui/Autocomplete";
 // import { DayOfTheWeekSelect } from "@/components/fields/dayOfTheWeek";
 
-export const AddClassToSessionModal = () => {
+interface AddClassToSessionModalProps {
+  termId: string;
+}
+
+export const AddClassToSessionModal = ({ termId }: AddClassToSessionModalProps) => {
   const [classOptions, setClassOptions] = useState<{ id: string; name: string }[]>([]);
+  const [closeOnAction, setCloseOnAction] = useState(false);
   const [errors, setErrors] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,7 +25,14 @@ export const AddClassToSessionModal = () => {
     termSpecificDescription: "",
     startTime: "",
     endTime: "",
+    termId
   })
+
+  const resetCloseOnAction = () => {
+    setTimeout(() => {
+      setCloseOnAction(false)
+    }, 500);
+  }
 
   useEffect(() => {
     const fetchClassOptions = async () => {
@@ -59,13 +71,12 @@ export const AddClassToSessionModal = () => {
         },
         body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to add class to session");
       }
-
-      // Optionally, you can handle success (e.g., show a success message, refresh data, etc.)
+      setCloseOnAction(true);
+      resetCloseOnAction();
     } catch (err) {
       setErrors(`Failed to add class to session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`);
     } finally {
@@ -80,6 +91,7 @@ export const AddClassToSessionModal = () => {
         modalBtnClassName="primary"
         btnAction={<button onClick={onSubmit}>{submitting ? "Adding..." : "Add Class"}</button>}
         includeCancel={true}
+        closeOnAction={closeOnAction}
       >
         <div className="form-container no-border">
           <form>

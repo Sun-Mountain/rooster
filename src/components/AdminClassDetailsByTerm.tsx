@@ -42,13 +42,17 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
     <>
       <div className="admin-list-header">
         <h2>Session Classes</h2>
-        {!termEnded && <AddClassToSessionModal />}
+        {!termEnded && <AddClassToSessionModal termId={termId} />}
       </div>
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>
       ) : (
         <>
-          Yay, classes!
+          {classDetailsList.map((detail) => (
+            <div key={detail.id} className="admin-list-item">
+              {detail.class.name}
+            </div>
+          ))}
         </>
       )}
     </>

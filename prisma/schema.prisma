@@ -36,7 +36,7 @@ model ClassTeacherProfile {
   teacherName String?
   bio         String?
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  classes     ClassTermDetails[] @relation("ClassTermTeachers")
+  // classes     ClassTermDetails[] @relation("ClassTermTeachers")
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -51,29 +51,29 @@ model ClassTermDetails {
   price                   Float
   capacity                Int
   termSpecificDescription String?
-  teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
+  // teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
   classTermRoster         ClassTermRoster[]
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
-  @@unique([classId, termId])
+  // @@id([classId, termId])
   @@map("class_term_details")
 }
 
 model ClassTermRoster {
   id                 String   @id @default(cuid())
   classTermDetailsId String
-  dayOfWeek          String
+  dayOfTheWeek          String
   startTime          String
   endTime            String
-  roster             RosterItem[]
+  // roster             RosterItem[]
   classTermDetails   ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 
-  @@unique([classTermDetailsId])
+  // @@unique([classTermDetailsId])
   @@map("class_term_roster")
 }
 
@@ -81,12 +81,12 @@ model RosterItem {
   id                 String   @id @default(cuid())
   classTermRosterId  String
   userId             String
-  classTermRoster    ClassTermRoster @relation(fields: [classTermRosterId], references: [id], onDelete: Cascade)
+  // classTermRoster    ClassTermRoster @relation(fields: [classTermRosterId], references: [id], onDelete: Cascade)
   user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
 
-  @@unique([classTermRosterId, userId])
+  // @@unique([classTermRosterId, userId])
   @@map("roster_item")
 }
 

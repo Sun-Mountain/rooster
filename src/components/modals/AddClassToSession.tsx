@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AttachMoney } from "@mui/icons-material";
 import { Modal } from "@/components/_ui/Modal";
 import { TextField } from "@/components/_ui/TextField";
@@ -9,9 +9,11 @@ import { Autocomplete } from "@/components/_ui/Autocomplete";
 
 interface AddClassToSessionModalProps {
   termId: string;
+  setAddingClass: Dispatch<SetStateAction<boolean>>;
+  addingClass: boolean;
 }
 
-export const AddClassToSessionModal = ({ termId }: AddClassToSessionModalProps) => {
+export const AddClassToSessionModal = ({ termId, setAddingClass, addingClass }: AddClassToSessionModalProps) => {
   const [classOptions, setClassOptions] = useState<{ id: string; name: string }[]>([]);
   const [closeOnAction, setCloseOnAction] = useState(false);
   const [errors, setErrors] = useState<string | null>(null);
@@ -30,7 +32,8 @@ export const AddClassToSessionModal = ({ termId }: AddClassToSessionModalProps) 
 
   const resetCloseOnAction = () => {
     setTimeout(() => {
-      setCloseOnAction(false)
+      setCloseOnAction(false);
+      setAddingClass(!addingClass);
     }, 500);
   }
 
@@ -88,7 +91,7 @@ export const AddClassToSessionModal = ({ termId }: AddClassToSessionModalProps) 
     <>
       <Modal
         modalBtnContent="Add Class to Session"
-        modalBtnClassName="primary"
+        modalBtnClassName="primary medium"
         btnAction={<button onClick={onSubmit}>{submitting ? "Adding..." : "Add Class"}</button>}
         includeCancel={true}
         closeOnAction={closeOnAction}

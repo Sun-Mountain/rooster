@@ -78,7 +78,7 @@ export default function SingleTermPageContent() {
                 {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </>
             ) : (
-              <Button className="w-icon">
+              <Button className="w-icon medium">
                 {termData ? getStatusIcon(termData.status) : null}
                 {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </Button>
@@ -92,7 +92,10 @@ export default function SingleTermPageContent() {
         </div>
       </div>
       <div className="content-container admin-list">
-        <AdminClassDetailsByTerm termId={termId} termEnded={termData?.status === "ENDED"} />
+        <AdminClassDetailsByTerm
+          termId={termId}
+          termEnded={termData?.status === "ENDED"}
+        />
       </div>
     </div>
   )

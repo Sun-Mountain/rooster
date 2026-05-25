@@ -63,15 +63,15 @@ model ClassTermDetails {
 }
 
 model ClassTermRoster {
-  id                 String   @id @default(cuid())
-  classTermDetailsId String
-  dayOfTheWeek          String
-  startTime          String
-  endTime            String
+  id                  String   @id @default(cuid())
+  classTermDetailsId  String
+  dayOfTheWeek        String
+  startTime           String
+  endTime             String
   // roster             RosterItem[]
-  classTermDetails   ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
+  classTermDetails    ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 
   // @@unique([classTermDetailsId])
   @@map("class_term_roster")

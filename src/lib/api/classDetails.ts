@@ -19,3 +19,16 @@ export const fetchClassDetailsByTerm = async (
     setIsLoading(false);
   }
 }
+
+export const deleteClassDetail = async (id: string) => {
+  try {
+    const res = await fetch(`/api/admin/classDetails?id=${id}`, {
+      method: "DELETE"
+    });
+    if (!res.ok) throw new Error("Failed to delete class detail.");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Failed to delete class detail");
+  }
+}

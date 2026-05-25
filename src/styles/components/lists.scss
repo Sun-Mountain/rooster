@@ -61,6 +61,24 @@
   }
 }
 
+
+.condensed {
+  border-top: none;
+  padding: 1rem 0;
+
+  .list-item {
+    div {
+      padding: 0.5rem 1rem;
+      &:first-child {
+        padding-top: 1rem;
+      }
+      &:last-child {
+        width:auto;
+      }
+    }
+  }
+}
+
 .admin-list-header {
   display: flex;
   flex-wrap: wrap;

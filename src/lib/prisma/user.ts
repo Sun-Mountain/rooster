@@ -23,13 +23,6 @@ export const getUserById = async (id: string): Promise<User | null> => {
   });
 };
 
-// Delete a user from the database
-export const deleteUserById = async (id: string): Promise<User> => {
-  return await db.user.delete({
-    where: { id },
-  });
-};
-
 // Update info for a single user based on a user id. The user id will remain the same but all other fields may be changed
 export const updateUserById = async (userId: string, data: Prisma.UserUpdateInput): Promise<User> => {
   return await db.user.update({

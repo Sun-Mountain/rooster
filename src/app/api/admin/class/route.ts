@@ -15,7 +15,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, description } = await request.json();
+    const { name, description, time } = await request.json();
     if (!name) {
       return NextResponse.json(
         { error: "Name is required" },
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newClass = await createClass({ name, description });
+    const newClass = await createClass({ name, description, time });
     return NextResponse.json(newClass, { status: 201 });
   } catch (error) {
     return NextResponse.json(

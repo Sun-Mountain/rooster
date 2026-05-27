@@ -15,13 +15,13 @@ const transporter = nodemailer.createTransport({
 });
 
 // Send a notification email to set of users based on an array of user IDs. The subject line and text of the email message also need to be provided provided
-export async function sentNotificationEmail(users: Array(String), subjectLine: String, emailText: String){
+export async function sendNotificationEmail(users: Array<string>, subjectLine: string, emailText: string){
 	try {
-		for user in users{
-			const userInfo = getUserById(user)
-			if (!userinfo) {
-				console.log('No user ID found for user %s', user)
-				continue
+		for (const user of users) {
+			const userInfo = getUserById(user);
+			if (!userInfo) {
+				console.log('No user ID found for user %s', user);
+				continue;
 			}
 			const info = await transporter.sendMail({
 				from: '"No Reply" <no-reply@rooster.com>',
@@ -30,10 +30,10 @@ export async function sentNotificationEmail(users: Array(String), subjectLine: S
 				html: emailText
 			});
 
-		console.log("Message sent: %s, info.messageId);
-		} catch (err) {
-			console.error('Error while sending mail:' err);
-			throw err
+		console.log("Message sent: %s", info.messageId);
 		}
-	}
+	} catch (err) {
+		console.error('Error while sending mail:', err);
+		throw err
+	};
 }

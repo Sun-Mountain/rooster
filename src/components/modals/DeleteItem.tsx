@@ -7,7 +7,7 @@ import { deleteBtnContent } from "@/components/buttons/btnContent";
 
 interface DeleteItemModalProps {
   itemId: string;
-  type: "user" | "term" | "class";
+  type: "user" | "term" | "class" | "classDetails";
   name?: string;
   modalBtnSize?: "small" | "medium" | "large";
 }
@@ -22,7 +22,7 @@ export const DeleteItemModal = ({
 
   const deleteItem = async () => {
     try {
-      const response = await fetch(`/api/admin/${type}/${itemId}`, {
+      const response = await fetch(`/api/admin/${type}?id=${itemId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

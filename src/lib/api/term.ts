@@ -8,7 +8,7 @@ export const fetchTerms = async (
 ) => {
   try {
     setIsLoading(true)
-    const res = await fetch("/api/admin/term");
+    const res = await fetch("/api/admin/terms");
     if (!res.ok) throw new Error("Failed to fetch sessions.")
     const data = await res.json();
     setTermList(data)
@@ -57,7 +57,7 @@ export const fetchSingleTermById = async (
   setIsLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   try {
-    const res = await fetch(`/api/admin/term/${termId}`, {
+    const res = await fetch(`/api/admin/term?id=${termId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export const updateTermStatusById = async (
   newStatus: string
 ) => {
   try {
-    const res = await fetch(`/api/admin/term/${termId}/status`, {
+    const res = await fetch(`/api/admin/term/status?id=${termId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export const updateTermById = async (
   setSubmitting: Dispatch<SetStateAction<boolean>>,
 ) => {
   try {
-    const response = await fetch(`/api/admin/term/${termId}`, {
+    const response = await fetch(`/api/admin/term?id=${termId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

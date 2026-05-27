@@ -40,7 +40,7 @@ export const AddClassToSessionModal = ({ termId, setAddingClass, addingClass }: 
   useEffect(() => {
     const fetchClassOptions = async () => {
       try {
-        const response = await fetch("/api/admin/classes");
+        const response = await fetch("/api/admin/classNames");
         const data = await response.json();
         setClassOptions(data);
       } catch (error) {

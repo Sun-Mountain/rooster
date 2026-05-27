@@ -4,9 +4,8 @@ import { updateTermStatus } from "@/lib/prisma/term";
 
 export async function PUT(request: NextRequest) {
   try {
-    const url = new URL(request.url);
-    const termId = url.pathname.split('/')[4];
-    const id = termId as string;
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });

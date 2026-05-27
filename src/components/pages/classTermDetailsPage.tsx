@@ -6,6 +6,7 @@ import { ClassDetailProps, TermProps } from "@/lib/props";
 import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById } from "@/lib/api/term";
 import { fetchSingleClassDetailById } from "@/lib/api/classDetails";
+import { DeleteItemModal } from "@/components/modals/DeleteItem";
 
 export default function AdminClassTermDetails() {
   const searchParams = useSearchParams()
@@ -18,24 +19,45 @@ export default function AdminClassTermDetails() {
   const classDetailsId = searchParams.get('id');
   const termId = pathname.split("/").filter(part => part)[2];
 
-  console.log("Extracted termId:", termId);
-  console.log("Extracted classDetailsId:", classDetailsId);
+  console.log(classData)
 
   useEffect(() => {
     if (isLoading && termId) fetchSingleTermById(termId, setTermData);
     if (isLoading && classDetailsId) fetchSingleClassDetailById(classDetailsId, setClassData);
   }, [classDetailsId, termId, isLoading]);
 
-  console.log("Term Data:", termData);
-  console.log("Class Detail Data:", classData);
-
   return (
     <div className="admin-page-container">
       {/* TODO: Fix Breadcrumbs component */}
       <Breadcrumbs />
-      <h1>Class Term Details</h1>
+      <h1>{classData ? classData.class.name : "Class Term Details"}</h1>
       <div className="content-container">
-        <p>Details for a specific class term will be displayed here.</p>
+              <div>
+                <div className="action-btns-container">
+                  {/* <div>
+                    {termData && termData?.status !== "ENDED" && (
+                      <EditSessionModal
+                        formData={{ ...termData, description: termData.description ?? undefined }}
+                        termId={termId}
+                        setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
+                      />
+                    )}
+                  </div> */}
+                  <DeleteItemModal
+                    itemId={classData?.id || ""}
+                    type="classDetails"
+                    name={`${classData?.class.name} from ${termData?.name}` || "this class from this session"}
+                    modalBtnSize="small"
+                  />
+                </div>
+              </div>
+        <div>
+          {classData?.termSpecificDescription || "No term-specific description available."}<br /><br />
+        </div>
+        <div>
+          Capacity: {classData?.capacity}<br /><br />
+          Price: ${classData?.price}<br /><br />
+        </div>
       </div>
     </div>
   )

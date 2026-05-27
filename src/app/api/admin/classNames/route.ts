@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { getAllClasses } from '@/lib/prisma/class'
+import { getClassNamesAndIds } from '@/lib/prisma/class'
 
 export async function GET() {
   try {
-    const classes = await getAllClasses();
+    const classes = await getClassNamesAndIds();
     return NextResponse.json(classes, { status: 200 });
   } catch (error) {
     return NextResponse.json(

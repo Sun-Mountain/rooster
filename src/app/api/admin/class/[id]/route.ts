@@ -5,9 +5,8 @@ export async function GET(
   request: NextRequest
 ) {
   try {
-    const url = new URL(request.url);
-    const userId = url.pathname.split('/')[4];
-    const id = userId as string;
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });

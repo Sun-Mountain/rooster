@@ -9,7 +9,7 @@ export const fetchClassDetailsByTerm = async (
 ) => {
   try {
     setIsLoading(true);
-    const res = await fetch(`/api/admin/classDetails?termId=${termId}`);
+    const res = await fetch(`/api/admin/term/classDetails?termId=${termId}`);
     if (!res.ok) throw new Error("Failed to fetch class details.");
     const data = await res.json();
     setClassDetailsList(data);
@@ -27,12 +27,12 @@ export const fetchSingleClassDetailById = async (
 ) => {
   try {
     setIsLoading?.(true);
-    const res = await fetch(`/api/admin/classDetails/${id}`);
+    const res = await fetch(`/api/admin/classDetails?id=${id}`);
     if (!res.ok) throw new Error("Failed to fetch class detail.");
     const data = await res.json();
     setClassDetailData(data);
   } catch (err) {
-    throw new Error(err instanceof Error ? err.message : "Failed to delete class detail");
+    throw new Error(err instanceof Error ? err.message : "Failed to fetch class detail");
   } finally {
     setIsLoading?.(false);
   }

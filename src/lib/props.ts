@@ -33,6 +33,7 @@ export interface ClassDetailProps {
   id: string;
   classId: string;
   termId: string;
+  termSpecificDescription?: string;
   class: {
     name: string;
   }

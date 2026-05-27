@@ -1,20 +1,22 @@
 import { NextResponse, NextRequest } from "next/server";
-import { createClassTermDetail, deleteClassTermDetail, getClassTermDetailsBySession } from "@/lib/prisma/classTermDetail";
+import { createClassTermDetail, deleteClassTermDetail, getClassTermDetailById } from "@/lib/prisma/classTermDetail";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const termId = searchParams.get("termId");
+    const id = searchParams.get("id");
 
-    if (!termId) {
-      return NextResponse.json(
-        { error: "termId query parameter is required" },
-        { status: 400 },
-      );
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const classTermDetails = await getClassTermDetailsBySession(termId);
-    return NextResponse.json(classTermDetails, { status: 200 });
+    const classDetailData = await getClassTermDetailById(id);
+
+    if (!classDetailData) {
+      return NextResponse.json({ error: "Class detail not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(classDetailData, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },

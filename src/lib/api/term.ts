@@ -54,7 +54,7 @@ export const createNewTerm = async (
 export const fetchSingleTermById = async (
   termId: string,
   setTermData: Dispatch<SetStateAction<TermProps | null>>,
-  setIsLoading: Dispatch<SetStateAction<boolean>>
+  setIsLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   try {
     const res = await fetch(`/api/admin/term/${termId}`, {
@@ -66,7 +66,7 @@ export const fetchSingleTermById = async (
     if (!res.ok) throw new Error("Failed to fetch term.")
     const data = await res.json();
     setTermData(data);
-    setIsLoading(false);
+    if (setIsLoading) setIsLoading(false);
   } catch (err) {
     throw err instanceof Error ? err : new Error("Failed to load term");
   }

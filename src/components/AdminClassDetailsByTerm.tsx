@@ -54,7 +54,7 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
           {classDetailsList.map((detail) => (
             <li key={detail.id} className="list-item">
               <div>
-                <a href={`/admin/session/${termId}/class?id=${detail.classId}}`}>
+                <a href={`/admin/session/${termId}/class?id=${detail.id}`}>
                   {detail.class.name}
                 </a>
               </div>

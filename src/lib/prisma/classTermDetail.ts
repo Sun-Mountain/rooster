@@ -111,6 +111,23 @@ export const getClassTermDetailsBySession = async (termId: string): Promise<Clas
   });
 }
 
+export const getClassTermDetailById = async (id: string): Promise<ClassTermDetails | null> => {
+  console.log("Fetching class term detail with ID (prisma): ", id);
+  return await db.classTermDetails.findUnique({
+    where: {
+      id
+    },
+    include: {
+      class: {
+        select: {
+          name: true,
+          description: true,
+        }
+      },
+    }
+  });
+}
+
 // UPDATE
 
 export const updateClassTermDetail = async (

@@ -54,10 +54,12 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
           {classDetailsList.map((detail) => (
             <li key={detail.id} className="list-item">
               <div>
-                {detail.class.name}
+                <a href={`/admin/session/${termId}/class?id=${detail.classId}}`}>
+                  {detail.class.name}
+                </a>
               </div>
               <div>
-                {!termEnded && <Button className="w-icon small" onClick={() => {
+                {!termEnded && <Button className="w-icon small invert" onClick={() => {
                   if (confirm("Are you sure you want to delete this class from the session? This action cannot be undone.")) {
                     fetch(`/api/admin/classDetails?id=${detail.id}`, {
                       method: "DELETE"

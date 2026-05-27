@@ -112,3 +112,39 @@ export const getClassTermDetailsBySession = async (termId: string): Promise<Clas
 }
 
 // UPDATE
+
+export const updateClassTermDetail = async (
+  id: string,
+  data: Partial<ClassTermDetailWithRelations>
+): Promise<ClassTermDetails> => {
+  try {
+
+  const { price,
+          capacity,
+          termSpecificDescription,
+          classId,
+          termId,
+          dayOfTheWeek,
+          startTime,
+          endTime
+        } = data;
+    const updatedClassTermDetail = await db.classTermDetails.update({
+      where: { id },
+      data: {
+        price,
+        capacity,
+        termSpecificDescription,
+        class: classId ? { connect: { id: classId } } : undefined,
+        term: termId ? { connect: { id: termId } } : undefined,
+      },
+      include: {
+        classTermRoster: true,
+      },
+    });
+
+    return updatedClassTermDetail;
+  } catch (error) {
+    console.error("Error updating ClassTermDetail: ", error);
+    throw new Error(error instanceof Error ? error.message : "Failed to update class term detail");
+  }
+}

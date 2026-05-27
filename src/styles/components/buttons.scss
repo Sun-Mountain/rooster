@@ -77,10 +77,21 @@ button {
     }
   }
 
+  &.invert {
+    background-color: $primary-btn-text;
+    color: $primary-btn;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $african-violet;
+    }
+  }
+
   &.danger {
     background-color: $danger-btn;
     border: 1px solid $danger-btn;
     color: $primary-btn-text;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     &:hover {
       background-color: $primary-btn-text;

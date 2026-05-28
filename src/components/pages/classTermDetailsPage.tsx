@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById } from "@/lib/api/term";
 import { fetchSingleClassDetailById } from "@/lib/api/classDetails";
 import { DeleteItemModal } from "@/components/modals/DeleteItem";
+import { EditClassDetailsModal } from "@/components/modals/EditClassDetails";
 
 export default function AdminClassTermDetails() {
   const searchParams = useSearchParams()
@@ -18,8 +19,6 @@ export default function AdminClassTermDetails() {
 
   const classDetailsId = searchParams.get('id');
   const termId = pathname.split("/").filter(part => part)[2];
-
-  console.log(classData)
 
   useEffect(() => {
     if (isLoading && termId) fetchSingleTermById(termId, setTermData);
@@ -34,15 +33,16 @@ export default function AdminClassTermDetails() {
       <div className="content-container">
               <div>
                 <div className="action-btns-container">
-                  {/* <div>
+                  <div>
                     {termData && termData?.status !== "ENDED" && (
-                      <EditSessionModal
-                        formData={{ ...termData, description: termData.description ?? undefined }}
-                        termId={termId}
-                        setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
+                      <EditClassDetailsModal
+                        formData={classData as ClassDetailProps}
+                        // formData={{ ...termData, description: termData.description ?? undefined }}
+                        // termId={termId}
+                        // setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
                       />
                     )}
-                  </div> */}
+                  </div>
                   <DeleteItemModal
                     itemId={classData?.id || ""}
                     type="classDetails"

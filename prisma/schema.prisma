@@ -165,13 +165,6 @@ model Verification {
   @@map("verification")
 }
 
-model Class {
-  id String @id @default(cuid())
-  name String
-  time DateTime
-  description String
-}
-
 model TermSignUp {
   id String @id @default(cuid())
   termid String

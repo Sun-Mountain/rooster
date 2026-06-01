@@ -99,8 +99,7 @@ export const AccountAddressForm = ({ userId, setMissingInfo, missingInfo }: Acco
         }
       })
       .catch(error => {
-        console.error('Error updating address:', error);
-        setAlertMsg({ message: 'Error updating address', type: 'error' });
+        setAlertMsg({ message: error instanceof Error ? error.message : "Unable to update address. Please try again. If the issue persists, contact support.", type: 'error' });
       });
   };
 

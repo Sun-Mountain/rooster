@@ -30,7 +30,7 @@ export default function AdminClassTermDetails() {
       <Breadcrumbs links= {[
         { name: "Admin", href: "/admin" },
         { name: "Sessions", href: "/admin/sessions" },
-        { name: termData ? `Session: ${termData.name}` : "Session", href: `/admin/sessions/${termId}` },
+        { name: termData ? `Session: ${termData.name}` : "Session", href: `/admin/session/${termId}` },
         { name: classData ? `Class: ${classData.class.name}` : "Class" },
       ]}/>
       <h1>{classData ? classData.class.name : "Class Term Details"}</h1>

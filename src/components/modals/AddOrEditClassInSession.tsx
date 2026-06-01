@@ -7,6 +7,7 @@ import { Button } from "@/components/_ui/Button";
 import { Modal } from "@/components/_ui/Modal";
 import { TextField } from "@/components/_ui/TextField";
 import { Autocomplete } from "@/components/_ui/Autocomplete";
+import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 
 interface AddClassToSessionModalProps {
   termId: string;
@@ -27,7 +28,7 @@ export const AddOrEditClassInSessionModal = ({
 }: AddClassToSessionModalProps) => {
   const [classOptions, setClassOptions] = useState<{ id: string; name: string }[]>([]);
   const [closeOnAction, setCloseOnAction] = useState(false);
-  const [errors, setErrors] = useState<string | null>(null);
+  const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     classId: "",
@@ -57,7 +58,7 @@ export const AddOrEditClassInSessionModal = ({
         const data = await response.json();
         setClassOptions(data);
       } catch (error) {
-        setErrors(`Failed to fetch class options: ${error instanceof Error ? error.message : "An unexpected error occurred"}`);
+        setAlertMsg({ message: `Failed to fetch class options: ${error instanceof Error ? error.message : "An unexpected error occurred"}`, type: 'error' });
       }
     };
 
@@ -158,10 +159,18 @@ export const AddOrEditClassInSessionModal = ({
       }
       resetCloseOnAction();
     } catch (err) {
-      setErrors(`Failed to ${!isEdit ? "add" : "update"} class in session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`);
+      setAlertMsg({ message: `Failed to ${!isEdit ? "add" : "update"} class in session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`, type: 'error' });
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleAddAnotherDayTime = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFormData(prev => prev ? {
+      ...prev,
+      classInstances: [...prev.classInstances, { dayOfTheWeek: "", startTime: "", endTime: "" }]
+    } : prev);
   };
 
   return (
@@ -176,6 +185,9 @@ export const AddOrEditClassInSessionModal = ({
         closeOnAction={closeOnAction}
       >
         <div className="form-container no-border">
+          <div className="form-header">
+            <h3>{!isEdit ? "Add Class to Session" : "Edit Class in Session"}</h3>
+          </div>
           <form>
             <Autocomplete
               options={classOptions}
@@ -208,40 +220,65 @@ export const AddOrEditClassInSessionModal = ({
             </div>
             {formData.classInstances.map((instance, index) => (
               <div key={index} className="roster-entry">
-                <Autocomplete
-                  options={daysOfTheWeek()}
-                  label="Day of the Week"
-                  name="dayOfTheWeek"
-                  initialValue={instance.dayOfTheWeek}
-                  disabled={submitting}
-                  handleChange={(e) => handleRosterChange(index, e)}
-                />
-                <div className="flex-fields-container">
-                  <TextField
-                    label="Start Time"
-                    name="startTime"
-                    type="time"
-                    InputLabelProps={{
-                      shrink: true, // Forces the label to move to the top
-                    }}
-                    initialValue={instance.startTime}
-                    onChange={(e) => handleRosterChange(index, e)}
+                <div className="instance-fields">
+                  <Autocomplete
+                    options={daysOfTheWeek()}
+                    label="Day of the Week"
+                    name="dayOfTheWeek"
+                    initialValue={instance.dayOfTheWeek}
                     disabled={submitting}
+                    handleChange={(e) => handleRosterChange(index, e)}
                   />
-                  <TextField
-                    label="End Time"
-                    name="endTime"
-                    type="time"
-                    InputLabelProps={{
-                      shrink: true, // Forces the label to move to the top
-                    }}
-                    initialValue={instance.endTime}
-                    onChange={(e) => handleRosterChange(index, e)}
-                    disabled={submitting}
-                  />
+                  <div className="flex-fields-container">
+                    <TextField
+                      label="Start Time"
+                      name="startTime"
+                      type="time"
+                      InputLabelProps={{
+                        shrink: true, // Forces the label to move to the top
+                      }}
+                      initialValue={instance.startTime}
+                      onChange={(e) => handleRosterChange(index, e)}
+                      disabled={submitting}
+                    />
+                    <TextField
+                      label="End Time"
+                      name="endTime"
+                      type="time"
+                      InputLabelProps={{
+                        shrink: true, // Forces the label to move to the top
+                      }}
+                      initialValue={instance.endTime}
+                      onChange={(e) => handleRosterChange(index, e)}
+                      disabled={submitting}
+                    />
+                  </div>
                 </div>
+                  {formData.classInstances.length > 1 && (
+                <div className="remove-instance-btn">
+                    <Button
+                      className="danger small"
+                      handleClick={(e) => {
+                        e.preventDefault();
+                        setFormData(prev => prev ? {
+                          ...prev,
+                          classInstances: prev.classInstances.filter((_, i) => i !== index)
+                        } : prev);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                </div>
+                  )}
               </div>
             ))}
+            <div className="non-field-container">
+              <Button
+                handleClick={handleAddAnotherDayTime}
+              >
+                {formData.classInstances.length < 7 ? "Add Another Day / Time" : "Max Days Added"}
+              </Button>
+            </div>
             <TextField
               label="Additional Notes"
               name="termSpecificDescription"

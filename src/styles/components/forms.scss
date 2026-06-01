@@ -29,6 +29,10 @@
     }
   }
 
+  .non-field-container {
+    margin-bottom: 1rem;
+  }
+
   .text-field-container {
     margin-bottom: 1rem;
   }
@@ -42,6 +46,23 @@
     .text-field-container {
       flex: 1;
     }
+  }
+
+  .roster-entry {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .instance-fields {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .roster-entry+.roster-entry {
+    border-top: $basic-border-soft;
+    padding-top: 1rem;
   }
 
   .flex-fields-container+.flex-fields-container {

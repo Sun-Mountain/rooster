@@ -121,8 +121,6 @@ export async function PUT(request: NextRequest) {
       }))
     };
 
-    console.log("Received update data:", updatedClassTermDetailData);
-
     const updatedClassTermDetail = await updateClassTermDetail(classInstanceId, updatedClassTermDetailData);
     return NextResponse.json(updatedClassTermDetail, { status: 200 });
   } catch (error) {

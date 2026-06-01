@@ -17,8 +17,6 @@ export type ClassTermDetailWithRelations = ClassTermDetails & {
 export const createClassTermDetail = async (
   data: ClassTermDetailWithRelations,
 ): Promise<ClassTermDetails> => {
-  console.log("ClassTermDetails: ", data);
-
   const { price,
           capacity,
           termSpecificDescription,

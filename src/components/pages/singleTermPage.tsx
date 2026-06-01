@@ -45,7 +45,11 @@ export default function SingleTermPageContent() {
 
   return (
     <div className="admin-page-container">
-      <Breadcrumbs currentPageTitle={`Session: ${pageTitle}`} />
+      <Breadcrumbs links= {[
+        { name: "Admin", href: "/admin" },
+        { name: "Sessions", href: "/admin/sessions" },
+        { name: termData ? `Session: ${termData.name}` : "Session" },
+      ]} />
       <h1>{pageTitle}</h1>
       <div className="content-container two-column">
         <div>

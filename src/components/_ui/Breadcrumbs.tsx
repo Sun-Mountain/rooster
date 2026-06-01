@@ -6,12 +6,11 @@ import { KeyboardDoubleArrowLeft as ArrowBack } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 
 interface BreadcrumbsProps {
+  links?: { name: string; href?: string }[];
   currentPageTitle?: string;
 }
 
-export const Breadcrumbs = ({ currentPageTitle }: BreadcrumbsProps) => {
-  const pathname = usePathname();
-  const pathParts = pathname.split("/").filter(part => part);
+export const Breadcrumbs = ({ links, currentPageTitle }: BreadcrumbsProps) => {
 
   return (
     <div className="crumb-container">
@@ -19,36 +18,25 @@ export const Breadcrumbs = ({ currentPageTitle }: BreadcrumbsProps) => {
         aria-label="breadcrumb"
         separator={<ArrowBack style={{ fontSize: "16px" }} />}
       >
-        {pathParts.map((part, index) => {
-          const href = "/" + pathParts.slice(0, index + 1).join("/");
-          const isLast = index === pathParts.length - 1;
-          const displayName = part.charAt(0).toUpperCase() + part.slice(1);
-
-          if (part === "session") {
+        {links && links.map((link, index) => {
+          if (link.href) {
             return (
-              <Link key={href} href="/admin/sessions" className="breadcrumb-item">
-                Sessions
+              <Link key={index} href={link.href} className="crumb-link">
+                {link.name}
               </Link>
-            );
-          } else if (part === "class") {
+            )
+          } else {
             return (
-              <Link key={href} href="/admin/classes" className="breadcrumb-item">
-                Classes
-              </Link>
-            );
+              <span key={index} className="crumb-link">
+                {link.name}
+              </span>
+            )
           }
-
-          return isLast ? (
-            <span key={href} className="breadcrumb-item current">
-              {currentPageTitle || displayName}
-            </span>
-          ) : (
-            <Link key={href} href={href} className="breadcrumb-item">
-              {displayName}
-            </Link>
-          );
         })}
+        {currentPageTitle && (
+          <span className="crumb-current">{currentPageTitle}</span>
+        )}
       </BreadcrumbUI>
-    </div>
+     </div>
   )
 }

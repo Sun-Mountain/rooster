@@ -23,7 +23,11 @@ export default function SingleClassPage() {
 
   return (
     <div className="admin-page-container">
-      <Breadcrumbs currentPageTitle={`Class: ${pageTitle}`} />
+      <Breadcrumbs links= {[
+        { name: "Admin", href: "/admin" },
+        { name: "Classes", href: "/admin/classes" },
+        { name: classData ? `Class: ${classData.name}` : "Class" },
+      ]} />
       <h1>{pageTitle}</h1>
       <div className ="content-container two-column">
         <div>

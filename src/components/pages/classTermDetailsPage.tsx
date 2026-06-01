@@ -27,8 +27,12 @@ export default function AdminClassTermDetails() {
 
   return (
     <div className="admin-page-container">
-      {/* TODO: Fix Breadcrumbs component */}
-      <Breadcrumbs />
+      <Breadcrumbs links= {[
+        { name: "Admin", href: "/admin" },
+        { name: "Sessions", href: "/admin/sessions" },
+        { name: termData ? `Session: ${termData.name}` : "Session", href: `/admin/sessions/${termId}` },
+        { name: classData ? `Class: ${classData.class.name}` : "Class" },
+      ]}/>
       <h1>{classData ? classData.class.name : "Class Term Details"}</h1>
       <div className="content-container">
               <div>

@@ -145,7 +145,6 @@ export const updateClassTermDetail = async (
 
     return updatedClassTermDetail;
   } catch (error) {
-    console.error("Error updating ClassTermDetail: ", error);
     throw new Error(error instanceof Error ? error.message : "Failed to update class term detail");
   }
 }

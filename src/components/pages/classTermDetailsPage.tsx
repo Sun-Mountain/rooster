@@ -16,7 +16,6 @@ export default function AdminClassTermDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [termData, setTermData] = useState<TermProps | null>(null);
   const [classData, setClassData] = useState<ClassDetailProps | null>(null);
-  // console.log("classData", classData)
 
   const classDetailsId = searchParams.get('id');
   const termId = pathname.split("/").filter(part => part)[2];
@@ -41,6 +40,7 @@ export default function AdminClassTermDetails() {
                         setStartAction={setIsLoading}
                         classChange={isLoading}
                         classData={classData as ClassDetailProps}
+                        setClassData={setClassData}
                         isEdit={true}
                       />
                     )}

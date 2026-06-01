@@ -14,6 +14,7 @@ interface AddClassToSessionModalProps {
   classChange: boolean;
   isEdit?: boolean;
   classData?: ClassDetailProps;
+  setClassData?: Dispatch<SetStateAction<ClassDetailProps | null>>;
 }
 
 export const AddOrEditClassInSessionModal = ({
@@ -21,7 +22,8 @@ export const AddOrEditClassInSessionModal = ({
   setStartAction,
   classChange,
   isEdit = false,
-  classData
+  classData,
+  setClassData
 }: AddClassToSessionModalProps) => {
   const [classOptions, setClassOptions] = useState<{ id: string; name: string }[]>([]);
   const [closeOnAction, setCloseOnAction] = useState(false);
@@ -129,6 +131,31 @@ export const AddOrEditClassInSessionModal = ({
         throw new Error(errorData.error || (!isEdit ? "Failed to add class to session" : "Failed to update class in session"));
       }
       setCloseOnAction(true);
+      if (setClassData) {
+        setClassData((prev: ClassDetailProps | null) => {
+          const baseData = prev ?? classData;
+          if (!baseData) return prev ?? null;
+
+          return {
+            ...baseData,
+            classId: formData.classId,
+            price: Number(formData.price),
+            capacity: Number(formData.capacity),
+            termSpecificDescription: formData.termSpecificDescription,
+            classInstances: formData.classInstances.map((instance, idx) => ({
+              ...baseData.classInstances[idx],
+              dayOfTheWeek: instance.dayOfTheWeek,
+              startTime: instance.startTime,
+              endTime: instance.endTime,
+            })),
+            termId: formData.termId,
+            class: {
+              ...baseData.class,
+              name: formData.className,
+            },
+          };
+        });
+      }
       resetCloseOnAction();
     } catch (err) {
       setErrors(`Failed to ${!isEdit ? "add" : "update"} class in session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`);

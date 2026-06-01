@@ -12,8 +12,7 @@ export async function GET(request: NextRequest) {
     }
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    console.error('Error fetching user by ID:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 };
 
@@ -26,7 +25,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error deleting user by ID:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 };

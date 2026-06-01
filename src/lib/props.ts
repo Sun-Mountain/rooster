@@ -29,6 +29,14 @@ export interface TermProps {
   updatedAt: string;
 }
 
+export interface ClassInstanceProps {
+  id: string;
+  classTermDetailId: string;
+  dayOfTheWeek: string;
+  startTime: string;
+  endTime: string;
+}
+
 export interface ClassDetailProps {
   id: string;
   classId: string;
@@ -37,12 +45,7 @@ export interface ClassDetailProps {
   class: {
     name: string;
   };
-  classInstances: {
-    id: string;
-    dayOfTheWeek: string;
-    startTime: string;
-    endTime: string;
-  }[];
+  classInstances: ClassInstanceProps[];
   price: number;
   capacity: number;
   dayOfTheWeek: string;

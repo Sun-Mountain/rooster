@@ -39,11 +39,9 @@ export default function AdminClassTermDetails() {
                       <AddOrEditClassInSessionModal
                         termId={termId}
                         setStartAction={setIsLoading}
-                        addingClass={isLoading}
+                        classChange={isLoading}
                         classData={classData as ClassDetailProps}
                         isEdit={true}
-                        // termId={termId}
-                        // setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
                       />
                     )}
                   </div>

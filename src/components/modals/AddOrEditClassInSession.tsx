@@ -11,7 +11,7 @@ import { Autocomplete } from "@/components/_ui/Autocomplete";
 interface AddClassToSessionModalProps {
   termId: string;
   setStartAction: Dispatch<SetStateAction<boolean>>;
-  addingClass: boolean;
+  classChange: boolean;
   isEdit?: boolean;
   classData?: ClassDetailProps;
 }
@@ -19,7 +19,7 @@ interface AddClassToSessionModalProps {
 export const AddOrEditClassInSessionModal = ({
   termId,
   setStartAction,
-  addingClass,
+  classChange,
   isEdit = false,
   classData
 }: AddClassToSessionModalProps) => {
@@ -44,7 +44,7 @@ export const AddOrEditClassInSessionModal = ({
   const resetCloseOnAction = () => {
     setTimeout(() => {
       setCloseOnAction(false);
-      setStartAction(!addingClass);
+      setStartAction(!classChange);
     }, 500);
   }
 
@@ -63,25 +63,27 @@ export const AddOrEditClassInSessionModal = ({
   }, []);
 
   useEffect(() => {
-    const fillFormDataFromClassData = (classData: ClassDetailProps) => {
-      const { classId, price, capacity, termSpecificDescription, classInstances } = classData;
-      const newFormData = {
-        classId,
-        className: classData.class.name,
-        price,
-        capacity,
-        termSpecificDescription: termSpecificDescription || "",
-        classInstances: classInstances.map(instance => ({
-          dayOfTheWeek: instance.dayOfTheWeek,
-          startTime: instance.startTime,
-          endTime: instance.endTime,
-        })),
-        termId
+    if (isEdit) {
+      const fillFormDataFromClassData = (classData: ClassDetailProps) => {
+        const { classId, price, capacity, termSpecificDescription, classInstances } = classData;
+        const newFormData = {
+          classId,
+          className: classData.class.name,
+          price,
+          capacity,
+          termSpecificDescription: termSpecificDescription || "",
+          classInstances: classInstances.map(instance => ({
+            dayOfTheWeek: instance.dayOfTheWeek,
+            startTime: instance.startTime,
+            endTime: instance.endTime,
+          })),
+          termId
+        };
+        setFormData(newFormData);
       };
-      setFormData(newFormData);
-    };
-    if (isEdit && classData) {
-      fillFormDataFromClassData(classData);
+      if (classData) {
+        fillFormDataFromClassData(classData);
+      }
     }
   }, [isEdit, classData, termId]);
 
@@ -110,10 +112,12 @@ export const AddOrEditClassInSessionModal = ({
     });
   };
 
+  const fetchURL = !isEdit ? "/api/admin/classDetails" : `/api/admin/classDetails?id=${classData?.id}`;
+
   const onSubmit = async () => {
     setSubmitting(true);
     try {
-      const response = await fetch("/api/admin/classDetails", {
+      const response = await fetch(fetchURL, {
         method: !isEdit ? "POST" : "PUT",
         headers: {
           "Content-Type": "application/json",

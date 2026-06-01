@@ -48,7 +48,7 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
         {!termEnded && <AddOrEditClassInSessionModal
                           termId={termId}
                           setStartAction={setAddingClass}
-                          addingClass={addingClass}
+                          classChange={addingClass}
                         />}
       </div>
       {classDetailsList.length === 0 ? (

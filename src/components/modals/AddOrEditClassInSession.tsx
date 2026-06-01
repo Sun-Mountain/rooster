@@ -184,7 +184,7 @@ export const AddOrEditClassInSessionModal = ({
         includeCancel={true}
         closeOnAction={closeOnAction}
       >
-        <div className="form-container no-border">
+        <div className="form-container no-border no-top-margin">
           <div className="form-header">
             <h3>{!isEdit ? "Add Class to Session" : "Edit Class in Session"}</h3>
           </div>

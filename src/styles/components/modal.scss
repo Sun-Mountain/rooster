@@ -16,7 +16,8 @@
     border: $modal-border;
     border-radius: $border-radius;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    // margin: 25% 1rem 25% 0rem;
+    max-width: $md;
+    margin: 0 auto;
     padding: 1.5rem;
     max-height: 80vh;
     overflow-y: auto;
@@ -24,6 +25,11 @@
     &.danger {
       border-color: $barn-red;
       font-size: 1.15rem;
+    }
+
+    &.no-padding {
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
 
@@ -38,4 +44,10 @@
     justify-content: flex-end;
     gap: 1rem;
   }
+}
+
+.modal-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }

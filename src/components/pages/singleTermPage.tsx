@@ -45,7 +45,11 @@ export default function SingleTermPageContent() {
 
   return (
     <div className="admin-page-container">
-      <Breadcrumbs currentPageTitle={`Session: ${pageTitle}`} />
+      <Breadcrumbs links= {[
+        { name: "Admin", href: "/admin" },
+        { name: "Sessions", href: "/admin/sessions" },
+        { name: termData ? `Session: ${termData.name}` : "Session" },
+      ]} />
       <h1>{pageTitle}</h1>
       <div className="content-container two-column">
         <div>
@@ -78,7 +82,7 @@ export default function SingleTermPageContent() {
                 {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </>
             ) : (
-              <Button className="w-icon">
+              <Button className="w-icon medium">
                 {termData ? getStatusIcon(termData.status) : null}
                 {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </Button>
@@ -92,7 +96,10 @@ export default function SingleTermPageContent() {
         </div>
       </div>
       <div className="content-container admin-list">
-        <AdminClassDetailsByTerm termId={termId} />
+        <AdminClassDetailsByTerm
+          termId={termId}
+          termEnded={termData?.status === "ENDED"}
+        />
       </div>
     </div>
   )

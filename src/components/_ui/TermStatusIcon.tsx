@@ -13,6 +13,6 @@ export const getStatusIcon = (status: "LIVE" | "ENDED" | "DRAFT", endDate?: stri
       if (endDate && endDate < new Date().toISOString()) {
         return <Inventory />;
       }
-      return <Drafts />;
+      return <span className="draft"><Drafts /></span>;
   }
 };

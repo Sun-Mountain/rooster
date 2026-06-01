@@ -1,21 +1,23 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   TextField as TextFieldComponent,
   InputLabelProps,
+  InputAdornment,
 } from "@mui/material";
 
 interface TextFieldProps {
   label: string;
   name: string;
-  initialValue?: string;
+  initialValue?: string | number;
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: "text" | "password" | "email" | "number" | "date";
+  type?: "text" | "password" | "email" | "number" | "date" | "time";
   errorMsg?: string;
   shrink?: boolean;
+  slotAdornment?: React.ReactNode;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   InputLabelProps?: InputLabelProps;
 }
@@ -31,12 +33,9 @@ export const TextField = ({
   errorMsg,
   onChange,
   InputLabelProps,
+  slotAdornment,
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
-
-  useEffect(() => {
-    setDefaultValue(initialValue);
-  }, [initialValue]);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDefaultValue(event.target.value);
@@ -58,7 +57,16 @@ export const TextField = ({
         multiline={multiline}
         rows={rows}
         fullWidth
-        slotProps={{ inputLabel: InputLabelProps }}
+        slotProps={{
+          inputLabel: InputLabelProps,
+          input: {
+            startAdornment: slotAdornment ? (
+              <InputAdornment position="start">
+                {slotAdornment}
+              </InputAdornment>
+            ) : undefined,
+          },
+        }}
       />
     </div>
   );

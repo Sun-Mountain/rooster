@@ -9,7 +9,6 @@ import { ClassFormDataProps } from "@/lib/props";
 interface ClassFormProps {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isEditing?: boolean;
-  isModal?: boolean;
   formData?: ClassFormDataProps;
   setInitialFormData?: Dispatch<SetStateAction<ClassFormDataProps | null>>;
 }
@@ -17,7 +16,6 @@ interface ClassFormProps {
 export const ClassForm = ({
   setIsLoading,
   isEditing = false,
-  isModal = false,
   formData: initialFormData,
   setInitialFormData,
 }: ClassFormProps) => {

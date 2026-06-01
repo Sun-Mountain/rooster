@@ -11,7 +11,7 @@ export default function AdminClassList({ classList }: AdminClassListProps) {
   return (
     <ul className="admin-list">
       {classList.map((classItem: ClassProps) => (
-        <ClassListItem key={classItem.id} classId={classItem.id} name={classItem.name} />
+        <ClassListItem key={classItem.id} classId={classItem.id} name={classItem.name} noDescription={!classItem.description} />
       ))}
     </ul>
   )

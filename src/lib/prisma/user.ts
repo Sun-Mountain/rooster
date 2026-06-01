@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { User } from "@client";
+import { User, Prisma } from "@client";
 
 // DELETE
 
@@ -19,13 +19,6 @@ export const getAllUsers = async (): Promise<User[]> => {
 // Get user by a specified user id
 export const getUserById = async (id: string): Promise<User | null> => {
   return await db.user.findUnique({
-    where: { id },
-  });
-};
-
-// Delete a user from the database
-export const deleteUserById = async (id: string): Promise<User> => {
-  return await db.user.delete({
     where: { id },
   });
 };

@@ -9,7 +9,7 @@ export const fetchClassDetailsByTerm = async (
 ) => {
   try {
     setIsLoading(true);
-    const res = await fetch(`/api/admin/classDetails?termId=${termId}`);
+    const res = await fetch(`/api/admin/term/classDetails?termId=${termId}`);
     if (!res.ok) throw new Error("Failed to fetch class details.");
     const data = await res.json();
     setClassDetailsList(data);
@@ -17,5 +17,47 @@ export const fetchClassDetailsByTerm = async (
     setError(err instanceof Error ? err.message : "Failed to load class details");
   } finally {
     setIsLoading(false);
+  }
+}
+
+export const fetchSingleClassDetailById = async (
+  id: string,
+  setClassDetailData: Dispatch<SetStateAction<ClassDetailProps | null>>,
+  setIsLoading?: Dispatch<SetStateAction<boolean>>
+) => {
+  try {
+    setIsLoading?.(true);
+    const res = await fetch(`/api/admin/classDetails?id=${id}`);
+    if (!res.ok) throw new Error("Failed to fetch class detail.");
+    const data = await res.json();
+    setClassDetailData(data);
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Failed to fetch class detail");
+  } finally {
+    setIsLoading?.(false);
+  }
+}
+
+export const deleteClassDetail = async (id: string) => {
+  try {
+    const res = await fetch(`/api/admin/classDetails?id=${id}`, {
+      method: "DELETE"
+    });
+    if (!res.ok) throw new Error("Failed to delete class detail.");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Failed to delete class detail");
+  }
+}
+
+export const getClassDetailById = async (id: string): Promise<ClassDetailProps> => {
+  try {
+    const res = await fetch(`/api/admin/classDetails?id=${id}`);
+    if (!res.ok) throw new Error("Failed to fetch class detail.");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Failed to load class detail");
   }
 }

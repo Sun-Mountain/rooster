@@ -16,7 +16,7 @@ export const AdminDashLinks = () => {
         </Link>
       </li>
       <li>
-        <Link href="/admin/classes" className={isActive("/admin/class")}>
+        <Link href="/admin/classes" className={isActive("/admin/class/")}>
           Classes
         </Link>
       </li>

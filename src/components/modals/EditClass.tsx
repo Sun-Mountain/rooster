@@ -65,7 +65,6 @@ export const EditClassModal = ({
           <ClassForm
             setIsLoading={setSubmitting}
             isEditing={true}
-            isModal={true}
             formData={classData || undefined}
             setInitialFormData={setClassDataState}
           />

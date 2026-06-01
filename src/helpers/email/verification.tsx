@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendVerificationEmail(email: String){
+export async function sendVerificationEmail(email: string){
 	try {
  		const info = await transporter.sendMail({
 			from: '"No Reply" <no-reply@example.com>', // sender address

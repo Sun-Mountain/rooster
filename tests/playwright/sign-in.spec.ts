@@ -34,12 +34,12 @@ test.describe('Sign In', () => {
         });
     });
 
-    test.describe.skip('User Sign In', () => {
+    // test.describe.skip('User Sign In', () => {
         // TODO: Implement user sign in tests
-        test('successfully signs in with valid cookie', async ({ page }) => {
-        });
+        // test('successfully signs in with valid cookie', async ({ page }) => {
+        // });
 
-        test('cannot sign in with invalid cookie', async ({ page }) => {
-        });
-    });
+        // test('cannot sign in with invalid cookie', async ({ page }) => {
+        // });
+    // });
 });

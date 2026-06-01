@@ -7,7 +7,7 @@ import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById } from "@/lib/api/term";
 import { fetchSingleClassDetailById } from "@/lib/api/classDetails";
 import { DeleteItemModal } from "@/components/modals/DeleteItem";
-import { EditClassDetailsModal } from "@/components/modals/EditClassDetails";
+import { AddOrEditClassInSessionModal } from "@/components/modals/AddOrEditClassInSession";
 
 export default function AdminClassTermDetails() {
   const searchParams = useSearchParams()
@@ -16,6 +16,7 @@ export default function AdminClassTermDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [termData, setTermData] = useState<TermProps | null>(null);
   const [classData, setClassData] = useState<ClassDetailProps | null>(null);
+  // console.log("classData", classData)
 
   const classDetailsId = searchParams.get('id');
   const termId = pathname.split("/").filter(part => part)[2];
@@ -35,9 +36,12 @@ export default function AdminClassTermDetails() {
                 <div className="action-btns-container">
                   <div>
                     {termData && termData?.status !== "ENDED" && (
-                      <EditClassDetailsModal
-                        formData={classData as ClassDetailProps}
-                        // formData={{ ...termData, description: termData.description ?? undefined }}
+                      <AddOrEditClassInSessionModal
+                        termId={termId}
+                        setStartAction={setIsLoading}
+                        addingClass={isLoading}
+                        classData={classData as ClassDetailProps}
+                        isEdit={true}
                         // termId={termId}
                         // setTermData={setTermData as React.Dispatch<React.SetStateAction<TermProps>>}
                       />

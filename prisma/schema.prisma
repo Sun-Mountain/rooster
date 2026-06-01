@@ -52,17 +52,16 @@ model ClassTermDetails {
   capacity                Int
   termSpecificDescription String?
   // teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
-  classTermRoster         ClassTermRoster[]
+  classInstances        ClassInstance[]
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
-  // @@id([classId, termId])
   @@map("class_term_details")
 }
 
-model ClassTermRoster {
+model ClassInstance {
   id                  String   @id @default(cuid())
   classTermDetailsId  String
   dayOfTheWeek        String
@@ -74,7 +73,7 @@ model ClassTermRoster {
   updatedAt           DateTime         @updatedAt
 
   // @@unique([classTermDetailsId])
-  @@map("class_term_roster")
+  @@map("class_instance")
 }
 
 model RosterItem {

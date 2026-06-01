@@ -26,6 +26,11 @@
       border-color: $barn-red;
       font-size: 1.15rem;
     }
+
+    &.no-padding {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 
   .danger-modal {

@@ -1,17 +1,14 @@
 import db from "@/lib/prisma";
 import { ClassTermDetails, Prisma } from "../../../generated/prisma/client";
 
-export type ClassTermRosterCreateInput = Omit<
-  Prisma.ClassTermRosterCreateInput,
+export type ClassInstanceCreateInput = Omit<
+  Prisma.ClassInstanceCreateInput,
   "classTermDetailsId" | "classTermDetails"
 >
 export type ClassTermDetailWithRelations = ClassTermDetails & {
   classId: string;
   termId: string;
-  dayOfTheWeek: string;
-  startTime: string;
-  endTime: string;
-  classTermRoster?: ClassTermRosterCreateInput[]; // Optional, can be used for creating related roster entries
+  classInstances?: ClassInstanceCreateInput[]; // Optional, can be used for creating related roster entries
   className?: string; // Optional, can be used for display purposes
 };
 
@@ -27,21 +24,19 @@ export const createClassTermDetail = async (
           termSpecificDescription,
           classId,
           termId,
-          dayOfTheWeek,
-          startTime,
-          endTime
+          classInstances
         } = data;
 
   try {
-    const createClassTermRoster = (
-      classTermRosterData: ClassTermRosterCreateInput[]
+    const createClassInstances = (
+      classInstancesData: ClassInstanceCreateInput[]
     ) => {
-      const classTermRosterCreate = { create: classTermRosterData.map(roster => ({
-        dayOfTheWeek: roster.dayOfTheWeek,
-        startTime: roster.startTime,
-        endTime: roster.endTime,
+      const classInstancesCreate = { create: classInstancesData.map(instance => ({
+        dayOfTheWeek: instance.dayOfTheWeek,
+        startTime: instance.startTime,
+        endTime: instance.endTime,
       }))};
-      return classTermRosterCreate;
+      return classInstancesCreate;
     }
 
     const newClassTermDetail = await db.classTermDetails.create({
@@ -49,11 +44,7 @@ export const createClassTermDetail = async (
         price,
         capacity,
         termSpecificDescription,
-        classTermRoster: createClassTermRoster([{
-          dayOfTheWeek,
-          startTime,
-          endTime
-        }]),
+        classInstances: createClassInstances(classInstances || []),
         class: {
           connect: {
             id: classId,
@@ -66,15 +57,11 @@ export const createClassTermDetail = async (
         },
       },
       include: {
-        classTermRoster: true,
+        classInstances: true,
       },
     });
-
-    console.log("Created ClassTermDetail: ", newClassTermDetail);
-
     return newClassTermDetail;
   } catch (error) {
-    console.error("Error creating ClassTermDetail: ", error);
     throw new Error(error instanceof Error ? error.message : "Failed to create class term detail");
   }
 };
@@ -106,7 +93,7 @@ export const getClassTermDetailsBySession = async (termId: string): Promise<Clas
         select: {
           name: true
         }
-      },
+      }
     }
   });
 }
@@ -123,6 +110,7 @@ export const getClassTermDetailById = async (id: string): Promise<ClassTermDetai
           description: true,
         }
       },
+      classInstances: true,
     }
   });
 }
@@ -140,9 +128,6 @@ export const updateClassTermDetail = async (
           termSpecificDescription,
           classId,
           termId,
-          dayOfTheWeek,
-          startTime,
-          endTime
         } = data;
     const updatedClassTermDetail = await db.classTermDetails.update({
       where: { id },
@@ -154,7 +139,7 @@ export const updateClassTermDetail = async (
         term: termId ? { connect: { id: termId } } : undefined,
       },
       include: {
-        classTermRoster: true,
+        classInstances: true,
       },
     });
 

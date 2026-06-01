@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AddClassToSessionModal } from "@/components/modals/AddClassToSession";
+import { AddOrEditClassInSessionModal } from "@/components/modals/AddOrEditClassInSession";
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
 import { Delete } from "@mui/icons-material";
@@ -45,7 +45,11 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
     <>
       <div className="admin-list-header">
         <h2>Session Classes</h2>
-        {!termEnded && <AddClassToSessionModal termId={termId} setAddingClass={setAddingClass} addingClass={addingClass} />}
+        {!termEnded && <AddOrEditClassInSessionModal
+                          termId={termId}
+                          setStartAction={setAddingClass}
+                          addingClass={addingClass}
+                        />}
       </div>
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>

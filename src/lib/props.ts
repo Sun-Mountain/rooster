@@ -36,8 +36,14 @@ export interface ClassDetailProps {
   termSpecificDescription?: string;
   class: {
     name: string;
-  }
-  price: Float16Array;
+  };
+  classInstances: {
+    id: string;
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
+  price: number;
   capacity: number;
   dayOfTheWeek: string;
   startTime: string;

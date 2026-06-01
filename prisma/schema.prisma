@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -20,12 +21,12 @@ enum TermStatus {
 }
 
 model Class {
-  id                String   @id @default(cuid())
-  name              String
-  description       String?
-  classTermDetails  ClassTermDetails[]
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id               String             @id @default(cuid())
+  name             String
+  description      String?
+  classTermDetails ClassTermDetails[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 
   @@map("class")
 }
@@ -50,15 +51,15 @@ model ClassTermDetails {
 }
 
 model Term {
-  id          String   @id @default(cuid())
+  id          String             @id @default(cuid())
   name        String
   description String?
   startDate   DateTime
   endDate     DateTime
-  status      TermStatus @default(DRAFT)
+  status      TermStatus         @default(DRAFT)
   classes     ClassTermDetails[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 
   @@map("term")
 }
@@ -133,6 +134,7 @@ model Session {
 
   @@unique([token])
   @@map("session")
+  @@index([userId])
 }
 
 model Account {
@@ -152,6 +154,7 @@ model Account {
   updatedAt             DateTime  @updatedAt
 
   @@map("account")
+  @@index([userId])
 }
 
 model Verification {
@@ -163,34 +166,35 @@ model Verification {
   updatedAt  DateTime? @updatedAt
 
   @@map("verification")
+  @@index([identifier])
 }
 
 model TermSignUp {
-  id String @id @default(cuid())
+  id     String @id @default(cuid())
   termid String
   userid String
 }
 
 model TermTeacher {
-  id String @id @default(cuid())
-  termid String
-  classid String
+  id        String @id @default(cuid())
+  termid    String
+  classid   String
   teacherid String
 }
 
 model Equipment {
-  id String @id @default(cuid())
-  name String
+  id          String @id @default(cuid())
+  name        String
   description String
-  image String
-  location String
+  image       String
+  location    String
 }
 
 model EquipmentSignup {
-  id String @id @default(cuid())
-  equipmentid String
+  id           String @id @default(cuid())
+  equipmentid  String
   reservedTime String
-  userId String
-  termId String
-  notes String
+  userId       String
+  termId       String
+  notes        String
 }

@@ -26,7 +26,8 @@
     "pg": "^8.21.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "kysely": "^0.28.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

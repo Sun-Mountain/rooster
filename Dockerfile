@@ -18,8 +18,6 @@ RUN pnpm install
 # Copy the rest of the application code
 COPY . .
 
-RUN npx prisma generate
-
 # RUN pnpm build
 
 # Expose the port the app runs on
@@ -27,4 +25,4 @@ EXPOSE 3000
 
 # Command to run the application
 # CMD ["npm", "run", "dev"]
-CMD ["sh", "-c", "pnpm prisma migrate deploy && pnpm run dev"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && npx prisma generate && pnpm run dev"]

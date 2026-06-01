@@ -18,6 +18,8 @@ RUN pnpm install
 # Copy the rest of the application code
 COPY . .
 
+RUN npx prisma generate
+
 # RUN pnpm build
 
 # Expose the port the app runs on

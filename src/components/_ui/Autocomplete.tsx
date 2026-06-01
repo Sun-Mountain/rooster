@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Autocomplete as AutocompleteComponent, AutocompleteChangeDetails } from "@mui/material";
+import { useState } from "react";
+import { Autocomplete as AutocompleteComponent } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 interface AutoCompleteProps {

@@ -25,14 +25,12 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(userInfo, { status: 200 });
   } catch (error) {
-    console.error('Error fetching useruu info:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }
 
 // Create a new user and send a sign up verification email to the user based on the provided email addresss
 export async function POST(request: NextRequest) {
-  const url = new URL(request.url);
   const body = await request.json();
 
   try {
@@ -40,8 +38,7 @@ export async function POST(request: NextRequest) {
 	  sendVerificationEmail(newUser.email)
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
-    console.error('Error creating user:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }
 
@@ -59,7 +56,6 @@ export async function PUT(request: NextRequest) {
     const updatedUser = await updateUserById(userId, body);
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
-    console.error('Error updating user info:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }

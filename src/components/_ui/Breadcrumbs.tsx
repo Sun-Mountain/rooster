@@ -1,9 +1,8 @@
 "use client";
 
 import { Breadcrumbs as BreadcrumbUI } from "@mui/material";
-import Link from "next/dist/client/link";
 import { KeyboardDoubleArrowLeft as ArrowBack } from "@mui/icons-material";
-import { usePathname } from "next/navigation";
+import Link from "next/dist/client/link";
 
 interface BreadcrumbsProps {
   links?: { name: string; href?: string }[];

@@ -105,7 +105,7 @@ export const AddOrEditClassInSessionModal = ({
     setFormData(prev => prev ? { ...prev, [name]: value, className: selectedClass ? selectedClass.name : "" } : prev);
   };
 
-  const handleRosterChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInstanceChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => {
       if (!prev) return prev;
@@ -173,6 +173,12 @@ export const AddOrEditClassInSessionModal = ({
     } : prev);
   };
 
+  const handleRemoveDayTime = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    e.preventDefault();
+    const updatedInstances = formData.classInstances.filter((_, i) => i !== index);
+    setFormData(prev => prev ? { ...prev, classInstances: updatedInstances } : prev);
+  };
+
   return (
     <>
       <Modal
@@ -227,7 +233,8 @@ export const AddOrEditClassInSessionModal = ({
                     name="dayOfTheWeek"
                     initialValue={instance.dayOfTheWeek}
                     disabled={submitting}
-                    handleChange={(e) => handleRosterChange(index, e)}
+                    resetInitialValue={true}
+                    handleChange={(e) => handleInstanceChange(index, e)}
                   />
                   <div className="flex-fields-container">
                     <TextField
@@ -238,7 +245,8 @@ export const AddOrEditClassInSessionModal = ({
                         shrink: true, // Forces the label to move to the top
                       }}
                       initialValue={instance.startTime}
-                      onChange={(e) => handleRosterChange(index, e)}
+                      resetInitialValue={true}
+                      onChange={(e) => handleInstanceChange(index, e)}
                       disabled={submitting}
                     />
                     <TextField
@@ -249,7 +257,8 @@ export const AddOrEditClassInSessionModal = ({
                         shrink: true, // Forces the label to move to the top
                       }}
                       initialValue={instance.endTime}
-                      onChange={(e) => handleRosterChange(index, e)}
+                      resetInitialValue={true}
+                      onChange={(e) => handleInstanceChange(index, e)}
                       disabled={submitting}
                     />
                   </div>
@@ -258,13 +267,7 @@ export const AddOrEditClassInSessionModal = ({
                 <div className="remove-instance-btn">
                     <Button
                       className="danger small"
-                      handleClick={(e) => {
-                        e.preventDefault();
-                        setFormData(prev => prev ? {
-                          ...prev,
-                          classInstances: prev.classInstances.filter((_, i) => i !== index)
-                        } : prev);
-                      }}
+                      handleClick={(e) => handleRemoveDayTime(e, index)}
                     >
                       Remove
                     </Button>

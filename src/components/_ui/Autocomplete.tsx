@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Autocomplete as AutocompleteComponent } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
@@ -8,6 +10,7 @@ interface AutoCompleteProps {
   name: string;
   initialValue?: string;
   disabled?: boolean;
+  resetInitialValue?: boolean;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,10 +20,23 @@ export const Autocomplete = ({
   name,
   initialValue,
   disabled = false,
+  resetInitialValue = false,
   handleChange }: AutoCompleteProps) => {
   const [value, setValue] = useState<string>(initialValue || "");
   const [inputValue, setInputValue] = useState('');
 
+  useEffect(() => {
+    const setInitialValue = () => {
+      if (initialValue) {
+        const matchingOption = options.find(option => option.id === initialValue);
+        setValue(matchingOption ? matchingOption.name : "");
+      } else {
+        setValue("");
+      }
+    };
+
+    setInitialValue();
+  }, [initialValue, resetInitialValue, options]);
 
   return (
     <>

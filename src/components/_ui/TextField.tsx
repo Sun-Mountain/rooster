@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   TextField as TextFieldComponent,
   InputLabelProps,
@@ -18,6 +18,7 @@ interface TextFieldProps {
   errorMsg?: string;
   shrink?: boolean;
   slotAdornment?: React.ReactNode;
+  resetInitialValue?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   InputLabelProps?: InputLabelProps;
 }
@@ -34,6 +35,7 @@ export const TextField = ({
   onChange,
   InputLabelProps,
   slotAdornment,
+  resetInitialValue = false,
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
 
@@ -41,6 +43,18 @@ export const TextField = ({
     setDefaultValue(event.target.value);
     if (onChange) onChange(event);
   };
+
+  useEffect(() => {
+    const setInitialValue = () => {
+      if (initialValue) {
+        setDefaultValue(initialValue);
+      } else {
+        setDefaultValue("");
+      }
+    };
+
+    setInitialValue();
+  }, [initialValue, resetInitialValue]);
 
   return (
     <div className="text-field-container">

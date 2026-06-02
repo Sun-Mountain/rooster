@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AddOrEditClassInSessionModal } from "@/components/modals/AddOrEditClassInSession";
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
+import { Button } from "@/components/_ui/Button";
 
 import { ClassDetailNameList } from "@/components/ClassDetailNameList";
 
@@ -13,6 +14,7 @@ interface TermClassesProps {
 }
 
 export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps) => {
+  const [showSchedule, setShowSchedule] = useState(false);
   const [classDetailsList, setClassDetailsList] = useState<ClassDetailProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,15 +60,31 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
           </div>
         )}
       </div>
+      <div className="action-btns-container">
+        <Button
+          className="small invert"
+          onClick={() => setShowSchedule(prev => !prev)}
+        >
+          {!showSchedule ? "Show Class Schedule" : "Order by Class Name"}
+        </Button>
+      </div>
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>
       ) : (
-        <ClassDetailNameList
-          classDetailsList={classDetailsList}
-          termId={termId}
-          termEnded={termEnded}
-          setClassDetailsList={setClassDetailsList}
-         />
+        <>
+          {!showSchedule ? (
+            <ClassDetailNameList
+              classDetailsList={classDetailsList}
+              termId={termId}
+              termEnded={termEnded}
+              setClassDetailsList={setClassDetailsList}
+            />
+          ) : (
+            <>
+              Beep
+            </>
+          )}
+        </>
       )}
     </>
   )

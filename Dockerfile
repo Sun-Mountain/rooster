@@ -10,6 +10,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
 
 # Install dependencies
 RUN pnpm install
@@ -24,4 +25,4 @@ EXPOSE 3000
 
 # Command to run the application
 # CMD ["npm", "run", "dev"]
-CMD ["sh", "-c", "pnpm prisma migrate deploy && pnpm run dev"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && npx prisma generate && pnpm run dev"]

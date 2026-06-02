@@ -15,8 +15,8 @@
       padding: 1rem 1rem 1rem 0;
       align-items: center;
 
-      &:first-child {
-        max-width: 25rem;
+      &.link-container {
+        width: 11rem;
       }
 
       &:last-child {
@@ -61,6 +61,21 @@
   }
 }
 
+.class-instances {
+  color: $slate-gray;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 200px;
+
+  div {
+    padding: 0 !important;
+  }
+
+  div+div {
+    margin-top: 0.5rem;
+  }
+}
 
 .condensed {
   border-top: none;
@@ -139,18 +154,6 @@
 
     h2 {
       margin: 0;
-    }
-  }
-}
-
-@media screen and (min-width: calc($sm + 1px)){
-  .admin-list {
-    .list-item {
-      div {
-        &:first-child {
-          width: 45%;
-        }
-      }
     }
   }
 }

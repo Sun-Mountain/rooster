@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { AddOrEditClassInSessionModal } from "@/components/modals/AddOrEditClassInSession";
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
-import { Delete } from "@mui/icons-material";
-import { Button } from "@/components/_ui/Button";
+
+import { ClassDetailNameList } from "@/components/ClassDetailNameList";
 
 interface TermClassesProps {
   termId: string;
@@ -51,39 +51,22 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
                           classChange={addingClass}
                         />}
       </div>
+      <div>
+        {classDetailsList.length > 0 && (
+          <div>
+            There are {classDetailsList.length} {classDetailsList.length === 1 ? "class" : "classes"} in this session.
+          </div>
+        )}
+      </div>
       {classDetailsList.length === 0 ? (
         <p>No classes found for this session.</p>
       ) : (
-        <ul className="admin-list condensed">
-          {classDetailsList.map((detail) => (
-            <li key={detail.id} className="list-item">
-              <div>
-                <a href={`/admin/session/${termId}/class?id=${detail.id}`}>
-                  {detail.class.name}
-                </a>
-              </div>
-              <div>
-                {!termEnded && <Button className="w-icon small invert" onClick={() => {
-                  if (confirm("Are you sure you want to delete this class from the session? This action cannot be undone.")) {
-                    fetch(`/api/admin/classDetails?id=${detail.id}`, {
-                      method: "DELETE"
-                    })
-                      .then(res => {
-                        if (!res.ok) throw new Error("Failed to delete class detail.");
-                        return res.json();
-                      })
-                      .then(() => {
-                        setClassDetailsList(prev => prev.filter(cd => cd.id !== detail.id));
-                      })
-                      .catch(err => {
-                        alert(`Error deleting class detail: ${err instanceof Error ? err.message : "An unexpected error occurred"}`);
-                      });
-                  }
-                }}><Delete /></Button>}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ClassDetailNameList
+          classDetailsList={classDetailsList}
+          termId={termId}
+          termEnded={termEnded}
+          setClassDetailsList={setClassDetailsList}
+         />
       )}
     </>
   )

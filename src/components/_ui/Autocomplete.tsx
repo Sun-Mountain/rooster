@@ -35,7 +35,9 @@ export const Autocomplete = ({
       }
     };
 
-    setInitialValue();
+    if (resetInitialValue) {
+      setInitialValue();
+    }
   }, [initialValue, resetInitialValue, options]);
 
   return (

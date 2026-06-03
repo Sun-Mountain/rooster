@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 export async function sendNotificationEmail(users: Array<string>, subjectLine: string, emailText: string){
 	try {
 		for (const user of users) {
-			const userInfo = getUserById(user);
+			const userInfo = await getUserById(user);
 			if (!userInfo) {
 				console.log('No user ID found for user %s', user);
 				continue;

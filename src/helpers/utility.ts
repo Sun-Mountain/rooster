@@ -1,8 +1,8 @@
-import { getClassById } from "prisma/schema/termSignup"
+import { getTermSignUpDetailsByTermId } from "@/lib/prisma/termSignup"
 
 
 export function getTermRooster(classId: string) {
-  const termSignupInfo = getTermSignupByTermId(classId)
+  const termSignupInfo = getTermSignUpDetailsByTermId(classId)
 	
   return termSignupInfo
 }

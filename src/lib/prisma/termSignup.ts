@@ -7,10 +7,10 @@ import { TermSignUp, Prisma } from "../../../generated/prisma/client";
 
 // GET
 
-export const getTermSignUpDetailsByTermId = async (termId: string): Promise<ClassTermDetails[]> => {
+export const getTermSignUpDetailsByTermId = async (termid: string): Promise<TermSignUp[]> => {
   return await db.termSignUp.findMany({
     where: {
-      termId
+      termid
     }
   });
 }

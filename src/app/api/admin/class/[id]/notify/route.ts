@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
     if (!classInfo) {
       return NextResponse.json({ error: "Class not found" }, { status: 404 });
     }
-    const userIds = classInfo.students.map(student => student.userId);
-    sendNotificationEmail(userIds, subject, message);
+    // const userIds = classInfo.students.map(student => student.userId);
+    // sendNotificationEmail(userIds, subject, message);
 
   } catch (error) {
     return NextResponse.json({ error: "Failed to process notification" }, { status: 500 });

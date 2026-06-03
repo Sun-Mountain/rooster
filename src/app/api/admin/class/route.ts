@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newClass = await createClass({ name, description, time });
+    const newClass = await createClass({ name, description });
     return NextResponse.json(newClass, { status: 201 });
   } catch (error) {
     return NextResponse.json(

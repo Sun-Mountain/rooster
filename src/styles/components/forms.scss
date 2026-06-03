@@ -29,6 +29,10 @@
     }
   }
 
+  .non-field-container {
+    margin-bottom: 1rem;
+  }
+
   .text-field-container {
     margin-bottom: 1rem;
   }
@@ -44,6 +48,23 @@
     }
   }
 
+  .roster-entry {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .instance-fields {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .roster-entry+.roster-entry {
+    border-top: $basic-border-soft;
+    padding-top: 1rem;
+  }
+
   .flex-fields-container+.flex-fields-container {
     margin-top: 0;
   }
@@ -52,6 +73,10 @@
     border: none;
     box-shadow: none;
     padding: 0;
+  }
+
+  &.no-top-margin {
+    margin-top: 0;
   }
 }
 

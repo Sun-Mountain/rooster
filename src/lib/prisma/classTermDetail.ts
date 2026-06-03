@@ -12,6 +12,18 @@ export type ClassTermDetailWithRelations = ClassTermDetails & {
   className?: string; // Optional, can be used for display purposes
 };
 
+export type ClassTermGetBySession = {
+  id: string;
+  class: {
+    name: string;
+  };
+  classInstances: {
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
+};
+
 // POST
 
 export const createClassTermDetail = async (
@@ -78,22 +90,34 @@ export const deleteClassTermDetail = async (id: string): Promise<ClassTermDetail
 
 // GET
 
-export const getClassTermDetailsBySession = async (termId: string): Promise<ClassTermDetails[]> => {
-  return await db.classTermDetails.findMany({
+export const getClassTermDetailsBySession = async (termId: string): Promise<ClassTermGetBySession[]> => {
+  const classDetails = await db.classTermDetails.findMany({
     where: {
       termId
     },
-    orderBy: {
-      createdAt: "desc"
-    },
-    include: {
+    select: {
+      id: true,
       class: {
         select: {
-          name: true
+          name: true,
         }
+      },
+      classInstances: {
+        select: {
+          dayOfTheWeek: true,
+          startTime: true,
+          endTime: true,
+        }
+      }
+    },
+    orderBy: {
+      class: {
+        name: "asc",
       }
     }
   });
+
+  return classDetails;
 }
 
 export const getClassTermDetailById = async (id: string): Promise<ClassTermDetails | null> => {

@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { createClass, getClassById } from "@/lib/prisma/class";
+import { createClass, deleteClass, getClassById } from "@/lib/prisma/class";
 
 export async function GET(
   request: NextRequest
@@ -46,3 +46,31 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(
+  request: NextRequest
+) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    const classData = await getClassById(id);
+
+    if (!classData) {
+      return NextResponse.json({ error: "Class not found" }, { status: 404 });
+    }
+
+    await deleteClass(id);
+
+    return NextResponse.json({ message: "Class deleted successfully" }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Internal Server Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}` },
+      { status: 500 },
+    );
+  }
+};

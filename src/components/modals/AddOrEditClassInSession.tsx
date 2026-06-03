@@ -7,6 +7,7 @@ import { Button } from "@/components/_ui/Button";
 import { Modal } from "@/components/_ui/Modal";
 import { TextField } from "@/components/_ui/TextField";
 import { Autocomplete } from "@/components/_ui/Autocomplete";
+import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 
 interface AddClassToSessionModalProps {
   termId: string;
@@ -27,7 +28,7 @@ export const AddOrEditClassInSessionModal = ({
 }: AddClassToSessionModalProps) => {
   const [classOptions, setClassOptions] = useState<{ id: string; name: string }[]>([]);
   const [closeOnAction, setCloseOnAction] = useState(false);
-  const [errors, setErrors] = useState<string | null>(null);
+  const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     classId: "",
@@ -57,7 +58,7 @@ export const AddOrEditClassInSessionModal = ({
         const data = await response.json();
         setClassOptions(data);
       } catch (error) {
-        setErrors(`Failed to fetch class options: ${error instanceof Error ? error.message : "An unexpected error occurred"}`);
+        setAlertMsg({ message: `Failed to fetch class options: ${error instanceof Error ? error.message : "An unexpected error occurred"}`, type: 'error' });
       }
     };
 
@@ -104,7 +105,7 @@ export const AddOrEditClassInSessionModal = ({
     setFormData(prev => prev ? { ...prev, [name]: value, className: selectedClass ? selectedClass.name : "" } : prev);
   };
 
-  const handleRosterChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInstanceChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => {
       if (!prev) return prev;
@@ -158,10 +159,24 @@ export const AddOrEditClassInSessionModal = ({
       }
       resetCloseOnAction();
     } catch (err) {
-      setErrors(`Failed to ${!isEdit ? "add" : "update"} class in session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`);
+      setAlertMsg({ message: `Failed to ${!isEdit ? "add" : "update"} class in session: ${err instanceof Error ? err.message : "An unexpected error occurred"}`, type: 'error' });
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleAddAnotherDayTime = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFormData(prev => prev ? {
+      ...prev,
+      classInstances: [...prev.classInstances, { dayOfTheWeek: "", startTime: "", endTime: "" }]
+    } : prev);
+  };
+
+  const handleRemoveDayTime = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    e.preventDefault();
+    const updatedInstances = formData.classInstances.filter((_, i) => i !== index);
+    setFormData(prev => prev ? { ...prev, classInstances: updatedInstances } : prev);
   };
 
   return (
@@ -175,7 +190,10 @@ export const AddOrEditClassInSessionModal = ({
         includeCancel={true}
         closeOnAction={closeOnAction}
       >
-        <div className="form-container no-border">
+        <div className="form-container no-border no-top-margin">
+          <div className="form-header">
+            <h3>{!isEdit ? "Add Class to Session" : "Edit Class in Session"}</h3>
+          </div>
           <form>
             <Autocomplete
               options={classOptions}
@@ -208,40 +226,62 @@ export const AddOrEditClassInSessionModal = ({
             </div>
             {formData.classInstances.map((instance, index) => (
               <div key={index} className="roster-entry">
-                <Autocomplete
-                  options={daysOfTheWeek()}
-                  label="Day of the Week"
-                  name="dayOfTheWeek"
-                  initialValue={instance.dayOfTheWeek}
-                  disabled={submitting}
-                  handleChange={(e) => handleRosterChange(index, e)}
-                />
-                <div className="flex-fields-container">
-                  <TextField
-                    label="Start Time"
-                    name="startTime"
-                    type="time"
-                    InputLabelProps={{
-                      shrink: true, // Forces the label to move to the top
-                    }}
-                    initialValue={instance.startTime}
-                    onChange={(e) => handleRosterChange(index, e)}
+                <div className="instance-fields">
+                  <Autocomplete
+                    options={daysOfTheWeek()}
+                    label="Day of the Week"
+                    name="dayOfTheWeek"
+                    initialValue={instance.dayOfTheWeek}
                     disabled={submitting}
+                    resetInitialValue={true}
+                    handleChange={(e) => handleInstanceChange(index, e)}
                   />
-                  <TextField
-                    label="End Time"
-                    name="endTime"
-                    type="time"
-                    InputLabelProps={{
-                      shrink: true, // Forces the label to move to the top
-                    }}
-                    initialValue={instance.endTime}
-                    onChange={(e) => handleRosterChange(index, e)}
-                    disabled={submitting}
-                  />
+                  <div className="flex-fields-container">
+                    <TextField
+                      label="Start Time"
+                      name="startTime"
+                      type="time"
+                      InputLabelProps={{
+                        shrink: true, // Forces the label to move to the top
+                      }}
+                      initialValue={instance.startTime}
+                      resetInitialValue={true}
+                      onChange={(e) => handleInstanceChange(index, e)}
+                      disabled={submitting}
+                    />
+                    <TextField
+                      label="End Time"
+                      name="endTime"
+                      type="time"
+                      InputLabelProps={{
+                        shrink: true, // Forces the label to move to the top
+                      }}
+                      initialValue={instance.endTime}
+                      resetInitialValue={true}
+                      onChange={(e) => handleInstanceChange(index, e)}
+                      disabled={submitting}
+                    />
+                  </div>
                 </div>
+                  {formData.classInstances.length > 1 && (
+                <div className="remove-instance-btn">
+                    <Button
+                      className="danger small"
+                      handleClick={(e) => handleRemoveDayTime(e, index)}
+                    >
+                      Remove
+                    </Button>
+                </div>
+                  )}
               </div>
             ))}
+            <div className="non-field-container">
+              <Button
+                handleClick={handleAddAnotherDayTime}
+              >
+                {formData.classInstances.length < 7 ? "Add Another Day / Time" : "Max Days Added"}
+              </Button>
+            </div>
             <TextField
               label="Additional Notes"
               name="termSpecificDescription"

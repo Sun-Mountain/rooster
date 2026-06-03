@@ -43,6 +43,9 @@ export const getClassNamesAndIds = async (): Promise<{ id: string; name: string 
     select: {
       id: true,
       name: true
+    },
+    orderBy: {
+      name: "asc"
     }
   });
   return classes.map(c => ({ id: c.id, name: c.name }));

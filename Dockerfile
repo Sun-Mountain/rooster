@@ -25,5 +25,4 @@ EXPOSE 3000
 
 # Command to run the application
 # CMD ["npm", "run", "dev"]
-# CMD ["sh", "-c", "pnpm prisma migrate deploy && npx prisma generate && pnpm run dev"]
-CMD ["sh", "-c", "pnpm prisma migrate deploy && npx prisma generate && pnpm start"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && npx prisma generate && pnpm run dev"]

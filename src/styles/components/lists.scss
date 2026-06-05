@@ -111,6 +111,16 @@
   }
 }
 
+.schedule-day-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h3 {
+    margin: 1.75rem 1rem 1rem 1rem;
+  }
+}
+
 @media screen and (max-width: $sm) {
   .admin-list {
     padding: 1rem 0;

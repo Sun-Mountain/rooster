@@ -32,9 +32,9 @@ export const ClassDetailSchedule = ({
   }, {} as Record<string, typeof classSchedule>);
 
   return (
-    <div>
+    <div className="class-schedule">
       {Object.entries(groupedByDay).map(([day, schedules]) => (
-        <div key={day}>
+        <div key={day} className="schedule-day-group">
           <h3>{day}</h3>
           {schedules.map((schedule, idx) => (
             <div key={idx}>

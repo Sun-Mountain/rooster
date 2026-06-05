@@ -48,7 +48,7 @@ export const AddOrEditClassInSessionModal = ({
     setTimeout(() => {
       setCloseOnAction(false);
       setStartAction(!classChange);
-    }, 500);
+    }, 1000);
   }
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const AddOrEditClassInSessionModal = ({
   }, [isEdit, classData, termId]);
 
   function daysOfTheWeek(): { id: string; name: string }[] {
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => ({ id: day, name: day }));
+    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(day => ({ id: day, name: day }));
   }
 
   const handleChange=(e: React.ChangeEvent<HTMLInputElement>) => {

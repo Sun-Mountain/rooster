@@ -16,7 +16,8 @@
       align-items: center;
 
       &.link-container {
-        width: 11rem;
+        min-width: 10rem;
+        max-width: 13rem;
       }
 
       &:last-child {

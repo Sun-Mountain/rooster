@@ -40,7 +40,7 @@ export const MainNavLinks = ({ user, inDrawer = false }: MainNavLinksProps) => {
         <>
           {user.role === 'ADMIN' || user.role === 'SUPER' && (
             <li>
-              <Link href="/admin" className={`nav-link ${pathname === "/admin" ? "active" : ""}`}>
+              <Link href="/admin" className={`nav-link ${pathname.includes("/admin") ? "active" : ""}`}>
                 Admin Panel
               </Link>
             </li>

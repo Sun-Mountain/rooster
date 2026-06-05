@@ -5,8 +5,8 @@ import { AddOrEditClassInSessionModal } from "@/components/modals/AddOrEditClass
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
 import { Button } from "@/components/_ui/Button";
-
 import { ClassDetailNameList } from "@/components/ClassDetailNameList";
+import { ClassDetailSchedule } from "@/components/ClassDetailSchedule";
 
 interface TermClassesProps {
   termId: string;
@@ -19,6 +19,16 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addingClass, setAddingClass] = useState(false);
+
+  const consolidatedSchedule = classDetailsList.flatMap(detail =>
+    detail.classInstances.map(instance => ({
+      id: detail.id,
+      className: detail.class.name,
+      dayOfTheWeek: instance.dayOfTheWeek,
+      startTime: instance.startTime,
+      endTime: instance.endTime,
+    }))
+  );
 
   useEffect(() => {
     const fetchClassDetails = async () => {
@@ -56,7 +66,7 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
       <div>
         {classDetailsList.length > 0 && (
           <div>
-            There are {classDetailsList.length} {classDetailsList.length === 1 ? "class" : "classes"} in this session.
+            There are {consolidatedSchedule.length} {consolidatedSchedule.length === 1 ? "class" : "classes"} in this session.
           </div>
         )}
       </div>
@@ -81,7 +91,7 @@ export const AdminClassDetailsByTerm = ({ termId, termEnded }: TermClassesProps)
             />
           ) : (
             <>
-              Beep
+              <ClassDetailSchedule classSchedule={consolidatedSchedule} />
             </>
           )}
         </>

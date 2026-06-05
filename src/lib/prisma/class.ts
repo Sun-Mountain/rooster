@@ -25,7 +25,7 @@ export const deleteClass = async (id: string): Promise<Class> => {
 export const getAllClasses = async (): Promise<Class[]> => {
   return await db.class.findMany({
     orderBy: {
-      createdAt: "desc"
+      name: "asc"
     }
   });
 }

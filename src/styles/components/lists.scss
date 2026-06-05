@@ -16,7 +16,8 @@
       align-items: center;
 
       &.link-container {
-        width: 11rem;
+        min-width: 10rem;
+        max-width: 13rem;
       }
 
       &:last-child {
@@ -107,6 +108,16 @@
 
   h2 {
     margin: 0;
+  }
+}
+
+.schedule-day-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h3 {
+    margin: 1.75rem 1rem 1rem 1rem;
   }
 }
 

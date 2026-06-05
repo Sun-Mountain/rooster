@@ -52,7 +52,7 @@ model ClassTermDetails {
   capacity                Int
   termSpecificDescription String?
   // teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
-  classInstances        ClassInstance[]
+  classInstances          ClassInstance[]
   class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
   term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
   createdAt               DateTime @default(now())

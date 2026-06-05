@@ -63,6 +63,11 @@ export default function AdminClassTermDetails() {
         <div>
           Capacity: {classData?.capacity}<br /><br />
           Price: ${classData?.price}<br /><br />
+          {classData?.classInstances.map((instance) => (
+            <div key={instance.id}>
+              {instance.dayOfTheWeek}: {instance.startTime} - {instance.endTime}
+            </div>
+          ))}
         </div>
       </div>
     </div>

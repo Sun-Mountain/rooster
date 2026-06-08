@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
 import { usePathname } from "next/navigation";
+import { TermStatus } from "@client";
 import { Breadcrumbs } from "@/components/_ui/Breadcrumbs";
 import { fetchSingleTermById, updateTermStatusById } from "@/lib/api/term";
 import { dateFormat } from "@/helpers/dateFormatting";
@@ -20,6 +21,7 @@ export default function SingleTermPageContent() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [termData, setTermData] = useState<TermProps | null>(null);
+  const [termStatus, setTermStatus] = useState<TermStatus | undefined>(termData?.status);
 
   useEffect(() => {
     if (isLoading && termId) fetchSingleTermById(termId, setTermData, setIsLoading);
@@ -33,6 +35,23 @@ export default function SingleTermPageContent() {
   }, [termData, termId]);
 
   const pageTitle = isLoading ? "Loading..." : termData ? termData.name : "Single Term Page";
+
+  const updateTermStatus = () => {
+    if (!termData) return;
+
+    if (termData.status === "ENDED") return;
+
+    let newStatus: "LIVE" | "DRAFT"
+
+    if (termData.status === "DRAFT") {
+      newStatus = "LIVE";
+    } else {
+      newStatus = "DRAFT";
+    }
+
+    updateTermStatusById(termId, newStatus);
+    setTermStatus(newStatus)
+  }
 
   if (isLoading) {
     return (
@@ -82,9 +101,12 @@ export default function SingleTermPageContent() {
                 {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </>
             ) : (
-              <Button className="w-icon medium">
-                {termData ? getStatusIcon(termData.status) : null}
-                {termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
+              <Button
+                className="w-icon medium"
+                onClick={updateTermStatus}
+              >
+                {termStatus ? getStatusIcon(termStatus) : getStatusIcon(termData?.status || "DRAFT")}
+                {termStatus ? termStatus.slice(0,1) + termStatus.slice(1).toLowerCase() : termData ? termData.status.slice(0,1) + termData.status.slice(1).toLowerCase() : ""}
               </Button>
             )}
           </div>

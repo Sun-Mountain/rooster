@@ -19,20 +19,32 @@ export const MainNavLinks = ({ user, inDrawer = false }: MainNavLinksProps) => {
     };
   }
 
+  const linkClass = (path: string, exact: boolean = false) => {
+    if (inDrawer) {
+      return "nav-link";
+    }
+
+    if (exact ? pathname === path : pathname.includes(path)) {
+      return "nav-link active";
+    }
+
+    return "nav-link";
+  }
+
   return (
     <ul className="nav-links">
       <li>
-        <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`}>
+        <Link href="/" className={linkClass("/", true)}>
           Home
         </Link>
       </li>
       <li>
-        <Link href="/classes" className={`nav-link ${pathname === "/classes" ? "active" : ""}`}>
+        <Link href="/classes" className={linkClass("/classes", false)}>
           Classes
         </Link>
       </li>
       <li>
-        <Link href="/about" className={`nav-link ${pathname === "/About" ? "active" : ""}`}>
+        <Link href="/about" className={linkClass("/about", true)}>
           About Us
         </Link>
       </li>
@@ -40,13 +52,13 @@ export const MainNavLinks = ({ user, inDrawer = false }: MainNavLinksProps) => {
         <>
           {user.role === 'ADMIN' || user.role === 'SUPER' && (
             <li>
-              <Link href="/admin" className={`nav-link ${pathname.includes("/admin") ? "active" : ""}`}>
+              <Link href="/admin" className={linkClass("/admin", false)}>
                 Admin Panel
               </Link>
             </li>
           )}
           <li>
-            <Link href="/profile" className={`nav-link avatar-link ${pathname === "/profile" ? "active" : ""}`}>
+            <Link href="/profile" className={linkClass("/profile", true) + " avatar-link"}>
               {inDrawer ? 'Profile' : (
                 <Avatar alt={user.name || ''} src={user.image || ''} {...stringAvatar(user.name || '')} />
               )}

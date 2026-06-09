@@ -31,6 +31,10 @@
       padding-top: 0;
       padding-bottom: 0;
     }
+
+    &.modal-sm {
+      max-width: 500px;
+    }
   }
 
   .danger-modal {

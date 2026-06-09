@@ -58,6 +58,12 @@
       .draft {
         color: $soft-text-color;
       }
+
+      &.live {
+        svg {
+          fill: $pistachio;
+        }
+      }
     }
   }
 }

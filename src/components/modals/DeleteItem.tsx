@@ -10,15 +10,15 @@ import { Alert, AlertMsgProps } from "@/components/_ui/Alert";
 interface DeleteItemModalProps {
   itemId: string;
   type: "user" | "term" | "class" | "classDetails";
-  name?: string;
   modalBtnSize?: "small" | "medium" | "large";
+  name?: string;
 }
 
 export const DeleteItemModal = ({
   itemId,
   type,
-  name,
   modalBtnSize = "medium",
+  name,
 }: DeleteItemModalProps) => {
   const [alertMsg, setAlertMsg] = useState<AlertMsgProps | null>(null);
   const router = useRouter();

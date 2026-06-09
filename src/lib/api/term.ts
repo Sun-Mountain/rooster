@@ -51,6 +51,22 @@ export const createNewTerm = async (
   }
 }
 
+export const fetchLiveTerms = async (
+  setTermList: Dispatch<SetStateAction<TermProps[]>>,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+) => {
+  try {
+    const res = await fetch("/api/admin/terms/live");
+    if (!res.ok) throw new Error("Failed to fetch live sessions.")
+    const data = await res.json();
+    setTermList(data)
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : "Failed to load live sessions");
+  } finally {
+    setIsLoading(false);
+  }
+}
+
 export const fetchSingleTermById = async (
   termId: string,
   setTermData: Dispatch<SetStateAction<TermProps | null>>,

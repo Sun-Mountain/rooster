@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 interface ClassDetailScheduleProps {
   classSchedule: {
     id: string;
@@ -15,8 +13,6 @@ interface ClassDetailScheduleProps {
 export const ClassDetailSchedule = ({
   classSchedule
 }: ClassDetailScheduleProps) => {
-
-  // const dayOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const sortedByTime = classSchedule.reduce((acc, schedule) => {
     if (!acc[schedule.dayOfTheWeek]) {

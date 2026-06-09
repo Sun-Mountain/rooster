@@ -26,6 +26,10 @@
   }
 }
 
+.page-content {
+  padding: 1rem;
+}
+
 @media screen and (max-width: $sm) {
   .admin-page-container {
     .content-container {

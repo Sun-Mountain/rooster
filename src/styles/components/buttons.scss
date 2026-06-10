@@ -85,6 +85,14 @@ button {
     &:hover {
       color: $african-violet;
     }
+
+    &.w-border {
+      border: 1px solid $primary-btn;
+
+      &:hover {
+        border-color: $african-violet;
+      }
+    }
   }
 
   &.danger {

@@ -9,7 +9,15 @@ interface TabsProps {
   tabs: {
     label: ReactNode;
     name: string;
+    tabContent: {
+      children: ReactNode;
+    };
   }[];
+}
+interface TabPanelProps {
+  children?: ReactNode;
+  index: number;
+  value: number;
 }
 
 function a11yProps(name: string) {
@@ -18,6 +26,22 @@ function a11yProps(name: string) {
     id: `${index}-tab`,
     'aria-controls': `${index}-tabpanel`,
   };
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <>{children}</>}
+    </div>
+  );
 }
 
 export const Tabs = ({ tabs }: TabsProps) => {
@@ -29,7 +53,13 @@ export const Tabs = ({ tabs }: TabsProps) => {
 
   return (
     <>
-      <TabUI value={activeTab} onChange={handleTabChange} className="tabs-container">
+      <TabUI
+        className="tabs-container"
+        onChange={handleTabChange}
+        value={activeTab}
+        variant="scrollable"
+        scrollButtons="auto"
+      >
         {tabs.map((tab, index) => (
           <Tab
             key={index}
@@ -37,6 +67,11 @@ export const Tabs = ({ tabs }: TabsProps) => {
             className="tab-label" {...a11yProps(tab.name)} />
         ))}
       </TabUI>
+      {tabs.map((tab, index) => (
+        <TabPanel key={index} value={activeTab} index={index}>
+          {tab.tabContent.children}
+        </TabPanel>
+      ))}
     </>
   );
 }

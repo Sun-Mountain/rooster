@@ -38,8 +38,26 @@
       }
     }
   }
+
+  button + button {
+    margin-left: 1rem;
+  }
 }
 
 .MuiTabs-indicator {
   background-color: $seasalt !important;
+}
+
+.tab-panel-content-container {
+  padding: 1rem;
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .toggle-btns-container {
+    display: flex;
+    gap: 0.5rem;
+  }
 }

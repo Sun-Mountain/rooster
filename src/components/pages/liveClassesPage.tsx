@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { fetchLiveTerms } from "@/lib/api/term";
 import { TermProps } from "@/lib/props";
-import { ClassDetailSchedule } from "../ClassDetailSchedule";
 import { Tabs } from "@/components/_ui/Tabs";
+import { ClassTabPanelContent } from "@/components/ClassTabPanelContent";
 
 export default function LiveClassesPage() {
   const [liveTerms, setLiveTerms] = useState<TermProps[]>([]);
@@ -59,6 +59,14 @@ export default function LiveClassesPage() {
             tabs={liveTerms.map((term, index) => ({
               label: currentTerm(term.name, term.startDate, term.endDate, index),
               name: term.name,
+              tabContent: {
+                children: <ClassTabPanelContent
+                            termId={term.id}
+                            startDate={term.startDate}
+                            endDate={term.endDate}
+                            currentSession={new Date(term.startDate) <= new Date() && new Date(term.endDate) >= new Date()}
+                          />
+              }
             }))}
           />
         </>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchLiveTerms } from "@/lib/api/term";
 import { TermProps } from "@/lib/props";
 import { ClassDetailSchedule } from "../ClassDetailSchedule";
+import { Tabs } from "@/components/_ui/Tabs";
 
 export default function LiveClassesPage() {
   const [liveTerms, setLiveTerms] = useState<TermProps[]>([]);
@@ -15,8 +16,6 @@ export default function LiveClassesPage() {
     }
   }, [isLoading]);
 
-  console.log("Live Terms:", liveTerms);
-
   if (isLoading) {
     return (
       <div className="page-content">
@@ -26,6 +25,29 @@ export default function LiveClassesPage() {
     );
   }
 
+  const currentTerm = (
+    name: string,
+    startDate: string,
+    endDate: string,
+    index: number
+  ) => {
+    if (index > 1) {
+      return (<>{name}</>);
+    }
+
+    return (
+      <>
+        {name}<br />
+        {new Date(startDate) <= new Date() && new Date(endDate) >= new Date() && (
+          <span>(Current Session)</span>
+        )}
+        {new Date(startDate) > new Date() && (
+          <span>(Upcoming Session)</span>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="page-content">
       <h1>Classes</h1>
@@ -33,7 +55,12 @@ export default function LiveClassesPage() {
         <p>No live classes available at the moment.</p>
       ) : (
         <>
-          Yay! We have live classes! {/* You can replace this with a more detailed rendering of the live terms */}
+          <Tabs
+            tabs={liveTerms.map((term, index) => ({
+              label: currentTerm(term.name, term.startDate, term.endDate, index),
+              name: term.name,
+            }))}
+          />
         </>
       )}
     </div>

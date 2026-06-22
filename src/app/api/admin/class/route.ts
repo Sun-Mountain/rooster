@@ -29,7 +29,7 @@ export async function GET(
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, description } = await request.json();
+    const { name, description, time } = await request.json();
     if (!name) {
       return NextResponse.json(
         { error: "Name is required" },

@@ -7,4 +7,8 @@ const nextConfig: NextConfig = {
   },
 };
 
+module.exports = {
+  allowedDevOrigins: ['rooster-production.up.railway.app'],
+}
+
 export default nextConfig;

@@ -98,7 +98,6 @@
       padding: 0 !important;
     }
   }
-
 }
 
 .admin-list-header {
@@ -120,6 +119,32 @@
 
   h3 {
     margin: 1.75rem 1rem 1rem 1rem;
+  }
+}
+
+.class-name-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+
+  .class-name-item {
+    align-items: center;
+    border: $basic-border;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+
+    .class-name {
+      font-weight: 500;
+    }
+
+    .class-time {
+      color: $slate-gray;
+      font-size: 0.875rem;
+    }
   }
 }
 

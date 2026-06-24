@@ -7,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { fetchClassDetailsByTerm } from "@/lib/api/classDetails";
 import { ClassDetailProps } from "@/lib/props";
 import { ClassDetailSchedule } from "@/components/ClassDetailSchedule";
+import { PublicClassNameList } from "@/components/PublicClassNameList";
 
 interface ClassTabPanelContentProps {
   termId: string;
@@ -90,8 +91,10 @@ export const ClassTabPanelContent = ({
         </div>
       </div>
       <div className="panel-content">
-        {viewMode === "grid" && <div>Grid View Content for term {termId}</div>}
-        {viewMode === "list" && <div>List View Content for term {termId}</div>}
+        {(viewMode === "list" || viewMode === "grid") && <PublicClassNameList
+                                  classSchedule={consolidatedSchedule}
+                                  gridView={viewMode === "grid"}
+                                />}
         {viewMode === "schedule" && <ClassDetailSchedule classSchedule={consolidatedSchedule} />}
       </div>
     </div>

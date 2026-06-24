@@ -67,3 +67,13 @@ export interface UserProps {
   otherPronouns?: string;
   image?: string;
 }
+
+export interface ClassDetailScheduleProps {
+  classSchedule: {
+    id: string;
+    className: string;
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
+}

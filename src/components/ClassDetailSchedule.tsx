@@ -1,14 +1,6 @@
 "use client";
 
-interface ClassDetailScheduleProps {
-  classSchedule: {
-    id: string;
-    className: string;
-    dayOfTheWeek: string;
-    startTime: string;
-    endTime: string;
-  }[];
-}
+import { ClassDetailScheduleProps } from "@/lib/props";
 
 export const ClassDetailSchedule = ({
   classSchedule

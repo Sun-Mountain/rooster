@@ -3,6 +3,9 @@ import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
 type UpdateTermWithoutStatus = Omit<Prisma.TermUpdateInput, "status">;
 
+type FetchTermsResponse = Omit<
+  Term, "createdAt" | "updatedAt" | "description" >;
+
 // POST
 
 export const createTerm = async (
@@ -30,6 +33,24 @@ export const getAllTerms = async (): Promise<Term[]> => {
     orderBy: [
       { startDate: "desc" },
       { createdAt: "desc" },
+    ],
+  });
+};
+
+export const getLiveTerms = async (): Promise<Omit<Term, "createdAt" | "updatedAt" | "description">[]> => {
+  return await db.term.findMany({
+    where: {
+      status: "LIVE",
+    },
+    select: {
+      id: true,
+      name: true,
+      startDate: true,
+      endDate: true,
+      status: true,
+    },
+    orderBy: [
+      { startDate: "asc" }
     ],
   });
 };

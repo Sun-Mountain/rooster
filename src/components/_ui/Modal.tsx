@@ -7,54 +7,56 @@ interface ModalProps {
   children: ReactNode;
   modalBtnContent: ReactNode;
   btnAction?: ReactNode;
-  modalBtnClassName?: string;
-  includeCancel?: boolean;
-  open?: boolean;
-  danger?: boolean;
+  className?: string;
   closeOnAction?: boolean;
+  danger?: boolean;
+  includeCancel?: boolean;
+  modalBtnClassName?: string;
+  open?: boolean;
 }
 
 export const Modal =({
   children,
   modalBtnContent,
   btnAction,
-  modalBtnClassName,
-  includeCancel = false,
+  closeOnAction = false,
+  className = "",
   danger = false,
-  closeOnAction = false
+  includeCancel = false,
+  modalBtnClassName,
 }: ModalProps) => {
-  const [open, setOpen] = useState(false);
+        const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+        const handleOpen = () => {
+          setOpen(true);
+        };
 
-  const handleClose = () => {
-    setOpen(false)
-  };
+        const handleClose = () => {
+          setOpen(false)
+        };
 
-  useEffect(() => {
-    if (closeOnAction && open) {
-      const timer = setTimeout(() => setOpen(false), 0);
-      return () => clearTimeout(timer);
-    }
-  }, [closeOnAction, open]);
+        useEffect(() => {
+          if (closeOnAction && open) {
+            const timer = setTimeout(() => setOpen(false), 0);
+            return () => clearTimeout(timer);
+          }
+        }, [closeOnAction, open]);
 
-  return (
-    <div>
-      <Button onClick={handleOpen} className={modalBtnClassName}>
-        <>
-          {modalBtnContent}
-        </>
-      </Button>
-      <ModalComponent
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div className="modal-container">
-          <div className={`modal-content-container${danger ? ' danger' : ''}`}>
+        return (
+          <div>
+            <Button onClick={handleOpen} className={modalBtnClassName}>
+              <>
+                {modalBtnContent}
+              </>
+            </Button>
+            <ModalComponent
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <div className="modal-container">
+                <div className={`modal-content-container${danger ? ' danger' : ''}${className ? ` ${className}` : ''}`}>
             <div>
               {children}
             </div>

@@ -85,6 +85,14 @@ button {
     &:hover {
       color: $african-violet;
     }
+
+    &.w-border {
+      border: 1px solid $primary-btn;
+
+      &:hover {
+        border-color: $african-violet;
+      }
+    }
   }
 
   &.danger {
@@ -96,6 +104,18 @@ button {
     &:hover {
       background-color: $primary-btn-text;
       color: $danger-btn;
+    }
+  }
+
+  &.success {
+    background-color: $success-btn;
+    border: 1px solid $success-btn;
+    color: $primary-btn-text;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $primary-btn-text;
+      color: $success-btn;
     }
   }
 }

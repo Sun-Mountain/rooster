@@ -1,22 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-interface ClassDetailScheduleProps {
-  classSchedule: {
-    id: string;
-    className: string;
-    dayOfTheWeek: string;
-    startTime: string;
-    endTime: string;
-  }[];
-}
+import { ClassDetailScheduleProps } from "@/lib/props";
 
 export const ClassDetailSchedule = ({
   classSchedule
 }: ClassDetailScheduleProps) => {
-
-  // const dayOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const sortedByTime = classSchedule.reduce((acc, schedule) => {
     if (!acc[schedule.dayOfTheWeek]) {

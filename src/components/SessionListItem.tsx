@@ -34,7 +34,7 @@ export const SessionListItem = ({
           {name}
         </a>
       </div>
-      <div className="status-icon icon-container">
+      <div className={`status-icon icon-container${itemClass()}`}>
         {getStatusIcon(liveStatus, endDate)}
       </div>
       <div>

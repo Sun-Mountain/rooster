@@ -1,1 +1,33 @@
-@use './.resources/color.scss' as *;
+@use './.resources/colors.scss' as *;
+@use './.resources/screen-sizes.scss' as *;
+
+@forward './components/links.scss';
+@forward './components/navbar.scss';
+
+body {
+  background-color: $bg-color;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0 !important;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+main {
+  max-width: $max-screen-width;
+  margin: 0 auto;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+#navbar {
+  background-color: $navbar-color;
+  position: relative; 
+  top:0%;
+}

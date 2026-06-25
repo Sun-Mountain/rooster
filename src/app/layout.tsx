@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-// import NavBar from "@/components/NavBar";
+import NavBar from "@/components/layout/NavBar";
 // import Footer from "@/components/Footer";
-// import "@/styles/global.scss";
+import "@/styles/global.scss";
 
 export const metadata: Metadata = {
   title: "Rooster",
@@ -17,13 +17,15 @@ export default function RootLayout({
     <html lang="en">
         <body>
           <div id="app">
-            {/* <NavBar /> */}
-              <main>
-                <div id="main-container" data-testid="main-content">
-                  {children}
-                </div>
-              </main>
-            {/* <Footer /> */}
+            <NavBar />
+              <div>
+                <main>
+                  <div id="main-container" data-testid="main-content">
+                    {children}
+                  </div>
+                </main>
+                {/* <Footer /> */}
+              </div>
           </div>
         </body>
     </html>

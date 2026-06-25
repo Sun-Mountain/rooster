@@ -1,52 +1,76 @@
-'use client';
 
-import { ReactNode, useState } from 'react';
-import { Modal as ModalUI } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { ReactNode, useEffect, useState } from 'react';
+import { Modal as ModalComponent } from '@mui/material';
 import { Button } from '@/components/_ui/Button';
 
 interface ModalProps {
-  buttonContent: ReactNode;
   children: ReactNode;
-  modalOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  buttonClassName?: string;
+  modalBtnContent: ReactNode;
+  btnAction?: ReactNode;
+  className?: string;
+  closeOnAction?: boolean;
   danger?: boolean;
+  includeCancel?: boolean;
+  modalBtnClassName?: string;
+  open?: boolean;
 }
 
-export const Modal = ({
-  buttonContent,
+export const Modal =({
   children,
-  modalOpen = false,
-  onOpen,
-  onClose,
-  buttonClassName,
-  danger
+  modalBtnContent,
+  btnAction,
+  closeOnAction = false,
+  className = "",
+  danger = false,
+  includeCancel = false,
+  modalBtnClassName,
 }: ModalProps) => {
+        const [open, setOpen] = useState(false);
 
-  return (
-    <>
-      <Button onClick={onOpen} className={buttonClassName}>
-        {buttonContent}
-      </Button>
-      <ModalUI
-        open={modalOpen}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div className={`modal-container${danger ? ' danger-modal' : ''}`}>
-          <div className={`modal-content-container${danger ? ' danger-modal' : ''}`}>
-            <Button onClick={onClose} aria-label="Close modal" className="close-button icon transparent">
-              <Close />
+        const handleOpen = () => {
+          setOpen(true);
+        };
+
+        const handleClose = () => {
+          setOpen(false)
+        };
+
+        useEffect(() => {
+          if (closeOnAction && open) {
+            const timer = setTimeout(() => setOpen(false), 0);
+            return () => clearTimeout(timer);
+          }
+        }, [closeOnAction, open]);
+
+        return (
+          <div>
+            <Button onClick={handleOpen} className={modalBtnClassName}>
+              <>
+                {modalBtnContent}
+              </>
             </Button>
-            <div className="modal-content">
+            <ModalComponent
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <div className="modal-container">
+                <div className={`modal-content-container${danger ? ' danger' : ''}${className ? ` ${className}` : ''}`}>
+            <div>
               {children}
+            </div>
+            <div className="btn-group">
+              {btnAction}
+              {includeCancel && ( 
+                <Button onClick={handleClose} className="transparent no-border">
+                  Cancel
+                </Button>
+              )}
             </div>
           </div>
         </div>
-      </ModalUI>
-    </>
+      </ModalComponent>
+    </div>
   );
-};
+}

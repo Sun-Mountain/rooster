@@ -1,30 +1,41 @@
-'use client';
+"use client";
 
-import { ChangeEvent, useState } from "react";
-import { TextField as TextFieldComponent } from "@mui/material";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  TextField as TextFieldComponent,
+  InputLabelProps,
+  InputAdornment,
+} from "@mui/material";
 
 interface TextFieldProps {
   label: string;
   name: string;
-  initialValue?: string;
+  initialValue?: string | number;
   disabled?: boolean;
   multiline?: boolean;
   rows?: number;
-  type?: 'text' | 'password' | 'email' | 'number';
+  type?: "text" | "password" | "email" | "number" | "date" | "time";
   errorMsg?: string;
+  shrink?: boolean;
+  slotAdornment?: React.ReactNode;
+  resetInitialValue?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  InputLabelProps?: InputLabelProps;
 }
 
 export const TextField = ({
   label,
   name,
-  initialValue = '',
+  initialValue = "",
   disabled = false,
   type,
   multiline = false,
   rows,
   errorMsg,
-  onChange
+  onChange,
+  InputLabelProps,
+  slotAdornment,
+  resetInitialValue = false,
 }: TextFieldProps) => {
   const [defaultValue, setDefaultValue] = useState(initialValue);
 
@@ -32,6 +43,18 @@ export const TextField = ({
     setDefaultValue(event.target.value);
     if (onChange) onChange(event);
   };
+
+  useEffect(() => {
+    const setInitialValue = () => {
+      if (initialValue) {
+        setDefaultValue(initialValue);
+      } else {
+        setDefaultValue("");
+      }
+    };
+
+    setInitialValue();
+  }, [initialValue, resetInitialValue]);
 
   return (
     <div className="text-field-container">
@@ -47,7 +70,18 @@ export const TextField = ({
         error={!!errorMsg}
         multiline={multiline}
         rows={rows}
+        fullWidth
+        slotProps={{
+          inputLabel: InputLabelProps,
+          input: {
+            startAdornment: slotAdornment ? (
+              <InputAdornment position="start">
+                {slotAdornment}
+              </InputAdornment>
+            ) : undefined,
+          },
+        }}
       />
     </div>
   );
-}
+};

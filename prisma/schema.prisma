@@ -1,10 +1,11 @@
+
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // uses connection pooling
 }
 
 enum Role {
@@ -13,68 +14,229 @@ enum Role {
   SUPER
 }
 
-enum Status {
-  ACTIVE
-  INACTIVE
-  PENDING
+enum TermStatus {
+  LIVE
+  ENDED
+  DRAFT
 }
 
-model Address {
-  id        String  @id @default(cuid())
-  userId    String  @unique
-  street    String
-  street2   String?
-  city      String
-  state     String
-  zipCode   String
-  country   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Class {
+  id               String             @id @default(cuid())
+  name             String
+  description      String?
+  classTermDetails ClassTermDetails[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
-
-  @@map ("addresses")
+  @@map("class")
 }
 
-model EmergencyContact {
-  id              String  @id @default(cuid())
-  userId          String  @unique
-  firstName       String
-  lastName        String
-  relationship    String?
-  phoneNum        String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+model ClassTeacherProfile {
+  id          String    @id @default(cuid())
+  userId      String
+  teacherName String?
+  bio         String?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // classes     ClassTermDetails[] @relation("ClassTermTeachers")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
-  @@map ("emergency_contacts")
+  @@unique([userId])
+  @@map("class_teacher_profile")
 }
 
-model Session {
-  id          String  @id @default(cuid())
-  title       String
+model ClassTermDetails {
+  id                      String   @id @default(cuid())
+  classId                 String
+  termId                  String
+  price                   Float
+  capacity                Int
+  termSpecificDescription String?
+  // teachers                ClassTeacherProfile[] @relation("ClassTermTeachers")
+  classInstances          ClassInstance[]
+  class                   Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  term                    Term     @relation(fields: [termId], references: [id], onDelete: Cascade)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@map("class_term_details")
+}
+
+model ClassInstance {
+  id                  String   @id @default(cuid())
+  classTermDetailsId  String
+  dayOfTheWeek        String
+  startTime           String
+  endTime             String
+  // roster             RosterItem[]
+  classTermDetails    ClassTermDetails @relation(fields: [classTermDetailsId], references: [id], onDelete: Cascade)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  // @@unique([classTermDetailsId])
+  @@map("class_instance")
+}
+
+model RosterItem {
+  id                 String   @id @default(cuid())
+  classTermRosterId  String
+  userId             String
+  // classTermRoster    ClassTermRoster @relation(fields: [classTermRosterId], references: [id], onDelete: Cascade)
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  // @@unique([classTermRosterId, userId])
+  @@map("roster_item")
+}
+
+model Term {
+  id          String             @id @default(cuid())
+  name        String
   description String?
   startDate   DateTime
   endDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      TermStatus         @default(DRAFT)
+  classes     ClassTermDetails[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 
-  @@map ("sessions")
+  @@map("term")
+}
+
+model ContactAddress {
+  id               String   @id @default(cuid())
+  street1          String?
+  street2          String?
+  city             String?
+  state            String?
+  zip              String?
+  country          String?  @default("USA")
+  secondaryEmail   String?
+  phone            String?
+  preferredContact String?  @default("phone")
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([userId])
+  @@map("contact_address")
+}
+
+model EmergencyContact {
+  id           String   @id @default(cuid())
+  firstName    String?
+  lastName     String?
+  relationship String?
+  phone        String?
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId])
+  @@map("emergency_contact")
 }
 
 model User {
-  id                  String  @id @default(cuid())
-  firstName           String
-  lastName            String
-  email               String   @unique
-  password            String
-  address             Address?
-  emergencyContact    EmergencyContact?
-  phoneNum            String?
-  role      Role      @default(USER)
-  status    Status    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id              String            @id @default(cuid())
+  name            String
+  firstName       String
+  lastName        String
+  email           String
+  emailVerified   Boolean
+  role            Role              @default(USER)
+  classes         RosterItem[]
+  contact         ContactAddress?
+  emergency       EmergencyContact?
+  pronouns        String?
+  otherPronouns   String?
+  image           String?
+  teacherProfile  ClassTeacherProfile?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  sessions        Session[]
+  accounts        Account[]
 
-  @@map ("users")
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+  @@index([userId])
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+  @@index([identifier])
+}
+
+model TermSignUp {
+  id     String @id @default(cuid())
+  termid String
+  userid String
+}
+
+model TermTeacher {
+  id        String @id @default(cuid())
+  termid    String
+  classid   String
+  teacherid String
+}
+
+model Equipment {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  image       String
+  location    String
+}
+
+model EquipmentSignup {
+  id           String @id @default(cuid())
+  equipmentid  String
+  reservedTime String
+  userId       String
+  termId       String
+  notes        String
 }

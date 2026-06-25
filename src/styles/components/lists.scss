@@ -12,21 +12,17 @@
     justify-content: space-between;
 
     div {
-      padding: 1rem 1rem 1rem 0;
+      padding: 1rem;
       align-items: center;
 
       &.link-container {
         min-width: 10rem;
-        max-width: 13rem;
+        max-width: 18rem;
       }
 
       &:last-child {
         text-align: right;
         width: 12rem;
-      }
-      
-      a, .link-container {
-        padding: 1rem;
       }
     }
 

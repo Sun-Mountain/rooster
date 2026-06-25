@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useWindowSize } from "@/helpers/useWindowSize";
 import { Button } from "@/components/_ui/Button";
 import { Apps, EventNote, TableRows } from "@mui/icons-material";
 import Tooltip from '@mui/material/Tooltip';
@@ -26,6 +27,7 @@ export const ClassTabPanelContent = ({
     const [classDetailsList, setClassDetailsList] = useState<ClassDetailProps[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { width } = useWindowSize();
 
   const consolidatedSchedule = classDetailsList.flatMap(detail =>
     detail.classInstances.map(instance => ({
@@ -92,9 +94,9 @@ export const ClassTabPanelContent = ({
       </div>
       <div className="panel-content">
         {(viewMode === "list" || viewMode === "grid") && <PublicClassNameList
-                                  classSchedule={consolidatedSchedule}
-                                  gridView={viewMode === "grid"}
-                                />}
+          classDetailsList={classDetailsList}
+          gridView={viewMode === "grid" || (width !== undefined && width < 650)}
+        />}
         {viewMode === "schedule" && <ClassDetailSchedule classSchedule={consolidatedSchedule} />}
       </div>
     </div>

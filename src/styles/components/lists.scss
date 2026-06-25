@@ -134,8 +134,9 @@
     border-radius: $border-radius;
     display: flex;
     justify-content: space-between;
-    margin: 1rem 0;
+    margin: 1rem auto;
     padding: 0.5rem 1rem;
+    max-width: 675px;
 
     .class-name {
       font-weight: 500;
@@ -144,6 +145,40 @@
     .class-time {
       color: $slate-gray;
       font-size: 0.875rem;
+    }
+
+    .class-item-time {
+      margin: auto 0;
+    }
+
+    .class-item-details {
+      display: flex;
+      flex-direction: row;
+
+      div {
+        align-items: center;
+        height: 100%;
+      }
+
+      div + div {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .class-name-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    .class-name-item {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0.5rem;
+      text-align: center;
+      width: 250px;
+      min-height: 100px;
     }
   }
 }

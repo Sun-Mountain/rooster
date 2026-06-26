@@ -1,22 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { useWindowSize } from "@/helpers/useWindowSize";
+import Drawer from "@/components/.ui/Drawer";
+import { MainNavLinks } from "@/components/content/MainNavLinks";
 
 const NavBar = () => {
+  const { width } = useWindowSize();
+  const isMobile = width && width <= 768;
+
   return (
     <nav id="navbar">
       <div id="navbar-content">
         <div id="logo-container">
           <Link href="/" id="logo-link"></Link>
         </div>
-        <div className="navbar-links">
-          <Link href="/classes" className="navbar-link">Classes</Link>
-          <Link href="/events" className="navbar-link">Events</Link>
-          <Link href="/about" className="navbar-link">About</Link>
-          <Link href="/contact" className="navbar-link">Contact</Link>
-        </div>
+        {!isMobile && (
+          <div className="navbar-links">
+            <MainNavLinks />
+          </div>
+        )}
         <div className="sign-in-btn-container ">
-          <Link href="/login" id="sign-in-link">Sign In</Link>
+          <Link href="/sign-in" id="sign-in-link">Sign In</Link>
+          {isMobile && (
+            <Drawer anchor="top" btnClassName="medium icon main-nav">
+              <MainNavLinks showHomeLink />
+            </Drawer>
+          )}
         </div>
       </div>
     </nav>

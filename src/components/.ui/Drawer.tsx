@@ -1,17 +1,23 @@
 'use client';
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Drawer as DrawerUI } from "@mui/material";
-import { ReactNode } from "react";
-import { Button } from "./Button";
-import { Menu, Close } from "@mui/icons-material";
+import { Menu, Close, KeyboardDoubleArrowUp } from "@mui/icons-material";
+import Button from "@/components/.ui/Button";
 
 interface DrawerProps {
-  anchor?: 'left' | 'top' | 'right' | 'bottom';
   children: ReactNode;
+  anchor?: 'left' | 'top' | 'right' | 'bottom';
+  btnClassName?: string;
+  drawerContentClassName?: string;
 }
 
-export const Drawer = ({ children, anchor = 'right' }: DrawerProps) => {
+const Drawer = ({
+  children,
+  anchor = 'right',
+  btnClassName,
+  drawerContentClassName = '',
+}: DrawerProps) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -21,19 +27,28 @@ export const Drawer = ({ children, anchor = 'right' }: DrawerProps) => {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>
+      <Button className={btnClassName} onClick={toggleDrawer(true)}>
         <Menu />
       </Button>
       <DrawerUI onClose={toggleDrawer(false)} open={open} anchor={anchor}>
-        <div>
-          <div>
+        <div className={`drawer-content ${anchor} ${drawerContentClassName}`}>
+          {/* <div className="drawer-header">
             <Button className="icon" onClick={toggleDrawer(false)}>
               <Close />
             </Button>
-          </div>
+          </div> */}
           {children}
+          <div className="drawer-footer">
+            {anchor === 'top' && (
+              <Button className="icon" onClick={toggleDrawer(false)}>
+                <KeyboardDoubleArrowUp />
+              </Button>
+            )}
+          </div>
         </div>
       </DrawerUI>
     </>
   );
 };
+
+export default Drawer;

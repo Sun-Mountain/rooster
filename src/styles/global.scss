@@ -1,15 +1,19 @@
 @use './.resources/colors.scss' as *;
 @use './.resources/screen-sizes.scss' as *;
 
+@forward './components/buttons.scss';
+@forward './components/drawer.scss';
 @forward './components/links.scss';
 @forward './components/navbar.scss';
 
 body {
   background-color: $bg-color;
+  display: flex;
+  flex-direction: column;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0 !important;
   min-height: 100vh;
+  padding: 0 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -17,8 +21,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 main {
-  max-width: $max-screen-width;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+footer, main {
   margin: 0 auto;
+  max-width: $max-screen-width;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 #app {

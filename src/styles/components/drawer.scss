@@ -1,0 +1,43 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+
+  &.top {
+    background-color: $navbar-color;
+
+    a, a:visited {
+      color: $navbar-link-color;
+      font-size: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    li {
+      padding: 15px 0;
+      border-bottom: 1px solid $navbar-border-color;
+    }
+
+    .navbar-link {
+      display: block;
+      width: 100vw;
+    }
+
+    .drawer-footer {
+      margin-top: 20px;
+      width: 100%;
+
+      button {
+        width: 100%;
+        svg {
+          color: $navbar-link-color;
+        }
+      }
+    }
+  }
+}

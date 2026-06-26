@@ -1,11 +1,10 @@
 @use '../.resources/colors.scss' as *;
 @use '../.resources/screen-sizes.scss' as *;
 
-#sign-in-link {
+@mixin btn-link-styles {
   background-color: $navbar-color;
   border: 1px solid $navbar-link-color !important;
-  color: $navbar-color;
-  border: none;
+  color: $navbar-link-color;
   padding: 8px 16px;
   text-decoration: none;
   font-size: 16px;
@@ -17,4 +16,15 @@
     color: $navbar-color; /* Change text color on hover */
     cursor: pointer;
   }
+}
+
+#sign-in-link {
+  @include btn-link-styles;
+}
+
+.main-nav {
+  @include btn-link-styles;
+  border: 0 !important;
+  margin-left: 20px; /* Add some spacing between the links */
+  height: 37px;
 }

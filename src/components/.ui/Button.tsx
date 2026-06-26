@@ -10,7 +10,7 @@ interface ButtonProps {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const Button = ({ children, ariaLabel, className, type = "button", onClick, handleClick, disabled = false }: ButtonProps) => {
+const Button = ({ children, ariaLabel, className, type = "button", onClick, handleClick, disabled = false }: ButtonProps) => {
   const handleOnClick = (event?: MouseEvent<HTMLButtonElement>) => {
     if (onClick) onClick();
     if (handleClick && event) handleClick(event);
@@ -22,3 +22,5 @@ export const Button = ({ children, ariaLabel, className, type = "button", onClic
     </button>
   );
 }
+
+export default Button;

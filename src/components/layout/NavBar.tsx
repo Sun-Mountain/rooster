@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useWindowSize } from "@/helpers/useWindowSize";
 import { UserProps } from "@/lib/props";
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from "next/link";
 import Drawer from "@/components/.ui/Drawer";
 import MainNavLinks from "@/components/content/MainNavLinks";
@@ -17,13 +18,9 @@ const NavBar = () => {
   const user = session?.user as UserProps | undefined;
   const pathname = usePathname();
 
-  const pathnameDoesNotInclude = (paths: string[]) => {
-    return !paths.some((path) => pathname?.includes(path));
-  };
-
   return (
     <nav id="navbar" className={user ? "logged-in" : "no-user"}>
-      {user?.role != "USER" && pathnameDoesNotInclude(["/admin"]) && (
+      {user && user?.role != "USER" && !pathname.includes("/admin") && (
         <div className="is-admin-banner">
           <div className="navbar-content">
             <div className="admin-role">
@@ -58,8 +55,19 @@ const NavBar = () => {
             <Link href="/" id="logo-link"></Link>
           </div>
           {user ? (
-            <div>
-              <SignOutButton />
+            <div className="logged-in-links">
+              {user?.role != "USER" && pathname.includes("/admin") && (
+                <div className="dashboard-link-container">
+                  <Link href="/" className="dashboard-link">
+                    <AccountCircleIcon /> Student Dashboard
+                  </Link>
+                </div>
+              )}
+              {((isMobile && !pathname.includes("/admin")) || !isMobile) && (
+                <div>
+                  <SignOutButton />
+                </div>
+              )}
             </div>
           ) : (
             <>

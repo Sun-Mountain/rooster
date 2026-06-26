@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useWindowSize } from "@/helpers/useWindowSize";
 import Drawer from "@/components/.ui/Drawer";
-import { MainNavLinks } from "@/components/content/MainNavLinks";
+import MainNavLinks from "@/components/content/MainNavLinks";
 
 const NavBar = () => {
   const { width } = useWindowSize();

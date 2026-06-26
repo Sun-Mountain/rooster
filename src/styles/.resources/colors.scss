@@ -26,8 +26,17 @@ $platinum: rgba(222, 226, 230, 1);
 
 $vanilla-custard-50: rgba(244, 236, 224, 0.5);
 
+$background-color: $vanilla-custard;
+$navigation-color: $ink-black;
+
 // Body colors
-$bg-color: $seasalt;
-$navbar-color: $tekhelet;
+$bg-color: $background-color;
+$navbar-color: $navigation-color;
 $navbar-link-color: $bg-color;
 $navbar-border-color: $vanilla-custard-50;
+$header-color: $navbar-color;
+
+// Buttons
+$primary-btn-bg: $brown-red;
+$primary-btn-bg-hover: $oxidized-iron;
+$primary-btn-color: $seasalt;

@@ -20,6 +20,11 @@
 
 #sign-in-link {
   @include btn-link-styles;
+
+  &:hover {
+    background-color: $navbar-link-color; /* Change to a different color on hover */
+    color: $navbar-color !important; /* Change text color on hover */
+  }
 }
 
 .main-nav {

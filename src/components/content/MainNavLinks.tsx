@@ -4,7 +4,7 @@ interface MainNavLinksProps {
   showHomeLink?: boolean;
 }
 
-export const MainNavLinks = ({
+const MainNavLinks = ({
   showHomeLink = false
 }: MainNavLinksProps) => {
   return (
@@ -31,3 +31,5 @@ export const MainNavLinks = ({
     </>
   );
 };
+
+export default MainNavLinks;

@@ -3,6 +3,7 @@
 
 @forward './components/buttons.scss';
 @forward './components/drawer.scss';
+@forward './components/forms.scss';
 @forward './components/links.scss';
 @forward './components/navbar.scss';
 
@@ -17,6 +18,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  color: $header-color;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   margin: 0;
 }
 

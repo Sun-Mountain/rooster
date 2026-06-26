@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { UserProps } from "@/lib/props";
 
 interface MainNavLinksProps {
   showHomeLink?: boolean;
+  user?: UserProps | null;
 }
 
 const MainNavLinks = ({

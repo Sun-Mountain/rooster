@@ -16,6 +16,24 @@ button {
     padding: 0.25rem;
     cursor: pointer;
     width: auto;
+    display: flex;
+    align-items: center;
+    svg {
+      margin: 0 auto;
+    }
+  }
+
+  &.w-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  &.small {
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
   }
 
   svg {
@@ -26,5 +44,22 @@ button {
   &:hover {
     background-color: $primary-btn-bg-hover;
     cursor: pointer;
+  }
+}
+
+.sign-out-btn {
+  background: $sign-out-btn-bg;
+  border: 1px solid $sign-out-btn-color;
+  color: $sign-out-btn-color;
+  font-size: 0.75rem;
+  padding: 0.45rem 0.75rem;
+
+  svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  &:hover {
+    background-color: $sign-out-btn-bg-hover;
   }
 }

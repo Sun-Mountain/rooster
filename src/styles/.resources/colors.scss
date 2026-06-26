@@ -24,7 +24,15 @@ $antiflash-white: rgba(233, 236, 239, 1);
 $platinum: rgba(222, 226, 230, 1);
 
 
+$vanilla-custard-75: rgba(244, 236, 224, 0.75);
 $vanilla-custard-50: rgba(244, 236, 224, 0.5);
+$brown-red-50: rgba(155,34,38, 0.5);
+$slate-gray-50: rgba(108, 117, 125, 0.25);
+$seasalt-50: rgba(248, 249, 250, 0.5);
+$oxidized-iron-25: rgba(74, 32, 18, 0.25);
+$rusty-spice-25: rgba(150, 75, 0, 0.25);
+$seasalt-25: rgba(248, 249, 250, 0.5);
+$vanilla-custard-25: rgba(244, 236, 224, 0.25);
 
 $background-color: $vanilla-custard;
 $navigation-color: $ink-black;
@@ -35,8 +43,24 @@ $navbar-color: $navigation-color;
 $navbar-link-color: $bg-color;
 $navbar-border-color: $vanilla-custard-50;
 $header-color: $navbar-color;
+$footer-color: $slate-gray;
 
 // Buttons
 $primary-btn-bg: $brown-red;
 $primary-btn-bg-hover: $oxidized-iron;
 $primary-btn-color: $seasalt;
+
+// Btn Types
+$sign-out-btn-bg: transparent;
+$sign-out-btn-color: $slate-gray;
+$sign-out-btn-bg-hover: $rusty-spice-25;
+
+// Logged In Navigation
+$lg-navbar-color: $seasalt-50;
+$li-nav-border-color: $slate-gray-50;
+
+// Admin Navigation
+$admin-navbar-text: $vanilla-custard-75;
+$admin-navbar-str-text: $golden-orange;
+$admin-banner-link-bg: $brown-red;
+$admin-banner-link-text: $seasalt;

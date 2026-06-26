@@ -40,7 +40,7 @@ const Drawer = ({
           {children}
           <div className="drawer-footer">
             {anchor === 'top' && (
-              <Button className="icon" onClick={toggleDrawer(false)}>
+              <Button className="icon main-nav-btn" onClick={toggleDrawer(false)}>
                 <KeyboardDoubleArrowUp />
               </Button>
             )}

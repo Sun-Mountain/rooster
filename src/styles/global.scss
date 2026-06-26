@@ -33,6 +33,10 @@ footer, main {
   max-width: $max-screen-width;
 }
 
+footer {
+  color: $footer-color;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -44,7 +48,7 @@ ul {
   flex-direction: column;
 }
 
-#navbar {
+.no-user {
   background-color: $navbar-color;
   position: relative; 
   top:0%;

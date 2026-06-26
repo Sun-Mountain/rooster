@@ -53,12 +53,85 @@
     }
   }
 
-  #navbar-content {
+  .navbar-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     margin: 0 auto;
     max-width: $max-screen-width;
+  }
+
+  .sign-in-btn-container {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.logged-in {
+  background-color: $lg-navbar-color;
+
+  #logo-container {
+    width: 45px !important;
+    height: 45px !important;
+    margin: 5px;
+  }
+}
+
+.main-nav-btn {
+  &:hover {
+    background-color: $navbar-color !important;
+  }
+}
+
+.navbar-content-container {
+  border-bottom: 1px solid $li-nav-border-color;
+  width: 100%;
+
+  #navbar-content {
+    padding-bottom: 10px !important;
+    padding-top: 5px !important;
+  }
+}
+
+.is-admin-banner {
+  background-color: $navbar-color;
+
+  .navbar-content {
+    color: $admin-navbar-text;
+    font-size: 0.75rem;
+    padding: 12px !important;
+    max-width: $max-screen-width;
+
+    strong {
+      color: $admin-navbar-str-text;
+      font-weight: 550;
+      letter-spacing: 1.5px;
+    }
+
+    .admin-role {
+      display: flex;
+      div {
+        margin-right: 10px;
+      }
+    }
+
+    .admin-banner-link {
+      background-color: $admin-banner-link-bg;
+      border-radius: 1rem;
+      color: $admin-banner-link-text !important;
+      font-size: 0.75rem !important;
+      font-weight: 600;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+
+      svg {
+        padding-right: 5px;
+        width: 0.75rem;
+        height: 0.75rem;
+      }
+    }
   }
 }

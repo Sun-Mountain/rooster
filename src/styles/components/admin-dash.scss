@@ -16,8 +16,14 @@
 
     a, a:visited {
       color: $admin-dash-link-text;
+      font-size: 0.8rem;
       text-decoration: none;
-      opacity: 0.75;
+      opacity: 0.65;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
 
       &:hover {
         opacity: 1;
@@ -46,7 +52,9 @@
 
 @media (min-width: $sm) {
   #admin-dashboard-container {
+    display: flex;
     flex-direction: row;
+    width: 100%;
 
     .admin-dashboard-nav {
       position: relative;
@@ -67,6 +75,11 @@
           border-radius: 0.85rem;
           color: $admin-dash-link-active-color !important;
         }
+
+        svg {
+          width: 25px;
+          height: 25px;
+        }
       }
 
       ul {
@@ -81,5 +94,23 @@
         }
       }
     }
+  }
+
+  .main-content-container {
+    flex: 1;
+  }
+}
+
+.admin-dash-page-container {
+
+  .admin-page-header {
+    margin-bottom: 20px;
+  }
+
+  .admin-page-subheader {
+    color: $admin-sub-header-text-color;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
   }
 }

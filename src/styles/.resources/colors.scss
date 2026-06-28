@@ -24,14 +24,17 @@ $antiflash-white: rgba(233, 236, 239, 1);
 $platinum: rgba(222, 226, 230, 1);
 
 
+$oxidized-iron-75: rgba(74, 32, 18, 0.75);
 $vanilla-custard-75: rgba(244, 236, 224, 0.75);
+$seasalt-75: rgba(248, 249, 250, 0.75);
 $vanilla-custard-50: rgba(244, 236, 224, 0.5);
 $brown-red-50: rgba(155,34,38, 0.5);
+$oxidized-iron-50: rgba(74, 32, 18, 0.5);
 $slate-gray-50: rgba(108, 117, 125, 0.25);
 $seasalt-50: rgba(248, 249, 250, 0.5);
 $oxidized-iron-25: rgba(74, 32, 18, 0.25);
 $rusty-spice-25: rgba(150, 75, 0, 0.25);
-$seasalt-25: rgba(248, 249, 250, 0.5);
+$seasalt-25: rgba(248, 249, 250, 0.25);
 $vanilla-custard-25: rgba(244, 236, 224, 0.25);
 
 $background-color: $vanilla-custard;
@@ -67,3 +70,11 @@ $admin-banner-link-text: $seasalt;
 $admin-dash-link-text: $vanilla-custard;
 $admin-dash-link-active-bg: $brown-red;
 $admin-dash-link-active-color: $seasalt;
+
+$admin-sub-header-text-color: $slate-gray;
+
+// Tables
+$table-header-bg: $seasalt-75;
+$table-border-color: $slate-gray-50;
+$table-border-radius: 20px;
+$table-cell-bg: $seasalt-25;

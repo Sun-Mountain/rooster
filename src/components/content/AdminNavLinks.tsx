@@ -1,10 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import {
+  CalendarToday,
+  DashboardOutlined,
+  ImportContacts,
+  PeopleAltOutlined,
+  SettingsOutlined
+} from '@mui/icons-material';
 
 const AdminNavLinks = () => {
   const pathname = usePathname();
@@ -13,7 +16,7 @@ const AdminNavLinks = () => {
     <ul>
       <li>
         <a href="/admin" className={pathname === "/admin" ? "active" : ""}>
-          <DashboardOutlinedIcon />
+          <DashboardOutlined />
           <div>
             Dashboard
           </div>
@@ -21,7 +24,7 @@ const AdminNavLinks = () => {
       </li>
       <li>
         <a href="/admin/classes" className={pathname === "/admin/classes" ? "active" : ""}>
-          <ImportContactsIcon />
+          <ImportContacts />
           <div>
             Classes
           </div>
@@ -29,7 +32,7 @@ const AdminNavLinks = () => {
       </li>
       <li>
         <a href="/admin/sessions" className={pathname === "/admin/sessions" ? "active" : ""}>
-          <CalendarTodayIcon />
+          <CalendarToday />
           <div>
             Sessions
           </div>
@@ -37,9 +40,17 @@ const AdminNavLinks = () => {
       </li>
       <li>
         <a href="/admin/students" className={pathname === "/admin/students" ? "active" : ""}>
-          <PeopleAltOutlinedIcon />
+          <PeopleAltOutlined />
           <div>
             Students
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/settings" className={pathname === "/admin/settings" ? "active" : ""}>
+          <SettingsOutlined />
+          <div>
+            Settings
           </div>
         </a>
       </li>

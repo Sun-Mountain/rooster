@@ -7,11 +7,13 @@
 @forward './components/forms.scss';
 @forward './components/links.scss';
 @forward './components/navbar.scss';
+@forward './components/tables.scss';
 
 body {
   background-color: $bg-color;
   display: flex;
   flex-direction: column;
+  font-size: 1rem;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   min-height: 100vh;
@@ -25,7 +27,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 main {
+  font-size: 0.9rem;
   min-height: 80vh;
+  width: 100%;
 }
 
 footer, main {

@@ -20,11 +20,13 @@ const NavBar = () => {
   const pathname = usePathname();
 
   const [userRole, setUserRole] = useState<"USER" | "ADMIN" | "SUPER" | undefined>(undefined);
+  const [styling, setStyling] = useState<string>("no-user");
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("userRole") as "USER" | "ADMIN" | "SUPER" | null;
+    const storedRole = localStorage.getItem("userRole") as "USER" | "ADMIN" | "SUPER" | undefined | null;
+
     const recordRole = () => {
-      setUserRole(user?.role);
+      setUserRole(storedRole as "USER" | "ADMIN" | "SUPER" | undefined);
     }
 
     if (!storedRole && user?.role) {
@@ -36,9 +38,23 @@ const NavBar = () => {
     }
   }, [user?.role, userRole]);
 
+  useEffect(() => {
+    const storedRole = localStorage.getItem("userRole") as "USER" | "ADMIN" | "SUPER" | undefined | null;
+
+    const setNavbarStyling = () => {
+      if (storedRole) {
+        setStyling("logged-in");
+      } else {
+        setStyling("no-user");
+      }
+    };
+
+    setNavbarStyling();
+  }, [userRole]);
+
   return (
-    <nav id="navbar" className={userRole ? "logged-in" : "no-user"}>
-      {user && user?.role != "USER" && !pathname.includes("/admin") && (
+    <nav id="navbar" className={styling}>
+      {userRole != "USER" && !pathname.includes("/admin") && (
         <div className="is-admin-banner">
           <div className="navbar-content">
             <div className="admin-role">

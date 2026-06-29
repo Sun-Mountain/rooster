@@ -4,7 +4,8 @@ $rusty-spice: rgba(150, 75, 0, 1);
 $burnt-caramel: rgba(202, 103, 2, 1);
 $golden-orange: rgba(238, 155, 0, 1);
 $sunflower-gold: rgba(252, 191, 73, 1);
-$vanilla-custard: rgb(244, 236, 224, 1);
+$vanilla-custard: rgba(244, 236, 224, 1);
+$light-vanilla-custard: rgba(253, 248, 242, 1);
 $pearl-aqua: rgba(148,210,189, 1);
 $dark-cyan: rgba(0, 147, 150, 1);
 $dark-teal: rgba(0, 95, 115, 1);
@@ -63,7 +64,7 @@ $sign-out-btn-color: $slate-gray;
 $sign-out-btn-bg-hover: $rusty-spice-25;
 
 // Logged In Navigation
-$lg-navbar-color: $seasalt-50;
+$lg-navbar-color: $light-vanilla-custard;
 $li-nav-border-color: $slate-gray-50;
 
 // Admin Navigation
@@ -81,8 +82,9 @@ $admin-sub-header-text-color: $slate-gray;
 $table-header-bg: $seasalt;
 $table-border-color: $slate-gray-50;
 $table-border-radius: 20px;
-$table-cell-bg: $seasalt-25;
+$table-cell-bg: $light-vanilla-custard;
 $table-double-arrow: $slate-gray;
+$table-cell-bg-hover: $seasalt;
 
 // Stat Boxes
 $stat-box-bg: $seasalt-50;

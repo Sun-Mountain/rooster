@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 import { useWindowSize } from "@/helpers/useWindowSize";
@@ -18,8 +19,25 @@ const NavBar = () => {
   const user = session?.user as UserProps | undefined;
   const pathname = usePathname();
 
+  const [userRole, setUserRole] = useState<"USER" | "ADMIN" | "SUPER" | undefined>(undefined);
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("userRole") as "USER" | "ADMIN" | "SUPER" | null;
+    const recordRole = () => {
+      setUserRole(user?.role);
+    }
+
+    if (!storedRole && user?.role) {
+      localStorage.setItem("userRole", user.role);
+      recordRole();
+    } else if (storedRole && user?.role && storedRole !== userRole) {
+      localStorage.setItem("userRole", user.role);
+      recordRole();
+    }
+  }, [user?.role, userRole]);
+
   return (
-    <nav id="navbar" className={user ? "logged-in" : "no-user"}>
+    <nav id="navbar" className={userRole ? "logged-in" : "no-user"}>
       {user && user?.role != "USER" && !pathname.includes("/admin") && (
         <div className="is-admin-banner">
           <div className="navbar-content">

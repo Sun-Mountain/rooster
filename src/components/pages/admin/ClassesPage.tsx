@@ -35,16 +35,11 @@ const AdminClassesMainPage = () => {
             <div className="table-cell">
               Class
             </div>
-            <div className="table-cell">
-              Instructor
-            </div>
           </div>
           {classList.map((classItem) => (
             <div key={classItem.id} className="table-row">
               <div className="table-cell">
                 {classItem.name}
-              </div>
-              <div className="table-cell">
               </div>
             </div>
           ))}

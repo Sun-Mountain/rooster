@@ -49,6 +49,20 @@
   }
 }
 
+.admin-dash-page-container {
+  .admin-page-header {
+    margin-bottom: 20px;
+  }
+
+  .admin-page-subheader {
+    color: $admin-sub-header-text-color;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+}
+
 
 @media (min-width: $sm) {
   #admin-dashboard-container {
@@ -98,19 +112,5 @@
 
   .main-content-container {
     flex: 1;
-  }
-}
-
-.admin-dash-page-container {
-
-  .admin-page-header {
-    margin-bottom: 20px;
-  }
-
-  .admin-page-subheader {
-    color: $admin-sub-header-text-color;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
   }
 }

@@ -3,12 +3,12 @@ import db from "@/lib/prisma";
 export const getStats = async (): Promise<{
   users: number;
   classes: number;
-  liveSession: number;
+  liveSessions: number;
   totalSessions: number;
 }> => {
   const totalUsers = await db.user.count();
   const totalClasses = await db.class.count();
-  const liveTerms = await db.term.count({
+  const liveTerms = await db.term.findMany({
     where: {
       status: "LIVE",
     }
@@ -18,7 +18,7 @@ export const getStats = async (): Promise<{
   return {
     users: totalUsers,
     classes: totalClasses,
-    liveSession: liveTerms,
+    liveSessions: liveTerms.length,
     totalSessions: totalTerms,
   };
 };

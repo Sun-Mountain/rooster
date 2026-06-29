@@ -40,6 +40,8 @@
 
     &:last-child {
       border-bottom: 0;
+      border-bottom-left-radius: $table-border-radius;
+      border-bottom-right-radius: $table-border-radius;
     }
 
     div {

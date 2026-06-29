@@ -1,0 +1,125 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+
+.stat-box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  @each $color in $stat-icon-colors {
+    .stat-box:nth-child(#{index($stat-icon-colors, $color)}) .stat-icon svg {
+      color: $color;
+    }
+  }
+
+  @each $bg-color in $stat-icon-bg-colors {
+    .stat-box:nth-child(#{index($stat-icon-bg-colors, $bg-color)}) .stat-icon {
+      background-color: $bg-color;
+    }
+  }
+
+  .stat-box {
+    background-color: $stat-box-bg;
+    border: 1px solid $stat-box-border-color;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 5px;
+    flex: 1;
+    min-height: 100px;
+
+    h4 {
+      color: $stat-box-header-color;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-right: 10px;
+    }
+  }
+
+  .stat-header {
+    align-items: top;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .stat-icon {
+    align-items: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 8px;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .stat-value {
+    color: $stat-box-value-color;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1098px) {
+  .stat-box-container {
+    .stat-box {
+      min-width: 250px;
+      h4 {
+        font-size: 0.65rem;
+      }
+    }
+
+    .stat-icon {
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 895px) {
+  .stat-box-container {
+    .stat-box {
+      min-width: 150px;
+    }
+  }
+}
+
+@media (max-width: $sm) {
+  .stat-box-container {
+    .stat-box {
+      min-width: 200px;
+      h4 {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $xs) {
+  .stat-box-container {
+    .stat-box {
+      min-width: 150px;
+    }
+  }
+}
+
+@media (max-width: 445px) {
+  .stat-box-container {
+    .stat-box {
+      min-width: 100px;
+    }
+  }
+}

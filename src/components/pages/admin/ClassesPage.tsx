@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ClassProps } from "@/lib/props";
 import { fetchClasses } from "@/lib/api/class";
+import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Button from "@/components/.ui/Button";
 
 const AdminClassesMainPage = () => {
@@ -33,7 +34,7 @@ const AdminClassesMainPage = () => {
         <div className="table-container">
           <div className="table-header table-row">
             <div className="table-cell">
-              Class
+              Class <ImportExportIcon />
             </div>
           </div>
           {classList.map((classItem) => (

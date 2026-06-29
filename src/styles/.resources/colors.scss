@@ -34,8 +34,12 @@ $slate-gray-50: rgba(108, 117, 125, 0.25);
 $seasalt-50: rgba(248, 249, 250, 0.5);
 $oxidized-iron-25: rgba(74, 32, 18, 0.25);
 $rusty-spice-25: rgba(150, 75, 0, 0.25);
+$pearl-aqua-25: rgba(148,210,189, 0.25);
 $seasalt-25: rgba(248, 249, 250, 0.25);
 $vanilla-custard-25: rgba(244, 236, 224, 0.25);
+$sunflower-gold-15: rgba(252, 191, 73, 0.15);
+$brown-red-10: rgba(155,34,38, 0.1);
+$oxidized-iron-10: rgba(74, 32, 18, 0.10);
 
 $background-color: $vanilla-custard;
 $navigation-color: $ink-black;
@@ -78,3 +82,12 @@ $table-header-bg: $seasalt;
 $table-border-color: $slate-gray-50;
 $table-border-radius: 20px;
 $table-cell-bg: $seasalt-25;
+$table-double-arrow: $slate-gray;
+
+// Stat Boxes
+$stat-box-bg: $seasalt-50;
+$stat-box-border-color: $slate-gray-50;
+$stat-box-header-color: $slate-gray;
+$stat-box-value-color: $ink-black;
+$stat-icon-colors: $brown-red, $dark-teal, $burnt-caramel, $oxidized-iron;
+$stat-icon-bg-colors: $brown-red-10, $pearl-aqua-25, $sunflower-gold-15, $oxidized-iron-10;

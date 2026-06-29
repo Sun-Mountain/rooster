@@ -44,8 +44,14 @@
     background-color: $table-header-bg;
 
     div {
+      align-items: center;
+      display: flex;
       padding: 5px 10px;
       font-weight: bold;
+
+      svg {
+        color: $table-double-arrow;
+      }
     }
   }
 }

@@ -36,3 +36,17 @@ export const fetchSingleClassById = async (
     if (setIsLoading) setIsLoading(false);
   }
 };
+
+export const fetchClassCount = async (
+  setError: Dispatch<SetStateAction<string | null>>,
+  setClassCount: Dispatch<SetStateAction<number>>
+) => {
+  try {
+    const res = await fetch("/api/admin/class-count");
+    if (!res.ok) throw new Error("Failed to fetch class count.")
+    const data = await res.json();
+    setClassCount(data.count)
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Failed to load class count")
+  }
+}

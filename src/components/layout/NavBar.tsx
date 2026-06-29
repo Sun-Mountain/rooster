@@ -5,12 +5,12 @@ import { useSession } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 import { useWindowSize } from "@/helpers/useWindowSize";
 import { UserProps } from "@/lib/props";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Link from "next/link";
 import Drawer from "@/components/.ui/Drawer";
 import MainNavLinks from "@/components/content/MainNavLinks";
 import SignOutButton from "@/components/SignOutBtn";
+import AdminBanner from "./AdminBanner";
 
 const NavBar = () => {
   const { width } = useWindowSize();
@@ -39,10 +39,8 @@ const NavBar = () => {
   }, [user?.role, userRole]);
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("userRole") as "USER" | "ADMIN" | "SUPER" | undefined | null;
-
     const setNavbarStyling = () => {
-      if (storedRole) {
+      if (user) {
         setStyling("logged-in");
       } else {
         setStyling("no-user");
@@ -50,39 +48,11 @@ const NavBar = () => {
     };
 
     setNavbarStyling();
-  }, [userRole]);
+  }, [user]);
 
   return (
     <nav id="navbar" className={styling}>
-      {userRole != "USER" && !pathname.includes("/admin") && (
-        <div className="is-admin-banner">
-          <div className="navbar-content">
-            <div className="admin-role">
-              <div>
-                <strong>
-                  {user?.role}
-                </strong>
-              </div>
-              {!isMobile && (
-                <>
-                  <div>
-                    •
-                  </div>
-                  <div>
-                    Viewing member portal
-                  </div>
-                </>
-              )}
-            </div>
-            <div>
-              <Link href="/admin" className="admin-banner-link">
-                <DashboardOutlinedIcon />
-                Admin Panel        
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {user && <AdminBanner userRole={userRole} />}
       <div className="navbar-content-container">
         <div className="navbar-content">
           <div id="logo-container">
@@ -97,11 +67,9 @@ const NavBar = () => {
                   </Link>
                 </div>
               )}
-              {((isMobile && !pathname.includes("/admin")) || !isMobile) && (
-                <div>
-                  <SignOutButton />
-                </div>
-              )}
+              <div>
+                <SignOutButton />
+              </div>
             </div>
           ) : (
             <>

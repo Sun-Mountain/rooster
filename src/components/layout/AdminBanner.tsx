@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
@@ -8,6 +9,12 @@ interface AdminBannerProps {
 }
 
 const AdminBanner = ({ userRole }: AdminBannerProps) => {
+  const pathname = usePathname();
+
+  if (!userRole || userRole === "USER" || pathname.includes("/admin")) {
+    return null;
+  }
+
   return (
     <div className="is-admin-banner">
       <div className="navbar-content">

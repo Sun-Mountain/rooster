@@ -7,8 +7,8 @@ const DashboardOverview = () => {
   const [stats, setStats] = useState({
     classes: 0,
     users: 0,
-    sessions: 0,
-    enrollments: 0
+    liveSessions: 0,
+    totalSessions: 0
   });
 
   useEffect(() => {
@@ -30,9 +30,15 @@ const DashboardOverview = () => {
     <div className="dashboard-overview">
       <h1>Overview</h1>
       <div className="stat-box-container">
-        <StatBox title="classes" total={stats.classes} />
+        <StatBox title="classes" total={stats.classes} link="/admin/classes" />
         <StatBox title="students" total={stats.users} />
-        <StatBox title="sessions" total={stats.sessions} />
+        <StatBox
+          title="live sessions"
+          total={stats.liveSessions}
+          link="/admin/sessions"
+          linkText="View All"
+          otherStat={`${stats.totalSessions} total`}
+        />
         <StatBox title="enrollments" />
       </div>
     </div>

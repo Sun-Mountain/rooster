@@ -1,25 +1,36 @@
 "use client";
 
+import Link from "next/link";
 import {
   CalendarToday,
   ShowChart,
   PeopleAltOutlined,
-  ImportContacts
+  ImportContacts,
+  ChevronRight
 } from '@mui/icons-material';
 
 interface StatBoxProps {
   title: string;
   total?: number;
+  link?: string;
+  linkText?: string;
+  otherStat?: string;
 }
 
-const StatBox = ({ title, total }: StatBoxProps) => {
+const StatBox = ({
+  title,
+  total,
+  link,
+  linkText,
+  otherStat
+}: StatBoxProps) => {
   const boxTitle = () => {
     switch (title) {
       case "classes":
         return "Total Classes";
       case "students":
         return "Active Students";
-      case "sessions":
+      case "live sessions":
         return "Live Sessions";
       case "enrollments":
         return "Enrollments";
@@ -34,7 +45,7 @@ const StatBox = ({ title, total }: StatBoxProps) => {
         return <ImportContacts />;
       case "students":
         return <PeopleAltOutlined />;
-      case "sessions":
+      case "live sessions":
         return <CalendarToday />;
       case "enrollments":
         return <ShowChart />;
@@ -53,7 +64,17 @@ const StatBox = ({ title, total }: StatBoxProps) => {
           {boxIcon()}
         </div>
       </div>
-      <div className="stat-value">{total ?? 0}</div>
+      <div className="stat-content">
+        <div>
+          <div className="stat-value">{total ?? 0}</div>
+          {otherStat && <div className="stat-other">{otherStat}</div>}
+        </div>
+        {link && (
+          <div className="stat-link">
+            <Link href={link}><div>{linkText ?? "Manage"}</div> <ChevronRight /></Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

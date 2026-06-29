@@ -38,6 +38,7 @@ $rusty-spice-25: rgba(150, 75, 0, 0.25);
 $pearl-aqua-25: rgba(148,210,189, 0.25);
 $seasalt-25: rgba(248, 249, 250, 0.25);
 $vanilla-custard-25: rgba(244, 236, 224, 0.25);
+$brown-red-15: rgba(155,34,38, 0.15);
 $sunflower-gold-15: rgba(252, 191, 73, 0.15);
 $brown-red-10: rgba(155,34,38, 0.1);
 $oxidized-iron-10: rgba(74, 32, 18, 0.10);
@@ -62,6 +63,10 @@ $primary-btn-color: $seasalt;
 $sign-out-btn-bg: transparent;
 $sign-out-btn-color: $slate-gray;
 $sign-out-btn-bg-hover: $rusty-spice-25;
+
+$svg-color: $ink-black;
+$svg-color-danger: $brown-red;
+$svg-color-danger-background-hover: $brown-red-15;
 
 // Logged In Navigation
 $lg-navbar-color: $light-vanilla-custard;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ClassProps } from "@/lib/props";
 import { fetchClasses } from "@/lib/api/class";
-import { Add, ImportExport } from "@mui/icons-material";
+import { Add, DeleteForeverOutlined, ImportExport } from "@mui/icons-material";
 import Button from "@/components/.ui/Button";
 
 const AdminClassesMainPage = () => {
@@ -38,9 +38,14 @@ const AdminClassesMainPage = () => {
             </div>
           </div>
           {classList.map((classItem) => (
-            <div key={classItem.id} className="table-row">
+            <div key={classItem.id} className="table-row hover-reveal">
               <div className="table-cell">
                 {classItem.name}
+              </div>
+              <div>
+                <Button className="icon transparent small danger reveal">
+                  <DeleteForeverOutlined />
+                </Button>
               </div>
             </div>
           ))}

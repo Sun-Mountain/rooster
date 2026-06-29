@@ -12,12 +12,27 @@
   width: 100%;
 
   .table-row {
+    align-items: center;
     background-color: $table-cell-bg;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px 20px;
     border-bottom: 1px solid $table-border-color;
+
+    &.hover-reveal {
+      position: relative;
+
+      .reveal {
+        display: none;
+      }
+
+      &:hover {
+        .reveal {
+          display: block;
+        }
+      }
+    }
 
     &:hover {
       background-color: $table-cell-bg-hover;

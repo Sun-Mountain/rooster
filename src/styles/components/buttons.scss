@@ -12,6 +12,11 @@ button {
   padding: 10px 15px;
   width: 100%;
 
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
   &.icon {
     background-color: transparent;
     border: none;
@@ -20,6 +25,20 @@ button {
     width: auto;
     display: flex;
     align-items: center;
+
+    &.danger {
+      background-color: transparent;
+      border: none;
+      
+      svg {
+        color: $svg-color-danger;
+      }
+
+      &:hover {
+        background-color: $svg-color-danger-background-hover;
+      }
+    }
+
     svg {
       margin: 0 auto;
     }
@@ -41,11 +60,11 @@ button {
     border-radius: 1rem;
     font-size: 0.85rem;
     padding: 0.5rem 0.75rem;
-  }
 
-  svg {
-    width: 1rem;
-    height: 1rem;
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 
   &:hover {

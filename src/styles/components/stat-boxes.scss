@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use '../.resources/colors.scss' as *;
 @use '../.resources/screen-sizes.scss' as *;
 
@@ -9,13 +10,13 @@
   margin-top: 20px;
 
   @each $color in $stat-icon-colors {
-    .stat-box:nth-child(#{index($stat-icon-colors, $color)}) .stat-icon svg {
+    .stat-box:nth-child(#{list.index($stat-icon-colors, $color)}) .stat-icon svg {
       color: $color;
     }
   }
 
   @each $bg-color in $stat-icon-bg-colors {
-    .stat-box:nth-child(#{index($stat-icon-bg-colors, $bg-color)}) .stat-icon {
+    .stat-box:nth-child(#{list.index($stat-icon-bg-colors, $bg-color)}) .stat-icon {
       background-color: $bg-color;
     }
   }

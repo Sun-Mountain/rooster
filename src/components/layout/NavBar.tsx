@@ -69,7 +69,7 @@ const NavBar = () => {
                     </Link>
                   </div>
                   <div>
-                    <Link href="/" className="dashboard-link short-mobile-btn">
+                    <Link href="/dashboard" className="dashboard-link short-mobile-btn">
                       <AccountCircleIcon /> <span className="hide-for-mobile">Student Dashboard</span>
                     </Link>
                   </div>

@@ -67,6 +67,30 @@
   }
 }
 
+.dashboard-main-content {
+  margin: 1.5rem 5px;
+
+  .content-box {
+    background-color: $stat-box-bg;
+    border: 1px solid $stat-box-border-color;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .content-box-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    a, a:visited {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: $stat-box-link-color;
+      text-decoration: none;
+    }
+  }
+}
 
 @media (min-width: $sm) {
   #admin-dashboard-container {

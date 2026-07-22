@@ -11,7 +11,7 @@ const SessionListSummary = () => {
           <h2>Upcoming Sessions</h2>
         </div>
         <div>
-          <Link href="/sessions">
+          <Link href="/admin/sessions">
             View all <ChevronRight />
           </Link>
         </div>

@@ -1,0 +1,113 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.user-dashboard-nav {
+  background-color: $lg-navbar-color;
+
+  .user-nav-content {
+    margin: 0 auto;
+    max-width: $max-screen-width;
+    background-color: $navbar-color;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+
+    ul {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0 1rem;
+
+      li {
+        align-items: center;
+        text-align: center;
+      }
+
+      .hide-on-mobile {
+        display: none;
+      }
+
+      .show-for-mobile {
+        display: block;
+      }
+
+      .user-dashboard-link, .user-dashboard-link:visited {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        text-decoration: none;
+        color: $admin-dash-link-text;
+        font-size: 0.8rem;
+        text-decoration: none;
+        opacity: 0.65;
+
+        padding: 0.75rem;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $sm) {
+  .user-dashboard-nav {
+    background-color: $lg-navbar-color;
+    .user-nav-content {
+      background-color: $lg-navbar-color;
+      position: relative;
+
+      ul {
+        align-items: flex-end;
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+
+      .hide-on-mobile {
+        display: inline-block !important;
+      }
+
+      .show-for-mobile {
+        display: none;
+      }
+
+      .user-dashboard-link, .user-dashboard-link:visited {
+        flex-direction: row !important;
+
+        text-decoration: none;
+        color: $nav-link-color !important;
+        border-bottom: 2px solid transparent;
+        font-size: 0.8rem;
+        text-decoration: none;
+        opacity: 1 !important;
+
+        padding: 1rem;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          margin-right: 0.5rem;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &.active {
+          color: $nav-link-active !important;
+          border-bottom: 2px solid $nav-link-active;
+        }
+      }
+    }
+  }
+}

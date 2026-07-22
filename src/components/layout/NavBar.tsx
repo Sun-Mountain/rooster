@@ -57,7 +57,7 @@ const NavBar = () => {
       <div className="navbar-content-container">
         <div className="navbar-content">
           <div id="logo-container">
-            <Link href="/" id="logo-link"></Link>
+            <Link href={!user ? "/" : "/dashboard"} id="logo-link"></Link>
           </div>
           {user ? (
             <div className="logged-in-links">
@@ -68,13 +68,18 @@ const NavBar = () => {
                       <SettingsOutlinedIcon /> <span className="hide-for-mobile">Admin Settings</span>
                     </Link>
                   </div>
-                  <div>
-                    <Link href="/dashboard" className="dashboard-link short-mobile-btn">
-                      <AccountCircleIcon /> <span className="hide-for-mobile">Student Dashboard</span>
-                    </Link>
-                  </div>
                 </>
               )}
+              <div>
+                <Link href="/profile" className={`dashboard-link short-mobile-btn ${user?.role === "USER" && "show-for-mobile"}`}>
+                  <AccountCircleIcon />
+                  {user?.role !== "USER" && (
+                  <span className="hide-for-mobile">
+                    Student Profile
+                  </span>
+                  )}
+                </Link>
+              </div>
               <div>
                 <SignOutButton />
               </div>

@@ -141,8 +141,7 @@ model ContactAddress {
 
 model EmergencyContact {
   id           String   @id @default(cuid())
-  firstName    String?
-  lastName     String?
+  name         String?
   relationship String?
   phone        String?
   userId       String

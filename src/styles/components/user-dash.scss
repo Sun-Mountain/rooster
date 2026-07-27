@@ -60,6 +60,110 @@
   }
 }
 
+.user-dashboard-page-container {
+  max-width: $sm;
+  margin: 0 auto;
+  color: $slate-gray;
+
+  .user-profile-avatar {
+    margin: 0 auto;
+    width: 75px;
+    height: 75px;;
+    border-radius: 10px;
+    background-color: $brown-red; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to bottom right, $brown-red, $dark-cyan);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $seasalt;
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  h3 {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 550;
+    letter-spacing: 1px;
+  }
+
+  .content-section {
+    background-color: $lg-navbar-color;
+    border: 1px solid $stat-box-border-color;
+    border-radius: 10px;
+    margin-bottom: 20px !important;
+
+    .section-header {
+      border-bottom: 1px solid $stat-box-border-color;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+
+      h3 {
+        margin-left: 10px;
+        align-content: center;
+      }
+
+      svg {
+        color: $svg-color-danger;
+      }
+
+      div {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+      }
+
+      &.with-cav {
+        justify-content: space-between;
+      }
+
+      .caveat {
+        font-size: 12px;
+      }
+    }
+
+    .section-content {
+      padding: 20px;
+
+      .form-container {
+        width: auto;
+      }
+    }
+  }
+}
+
+#profile-page {
+  .content-section {
+    margin: 0 auto;
+    max-width: $sm;
+  }
+}
+
+#student-profile {
+  &.content-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .student-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 20px 0 0 0;
+
+    h3 {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 1.5rem;
+    }
+  }
+}
+
 @media (min-width: $sm) {
   .user-dashboard-nav {
     background-color: $lg-navbar-color;
@@ -106,6 +210,27 @@
         &.active {
           color: $nav-link-active !important;
           border-bottom: 2px solid $nav-link-active;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $xs) {
+  #student-profile {
+    &.content-section {
+      .section-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+
+        .user-profile-avatar {
+          margin: 0 20px;
+        }
+
+        .student-info {
+          margin-top: 0;
         }
       }
     }

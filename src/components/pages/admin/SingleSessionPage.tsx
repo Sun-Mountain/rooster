@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { TermProps } from "@/lib/props";
-import { Adjust } from "@mui/icons-material";
-import Button from "@/components/.ui/Button";
 import { dateFormat, titleCaseFormat } from "@/helpers/formatting";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from "next/link";

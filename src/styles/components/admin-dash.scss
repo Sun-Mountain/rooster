@@ -5,6 +5,10 @@
   display: flex;
   flex-direction: column-reverse;
 
+  .main-content-container {
+    margin: 0;
+  }
+
   .admin-dashboard-nav {
     background-color: $navbar-color;
     bottom: 0;

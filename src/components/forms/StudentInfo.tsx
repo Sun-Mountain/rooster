@@ -1,34 +1,77 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useEffect,
+  useState,
+  SetStateAction,
+  Dispatch
+} from "react";
+import { UserInfoProps } from "@/lib/props";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import TextField from "@/components/.ui/TextField";
-import { UserProps } from "@/lib/props";
 
 interface StudentFormProps {
-  user?: UserProps;
+  setUserInfo: Dispatch<SetStateAction<UserInfoProps | undefined>>;
+  userInfo?: UserInfoProps;
 }
 
-
-const StudentInfoForm = ({ user }: StudentFormProps) => {
+const StudentInfoForm = ({ userInfo, setUserInfo }: StudentFormProps) => {
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    // phone: user?.phone || "",
-    email: user?.email || "",
+    firstName: userInfo?.firstName || "",
+    lastName: userInfo?.lastName || "",
+    phone: userInfo?.contact?.phone || "",
+    email: userInfo?.email || "",
+    street1: userInfo?.contact?.street1 || "",
+    street2: userInfo?.contact?.street2 || "",
+    city: userInfo?.contact?.city || "",
+    state: userInfo?.contact?.state || "",
+    zip: userInfo?.contact?.zip || ""
   });
 
   useEffect(() => {
     const fillForm = () => {
       setFormData({
-        firstName: user?.firstName || "",
-        lastName: user?.lastName || "",
-        // phone: user?.phone || "",
-        email: user?.email || "",
+        firstName: userInfo?.firstName || "",
+        lastName: userInfo?.lastName || "",
+        phone: userInfo?.contact?.phone || "",
+        email: userInfo?.email || "",
+        street1: userInfo?.contact?.street1 || "",
+        street2: userInfo?.contact?.street2 || "",
+        city: userInfo?.contact?.city || "",
+        state: userInfo?.contact?.state || "",
+        zip: userInfo?.contact?.zip || ""
       });
     }
     fillForm();
-  }, [user]);
+  }, [userInfo]);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+
+    setUserInfo(prevInfo => {
+      if (!prevInfo) return prevInfo;
+      
+      if (name === "phone" || name === "street1" || name === "street2" || name === "city" || name === "state" || name === "zip") {
+        return {
+          ...prevInfo,
+          contact: {
+            ...prevInfo.contact,
+            [name]: value
+          }
+        };
+      }
+      
+      return {
+        ...prevInfo,
+        [name]: value
+      };
+    });
+  };
 
   return (
     <div className="content-section">
@@ -45,6 +88,7 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 name="firstName"
                 type="text"
                 initialValue={formData.firstName}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.firstName?.errors[0]}
                 formHelperText
@@ -54,6 +98,7 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 name="lastName"
                 type="text"
                 initialValue={formData.lastName}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText
@@ -64,6 +109,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 label="Phone Number"
                 name="phone"
                 type="text"
+                initialValue={formData.phone}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.firstName?.errors[0]}
                 formHelperText
@@ -73,6 +120,7 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 name="email"
                 type="text"
                 initialValue={formData.email}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText
@@ -82,6 +130,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
               label="Address Line 1"
               name="street1"
               type="text"
+              initialValue={formData.street1}
+              onChange={handleInputChange}
               // disabled={isLoading}
               // errorMsg={signUpErrors.lastName?.errors[0]}
               formHelperText
@@ -90,6 +140,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
               label="Address Line 2 (optional)"
               name="street2"
               type="text"
+              initialValue={formData.street2}
+              onChange={handleInputChange}
               // disabled={isLoading}
               // errorMsg={signUpErrors.lastName?.errors[0]}
               formHelperText
@@ -99,6 +151,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 label="City"
                 name="city"
                 type="text"
+                initialValue={formData.city}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText
@@ -107,6 +161,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 label="State"
                 name="state"
                 type="text"
+                initialValue={formData.state}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText
@@ -115,6 +171,8 @@ const StudentInfoForm = ({ user }: StudentFormProps) => {
                 label="ZIP Code"
                 name="zip"
                 type="text"
+                initialValue={formData.zip}
+                onChange={handleInputChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText

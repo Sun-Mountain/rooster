@@ -1,8 +1,52 @@
+"use client";
 
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import TextField from "@/components/.ui/TextField";
+import { UserInfoProps } from "@/lib/props";
 
-const EmergencyContactForm = () => {
+interface EmergencyContactFormProps {
+  setUserInfo: Dispatch<SetStateAction<UserInfoProps | undefined>>;
+  emergencyContact?: UserInfoProps["emergency"];
+}
+
+const EmergencyContactForm = ({ emergencyContact, setUserInfo }: EmergencyContactFormProps) => {
+  const [formData, setFormData] = useState({
+    name: emergencyContact?.name || "",
+    relationship: emergencyContact?.relationship || "",
+    phone: emergencyContact?.phone || ""
+  });
+
+  useEffect(() => {
+    const fillForm = () => {
+      setFormData({
+        name: emergencyContact?.name || "",
+        relationship: emergencyContact?.relationship || "",
+        phone: emergencyContact?.phone || ""
+      });
+    }
+    fillForm();
+  }, [emergencyContact]);
+
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+
+    setUserInfo(prevInfo => {
+      if (!prevInfo) return prevInfo;
+      return {
+        ...prevInfo,
+        emergency: {
+          ...prevInfo.emergency,
+          [name]: value
+        }
+      };
+    });
+  };
+
   return (
     <div className="content-section">
       <div className="section-header with-cav">
@@ -22,6 +66,8 @@ const EmergencyContactForm = () => {
                 label="Full Name"
                 name="name"
                 type="text"
+                initialValue={formData.name}
+                onChange={handleFormChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.firstName?.errors[0]}
                 formHelperText
@@ -30,6 +76,8 @@ const EmergencyContactForm = () => {
                 label="Relationship (optional)"
                 name="relationship"
                 type="text"
+                initialValue={formData.relationship}
+                onChange={handleFormChange}
                 // disabled={isLoading}
                 // errorMsg={signUpErrors.lastName?.errors[0]}
                 formHelperText
@@ -39,6 +87,8 @@ const EmergencyContactForm = () => {
               label="Phone Number"
               name="phone"
               type="text"
+              initialValue={formData.phone}
+              onChange={handleFormChange}
               // disabled={isLoading}
               // errorMsg={signUpErrors.firstName?.errors[0]}
               formHelperText

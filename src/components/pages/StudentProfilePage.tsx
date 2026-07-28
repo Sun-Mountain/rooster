@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import { UserProps } from "@/lib/props";
+import { UserProps, UserInfoProps } from "@/lib/props";
 import StudentSummary from '@/components/content/StudentSummary';
 import StudentInfoForm from "@/components/forms/StudentInfo";
 import EmergencyContactForm from "@/components/forms/EmergencyContact";
@@ -12,24 +12,7 @@ const StudentProfilePage = () => {
   const { data: session } = useSession();
   const user = session?.user as UserProps | undefined;
 
-  const [userInfo, setUserInfo] = useState<{
-    firstName: string;
-    lastName: string;
-    email: string;
-    contact: {
-      street1?: string;
-      street2?: string;
-      city?: string;
-      state?: string;
-      zip?: string;
-      phone?: string;
-    };
-    emergency: {
-      name?: string;
-      relationship?: string;
-      phone?: string;
-    }
-  } | undefined>(undefined);
+  const [userInfo, setUserInfo] = useState<UserInfoProps | undefined>(undefined);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -40,6 +23,7 @@ const StudentProfilePage = () => {
         const emergencyContact = await fetch(`/api/user/emergency?userId=${user.id}`);
         const emergencyData = await emergencyContact.json();
         setUserInfo({
+          id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
@@ -64,13 +48,17 @@ const StudentProfilePage = () => {
     fetchUserInfo();
   }, [user]);
 
+  const saveChanges = () => {
+    console.log(userInfo);
+  }
+
   return (
     <div id="profile-page" className="user-dashboard-page-container">
       <StudentSummary user={user} />
-      <StudentInfoForm user={user} />
-      <EmergencyContactForm />
+      <StudentInfoForm userInfo={userInfo} setUserInfo={setUserInfo} />
+      <EmergencyContactForm emergencyContact={userInfo?.emergency} setUserInfo={setUserInfo} />
       <div>
-        <Button>
+        <Button onClick={saveChanges}>
           Save Profile
         </Button>
       </div>

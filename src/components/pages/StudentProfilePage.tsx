@@ -61,6 +61,7 @@ const StudentProfilePage = () => {
     updateUser({
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
+      name: `${userInfo.firstName} ${userInfo.lastName}`,
     });
   }
 

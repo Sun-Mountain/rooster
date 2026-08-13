@@ -8,6 +8,7 @@ import StudentInfoForm from "@/components/forms/StudentInfo";
 import EmergencyContactForm from "@/components/forms/EmergencyContact";
 import Button from "@/components/.ui/Button";
 import { getOrCreateContactInfo } from "@/lib/api/userContactInfo";
+import { updateUser } from "@/lib/auth-client";
 
 const StudentProfilePage = () => {
   const { data: session } = useSession();
@@ -19,8 +20,7 @@ const StudentProfilePage = () => {
     const fetchUserInfo = async () => {
       if (!user) return;
       try {
-        const contactInfoResponse = await fetch(`/api/user/contact?userId=${user.id}`);
-        const contactInfo = await contactInfoResponse.json();
+        const contactInfo = await getOrCreateContactInfo(user.id);
         const emergencyContact = await fetch(`/api/user/emergency?userId=${user.id}`);
         const emergencyData = await emergencyContact.json();
         setUserInfo({
@@ -50,17 +50,18 @@ const StudentProfilePage = () => {
   }, [user]);
 
   const saveChanges = async () => {
-    console.log(userInfo);
-    const response = await fetch(`/api/user/contact`, {
+    if (!user || !userInfo) return;
+    await fetch(`/api/user/contact`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId: user?.id, body: userInfo?.contact }),
     });
-    if (!response.ok) {
-      console.error("Failed to save changes", await response.json());
-    }
+    updateUser({
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+    });
   }
 
   return (

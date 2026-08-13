@@ -2,7 +2,6 @@ import db from "@/lib/prisma";
 import { ContactAddress, Prisma } from "@client";
 
 export const createContactInfo = async (data: Prisma.ContactAddressCreateInput): Promise<ContactAddress> => {
-  console.log({data})
   return await db.contactAddress.create({
     data,
   });

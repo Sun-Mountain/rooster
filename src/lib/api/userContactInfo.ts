@@ -1,7 +1,8 @@
 export const getOrCreateContactInfo = async (userId: string) => {
   try {
     const contactInfo = await fetch(`/api/user/contact?userId=${userId}`);
-    if (contactInfo === null) {
+    const contactInfoJSON = await contactInfo.json();
+    if (contactInfoJSON === null) {
       const newContactInfo = await fetch(`/api/user/contact`, {
         method: "POST",
         headers: {
@@ -18,7 +19,6 @@ export const getOrCreateContactInfo = async (userId: string) => {
       });
       return newContactInfo.json();
     } else {
-      const contactInfoJSON = await contactInfo.json();
       return contactInfoJSON;
     }
   } catch (error) {

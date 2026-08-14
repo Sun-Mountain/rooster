@@ -8,6 +8,7 @@ import StudentInfoForm from "@/components/forms/StudentInfo";
 import EmergencyContactForm from "@/components/forms/EmergencyContact";
 import Button from "@/components/.ui/Button";
 import { getOrCreateContactInfo } from "@/lib/api/userContactInfo";
+import { getOrCreateEmergencyContact } from "@/lib/api/userEmergencyContact";
 import { updateUser } from "@/lib/auth-client";
 
 const StudentProfilePage = () => {
@@ -21,8 +22,7 @@ const StudentProfilePage = () => {
       if (!user) return;
       try {
         const contactInfo = await getOrCreateContactInfo(user.id);
-        const emergencyContact = await fetch(`/api/user/emergency?userId=${user.id}`);
-        const emergencyData = await emergencyContact.json();
+        const emergencyContactResponse = await getOrCreateEmergencyContact(user.id);
         setUserInfo({
           id: user.id,
           firstName: user.firstName,
@@ -37,9 +37,9 @@ const StudentProfilePage = () => {
             phone: contactInfo?.phone || ""
           },
           emergency: {
-            name: emergencyData?.name || "",
-            relationship: emergencyData?.relationship || "",
-            phone: emergencyData?.phone || ""
+            name: emergencyContactResponse?.name || "",
+            relationship: emergencyContactResponse?.relationship || "",
+            phone: emergencyContactResponse?.phone || ""
           }
         });
       } catch (error) {

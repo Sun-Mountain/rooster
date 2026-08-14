@@ -58,6 +58,13 @@ const StudentProfilePage = () => {
       },
       body: JSON.stringify({ userId: user?.id, body: userInfo?.contact }),
     });
+    await fetch(`/api/user/emergency`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user?.id, body: userInfo?.emergency }),
+    });
     updateUser({
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,

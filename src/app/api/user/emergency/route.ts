@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { createEmergencyContact, getEmergencyContactByUserId } from "@/lib/prisma/emergencyContact";
+import { createEmergencyContact, getEmergencyContactByUserId, updateEmergencyContact } from "@/lib/prisma/emergencyContact";
 
 export async function GET(
   request: NextRequest
@@ -26,6 +26,21 @@ export async function POST(
     }
     const newContactInfo = await createEmergencyContact({userId, ...body});
     return NextResponse.json(newContactInfo);
+  } catch (error) {
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
+  }
+}
+
+export async function PUT(
+  request: NextRequest
+) {
+  try {
+    const { userId, body } = await request.json();
+    if (!userId || !body) {
+      return NextResponse.json({ error: "User ID and body are required" }, { status: 400 });
+    }
+    const updatedContactInfo = await updateEmergencyContact(userId, {...body});
+    return NextResponse.json(updatedContactInfo);
   } catch (error) {
     return NextResponse.json({ error: `${error}` }, { status: 500 });
   }

@@ -7,6 +7,7 @@ import { useWindowSize } from "@/helpers/useWindowSize";
 import { UserProps } from "@/lib/props";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import CartModal from "@/components/modals/Cart";
 import Link from "next/link";
 import Drawer from "@/components/.ui/Drawer";
 import MainNavLinks from "@/components/content/MainNavLinks";
@@ -67,6 +68,13 @@ const NavBar = () => {
                     <Link href="/admin/settings" className="dashboard-link short-mobile-btn show-for-mobile">
                       <SettingsOutlinedIcon /> <span className="hide-for-mobile">Admin Settings</span>
                     </Link>
+                  </div>
+                </>
+              )}
+              {!pathname.includes("/admin") && (
+                <>
+                  <div className="dashboard-actions">
+                      <CartModal />
                   </div>
                 </>
               )}

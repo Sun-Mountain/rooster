@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import { UserProps, UserInfoProps } from "@/lib/props";
+import Skeleton from '@mui/material/Skeleton';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import StudentSummary from '@/components/content/StudentSummary';
 import StudentInfoForm from "@/components/forms/StudentInfo";
 import EmergencyContactForm from "@/components/forms/EmergencyContact";
@@ -15,10 +17,12 @@ const StudentProfilePage = () => {
   const { data: session } = useSession();
   const user = session?.user as UserProps | undefined;
 
+  const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<UserInfoProps | undefined>(undefined);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
+      setIsLoading(true);
       if (!user) return;
       try {
         const contactInfo = await getOrCreateContactInfo(user.id);
@@ -46,7 +50,7 @@ const StudentProfilePage = () => {
         console.error("Failed to fetch user info", error);
       }
     };
-    fetchUserInfo();
+    fetchUserInfo().finally(() => setIsLoading(false));
   }, [user]);
 
   const saveChanges = async () => {
@@ -74,14 +78,16 @@ const StudentProfilePage = () => {
 
   return (
     <div id="profile-page" className="user-dashboard-page-container">
-      <StudentSummary user={user} />
-      <StudentInfoForm userInfo={userInfo} setUserInfo={setUserInfo} />
-      <EmergencyContactForm emergencyContact={userInfo?.emergency} setUserInfo={setUserInfo} />
-      <div>
-        <Button onClick={saveChanges}>
-          Save Profile
-        </Button>
-      </div>
+      {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <StudentSummary user={user} />}
+      {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <StudentInfoForm userInfo={userInfo} setUserInfo={setUserInfo} />}
+      {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <EmergencyContactForm emergencyContact={userInfo?.emergency} setUserInfo={setUserInfo} />}
+      {!isLoading && (
+        <div className="button-container">
+          <Button className="w-icon" onClick={saveChanges}>
+            <SaveOutlinedIcon /> Save Profile
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

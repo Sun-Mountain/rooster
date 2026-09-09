@@ -139,6 +139,11 @@
     margin: 0 auto;
     max-width: $sm;
   }
+
+  .button-container {
+    float: right;
+    max-width: 150px;
+  }
 }
 
 #student-profile {

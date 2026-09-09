@@ -75,6 +75,10 @@ ul {
   top:0%;
 }
 
+.MuiSkeleton-root + .MuiSkeleton-root {
+  margin-top: 20px;
+}
+
 @media (max-width: $md) {
   .hide-for-mobile {
     display: none;

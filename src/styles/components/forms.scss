@@ -35,6 +35,14 @@
     margin-bottom: 0;
   }
 
+  .form-warning {
+    background-color: #fff4e5;
+    border: 1px solid #f0b36b;
+    color: #8a4b08;
+    margin: 0 0 20px;
+    padding: 10px 12px;
+  }
+
   &.modal-form {
     padding-bottom: 0;
     padding-top: 0;

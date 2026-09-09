@@ -3,7 +3,6 @@
 import { SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
-import { Error } from "@mui/icons-material";
 import Button from "@/components/.ui/Button";
 import TextField from "@/components/.ui/TextField";
 import AuthLinks from "@/components/content/AuthLinks";
@@ -132,6 +131,11 @@ const SignInSignUpForm = ({ signUp = false, verificationPending = false }: SignI
         )}
       </div>
       <form onSubmit={onSubmit} className="form">
+        {formError && (
+          <p className="form-warning" role="alert">
+            {formError}
+          </p>
+        )}
         {signUp && (
           <>
             <TextField

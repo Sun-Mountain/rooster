@@ -70,6 +70,26 @@ export interface UserProps {
   image?: string;
 }
 
+export interface UserInfoProps {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  contact: {
+    street1?: string;
+    street2?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+    phone?: string;
+  };
+  emergency: {
+    name?: string;
+    relationship?: string;
+    phone?: string;
+  }
+}
+
 export interface ClassDetailScheduleProps {
   classSchedule: {
     id: string;

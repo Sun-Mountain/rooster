@@ -15,6 +15,7 @@
 @forward './components/sessions.scss';
 @forward './components/stat-boxes.scss';
 @forward './components/tables.scss';
+@forward './components/user-dash.scss';
 
 body {
   background-color: $bg-color;
@@ -39,9 +40,14 @@ main {
   width: 100%;
 }
 
-footer, main {
+#admin-dashboard-container, .main-content-container {
   margin: 0 auto;
   max-width: $max-screen-width;
+}
+
+footer, main {
+  margin: 0 auto;
+  // max-width: $max-screen-width;
 }
 
 footer {
@@ -67,6 +73,10 @@ ul {
   background-color: $navbar-color;
   position: relative; 
   top:0%;
+}
+
+.MuiSkeleton-root + .MuiSkeleton-root {
+  margin-top: 20px;
 }
 
 @media (max-width: $md) {

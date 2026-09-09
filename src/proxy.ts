@@ -5,12 +5,12 @@ import { PUBLIC_ROUTES } from "./lib/routes";
 
 export async function proxy(req: NextResponse) {
   const { pathname } = new URL(req.url);
-    const session = await auth.api.getSession({
-        headers: await headers()
-    })
+  const session = await auth.api.getSession({
+      headers: await headers()
+  })
   const user = session?.user;
 
-  if (PUBLIC_ROUTES.includes(pathname)) {
+  if (!user && PUBLIC_ROUTES.includes(pathname)) {
     return NextResponse.next();
   }
 
@@ -18,7 +18,7 @@ export async function proxy(req: NextResponse) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  if (user.role === 'USER' && pathname.startsWith('/admin')) {
+  if (user.role !== 'SUPER' && user.role !== 'ADMIN' && pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 

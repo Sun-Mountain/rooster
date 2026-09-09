@@ -51,9 +51,6 @@ export const createClassTermDetail = async (
   data: ClassTermDetailWithRelations,
 ): Promise<ClassTermDetails> => {
   const { price, capacity, termSpecificDescription, classId, termId, classInstances } = data;
-
-  console.log("Parsed values - Price:", price, "Capacity:", capacity, "Term Specific Description:", termSpecificDescription, "Class ID:", classId, "Term ID:", termId, "Class Instances:", classInstances);
-
   try {
     const createClassInstances = (
       classInstancesData: ClassInstanceCreateInput[]

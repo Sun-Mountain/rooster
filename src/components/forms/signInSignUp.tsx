@@ -115,7 +115,7 @@ const SignInSignUpForm = ({ signUp = false }: SignInSignUpFormProps) => {
       if (response.error) {
         setFormError(response.error.message || "Something went wrong.");
       } else {
-        router.push("/profile");
+        router.push("/dashboard");
       }
     }
     setIsLoading(false);

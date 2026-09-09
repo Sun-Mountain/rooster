@@ -35,8 +35,6 @@ const DashboardOverview = () => {
         <StatBox
           title="live sessions"
           total={stats.liveSessions}
-          link="/admin/sessions"
-          linkText="View All"
           otherStat={`${stats.totalSessions} total`}
         />
         <StatBox title="enrollments" total="coming soon" />

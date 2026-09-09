@@ -1,0 +1,159 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.classes-page {
+  margin: 0 auto;
+  max-width: $lg;
+  padding: 56px 24px 72px;
+}
+
+.classes-page-header {
+  border-bottom: 1px solid $table-border-color;
+  margin-bottom: 42px;
+  padding-bottom: 28px;
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin: 8px 0 12px;
+  }
+
+  > p:last-child {
+    color: $slate-gray;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+}
+
+.eyebrow {
+  color: $back-link-color;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.class-term {
+  margin-bottom: 56px;
+}
+
+.class-term-header {
+  align-items: end;
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 1.8rem;
+    margin: 7px 0;
+  }
+}
+
+.term-dates,
+.term-description {
+  color: $slate-gray;
+  margin: 0;
+}
+
+.term-description {
+  max-width: 34rem;
+  text-align: right;
+}
+
+.class-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.public-class-card {
+  background: $card-bg;
+  border: 1px solid $table-border-color;
+  border-top: 4px solid $back-link-color;
+  padding: 24px;
+}
+
+.public-class-card-heading {
+  align-items: start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+.class-price {
+  color: $header-color;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.class-description {
+  color: $slate-gray;
+  line-height: 1.5;
+  margin: 16px 0 22px;
+}
+
+.class-meta {
+  border-top: 1px solid $table-border-color;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-top: 16px;
+
+  div {
+    display: grid;
+    gap: 4px;
+  }
+
+  dt {
+    color: $slate-gray;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  dd span {
+    display: block;
+  }
+}
+
+.classes-empty-state {
+  border: 1px dashed $table-border-color;
+  padding: 48px 24px;
+  text-align: center;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: $slate-gray;
+    margin: 0;
+  }
+}
+
+@media (max-width: $md) {
+  .classes-page {
+    padding: 36px 16px 52px;
+  }
+
+  .class-term-header {
+    align-items: start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .term-description {
+    text-align: left;
+  }
+}

@@ -75,6 +75,109 @@ async function main() {
       description: 'description of test trapeze',
     },
   });
+
+  await prisma.location.upsert({
+    where: { id: 'test-main-studio' },
+    update: {
+      name: 'Main Studio',
+      type: 'indoor',
+    },
+    create: {
+      id: 'test-main-studio',
+      name: 'Main Studio',
+      type: 'indoor',
+    },
+  });
+
+  await prisma.term.upsert({
+    where: { id: 'test-spring-2027' },
+    update: {
+      name: 'Spring 2027',
+      description: 'A test term for browsing and registering for classes.',
+      startDate: '2027-03-01',
+      endDate: '2027-04-23',
+      weeks: 8,
+      status: 'LIVE',
+    },
+    create: {
+      id: 'test-spring-2027',
+      name: 'Spring 2027',
+      description: 'A test term for browsing and registering for classes.',
+      startDate: '2027-03-01',
+      endDate: '2027-04-23',
+      weeks: 8,
+      status: 'LIVE',
+    },
+  });
+
+  await prisma.classTermDetails.upsert({
+    where: { id: 'test-spring-2027-silks' },
+    update: {
+      price: 180,
+      capacity: 12,
+      termSpecificDescription: 'Build strength, vocabulary, and confidence on the silks.',
+      locationId: 'test-main-studio',
+      classInstances: {
+        deleteMany: {},
+        create: {
+          daysOfTheWeek: ['Monday'],
+          startTime: '18:00',
+          endTime: '19:30',
+        },
+      },
+    },
+    create: {
+      id: 'test-spring-2027-silks',
+      classId: 'test-silks',
+      termId: 'test-spring-2027',
+      price: 180,
+      capacity: 12,
+      termSpecificDescription: 'Build strength, vocabulary, and confidence on the silks.',
+      locationId: 'test-main-studio',
+      classInstances: {
+        create: {
+          daysOfTheWeek: ['Monday'],
+          startTime: '18:00',
+          endTime: '19:30',
+        },
+      },
+    },
+  });
+
+  await prisma.classTermDetails.upsert({
+    where: { id: 'test-spring-2027-trapeze' },
+    update: {
+      price: 195,
+      capacity: 10,
+      termSpecificDescription: 'Learn foundational trapeze skills in a supportive class setting.',
+      locationId: 'test-main-studio',
+      classInstances: {
+        deleteMany: {},
+        create: {
+          daysOfTheWeek: ['Wednesday'],
+          startTime: '19:00',
+          endTime: '20:30',
+        },
+      },
+    },
+    create: {
+      id: 'test-spring-2027-trapeze',
+      classId: 'test-trapeze',
+      termId: 'test-spring-2027',
+      price: 195,
+      capacity: 10,
+      termSpecificDescription: 'Learn foundational trapeze skills in a supportive class setting.',
+      locationId: 'test-main-studio',
+      classInstances: {
+        create: {
+          daysOfTheWeek: ['Wednesday'],
+          startTime: '19:00',
+          endTime: '20:30',
+        },
+      },
+    },
+  });
+
   await prisma.user.upsert({
     where: { email: 'rob.c@prisma.io' },
     update: {},

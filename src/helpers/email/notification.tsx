@@ -1,17 +1,6 @@
-import nodemailer from "nodemailer";
 import { getUserById } from "@/lib/prisma/user";
 import { logger } from "@/helpers/logger";
-
-// Create a transporter using SMTP
-const transporter = nodemailer.createTransport({
-  host: "smtp.example.com",
-  port: 587,
-  secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+import transporter from "@/helpers/email/email_config";
 
 // Send a notification email to set of users based on an array of user IDs. The subject line and text of the email message also need to be provided provided
 export async function sendNotificationEmail(users: Array<string>, subjectLine: string, emailText: string){
@@ -23,7 +12,7 @@ export async function sendNotificationEmail(users: Array<string>, subjectLine: s
 				continue;
 			}
 			const info = await transporter.sendMail({
-				from: '"No Reply" <no-reply@rooster.com>',
+				from: process.env.SMTP_FROM,
 				to: userInfo.email,
 				subject: subjectLine,
 				html: emailText

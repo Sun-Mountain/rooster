@@ -43,6 +43,56 @@ export const getAllTerms = async (): Promise<Term[]> => {
   });
 };
 
+export const getLiveTermsWithClasses = async () => {
+  return await db.term.findMany({
+    where: {
+      status: "LIVE",
+    },
+    orderBy: {
+      startDate: "asc",
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      startDate: true,
+      endDate: true,
+      weeks: true,
+      classes: {
+        orderBy: {
+          class: {
+            name: "asc",
+          },
+        },
+        select: {
+          id: true,
+          price: true,
+          capacity: true,
+          termSpecificDescription: true,
+          location: {
+            select: {
+              name: true,
+            },
+          },
+          class: {
+            select: {
+              name: true,
+              description: true,
+            },
+          },
+          classInstances: {
+            select: {
+              daysOfTheWeek: true,
+              startTime: true,
+              endTime: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
 export const getTermByNameAndDate = async (name: string, date: string): Promise<Term | null> => {
   return await db.term.findFirst({
     where: {

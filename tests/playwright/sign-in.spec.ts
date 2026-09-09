@@ -30,7 +30,7 @@ test.describe('Sign In', () => {
         test('has forgot password link', async ({ page }) => {
             const forgotPasswordLink = await page.getByRole('link', { name: 'Forgot Password?' })
             await expect(forgotPasswordLink).toBeVisible();
-            await expect(forgotPasswordLink).toHaveAttribute('href', '/forgot-password');
+            await expect(forgotPasswordLink).toHaveAttribute('href', '/password');
         });
     });
 

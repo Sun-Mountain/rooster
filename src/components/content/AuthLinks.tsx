@@ -24,9 +24,9 @@ const AuthLinks = () => {
           </Link>
         </li>
       )}
-      {pathname !== "/forgot-password" && (
+      {pathname !== "/password" && (
         <li>
-          <Link href="/forgot-password">Forgot Password?</Link>
+          <Link href="/password">Forgot Password?</Link>
         </li>
       )}
     </ul>

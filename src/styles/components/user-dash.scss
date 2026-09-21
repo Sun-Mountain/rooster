@@ -141,8 +141,23 @@
   }
 
   .button-container {
-    float: right;
-    max-width: 150px;
+    display: flex;
+    width: 100%;
+
+    button {
+      margin: 0 0 0 auto;
+      width: 150px;
+      font-size: 1rem;
+    }
+  }
+
+  .reset-btn-container {
+    display: flex;
+    justify-content: center;
+    .reset-btn {
+      background-color: $onyx;
+      width: 200px;
+    }
   }
 }
 

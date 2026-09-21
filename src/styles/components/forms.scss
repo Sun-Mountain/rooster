@@ -43,7 +43,15 @@
 }
 
 .solo-form {
+  margin-top: 25px;
   width: 45vw;
+
+  .form-btn-container {
+    button {
+      font-size: 1.2rem;
+      justify-content: center;
+    }
+  }
 }
 
 .text-field-container {

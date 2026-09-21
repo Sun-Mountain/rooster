@@ -13,6 +13,8 @@ import { getOrCreateContactInfo } from "@/lib/api/userContactInfo";
 import { getOrCreateEmergencyContact } from "@/lib/api/userEmergencyContact";
 import { updateUser } from "@/lib/auth-client";
 
+import ResetPasswordModal from "@/components/modals/ResetPassword";
+
 const StudentProfilePage = () => {
   const { data: session } = useSession();
   const user = session?.user as UserProps | undefined;
@@ -81,13 +83,16 @@ const StudentProfilePage = () => {
       {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <StudentSummary user={user} />}
       {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <StudentInfoForm userInfo={userInfo} setUserInfo={setUserInfo} />}
       {isLoading ? <Skeleton variant="rounded" width="100%" height={118} /> : <EmergencyContactForm emergencyContact={userInfo?.emergency} setUserInfo={setUserInfo} />}
-      {!isLoading && (
         <div className="button-container">
           <Button className="w-icon" onClick={saveChanges}>
             <SaveOutlinedIcon /> Save Profile
           </Button>
         </div>
+      <div className="reset-btn-container">
+      {!isLoading && (
+        <ResetPasswordModal setIsLoading={setIsLoading} />
       )}
+      </div>
     </div>
   )
 }

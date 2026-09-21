@@ -90,7 +90,7 @@ const StudentProfilePage = () => {
         </div>
       <div className="reset-btn-container">
       {!isLoading && (
-        <ResetPasswordModal />
+        <ResetPasswordModal setIsLoading={setIsLoading} />
       )}
       </div>
     </div>

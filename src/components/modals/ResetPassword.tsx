@@ -6,15 +6,19 @@ import ModalComponent from "@/components/.ui/Modal";
 import TextField from "@/components/.ui/TextField";
 import PasswordForm from "@/components/forms/Password";
 
-const ResetPasswordModal = () => {
+const ResetPasswordModal = ({ setIsLoading }: { setIsLoading: Dispatch<SetStateAction<boolean>> }) => {
+  const [closeOnAction, setCloseOnAction] = useState(false);
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle password reset logic here
   };
 
-  const addClassBtn = <>New <span className="hide-for-mobile">Class</span></>;
-
+  const submitBtn = (
+    <Button className="primary" type="submit" handleSubmit={handleSubmit}>
+      Reset Password
+    </Button>
+  );
 
   return (
     <ModalComponent
@@ -23,8 +27,8 @@ const ResetPasswordModal = () => {
         modalBtnContent="Reset Password"
         modalBtnClassName="w-icon reset-btn"
         modalHeader={<h2>Reset Password</h2>}
-        // btnAction={submitBtn}
-        // closeOnAction={closeOnAction}
+        btnAction={submitBtn}
+        closeOnAction={closeOnAction}
       >
       <PasswordForm />
     </ModalComponent>

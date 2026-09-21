@@ -1,7 +1,9 @@
-export default function PasswordPage() {
+import PasswordForm from "@/components/forms/Password";
+
+export default function PasswordRecoveryPage() {
   return (
     <>
-      <h1>Password</h1>
+      <PasswordForm recovery />
     </>
   );
 }

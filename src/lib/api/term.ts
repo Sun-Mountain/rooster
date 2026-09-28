@@ -56,7 +56,7 @@ export const fetchLiveTerms = async (
   setIsLoading: Dispatch<SetStateAction<boolean>>,
 ) => {
   try {
-    const res = await fetch("/api/admin/terms/live");
+    const res = await fetch("/api/terms/live");
     if (!res.ok) throw new Error("Failed to fetch live sessions.")
     const data = await res.json();
     setTermList(data)

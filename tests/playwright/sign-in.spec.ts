@@ -15,7 +15,7 @@ test.describe('Sign In', () => {
         });
 
         test('has sign in form', async ({ page }) => {
-            await expect(page.getByRole('heading', { name: 'Sign In' })).toBeVisible();
+            await expect(page.getByRole('heading', { name: 'Welcome back' })).toBeVisible();
             await expect(page.getByRole('textbox', { name: 'Email' })).toBeVisible();
             await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible();
             await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible();
@@ -34,12 +34,46 @@ test.describe('Sign In', () => {
         });
     });
 
-    // test.describe.skip('User Sign In', () => {
-        // TODO: Implement user sign in tests
-        // test('successfully signs in with valid cookie', async ({ page }) => {
-        // });
+    test('shows a warning after an unsuccessful sign in', async ({ page }) => {
+        await page.route('**/api/auth/sign-in/email', async (route) => {
+            await route.fulfill({
+                status: 401,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    error: {
+                        message: 'Invalid email or password',
+                    },
+                }),
+            });
+        });
 
-        // test('cannot sign in with invalid cookie', async ({ page }) => {
-        // });
-    // });
+        await page.getByRole('textbox', { name: 'Email' }).fill('unknown@example.com');
+        await page.getByRole('textbox', { name: 'Password' }).fill('incorrect-password');
+        await page.getByRole('button', { name: 'Sign In' }).click();
+
+        await expect(page.getByRole('alert')).toBeVisible();
+    });
+
+    test('redirects to the profile after a successful sign in', async ({ page }) => {
+        await page.route('**/api/auth/sign-in/email', async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({}),
+            });
+        });
+        await page.route('**/profile', async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'text/html',
+                body: '<html><body><h1>Account Information</h1></body></html>',
+            });
+        });
+
+        await page.getByRole('textbox', { name: 'Email' }).fill('member@example.com');
+        await page.getByRole('textbox', { name: 'Password' }).fill('correct-password');
+        await page.getByRole('button', { name: 'Sign In' }).click();
+
+        await expect(page).toHaveURL(/\/profile$/);
+    });
 });

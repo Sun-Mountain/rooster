@@ -3,7 +3,11 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { PUBLIC_ROUTES } from "./lib/routes";
 
+import { logger } from "@/helpers/logger";
+
 export async function proxy(req: NextResponse) {
+
+  logger.debug(`Proxy middleware invoked for URL: ${req.url}`);
   const { pathname } = new URL(req.url);
   const session = await auth.api.getSession({
       headers: await headers()

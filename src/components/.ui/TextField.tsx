@@ -8,7 +8,7 @@ import {
   FormHelperText
 } from "@mui/material";
 
-interface TextFieldProps {
+export interface TextFieldProps {
   label: string;
   name: string;
   className?: string;
@@ -27,7 +27,7 @@ interface TextFieldProps {
   formHelperText?: boolean;
 }
 
-const TextField = ({
+export const TextField = ({
   label,
   name,
   className,

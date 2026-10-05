@@ -1,9 +1,15 @@
 import SignInSignUpForm from "@/components/forms/signInSignUp";
 
-export default function SignInPage() {
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ verification?: string }>;
+}) {
+  const params = await searchParams;
+
   return (
     <>
-      <SignInSignUpForm />
+      <SignInSignUpForm verificationPending={params.verification === "pending"} />
     </>
   );
 }

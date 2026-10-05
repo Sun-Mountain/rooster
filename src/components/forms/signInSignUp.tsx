@@ -3,7 +3,6 @@
 import { SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp as signUpAuth, signIn as signInAuth } from "@/lib/auth-client";
-import { Error } from "@mui/icons-material";
 import Button from "@/components/.ui/Button";
 import TextField from "@/components/.ui/TextField";
 import AuthLinks from "@/components/content/AuthLinks";
@@ -11,6 +10,7 @@ import * as z from "zod";
 
 interface SignInSignUpFormProps {
   signUp?: boolean;
+  verificationPending?: boolean;
 }
 
 const SignInSchema = z.object({
@@ -56,7 +56,7 @@ interface SignUpErrorProps {
   };
 }
 
-const SignInSignUpForm = ({ signUp = false }: SignInSignUpFormProps) => {
+const SignInSignUpForm = ({ signUp = false, verificationPending = false }: SignInSignUpFormProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [signInErrors, setSignInErrors] = useState<SignInErrorProps>({});
@@ -98,7 +98,7 @@ const SignInSignUpForm = ({ signUp = false }: SignInSignUpFormProps) => {
       if (response.error) {
         setFormError(response.error.message || "Something went wrong.");
       } else {
-        router.push("/");
+        router.push("/sign-in?verification=pending");
       }
     } else {
       validation = SignInSchema.safeParse(data);
@@ -126,8 +126,16 @@ const SignInSignUpForm = ({ signUp = false }: SignInSignUpFormProps) => {
       <div className="form-header">
         <h1>{signUp ? "Sign Up" : "Welcome back"}</h1>
         <h4>{signUp ? "Create a new account" : "Sign in with your Rooster account"}</h4>
+        {!signUp && verificationPending && (
+          <p className="form-message">Check your email for a verification link before signing in.</p>
+        )}
       </div>
       <form onSubmit={onSubmit} className="form">
+        {formError && (
+          <p className="form-warning" role="alert">
+            {formError}
+          </p>
+        )}
         {signUp && (
           <>
             <TextField

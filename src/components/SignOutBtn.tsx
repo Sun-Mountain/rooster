@@ -5,7 +5,7 @@ import { signOut } from "@/lib/auth-client";
 import { Logout } from '@mui/icons-material';
 import Button from "@/components/.ui/Button";
 
-const SignOutBtn = () => {
+export const SignOutBtn = () => {
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -19,5 +19,3 @@ const SignOutBtn = () => {
     </Button>
   )
 }
-
-export default SignOutBtn;

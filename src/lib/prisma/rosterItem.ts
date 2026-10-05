@@ -34,6 +34,51 @@ export const getRosterEntriesByUserId = async (userId: string): Promise<RosterIt
   });
 };
 
+export const getCurrentRosterDetailsByUserId = async (userId: string) => {
+  const rosterEntries = await db.rosterItem.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (rosterEntries.length === 0) return [];
+
+  const classDetails = await db.classTermDetails.findMany({
+    where: {
+      id: { in: rosterEntries.map((entry) => entry.classTermRosterId) },
+      term: {
+        status: "LIVE",
+      },
+    },
+    include: {
+      class: {
+        select: {
+          name: true,
+          description: true,
+        },
+      },
+      term: {
+        select: {
+          name: true,
+          startDate: true,
+          endDate: true,
+        },
+      },
+      classInstances: true,
+      location: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  const detailsById = new Map(classDetails.map((detail) => [detail.id, detail]));
+
+  return rosterEntries
+    .map((entry) => ({ rosterEntryId: entry.id, classDetails: detailsById.get(entry.classTermRosterId) }))
+    .filter((entry) => entry.classDetails !== undefined);
+};
+
 // Update info for a single roster entry based on a roster entry id. The roster entry id will remain the same but all other fields may be changed
 export const updateRosterEntryById = async (rosterEntryId: string, data: Prisma.RosterItemUpdateInput): Promise<RosterItem> => {
   return await db.rosterItem.update({

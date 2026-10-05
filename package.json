@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:reset": "prisma migrate reset",
+    "db:reset:seed": "node scripts/reset-database.mjs",
     "lint": "eslint",
     "test:playwright": "playwright test",
     "test:playwright:ui": "playwright test --ui",

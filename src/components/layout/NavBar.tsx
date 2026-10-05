@@ -89,7 +89,7 @@ const NavBar = () => {
                 </Link>
               </div>
               <div>
-                <SignOutButton />
+                <SignOutBtn />
               </div>
             </div>
           ) : (

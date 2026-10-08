@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { ClassDetailProps}  from "@/lib/props";
-import { BorderColor } from "@mui/icons-material";
+import { BorderColor, AddShoppingCart } from "@mui/icons-material";
 import SessionClassForm from "../forms/sessionClass";
 import DeleteItemModal from "@/components/modals/DeleteItem";
 import Button from "@/components/.ui/Button";
@@ -62,7 +62,7 @@ const ClassDetailItem = ({
   };
 
   return (
-    <div className={`admin-session-class-detail${isEditing ? " editing" : ""}`}>
+    <div className={`session-class-detail${isEditing ? " editing" : ""}`}>
       {!isEditing ? (
         <>
           <div className="class-detail-info">
@@ -77,21 +77,29 @@ const ClassDetailItem = ({
               ))}
             </div>
           </div>
-          {adminView && (
             <div className="reveal">
               <div className="action-buttons">
-                <Button className="icon x-small transparent no-border" onClick={() => setIsEditing(!isEditing)}>
-                  <BorderColor />
-                </Button>
-                <DeleteItemModal
-                  itemId={formData.classId}
-                  name={`${formData.className} from ${sessionName || "this session"}`}
-                  type="classDetails"
-                  setIsLoading={setIsLoading}
-                />
+                {adminView ? (
+                  <>
+                      <Button className="icon x-small transparent no-border" onClick={() => setIsEditing(!isEditing)}>
+                        <BorderColor />
+                      </Button>
+                      <DeleteItemModal
+                        itemId={formData.classId}
+                        name={`${formData.className} from ${sessionName || "this session"}`}
+                        type="classDetails"
+                        setIsLoading={setIsLoading}
+                      />
+                  </>
+                ) : (
+                  <>
+                    <Button className="w-icon small">
+                      <AddShoppingCart /> Add to Cart
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
-          )}
         </>
       ) : (
         <>

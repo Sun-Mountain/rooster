@@ -149,7 +149,7 @@
   }
 }
 
-.admin-session-class-detail {
+.session-class-detail {
   background-color: $list-item-bg;
   border: 1px solid $list-item-border-color;
   border-radius: $list-item-border-radius;
@@ -197,16 +197,6 @@
       padding: 5px;
     }
   }
-
-  // .reveal {
-  //   display: none;
-  // }
-
-  // &:hover {
-  //   .reveal {
-  //     display: block;
-  //   }
-  // }
 }
 
 .class-detail-info {
@@ -214,7 +204,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  width: 100%;
+  // width: 100%;
   color: $slate-gray;
 }
 

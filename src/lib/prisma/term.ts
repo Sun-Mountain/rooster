@@ -3,8 +3,16 @@ import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
 type UpdateTermWithoutStatus = Omit<Prisma.TermUpdateInput, "status">;
 
-type FetchTermsResponse = Omit<
-  Term, "createdAt" | "updatedAt" | "description" >;
+type TermsWithClassInstances = Prisma.TermGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    startDate: true;
+    endDate: true;
+    status: true;
+    weeks: true;
+  };
+}>;
 
 // POST
 
@@ -52,23 +60,24 @@ export const getTermByNameAndDate = async (name: string, date: string): Promise<
   });
 };
 
-// export const getLiveTerms = async (): Promise<Omit<Term, "createdAt" | "updatedAt" | "description">[]> => {
-//   return await db.term.findMany({
-//     where: {
-//       status: "LIVE",
-//     },
-//     select: {
-//       id: true,
-//       name: true,
-//       startDate: true,
-//       endDate: true,
-//       status: true,
-//     },
-//     orderBy: [
-//       { startDate: "asc" }
-//     ],
-//   });
-// };
+export const getLiveTerms = async (): Promise<TermsWithClassInstances[]> => {
+  return await db.term.findMany({
+    where: {
+      status: "LIVE",
+    },
+    select: {
+      id: true,
+      name: true,
+      startDate: true,
+      endDate: true,
+      status: true,
+      weeks: true,
+    },
+    orderBy: [
+      { startDate: "asc" }
+    ],
+  });
+};
 
 export const getTermById = async (id: string): Promise<Term | null> => {
   return await db.term.findUnique({

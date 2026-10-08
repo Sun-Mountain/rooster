@@ -8,12 +8,25 @@ import { EventNote, SortByAlpha } from "@mui/icons-material";
 import ClassDetailItem from "@/components/content/ClassDetailItem";
 import Button from "@/components/.ui/Button";
 import SessionClassScheduleView from "./SessionClassSchedule";
+import { usePathname } from "next/navigation";
 
-const SessionClasses = ({ sessionId, sessionName }: { sessionId: string, sessionName?: string }) => {
+type SessionClassesProps = {
+  sessionId: string;
+  sessionName?: string;
+  adminView?: boolean;
+};
+
+const SessionClasses = ({
+  sessionId,
+  sessionName,
+}: SessionClassesProps) => {
   const [classes, setClasses] = useState<ClassDetailProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewType, setViewType] = useState<"name" | "schedule">("name");
+  const pathname = usePathname();
+
+  const adminView = pathname.startsWith("/admin");
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -35,18 +48,20 @@ const SessionClasses = ({ sessionId, sessionName }: { sessionId: string, session
 
   return (
     <>
-      <div className="admin-session-classes-header">
-        <div>
-          <h2>Classes in this Session</h2>
-        </div>
-        <div>
-          <AddSessionClassModal
-            setIsLoading={setIsLoading}
-            sessionId={sessionId}
-            sessionName={sessionName}
-          />
-        </div>
-      </div>
+        {adminView && (
+          <div className="admin-session-classes-header">
+            <div>
+              <h2>Classes in this Session</h2>
+            </div>
+            <div>
+              <AddSessionClassModal
+                setIsLoading={setIsLoading}
+                sessionId={sessionId}
+                sessionName={sessionName}
+              />
+            </div>
+          </div>
+        )}
       <div className="view-buttons">
         <div>
           Sort By:
@@ -64,7 +79,7 @@ const SessionClasses = ({ sessionId, sessionName }: { sessionId: string, session
           </div>
         </Button>
       </div>
-      <div className="admin-session-class-detail-list">
+      <div className="session-class-detail-list">
         {isLoading ? (
           <div>Loading classes...</div>
         ) : error ? (
@@ -82,6 +97,7 @@ const SessionClasses = ({ sessionId, sessionName }: { sessionId: string, session
                     sessionName={sessionName}
                     sessionId={sessionId}
                     setIsLoading={setIsLoading}
+                    adminView={adminView}
                   />
                 ))}
               </>

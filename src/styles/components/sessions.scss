@@ -3,7 +3,14 @@
 
 // Single Session Page
 
-.admin-session {
+.single-session-signup-content {
+  .session-class-detail-list, .session-card-container, .view-buttons {
+    margin: 10px auto;
+    max-width: 800px;
+  }
+}
+
+.session-card-container {
   background-color: $card-bg;
   border: 1px solid $table-border-color;
   border-radius: $list-item-border-radius;
@@ -18,12 +25,12 @@
   }
 }
 
-.admin-session-header {
+.session-card-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  .admin-session-header-info {
+  .session-card-header-info {
     color: $list-item-font-color;
     display: flex;
     flex-direction: row;

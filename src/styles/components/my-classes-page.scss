@@ -1,0 +1,112 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.my-classes-page {
+  margin: 0 auto;
+  max-width: $lg;
+  padding: 56px 24px 72px;
+}
+
+.my-classes-header {
+  border-bottom: 1px solid $table-border-color;
+  margin-bottom: 36px;
+  padding-bottom: 28px;
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin: 8px 0 12px;
+  }
+
+  > p:last-child {
+    color: $slate-gray;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+}
+
+.my-classes-list {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.my-class-card {
+  background: $card-bg;
+  border: 1px solid $table-border-color;
+  border-top: 4px solid $back-link-color;
+  padding: 24px;
+}
+
+.my-class-heading {
+  align-items: start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 1.4rem;
+    margin-top: 7px;
+  }
+
+  > span {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+}
+
+.my-class-description {
+  color: $slate-gray;
+  line-height: 1.5;
+  margin: 16px 0 22px;
+}
+
+.my-class-meta {
+  border-top: 1px solid $table-border-color;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-top: 16px;
+
+  div {
+    display: grid;
+    gap: 4px;
+  }
+
+  dt {
+    color: $slate-gray;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  dd span {
+    display: block;
+  }
+}
+
+.my-classes-empty-state {
+  border: 1px dashed $table-border-color;
+  padding: 48px 24px;
+  text-align: center;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: $slate-gray;
+    margin: 0;
+  }
+}
+
+@media (max-width: $md) {
+  .my-classes-page {
+    padding: 36px 16px 52px;
+  }
+}

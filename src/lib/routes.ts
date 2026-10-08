@@ -4,5 +4,6 @@ export const PUBLIC_ROUTES = ['/',
                               '/classes',
                               '/password',
                               '/sign-in',
-                              '/sign-up'
+                              '/sign-up',
+	   '/health'
                             ];

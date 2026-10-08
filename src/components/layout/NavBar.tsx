@@ -11,7 +11,7 @@ import CartModal from "@/components/modals/Cart";
 import Link from "next/link";
 import Drawer from "@/components/.ui/Drawer";
 import MainNavLinks from "@/components/content/MainNavLinks";
-import SignOutButton from "@/components/SignOutBtn";
+import { SignOutBtn } from "@/components/SignOutBtn";
 import AdminBanner from "./AdminBanner";
 
 const NavBar = () => {
@@ -89,7 +89,7 @@ const NavBar = () => {
                 </Link>
               </div>
               <div>
-                <SignOutButton />
+                <SignOutBtn />
               </div>
             </div>
           ) : (

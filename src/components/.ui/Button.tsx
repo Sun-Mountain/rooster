@@ -11,7 +11,7 @@ interface ButtonProps {
   handleSubmit?: (event: SubmitEvent<HTMLFormElement>) => void;
 }
 
-const Button = ({
+export const Button = ({
   children,
   ariaLabel,
   className,
@@ -27,6 +27,6 @@ const Button = ({
       {children}
     </button>
   );
-}
+};
 
 export default Button;

@@ -1,11 +1,14 @@
 import { expect, Locator, type Page } from '@playwright/test';
 
 const NavLinks = [
-    { name: 'Home', href: '/' },
     { name: 'Classes', href: '/classes' },
-    { name: 'About Us', href: '/about' },
+    { name: 'Events', href: '/events' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
     { name: 'Sign In', href: '/sign-in' }
 ];
+
+const MobileHomeLink = { name: 'Home', href: '/' };
 
 export async function expectMainNavLinks(page: Page) {
     if (!isMobileViewport(page)) {
@@ -18,7 +21,7 @@ export async function expectMainNavLinks(page: Page) {
 async function expectMainNavLinksMobile(page: Page) {
     await openMobileNavDrawer(page);
     const mobileNavDialog = page.getByRole('dialog');
-    await expectMainLinksCommon(mobileNavDialog);
+    await expectMainLinksCommon(mobileNavDialog, true);
     await closeMobileNavDrawer(page, mobileNavDialog);
 }
 
@@ -27,8 +30,9 @@ async function expectMainNavLinksDesktop(page: Page) {
     await expectMainLinksCommon(nav);
 }
 
-async function expectMainLinksCommon(nav: Locator) {
-    for (const link of NavLinks) {
+async function expectMainLinksCommon(nav: Locator, includeHome = false) {
+    const links = includeHome ? [MobileHomeLink, ...NavLinks] : NavLinks;
+    for (const link of links) {
         const linkElement = nav.getByRole('link', { name: link.name });
         await expect(linkElement).toBeVisible();
         await expect(linkElement).toHaveAttribute('href', link.href);

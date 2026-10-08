@@ -9,6 +9,7 @@ import DeleteItemModal from "@/components/modals/DeleteItem";
 import EditSessionModal from "@/components/modals/EditSession";
 import SessionClasses from "@/components/content/SessionClasses";
 import StatusUpdateModal from "@/components/modals/SessionStatus";
+import SessionInfoCard from "@/components/content/SessionInfoCard";
 
 const SingleSessionPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -51,9 +52,11 @@ const SingleSessionPage = () => {
         </div>
       ) : (
         <>
-          <div className="admin-session">
-            <div className="admin-session-header">
-              <div className="admin-session-header-info">
+          <div className="session-card-container">
+            {/* TODO: Add a SessionInfoCard component to display session details.
+            Must work with Live Modal */}
+            <div className="session-card-header">
+              <div className="session-card-header-info">
                 <div className="week-counter">
                   <span className="week-count-number">{session?.weeks}</span><br />weeks
                 </div>

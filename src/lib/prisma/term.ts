@@ -11,11 +11,6 @@ type TermsWithClassInstances = Prisma.TermGetPayload<{
     endDate: true;
     status: true;
     weeks: true;
-    classes: {
-      select: {
-        classInstances: true;
-      };
-    };
   };
 }>;
 
@@ -77,11 +72,6 @@ export const getLiveTerms = async (): Promise<TermsWithClassInstances[]> => {
       endDate: true,
       status: true,
       weeks: true,
-      classes: {
-        select: {
-          classInstances: true,
-        },
-      },
     },
     orderBy: [
       { startDate: "asc" }

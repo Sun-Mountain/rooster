@@ -12,13 +12,15 @@ interface ClassDetailItemProps {
   sessionId: string;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   sessionName?: string;
+  adminView?: boolean;
 }
 
 const ClassDetailItem = ({
   classDetail,
   sessionId,
   setIsLoading,
-  sessionName
+  sessionName,
+  adminView = false
 }: ClassDetailItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -75,19 +77,21 @@ const ClassDetailItem = ({
               ))}
             </div>
           </div>
-          <div className="reveal">
-            <div className="action-buttons">
-              <Button className="icon x-small transparent no-border" onClick={() => setIsEditing(!isEditing)}>
-                <BorderColor />
-              </Button>
-              <DeleteItemModal
-                itemId={formData.classId}
-                name={`${formData.className} from ${sessionName || "this session"}`}
-                type="classDetails"
-                setIsLoading={setIsLoading}
-              />
+          {adminView && (
+            <div className="reveal">
+              <div className="action-buttons">
+                <Button className="icon x-small transparent no-border" onClick={() => setIsEditing(!isEditing)}>
+                  <BorderColor />
+                </Button>
+                <DeleteItemModal
+                  itemId={formData.classId}
+                  name={`${formData.className} from ${sessionName || "this session"}`}
+                  type="classDetails"
+                  setIsLoading={setIsLoading}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </>
       ) : (
         <>

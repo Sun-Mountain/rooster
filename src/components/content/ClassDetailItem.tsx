@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { ClassDetailProps}  from "@/lib/props";
-import { BorderColor, AddShoppingCart } from "@mui/icons-material";
+import { BorderColor, ShoppingCartOutlined } from "@mui/icons-material";
 import SessionClassForm from "../forms/sessionClass";
 import DeleteItemModal from "@/components/modals/DeleteItem";
 import Button from "@/components/.ui/Button";
@@ -91,17 +91,17 @@ const ClassDetailItem = ({
                         setIsLoading={setIsLoading}
                       />
                   </>
-                ) : (
+                ) : (!adminView && (  
                   <>
                     <Button className="w-icon small">
-                      <AddShoppingCart /> Add to Cart
+                      <ShoppingCartOutlined /> Add to Cart
                     </Button>
                   </>
-                )}
+                ))}
               </div>
             </div>
         </>
-      ) : (
+      ) : (!!adminView && (
         <>
           <SessionClassForm
             sessionId={sessionId}
@@ -118,7 +118,7 @@ const ClassDetailItem = ({
             </Button>
           </div>
         </>
-      )}
+      ))}
     </div>
   );
 };

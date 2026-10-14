@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import "@/styles/global.scss";
+import { CartStoreProvider } from '@/providers/cart-provider';
 
 export const metadata: Metadata = {
   title: "Rooster",
@@ -15,6 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <CartStoreProvider>
         <body>
           <div id="app">
             <NavBar />
@@ -26,6 +28,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </body>
+      </CartStoreProvider>
     </html>
   );
 }

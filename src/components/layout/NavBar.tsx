@@ -14,7 +14,10 @@ import MainNavLinks from "@/components/content/MainNavLinks";
 import SignOutButton from "@/components/SignOutBtn";
 import AdminBanner from "./AdminBanner";
 
+import { useCartStore } from "@/providers/cart-provider";
+
 const NavBar = () => {
+  const { items } = useCartStore((state) => state);
   const { width } = useWindowSize();
   const isMobile = width && width <= 768;
   const { data: session } = useSession();
@@ -74,7 +77,7 @@ const NavBar = () => {
               {!pathname.includes("/admin") && (
                 <>
                   <div className="dashboard-actions">
-                      <CartModal />
+                      <CartModal /> {items.length}
                   </div>
                 </>
               )}

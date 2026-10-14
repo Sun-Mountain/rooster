@@ -7,6 +7,8 @@ import SessionClassForm from "../forms/sessionClass";
 import DeleteItemModal from "@/components/modals/DeleteItem";
 import Button from "@/components/.ui/Button";
 
+import { useCartStore } from "@/providers/cart-provider";
+
 interface ClassDetailItemProps {
   classDetail: ClassDetailProps;
   sessionId: string;
@@ -22,6 +24,8 @@ const ClassDetailItem = ({
   sessionName,
   adminView = false
 }: ClassDetailItemProps) => {
+  const { addToCart } = useCartStore((state) => state);
+
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -61,6 +65,15 @@ const ClassDetailItem = ({
     }
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      lineItemId: classDetail.id,
+      lineItem: classDetail.class.name,
+      price: classDetail.price,
+      quantity: 1
+    });
+  };
+
   return (
     <div className={`session-class-detail${isEditing ? " editing" : ""}`}>
       {!isEditing ? (
@@ -93,7 +106,7 @@ const ClassDetailItem = ({
                   </>
                 ) : (!adminView && (  
                   <>
-                    <Button className="w-icon small">
+                    <Button className="w-icon small" onClick={handleAddToCart}>
                       <ShoppingCartOutlined /> Add to Cart
                     </Button>
                   </>

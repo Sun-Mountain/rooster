@@ -1,0 +1,30 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.cart-btn-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .cart-icon {
+    // color: $cart-icon-color;
+    font-size: 1.5rem;
+  }
+}
+
+.cart-item-count {
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  height: 18px;
+  line-height: 18px;
+  position: absolute;
+  text-align: center;
+  right: 12px;
+  top: -2px;
+  width: 18px;
+}

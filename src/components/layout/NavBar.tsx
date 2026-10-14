@@ -76,8 +76,10 @@ const NavBar = () => {
               )}
               {!pathname.includes("/admin") && (
                 <>
-                  <div className="dashboard-actions">
-                      <CartModal /> {items.length}
+                  <div className="dashboard-actions cart-btn-container">
+                      <CartModal /> {items.length > 0 && (
+                        <span className="cart-item-count">{items.length}</span>
+                      )}
                   </div>
                 </>
               )}

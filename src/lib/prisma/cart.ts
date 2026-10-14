@@ -1,5 +1,5 @@
 import db from "@/lib/prisma";
-import { Cart, Prisma } from "../../../generated/prisma/client";
+import { Cart } from "../../../generated/prisma/client";
 
 type CartWithItems = Cart & { items: {
   lineItem: string;

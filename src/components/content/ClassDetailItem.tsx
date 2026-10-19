@@ -2,7 +2,11 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { ClassDetailProps}  from "@/lib/props";
-import { BorderColor, ShoppingCartOutlined } from "@mui/icons-material";
+import {
+  BorderColor,
+  ShoppingCartOutlined,
+  ShoppingCartCheckout
+} from "@mui/icons-material";
 import SessionClassForm from "../forms/sessionClass";
 import DeleteItemModal from "@/components/modals/DeleteItem";
 import Button from "@/components/.ui/Button";
@@ -17,6 +21,21 @@ interface ClassDetailItemProps {
   adminView?: boolean;
 }
 
+interface FormDataProps {
+  classId: string;
+  className: string;
+  price: number;
+  capacity: number;
+  termSpecificDescription: string;
+  classInstances: { daysOfTheWeek: string[];
+    startTime: string;
+    endTime: string;
+  }[];
+  termId: string;
+  instanceId?: string;
+  instanceStartTime?: string;
+}
+
 const ClassDetailItem = ({
   classDetail,
   sessionId,
@@ -24,11 +43,11 @@ const ClassDetailItem = ({
   sessionName,
   adminView = false
 }: ClassDetailItemProps) => {
-  const { addToCart } = useCartStore((state) => state);
+  const { addToCart, items } = useCartStore((state) => state);
 
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormDataProps>({
     classId: classDetail.classId,
     className: classDetail.class.name,
     price: classDetail.price,
@@ -39,7 +58,8 @@ const ClassDetailItem = ({
       startTime: instance.startTime,
       endTime: instance.endTime
     })),
-    termId: sessionId
+    termId: sessionId,
+    instanceId: undefined
   });
 
   const onSubmit = async () => {
@@ -106,9 +126,25 @@ const ClassDetailItem = ({
                   </>
                 ) : (!adminView && (  
                   <>
-                    <Button className="w-icon small" onClick={handleAddToCart}>
-                      <ShoppingCartOutlined /> Add to Cart
-                    </Button>
+                    {items.some(item => item.lineItemId === classDetail.id) ? (
+                      <div className="cart-actions">
+                        <Button className="w-icon small" disabled>
+                          <ShoppingCartCheckout /> In Cart
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        {formData.classInstances.length > 1 ? (
+                          <Button className="w-icon small">
+                            <ShoppingCartOutlined /> Pick a Time
+                          </Button>
+                        ) : (
+                          <Button className="w-icon small" onClick={handleAddToCart}>
+                            <ShoppingCartOutlined /> Add to Cart
+                          </Button>
+                        )}
+                      </>
+                    )}
                   </>
                 ))}
               </div>

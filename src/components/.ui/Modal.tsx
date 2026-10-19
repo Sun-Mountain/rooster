@@ -11,6 +11,7 @@ interface ModalComponentProps {
   btnAction?: ReactNode;
   modalBtnClassName?: string;
   closeOnAction?: boolean;
+  reverseBtnOrder?: boolean;
 }
 
 export default function ModalComponent({
@@ -22,6 +23,7 @@ export default function ModalComponent({
   btnAction,
   modalBtnClassName,
   closeOnAction = false,
+  reverseBtnOrder = false
 }: ModalComponentProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -51,7 +53,7 @@ export default function ModalComponent({
             <div className="modal-content">
               {children}
             </div>
-            <div className="modal-actions">
+            <div className={`modal-actions${reverseBtnOrder ? ' reverse' : ''}`}>
               {btnAction}
               <Button onClick={handleClose} className="transparent no-border">
                 Cancel

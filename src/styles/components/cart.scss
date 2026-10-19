@@ -28,3 +28,42 @@
   top: -2px;
   width: 18px;
 }
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+
+  .cart-item-name {
+    font-weight: bold;
+    color: $ink-black;
+  }
+
+  .cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.cart-total {
+  color: $ink-black;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  .cart-total-amount {
+    font-weight: bold;
+  }
+}
+
+.cart-item+.cart-item {
+  border-top: 1px solid $slate-gray-25;
+}
+
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

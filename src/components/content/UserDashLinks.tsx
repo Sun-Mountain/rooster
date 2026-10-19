@@ -13,6 +13,10 @@ import {
 const UserDashLinks = () => {
   const pathname = usePathname();
 
+  if (!pathname) {
+    return null;
+  }
+
   return (
     <ul>
       <li>

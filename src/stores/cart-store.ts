@@ -6,6 +6,8 @@ export type CartState = {
     lineItem: string;
     price: number;
     quantity: number;
+    instanceId?: string;
+    instanceStartTime?: string;
   }[];
 }
 

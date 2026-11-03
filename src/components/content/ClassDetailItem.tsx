@@ -7,6 +7,11 @@ import {
   ShoppingCartOutlined,
   ShoppingCartCheckout
 } from "@mui/icons-material";
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl } from '@mui/material';
 import SessionClassForm from "../forms/sessionClass";
 import DeleteItemModal from "@/components/modals/DeleteItem";
 import Button from "@/components/.ui/Button";
@@ -27,13 +32,14 @@ interface FormDataProps {
   price: number;
   capacity: number;
   termSpecificDescription: string;
-  classInstances: { daysOfTheWeek: string[];
+  classInstances: {
+    instanceId: string;
+    daysOfTheWeek: string[];
     startTime: string;
     endTime: string;
   }[];
   termId: string;
-  instanceId?: string;
-  instanceStartTime?: string;
+  instanceSelected?: string;
 }
 
 const ClassDetailItem = ({
@@ -54,12 +60,13 @@ const ClassDetailItem = ({
     capacity: classDetail.capacity,
     termSpecificDescription: classDetail.termSpecificDescription || "",
     classInstances: classDetail.classInstances.map(instance => ({
+      instanceId: instance.id,
       daysOfTheWeek: instance.daysOfTheWeek,
       startTime: instance.startTime,
       endTime: instance.endTime
     })),
     termId: sessionId,
-    instanceId: undefined
+    instanceSelected: ""
   });
 
   const onSubmit = async () => {
@@ -87,12 +94,16 @@ const ClassDetailItem = ({
 
   const handleAddToCart = () => {
     addToCart({
-      lineItemId: classDetail.id,
+      lineItemId: classDetail.classInstances[0].id,
       lineItem: classDetail.class.name,
       price: classDetail.price,
       quantity: 1
     });
   };
+
+  const handleInstanceChange = (instanceId: string) => {
+    setFormData({ ...formData, instanceSelected: instanceId });
+  }
 
   return (
     <div className={`session-class-detail${isEditing ? " editing" : ""}`}>
@@ -105,7 +116,31 @@ const ClassDetailItem = ({
             <div>
               {formData.classInstances.map((instance, idx) => (
                 <div key={idx}>
-                  {instance.daysOfTheWeek.join(", ")}: {instance.startTime} - {instance.endTime}
+                  {formData.classInstances.length > 1 && (
+                    <div key={`label-${idx}`}>
+                      <FormControl component="fieldset">
+                        <RadioGroup
+                          aria-label="class-instances"
+                          name="class-instances"
+                          value={formData.instanceSelected}
+                          onChange={() => handleInstanceChange(formData.classInstances[idx].instanceId)}
+                        >
+                          <FormControlLabel
+                            value={instance.instanceId}
+                            control={<Radio />}
+                            label={`${instance.daysOfTheWeek.join(", ")}: ${instance.startTime} - ${instance.endTime}`}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
+                  )}
+                  {formData.classInstances.length === 1 && (
+                    <div key={idx}>
+                      <div>
+                        {instance.daysOfTheWeek.join(", ")}: {instance.startTime} - {instance.endTime}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -118,7 +153,7 @@ const ClassDetailItem = ({
                         <BorderColor />
                       </Button>
                       <DeleteItemModal
-                        itemId={formData.classId}
+                        itemId={formData.classId || ""}
                         name={`${formData.className} from ${sessionName || "this session"}`}
                         type="classDetails"
                         setIsLoading={setIsLoading}
@@ -126,7 +161,7 @@ const ClassDetailItem = ({
                   </>
                 ) : (!adminView && (  
                   <>
-                    {items.some(item => item.lineItemId === classDetail.id) ? (
+                    {items.some(item => item.lineItemId === classDetail.classInstances[0].id) ? (
                       <div className="cart-actions">
                         <Button className="w-icon small" disabled>
                           <ShoppingCartCheckout /> In Cart
@@ -134,7 +169,7 @@ const ClassDetailItem = ({
                       </div>
                     ) : (
                       <>
-                        {formData.classInstances.length > 1 ? (
+                        {formData.classInstances.length > 1 && formData.instanceSelected === "" ? (
                           <Button className="w-icon small">
                             <ShoppingCartOutlined /> Pick a Time
                           </Button>

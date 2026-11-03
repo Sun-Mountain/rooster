@@ -88,7 +88,7 @@ const NavBar = () => {
                   <AccountCircleIcon />
                   {user?.role !== "USER" && (
                   <span className="hide-for-mobile">
-                    Student Profile
+                    Profile
                   </span>
                   )}
                 </Link>

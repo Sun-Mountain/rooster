@@ -23,7 +23,9 @@ interface SessionClassProps {
   price: number;
   capacity: number;
   termSpecificDescription: string;
-  classInstances: { daysOfTheWeek: string[];
+  classInstances: {
+    instanceId: string;
+    daysOfTheWeek: string[];
     startTime: string;
     endTime: string;
   }[];
@@ -73,7 +75,7 @@ const SessionClassForm = ({
     e.preventDefault();
     setFormData(prev => prev ? {
       ...prev,
-      classInstances: [...prev.classInstances, { daysOfTheWeek: [], startTime: "", endTime: "" }]
+      classInstances: [...prev.classInstances, { instanceId: "", daysOfTheWeek: [], startTime: "", endTime: "" }]
     } : prev);
   };
 

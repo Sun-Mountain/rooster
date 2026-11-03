@@ -19,7 +19,7 @@ const CartModal = () => {
     // Implement checkout logic here
   }
 
-  const checkoutBtn = (
+  const checkoutBtn = items.length > 0 && (
     <Button onClick={handleCheckout} className="primary">
       Checkout
     </Button>
@@ -45,6 +45,7 @@ const CartModal = () => {
                   <li key={item.lineItemId} className="cart-item">
                     <div className="cart-item-details">
                       <span className="cart-item-name">{item.lineItem}</span>
+                      <span className="cart-item-start-time">{item.instanceStartTime ? `Starts at: ${item.instanceStartTime}` : ''}</span>
                     </div>
                     <div className="cart-item-actions">
                       <div className="cart-item-price">

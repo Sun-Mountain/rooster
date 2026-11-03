@@ -43,7 +43,7 @@ const AdminNavLinks = () => {
         <a href="/admin/open-hang" className={pathname === "/admin/open-hang" ? "active" : ""}>
           <Air />
           <div>
-            Open Hang /<br />Point Rental
+            Open Practice
           </div>
         </a>
       </li>

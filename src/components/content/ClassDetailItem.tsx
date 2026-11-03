@@ -97,6 +97,8 @@ const ClassDetailItem = ({
       lineItemId: classDetail.classInstances[0].id,
       lineItem: classDetail.class.name,
       price: classDetail.price,
+      instanceId: formData.instanceSelected || classDetail.classInstances[0].id,
+      instanceStartTime: formData.classInstances.find(instance => instance.instanceId === (formData.instanceSelected || classDetail.classInstances[0].id))?.startTime || "",
       quantity: 1
     });
   };

@@ -1,6 +1,17 @@
 import db from "@/lib/prisma";
 import { Term, Prisma, TermStatus } from "../../../generated/prisma/client";
 
+type AllTerms = Prisma.TermGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    startDate: true;
+    endDate: true;
+    status: true;
+    weeks: true;
+  };
+}>;
+
 type UpdateTermWithoutStatus = Omit<Prisma.TermUpdateInput, "status">;
 
 type TermsWithClassInstances = Prisma.TermGetPayload<{
@@ -42,8 +53,17 @@ export const deleteTerm = async (id: string): Promise<Term> => {
 
 // GET
 
-export const getAllTerms = async (): Promise<Term[]> => {
+export const getAllTerms = async (): Promise<AllTerms[]> => {
+
   return await db.term.findMany({
+    select: {
+      id: true,
+      name: true,
+      startDate: true,
+      endDate: true,
+      status: true,
+      weeks: true,
+    },
     orderBy: [
       { startDate: "desc" },
       { createdAt: "desc" },

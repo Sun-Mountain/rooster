@@ -55,6 +55,7 @@ export interface ClassDetailProps {
   endTime: string;
   createdAt: string;
   updatedAt: string;
+  selectedInstanceId?: string;
 }
 
 export interface UserProps {

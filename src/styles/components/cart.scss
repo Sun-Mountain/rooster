@@ -1,0 +1,69 @@
+@use '../.resources/colors.scss' as *;
+@use '../.resources/screen-sizes.scss' as *;
+
+.cart-btn-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .cart-icon {
+    // color: $cart-icon-color;
+    font-size: 1.5rem;
+  }
+}
+
+.cart-item-count {
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  height: 18px;
+  line-height: 18px;
+  position: absolute;
+  text-align: center;
+  right: 12px;
+  top: -2px;
+  width: 18px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+
+  .cart-item-name {
+    font-weight: bold;
+    color: $ink-black;
+  }
+
+  .cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.cart-total {
+  color: $ink-black;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  .cart-total-amount {
+    font-weight: bold;
+  }
+}
+
+.cart-item+.cart-item {
+  border-top: 1px solid $slate-gray-25;
+}
+
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

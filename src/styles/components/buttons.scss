@@ -56,6 +56,17 @@ button {
     }
   }
 
+  &.medium {
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
   &.small {
     border-radius: 1rem;
     font-size: 0.85rem;

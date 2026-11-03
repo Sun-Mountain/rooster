@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# seed file
+/prisma/seed.ts
+
 # production
 /build
 /generated/*
